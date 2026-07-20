@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
-const ROLES = ['Frontend', 'Fullstack', 'Autodidacte', 'Bâtisseur']
+const ROLES = ['Développeur', 'Designer', 'Créateur', 'Autodidacte']
 
 export default function Hero() {
   const [roleIdx, setRoleIdx] = useState(0)
@@ -34,39 +35,45 @@ export default function Hero() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-6xl md:text-8xl lg:text-9xl leading-[0.9] tracking-tight mb-6"
+          className="font-display text-6xl md:text-8xl lg:text-9xl leading-[0.9] tracking-tight mb-2"
         >
-          AMINE PARÉ
+          AMINE<span className="text-clay">.</span>DEV
         </motion.h1>
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+          className="text-xs text-muted font-mono tracking-wide mb-6"
+        >
+          Amine Paré — Bobo-Dioulasso, Burkina Faso
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
           className="text-sm md:text-base text-muted mb-4"
         >
-          Développeur{' '}
+          Un{' '}
           <span key={roleIdx} className="font-serif italic text-text animate-role-fade-in inline-block">
             {ROLES[roleIdx]}
           </span>{' '}
-          — je construis pour l'Afrique.
+          digital complet — et bien plus, pour l'Afrique.
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
           className="text-sm md:text-base text-muted max-w-md mx-auto mb-10 leading-relaxed"
         >
-          Expériences web premium, du pixel au déploiement — e-commerces, marketplaces, intégrations Mobile Money.
+          Expériences digitales complètes, du concept au déploiement — développement, design, marketing, contenu et automatisation, pensés pour l'Afrique.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
           className="inline-flex flex-col sm:flex-row gap-4"
         >
-          <a href="#projects" className="rounded-full bg-text text-bg px-7 py-3.5 text-sm font-medium hover:scale-105 transition-transform">
+          <Link to="/projets" className="rounded-full bg-text text-bg px-7 py-3.5 text-sm font-medium hover:scale-105 transition-transform">
             Voir mes projets
-          </a>
-          <a href="#contact" className="rounded-full border-2 border-stroke px-7 py-3.5 text-sm font-medium hover:border-clay transition-colors">
+          </Link>
+          <Link to="/contact" className="rounded-full border-2 border-stroke px-7 py-3.5 text-sm font-medium hover:border-clay transition-colors">
             Me contacter
-          </a>
+          </Link>
         </motion.div>
       </div>
 

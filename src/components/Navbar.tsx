@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 const LINKS = [
-  { id: 'about', label: 'Profil' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'projects', label: 'Projets' },
-  { id: 'experience', label: 'Parcours' },
-  { id: 'gallery', label: 'Galerie' },
+  { to: '/a-propos', label: 'Profil' },
+  { to: '/competences', label: 'Compétences' },
+  { to: '/projets', label: 'Projets' },
+  { to: '/parcours', label: 'Parcours' },
+  { to: '/galerie', label: 'Galerie' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => { setOpen(false); window.scrollTo(0, 0) }, [location.pathname])
 
   return (
     <>
@@ -26,33 +30,35 @@ export default function Navbar() {
             scrolled ? 'shadow-lg shadow-black/30' : ''
           }`}
         >
-          <a href="#hero" className="w-9 h-9 rounded-full accent-gradient flex items-center justify-center mr-1">
-            <span className="w-7 h-7 rounded-full bg-bg flex items-center justify-center font-serif italic text-[13px]">
-              AP
+          <Link to="/" className="w-9 h-9 rounded-full accent-gradient flex items-center justify-center mr-1">
+            <span className="w-7 h-7 rounded-full bg-bg flex items-center justify-center font-serif italic text-[11px]">
+              AD
             </span>
-          </a>
+          </Link>
           <div className="w-px h-5 bg-stroke mx-1" />
           {LINKS.map((l) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              className="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 text-muted hover:text-text hover:bg-stroke/50 transition-colors"
+            <Link
+              key={l.to}
+              to={l.to}
+              className={`text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors ${
+                location.pathname === l.to ? 'text-text bg-stroke/50' : 'text-muted hover:text-text hover:bg-stroke/50'
+              }`}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <div className="w-px h-5 bg-stroke mx-1" />
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 bg-clay text-black font-medium hover:opacity-90 transition-opacity"
           >
             Me contacter ↗
-          </a>
+          </Link>
         </div>
 
         {/* Mobile */}
         <div className="md:hidden w-full flex items-center justify-between rounded-full border border-white/10 bg-surface/90 backdrop-blur-md px-4 py-2.5">
-          <a href="#hero" className="font-display text-lg tracking-wide">AP<span className="text-clay">.</span></a>
+          <Link to="/" className="font-display text-lg tracking-wide">AMINE<span className="text-clay">.</span>DEV</Link>
           <button onClick={() => setOpen(!open)} className="text-xs tracking-wider uppercase text-muted">
             {open ? 'Fermer' : 'Menu'}
           </button>
@@ -62,18 +68,18 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden fixed inset-0 z-40 bg-bg/98 flex flex-col items-center justify-center gap-8">
           {LINKS.map((l) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
+            <Link
+              key={l.to}
+              to={l.to}
               onClick={() => setOpen(false)}
               className="font-display text-4xl tracking-wide text-muted hover:text-text transition-colors"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a href="#contact" onClick={() => setOpen(false)} className="mt-4 rounded-full bg-clay text-black px-6 py-3 text-sm font-medium">
+          <Link to="/contact" onClick={() => setOpen(false)} className="mt-4 rounded-full bg-clay text-black px-6 py-3 text-sm font-medium">
             Me contacter
-          </a>
+          </Link>
         </div>
       )}
     </>
