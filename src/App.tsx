@@ -2,6 +2,7 @@ import { useState } from 'react'
 import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import Scene3D from './components/Scene3D'
 import Marquee from './components/Marquee'
 import About from './components/About'
 import Skills from './components/Skills'
@@ -20,6 +21,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <Scene3D />
         <Marquee />
         <About />
         <Skills />
