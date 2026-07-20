@@ -5,7 +5,6 @@ const LINKS = [
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projets' },
   { id: 'experience', label: 'Parcours' },
-  { id: 'gallery', label: 'Galerie' },
 ]
 
 export default function Navbar() {
