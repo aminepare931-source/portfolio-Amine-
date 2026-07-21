@@ -30,10 +30,8 @@ export default function Navbar() {
             scrolled ? 'shadow-lg shadow-black/30' : ''
           }`}
         >
-          <Link to="/" className="w-9 h-9 rounded-full accent-gradient flex items-center justify-center mr-1">
-            <span className="w-7 h-7 rounded-full bg-bg flex items-center justify-center font-serif italic text-[11px]">
-              AD
-            </span>
+          <Link to="/" className="w-9 h-9 rounded-full bg-black flex items-center justify-center mr-1 overflow-hidden border border-white/10">
+            <img src="/assets/logo.png" alt="Amine.Dev" className="w-full h-full object-cover scale-125" />
           </Link>
           <div className="w-px h-5 bg-stroke mx-1" />
           {LINKS.map((l) => (
@@ -58,7 +56,10 @@ export default function Navbar() {
 
         {/* Mobile */}
         <div className="md:hidden w-full flex items-center justify-between rounded-full border border-white/10 bg-surface/90 backdrop-blur-md px-4 py-2.5">
-          <Link to="/" className="font-display text-lg tracking-wide">AMINE<span className="text-clay">.</span>DEV</Link>
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/assets/logo.png" alt="Amine.Dev" className="w-8 h-8 rounded-full object-cover" />
+            <span className="font-display text-lg tracking-wide">AMINE<span className="text-clay">.</span>DEV</span>
+          </Link>
           <button onClick={() => setOpen(!open)} className="text-xs tracking-wider uppercase text-muted">
             {open ? 'Fermer' : 'Menu'}
           </button>

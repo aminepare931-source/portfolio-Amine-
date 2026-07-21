@@ -16,7 +16,7 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
     }
     requestAnimationFrame(tick)
   }, [inView, target])
-  return <div ref={ref} className="font-display text-6xl md:text-8xl text-text">{n}{suffix}</div>
+  return <div ref={ref} className="font-display text-4xl sm:text-6xl md:text-8xl text-text">{n}{suffix}</div>
 }
 
 const STATS = [

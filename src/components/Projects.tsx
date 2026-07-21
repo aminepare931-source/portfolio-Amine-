@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchProjects, Project } from '../lib/supabase'
 import Reveal from './Reveal'
+import ProjectsHeroCard from './ProjectsHeroCard'
 
 function spanClass(size: string) {
   switch (size) {
@@ -20,12 +21,15 @@ export default function Projects() {
   }, [])
 
   return (
-    <section id="projects" className="py-24 md:py-32 px-6 max-w-[1200px] mx-auto">
+    <section id="projects" className="py-16 md:py-24">
+      <ProjectsHeroCard />
+
+      <div className="px-6 max-w-[1200px] mx-auto">
       <Reveal>
         <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
-          <span className="w-6 h-px bg-clay" /> Réalisations
+          <span className="w-6 h-px bg-clay" /> Tous les projets
         </div>
-        <h2 className="font-display text-5xl md:text-6xl mb-12">Projets Récents.</h2>
+        <h2 className="font-display text-4xl sm:text-5xl md:text-6xl mb-12">Projets Récents.</h2>
       </Reveal>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
@@ -89,6 +93,7 @@ export default function Projects() {
             </a>
           </Reveal>
         ))}
+      </div>
       </div>
     </section>
   )
