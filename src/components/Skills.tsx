@@ -86,45 +86,56 @@ export default function Skills() {
   const cat = CATEGORIES.find((c) => c.id === active)!
 
   return (
-    <section id="skills" className="py-24 md:py-32 px-6 max-w-[1200px] mx-auto">
-      <Reveal>
-        <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
-          <span className="w-6 h-px bg-clay" /> Tech Stack & Compétences
-        </div>
-        <h2 className="font-display text-5xl md:text-6xl mb-4">Développeur fullstack.</h2>
-        <p className="text-sm text-muted max-w-lg mb-12">
-          Frontend, backend, bases de données — et bien au-delà. 42 compétences sur tout le spectre du digital.
-        </p>
-      </Reveal>
+    <section id="skills" className="relative py-24 md:py-32 overflow-hidden">
+      <video
+        autoPlay muted loop playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
+        src="/assets/bg.mp4"
+      />
+      <div className="absolute inset-0 bg-black/55" />
 
-      {/* Category tabs */}
-      <Reveal delay={0.1}>
-        <div className="flex flex-wrap gap-2 mb-10">
-          {CATEGORIES.map((c) => (
-            <button
-              key={c.id}
-              onClick={() => setActive(c.id)}
-              className={`text-xs md:text-sm rounded-full px-4 py-2.5 border transition-colors flex items-center gap-2 ${
-                active === c.id ? 'bg-clay text-black border-clay font-medium' : 'border-stroke text-muted hover:text-text hover:border-text/30'
-              }`}
-            >
-              <span>{c.ic}</span> {c.label}
-            </button>
+      <div className="relative z-10 px-6 max-w-[1200px] mx-auto">
+        <Reveal>
+          <div className="liquid-glass-strong rounded-3xl p-8 md:p-12 mb-10">
+            <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
+              <span className="w-6 h-px bg-clay" /> Tech Stack & Compétences
+            </div>
+            <h2 className="font-display text-5xl md:text-6xl mb-4 text-white">Développeur fullstack.</h2>
+            <p className="text-sm text-white/70 max-w-lg">
+              Frontend, backend, bases de données — et bien au-delà. 42 compétences sur tout le spectre du digital.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Category tabs — glass pills */}
+        <Reveal delay={0.1}>
+          <div className="flex flex-wrap gap-2 mb-10">
+            {CATEGORIES.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setActive(c.id)}
+                className={`liquid-glass rounded-full px-4 py-2.5 text-xs md:text-sm transition-transform hover:scale-105 flex items-center gap-2 ${
+                  active === c.id ? 'text-white font-medium' : 'text-white/60'
+                }`}
+                style={active === c.id ? { background: 'rgba(255,90,31,0.18)' } : {}}
+              >
+                <span>{c.ic}</span> {c.label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        <div className="grid md:grid-cols-3 gap-4">
+          {cat.skills.map((s, i) => (
+            <Reveal key={s.n} delay={i * 0.05}>
+              <div className="liquid-glass rounded-2xl p-6 h-full hover:scale-[1.02] transition-transform">
+                <div className="font-medium text-white mb-1">{s.n}</div>
+                <div className="text-[10px] font-mono text-clay uppercase tracking-wider mb-3">{s.lvl}</div>
+                <p className="text-xs text-white/60 leading-relaxed">{s.d}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
-      </Reveal>
-
-      <div className="grid md:grid-cols-3 gap-4">
-        {cat.skills.map((s, i) => (
-          <Reveal key={s.n} delay={i * 0.05}>
-            <div className="group h-full bg-surface border border-stroke rounded-2xl p-6 hover:border-clay/40 transition-colors relative overflow-hidden">
-              <div className="font-medium text-text mb-1">{s.n}</div>
-              <div className="text-[10px] font-mono text-clay uppercase tracking-wider mb-3">{s.lvl}</div>
-              <p className="text-xs text-muted leading-relaxed">{s.d}</p>
-              <div className="absolute top-0 left-0 right-0 h-[2px] accent-gradient opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </Reveal>
-        ))}
       </div>
     </section>
   )
