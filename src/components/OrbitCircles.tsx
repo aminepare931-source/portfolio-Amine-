@@ -53,8 +53,8 @@ export default function OrbitCircles() {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative">
             <div
-              className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4"
-              style={{ borderColor: '#FF5A1F', boxShadow: '0 0 40px rgba(255,90,31,0.5), 0 0 80px rgba(255,90,31,0.2)' }}
+              className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4"
+              style={{ borderColor: '#FF5A1F', boxShadow: '0 0 50px rgba(255,90,31,0.55), 0 0 100px rgba(255,90,31,0.25)' }}
             >
               <img src="/assets/hero.jpg" alt="Amine Paré" className="w-full h-full object-cover" />
             </div>
