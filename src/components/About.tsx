@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import ScrambleIn from './ScrambleIn'
 
 const STATS = [
   { n: '10+', l: 'Projets livrés' },
@@ -14,18 +15,31 @@ const TAGS = [
 ]
 
 const SERVICES = [
-  { ic: '💻', n: 'Développement Fullstack', d: 'Frontend, backend, bases de données — sites, marketplaces, e-commerces sur mesure, du concept au déploiement.' },
-  { ic: '🎨', n: 'Design Graphique', d: 'Identité visuelle, logos, maquettes Figma, supports pour réseaux sociaux.' },
-  { ic: '📈', n: 'Marketing Digital', d: 'Stratégie réseaux sociaux, community management, publicités, SEO de base.' },
-  { ic: '✍️', n: 'Rédaction & Copywriting', d: 'Textes de vente, contenu blog, scripts vidéo, descriptions produits.' },
-  { ic: '🎓', n: 'Formation & Cours', d: 'Conception de programmes, supports pédagogiques, mentorat, documentation.' },
-  { ic: '🤖', n: 'Automatisation & IA', d: 'Chatbots WhatsApp, intégrations API, scripts, prompt engineering.' },
+  { n: 'Développement Fullstack', d: 'Frontend, backend, bases de données — du concept au déploiement.' },
+  { n: 'Design Graphique', d: 'Identité visuelle, logos, maquettes Figma.' },
+  { n: 'Marketing Digital', d: 'Stratégie réseaux sociaux, community management, SEO.' },
+  { n: 'Rédaction & Copywriting', d: 'Textes de vente, contenu blog, scripts vidéo.' },
+  { n: 'Formation & Cours', d: 'Programmes, supports pédagogiques, mentorat.' },
+  { n: 'Automatisation & IA', d: 'Chatbots, intégrations API, prompt engineering.' },
 ]
 
 export default function About() {
   return (
-    <section id="about" className="py-24 md:py-32 px-6 max-w-[1200px] mx-auto">
-      <div className="grid md:grid-cols-[300px_1fr] gap-16 mb-20">
+    <section id="about" className="relative py-24 md:py-32 px-6 max-w-[1200px] mx-auto overflow-hidden">
+      {/* Watermark géant en fond */}
+      <div
+        className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center pointer-events-none select-none font-display uppercase leading-none whitespace-nowrap"
+        style={{
+          fontSize: 'clamp(90px, 22vw, 380px)',
+          letterSpacing: '-0.04em',
+          opacity: 0.05,
+          color: '#E8C97A',
+        }}
+      >
+        AMINE.DEV
+      </div>
+
+      <div className="relative grid md:grid-cols-[300px_1fr] gap-16 mb-20">
         <Reveal>
           <div className="relative">
             <img
@@ -46,8 +60,11 @@ export default function About() {
               <span className="w-6 h-px bg-clay" /> Profil
             </div>
             <h2 className="font-display text-5xl md:text-6xl leading-[0.95] mb-8">
-              Amine<span className="text-clay">.</span>Dev<br />
-              <span className="font-serif italic normal-case text-clay">Un digital complet.</span>
+              <ScrambleIn text="Amine.Dev" delay={200} />
+              <br />
+              <span className="font-serif italic normal-case text-clay">
+                <ScrambleIn text="Un digital complet." delay={700} />
+              </span>
             </h2>
           </Reveal>
 
@@ -96,23 +113,31 @@ export default function About() {
         </div>
       </div>
 
-      {/* SERVICES GRID */}
-      <Reveal>
-        <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
-          <span className="w-6 h-px bg-clay" /> Ce que je fais
+      {/* SERVICES — style "layer cards" (architecture SynapseX) */}
+      <div className="relative">
+        <Reveal>
+          <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
+            <span className="w-6 h-px bg-clay" /> Ce que je fais
+          </div>
+          <h3 className="font-display text-4xl md:text-5xl mb-3">Six domaines.</h3>
+          <p className="text-sm text-muted max-w-md mb-12">Zéro friction entre l'idée et le produit fini.</p>
+        </Reveal>
+
+        <div className="flex flex-col items-center gap-3 max-w-2xl mx-auto">
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.n} delay={0.4 + i * 0.08} className="w-full">
+              <div className="w-full min-h-[72px] border border-stroke rounded-lg flex items-center justify-between px-6 py-4 hover:border-clay/40 transition-colors group">
+                <div className="flex items-center gap-4">
+                  <span className="font-mono text-[11px] tracking-[0.15em] uppercase text-muted/60">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-base md:text-lg font-light text-text group-hover:text-clay transition-colors">{s.n}</span>
+                </div>
+                <span className="hidden md:block text-xs text-muted/70 text-right max-w-[45%]">{s.d}</span>
+              </div>
+            </Reveal>
+          ))}
         </div>
-        <h3 className="font-display text-4xl md:text-5xl mb-10">Six domaines, un seul interlocuteur.</h3>
-      </Reveal>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {SERVICES.map((s, i) => (
-          <Reveal key={s.n} delay={i * 0.05}>
-            <div className="h-full bg-surface border border-stroke rounded-2xl p-6 hover:border-clay/40 transition-colors">
-              <span className="text-2xl mb-3 block">{s.ic}</span>
-              <div className="font-medium text-text mb-2">{s.n}</div>
-              <p className="text-xs text-muted leading-relaxed">{s.d}</p>
-            </div>
-          </Reveal>
-        ))}
       </div>
     </section>
   )
