@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { VIDEOS } from '../config/videos'
 
 export default function LoadingScreen({ onComplete }: { onComplete: () => void }) {
   const [count, setCount] = useState(0)
@@ -21,7 +22,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
   return (
     <div className="fixed inset-0 z-[9999] bg-bg overflow-hidden">
       {/* Video background */}
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" style={{ opacity: 0.6 }} src="/assets/bg.mp4" />
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" style={{ opacity: 0.6 }} src={VIDEOS.loadingScreen} />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, #070b0a 0%, transparent 60%)' }} />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #070b0a 0%, transparent 40%)' }} />
 

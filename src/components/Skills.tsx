@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Reveal from './Reveal'
+import { VIDEOS } from '../config/videos'
 
 const CATEGORIES = [
   {
@@ -90,7 +91,7 @@ export default function Skills() {
       <video
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover opacity-40"
-        src="/assets/bg.mp4"
+        src={VIDEOS.skills}
       />
       <div className="absolute inset-0 bg-black/55" />
 

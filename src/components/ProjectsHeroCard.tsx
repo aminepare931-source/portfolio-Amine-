@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
+import { VIDEOS } from '../config/videos'
 
 /* Outils réellement utilisés dans les projets — icônes via simple-icons CDN */
 const TOOLS = [
@@ -41,7 +42,7 @@ export default function ProjectsHeroCard() {
           <video
             autoPlay muted loop playsInline
             className="w-full h-full object-cover scale-105"
-            src="/assets/bg.mp4"
+            src={VIDEOS.projectsHeroCard}
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>

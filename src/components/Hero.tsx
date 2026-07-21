@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import TypewriterHeading from './TypewriterHeading'
 import OrbitCircles from './OrbitCircles'
+import { VIDEOS } from '../config/videos'
 
 export default function Hero() {
   return (
@@ -9,7 +10,7 @@ export default function Hero() {
       <video
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover opacity-25"
-        src="/assets/bg.mp4"
+        src={VIDEOS.hero}
       />
       <div className="absolute inset-0 bg-black/65" />
 

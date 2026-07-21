@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Reveal from './Reveal'
+import { VIDEOS } from '../config/videos'
 
 const MILESTONES = [
   { ic: '🌱', date: '2021 — 2022', role: 'Auto-formation intensive', co: 'Self-taught · Bobo-Dioulasso', d: "Zéro à opérationnel : HTML, CSS, JavaScript, bases de données, premiers scripts backend. Apprentissage par la pratique, pas par la théorie." },
@@ -44,7 +45,7 @@ export default function JourneyRoad() {
         <video
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          src="/assets/bg.mp4"
+          src={VIDEOS.parcoursIntro}
         />
         <div className="absolute inset-0 bg-black/65" />
 
