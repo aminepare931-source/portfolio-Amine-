@@ -3,14 +3,25 @@ import Reveal from './Reveal'
 
 const CATEGORIES = [
   {
-    id: 'dev', label: 'Développement Web', ic: '💻',
+    id: 'frontend', label: 'Frontend', ic: '🖥️',
     skills: [
       { n: 'HTML / CSS', lvl: 'Expert', d: 'Flexbox, Grid, animations, responsive, accessibilité.' },
-      { n: 'JavaScript', lvl: 'Avancé', d: 'Vanilla ES6+, Fetch, DOM API, Canvas.' },
-      { n: 'Supabase', lvl: 'Confirmé', d: 'PostgreSQL, RLS, Realtime, Storage, Auth.' },
+      { n: 'JavaScript ES6+', lvl: 'Avancé', d: 'DOM API, Fetch, async/await, modules.' },
+      { n: 'UI/UX Interactions', lvl: 'Avancé', d: 'Micro-animations, transitions, expérience fluide.' },
+      { n: 'Responsive & Performance', lvl: 'Expert', d: 'Mobile-first, optimisation, temps de chargement.' },
       { n: 'Déploiement', lvl: 'Expert', d: 'Cloudflare Pages, Netlify, Vercel, DNS.' },
-      { n: 'E-Commerce', lvl: 'Expert', d: 'Boutiques custom, admin panels, WhatsApp.' },
-      { n: 'Paiements Africains', lvl: 'Confirmé', d: 'CinetPay, Orange Money, MTN MoMo, Moov.' },
+      { n: 'E-Commerce', lvl: 'Expert', d: 'Boutiques custom, panier, admin panels.' },
+    ],
+  },
+  {
+    id: 'backend', label: 'Backend & Bases de données', ic: '⚙️',
+    skills: [
+      { n: 'Node.js / Express', lvl: 'Avancé', d: 'APIs REST, middleware, architecture serveur.' },
+      { n: 'Python (Django / Flask)', lvl: 'Confirmé', d: 'Applications web, APIs, scripts d\'automatisation.' },
+      { n: 'Supabase / PostgreSQL', lvl: 'Avancé', d: 'RLS, Realtime, Storage, Auth, Edge Functions.' },
+      { n: 'MySQL / MariaDB', lvl: 'Confirmé', d: 'Modélisation relationnelle, requêtes complexes.' },
+      { n: 'MongoDB', lvl: 'Confirmé', d: 'Bases NoSQL, schémas flexibles, agrégations.' },
+      { n: 'Firebase', lvl: 'Confirmé', d: 'Auth, Firestore, hosting et fonctions rapides.' },
     ],
   },
   {
@@ -47,7 +58,7 @@ const CATEGORIES = [
     ],
   },
   {
-    id: 'formation', label: 'Formation & Cours en ligne', ic: '🎓',
+    id: 'formation', label: 'Formation & Cours', ic: '🎓',
     skills: [
       { n: 'Conception de programmes', lvl: 'Confirmé', d: 'Structurer un parcours d\'apprentissage complet.' },
       { n: 'Supports pédagogiques', lvl: 'Avancé', d: 'Slides, fiches, exercices pratiques.' },
@@ -80,9 +91,9 @@ export default function Skills() {
         <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
           <span className="w-6 h-px bg-clay" /> Tech Stack & Compétences
         </div>
-        <h2 className="font-display text-5xl md:text-6xl mb-4">Six domaines complets.</h2>
+        <h2 className="font-display text-5xl md:text-6xl mb-4">Développeur fullstack.</h2>
         <p className="text-sm text-muted max-w-lg mb-12">
-          36 compétences réparties sur tout le spectre du digital — pas seulement le code.
+          Frontend, backend, bases de données — et bien au-delà. 42 compétences sur tout le spectre du digital.
         </p>
       </Reveal>
 

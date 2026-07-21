@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import Reveal from './Reveal'
 
 const MILESTONES = [
-  { date: '2021 — 2022', role: 'Auto-formation intensive', co: 'Self-taught · Bobo-Dioulasso', d: "Point de départ : zéro. Apprentissage intensif — HTML, CSS, JavaScript, bases de données." },
-  { date: '2022 — 2024', role: 'Développeur Frontend Freelance', co: 'Projets clients', d: "Sites vitrine et landing pages pour clients locaux. Maîtrise du responsive et de la performance." },
-  { date: '2023', role: 'Développeur & Designer', co: "FASOKO · Portail d'actualités", d: "Agrégateur d'actualités burkinabè, architecture serverless Cloudflare, design sahélien." },
-  { date: '2023 — Présent', role: 'Fondateur & Développeur', co: 'EMBF Boutique · E-Commerce', d: "Boutique tech premium de zéro : Supabase, CinetPay, commandes WhatsApp, admin panel complet." },
-  { date: '2024 — Présent', role: 'Fondateur & Développeur Principal', co: 'TechBF · Marketplace de services', d: "Marketplace connectant clients et artisans à travers le Burkina Faso. Messagerie temps réel, parrainage." },
+  { ic: '🌱', date: '2021 — 2022', role: 'Auto-formation intensive', co: 'Self-taught · Bobo-Dioulasso', d: "Zéro à opérationnel : HTML, CSS, JavaScript, bases de données, premiers scripts backend. Apprentissage par la pratique, pas par la théorie." },
+  { ic: '🖥️', date: '2022 — 2024', role: 'Développeur Frontend Freelance', co: 'Projets clients', d: "Sites vitrine et landing pages pour clients locaux. Montée en compétence sur le responsive, la performance et les intégrations backend." },
+  { ic: '📰', date: '2023', role: 'Développeur & Designer Fullstack', co: "FASOKO · Portail d'actualités", d: "Agrégateur d'actualités burkinabè, backend d'agrégation de flux, architecture serverless Cloudflare, design sahélien." },
+  { ic: '🛒', date: '2023 — Présent', role: 'Fondateur & Développeur Fullstack', co: 'EMBF Boutique · E-Commerce', d: "Boutique tech premium construite de zéro : backend Supabase, API CinetPay, commandes WhatsApp automatisées, admin panel complet." },
+  { ic: '🏗️', date: '2024 — Présent', role: 'Fondateur & Développeur Principal', co: 'TechBF · Marketplace de services', d: "Marketplace fullstack connectant clients et artisans à travers le Burkina Faso — API, messagerie temps réel, système de parrainage." },
 ]
 
 export default function JourneyRoad() {
@@ -50,48 +50,62 @@ export default function JourneyRoad() {
       </Reveal>
 
       <div className="relative flex">
-        {/* Road SVG */}
+        {/* Road SVG — thicker, glowing */}
         <svg
-          width="4" height="100%" viewBox={`0 0 4 ${n * 260}`}
+          width="6" height="100%" viewBox={`0 0 6 ${n * 300}`}
           className="absolute left-0 top-0 h-full"
           preserveAspectRatio="none"
         >
+          <path d={`M3,0 L3,${n * 300}`} stroke="#221a12" strokeWidth="5" fill="none" strokeLinecap="round" />
           <path
-            ref={pathRef}
-            d={`M2,0 L2,${n * 260}`}
-            stroke="#2a221a" strokeWidth="3" fill="none"
-          />
-          <path
-            d={`M2,0 L2,${n * 260}`}
-            stroke="#FF5A1F" strokeWidth="3" fill="none"
+            d={`M3,0 L3,${n * 300}`}
+            stroke="#FF5A1F" strokeWidth="5" fill="none" strokeLinecap="round"
             strokeDasharray={pathLen || 1}
             strokeDashoffset={(pathLen || 1) * (1 - progress)}
-            style={{ filter: 'drop-shadow(0 0 6px rgba(255,90,31,0.7))', transition: 'stroke-dashoffset .05s linear' }}
+            style={{ filter: 'drop-shadow(0 0 10px rgba(255,90,31,0.9))', transition: 'stroke-dashoffset .05s linear' }}
           />
         </svg>
 
         {/* Milestones */}
-        <div className="pl-10 flex flex-col gap-[164px] md:gap-[196px] w-full">
+        <div className="pl-12 flex flex-col gap-14 md:gap-16 w-full">
           {MILESTONES.map((m, i) => {
             const lit = progress >= dotPositions[i] - 0.03
             return (
               <div key={m.role} className="relative">
+                {/* Glowing node with pulse ring */}
+                <div className="absolute -left-[52px] top-6">
+                  {lit && (
+                    <span
+                      className="absolute inset-0 rounded-full"
+                      style={{ background: '#FF5A1F', animation: 'ping-pulse 1.8s ease-out infinite' }}
+                    />
+                  )}
+                  <div
+                    className="relative w-4 h-4 rounded-full transition-all duration-500"
+                    style={{
+                      background: lit ? '#FF5A1F' : '#221a12',
+                      boxShadow: lit ? '0 0 18px #FF5A1F, 0 0 36px rgba(255,90,31,0.6)' : 'none',
+                    }}
+                  />
+                </div>
+
                 <div
-                  className="absolute -left-[46px] top-1.5 w-3 h-3 rounded-full transition-all duration-500"
+                  className="bg-surface border rounded-2xl p-6 md:p-8 transition-all duration-700"
                   style={{
-                    background: lit ? '#FF5A1F' : '#2a221a',
-                    boxShadow: lit ? '0 0 14px #FF5A1F, 0 0 28px rgba(255,90,31,0.5)' : 'none',
-                    transform: lit ? 'scale(1.3)' : 'scale(1)',
+                    borderColor: lit ? 'rgba(255,90,31,0.35)' : 'rgba(255,255,255,0.08)',
+                    opacity: lit ? 1 : 0.4,
+                    transform: lit ? 'translateX(0)' : 'translateX(-10px)',
                   }}
-                />
-                <div
-                  className="transition-all duration-700"
-                  style={{ opacity: lit ? 1 : 0.35, transform: lit ? 'translateX(0)' : 'translateX(-8px)' }}
                 >
-                  <div className="text-xs font-mono text-clay uppercase tracking-wide mb-1">{m.date}</div>
-                  <h3 className="font-display text-2xl md:text-3xl mb-1">{m.role}</h3>
-                  <div className="text-xs text-muted font-mono mb-3">{m.co}</div>
-                  <p className="text-sm text-muted leading-relaxed max-w-md">{m.d}</p>
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl md:text-4xl shrink-0">{m.ic}</span>
+                    <div>
+                      <div className="text-xs font-mono text-clay uppercase tracking-wide mb-1">{m.date}</div>
+                      <h3 className="font-display text-2xl md:text-3xl mb-1">{m.role}</h3>
+                      <div className="text-xs text-muted font-mono mb-3">{m.co}</div>
+                      <p className="text-sm text-muted leading-relaxed">{m.d}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             )

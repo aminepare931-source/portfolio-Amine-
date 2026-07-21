@@ -14,7 +14,7 @@ const TAGS = [
 ]
 
 const SERVICES = [
-  { ic: '💻', n: 'Développement Web', d: 'Sites, marketplaces, e-commerces sur mesure — vanilla JS, Supabase, déploiement.' },
+  { ic: '💻', n: 'Développement Fullstack', d: 'Frontend, backend, bases de données — sites, marketplaces, e-commerces sur mesure, du concept au déploiement.' },
   { ic: '🎨', n: 'Design Graphique', d: 'Identité visuelle, logos, maquettes Figma, supports pour réseaux sociaux.' },
   { ic: '📈', n: 'Marketing Digital', d: 'Stratégie réseaux sociaux, community management, publicités, SEO de base.' },
   { ic: '✍️', n: 'Rédaction & Copywriting', d: 'Textes de vente, contenu blog, scripts vidéo, descriptions produits.' },
@@ -54,8 +54,9 @@ export default function About() {
           <Reveal delay={0.1}>
             <p className="text-sm md:text-base text-muted leading-relaxed mb-4">
               Salut, moi c'est <strong className="text-text">Amine Paré</strong>, connu en ligne sous <strong className="text-text">Amine.Dev</strong>.
-              Basé à Bobo-Dioulasso, Burkina Faso, je suis 100% autodidacte depuis 3 ans — pas d'école, juste une curiosité
-              sans limite et des milliers d'heures de pratique sur de vrais projets.
+              Basé à Bobo-Dioulasso, Burkina Faso, je suis <strong className="text-text">développeur fullstack</strong> — frontend, backend,
+              bases de données — formé en construisant de vrais produits plutôt qu'en suivant un programme. Trois ans à apprendre vite,
+              livrer vite, et corriger encore plus vite.
             </p>
             <p className="text-sm md:text-base text-muted leading-relaxed mb-4">
               Contrairement à beaucoup de développeurs, je ne me suis jamais arrêté au code. J'ai appris à
