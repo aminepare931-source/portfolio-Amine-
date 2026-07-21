@@ -1,11 +1,13 @@
 import Hero from '../components/Hero'
 import Marquee from '../components/Marquee'
+import Stats from '../components/Stats'
 import About from '../components/About'
 import PatternDivider from '../components/PatternDivider'
 import Skills from '../components/Skills'
 import Projects from '../components/Projects'
 import JourneyRoad from '../components/JourneyRoad'
-import Gallery from '../components/Gallery'
+import Explorations from '../components/Explorations'
+import BottomMarquee from '../components/BottomMarquee'
 import Contact from '../components/Contact'
 
 export default function Home() {
@@ -13,12 +15,14 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
+      <Stats />
       <About />
       <PatternDivider />
       <Skills />
       <Projects />
       <JourneyRoad />
-      <Gallery />
+      <Explorations />
+      <BottomMarquee />
       <Contact />
     </>
   )
