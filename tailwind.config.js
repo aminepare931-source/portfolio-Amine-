@@ -17,6 +17,7 @@ export default {
       fontFamily: {
         display: ['"Bebas Neue"', 'sans-serif'],
         serif: ['"Fraunces"', 'serif'],
+        instrument: ['"Instrument Serif"', 'serif'],
         body: ['"Cabinet Grotesk"', 'system-ui', 'sans-serif'],
         mono: ['"DM Mono"', 'monospace'],
       },

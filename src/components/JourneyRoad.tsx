@@ -38,16 +38,49 @@ export default function JourneyRoad() {
   const dotPositions = MILESTONES.map((_, i) => (i / (n - 1)) * 0.94 + 0.02)
 
   return (
-    <section id="experience" ref={sectionRef} className="relative py-24 md:py-32 px-6 max-w-[900px] mx-auto">
-      <Reveal>
-        <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
-          <span className="w-6 h-px bg-clay" /> Mon Parcours
+    <section id="experience" ref={sectionRef} className="relative">
+      {/* ATELIER-STYLE INTRO */}
+      <div className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden flex flex-col">
+        <video
+          autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/assets/bg.mp4"
+        />
+        <div className="absolute inset-0 bg-black/65" />
+
+        <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
+          <div className="text-xs text-white/70 uppercase tracking-[0.3em] mb-6">Mon Parcours</div>
+          <h2 className="font-instrument text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] max-w-4xl">
+            DE BOBO-DIOULASSO<br />
+            <span className="italic">à</span> DES CLIENTS<br />
+            <span className="italic">à travers</span> L'AFRIQUE
+          </h2>
+          <p className="mt-5 md:mt-6 text-white/70 text-sm md:text-base font-light max-w-md leading-relaxed">
+            Trois ans d'autoformation intensive, transformés en produits réels
+            qui tournent en production aujourd'hui.
+          </p>
+          <div className="mt-6 md:mt-8 flex flex-col sm:flex-row items-center gap-4">
+            <a href="#skills-anchor" onClick={(e) => { e.preventDefault(); sectionRef.current?.querySelector('.road-start')?.scrollIntoView({ behavior: 'smooth' }) }} className="group flex items-center gap-2 bg-white text-black rounded-full px-7 py-3 text-sm font-medium hover:scale-105 transition-transform">
+              Voir la timeline
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="/projets" className="flex items-center gap-2 border border-white/40 text-white rounded-full px-7 py-3 text-sm hover:bg-white/10 hover:border-white/60 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              Voir les projets
+            </a>
+          </div>
         </div>
-        <h2 className="font-display text-5xl md:text-6xl mb-4">La Route.</h2>
-        <p className="text-sm text-muted max-w-md mb-16">
-          De Bobo-Dioulasso à mes premiers clients — chaque étape a laissé une trace.
-        </p>
-      </Reveal>
+      </div>
+
+      <div className="road-start py-24 md:py-32 px-6 max-w-[900px] mx-auto">
+        <Reveal>
+          <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
+            <span className="w-6 h-px bg-clay" /> La Route
+          </div>
+          <p className="text-sm text-muted max-w-md mb-16">
+            De Bobo-Dioulasso à mes premiers clients — chaque étape a laissé une trace.
+          </p>
+        </Reveal>
 
       <div className="relative flex">
         {/* Road SVG — thicker, glowing */}
@@ -111,6 +144,7 @@ export default function JourneyRoad() {
             )
           })}
         </div>
+      </div>
       </div>
     </section>
   )
