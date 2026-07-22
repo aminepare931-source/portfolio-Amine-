@@ -1,6 +1,21 @@
 import { useState } from 'react'
 import Reveal from './Reveal'
 import { VIDEOS } from '../config/videos'
+import { useInView } from '../hooks/useInView'
+
+const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 80, Confirmé: 65, Intermédiaire: 45 }
+const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#E8C97A', Confirmé: '#C9A24B', Intermédiaire: '#8a7a5a' }
+
+function SkillBar({ lvl }: { lvl: string }) {
+  const { ref, inView } = useInView<HTMLDivElement>(0.4)
+  const pct = LEVEL_PCT[lvl] ?? 50
+  const color = LEVEL_COLOR[lvl] ?? '#FF5A1F'
+  return (
+    <div ref={ref} className="h-2 rounded-full bg-white/10 overflow-hidden">
+      <div className="h-full rounded-full transition-all duration-[1200ms] ease-out" style={{ width: inView ? `${pct}%` : '0%', background: color }} />
+    </div>
+  )
+}
 
 const CATEGORIES = [
   {
@@ -108,6 +123,18 @@ export default function Skills() {
           </div>
         </Reveal>
 
+        {/* Badges + streak counter (style Duolingo) */}
+        <Reveal delay={0.05}>
+          <div className="flex flex-wrap items-center gap-2 mb-8">
+            <span className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-1.5 rounded-full" style={{ background: 'rgba(255,90,31,0.18)', color: '#FF8A52' }}>Fullstack</span>
+            <span className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-1.5 rounded-full" style={{ background: 'rgba(232,201,122,0.18)', color: '#E8C97A' }}>Autodidacte</span>
+            <span className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-1.5 rounded-full" style={{ background: 'rgba(90,200,120,0.18)', color: '#6FDB9A' }}>Disponible</span>
+            <span className="inline-flex items-center gap-1.5 text-[13px] font-extrabold px-3 py-1.5 rounded-full ml-1" style={{ background: 'rgba(255,90,31,0.12)', color: '#FF8A52' }}>
+              🔥 3 ans de code
+            </span>
+          </div>
+        </Reveal>
+
         {/* Category tabs — glass pills */}
         <Reveal delay={0.1}>
           <div className="flex flex-wrap gap-2 mb-10">
@@ -130,9 +157,12 @@ export default function Skills() {
           {cat.skills.map((s, i) => (
             <Reveal key={s.n} delay={i * 0.05}>
               <div className="liquid-glass rounded-2xl p-6 h-full hover:scale-[1.02] transition-transform">
-                <div className="font-medium text-white mb-1">{s.n}</div>
-                <div className="text-[10px] font-mono text-clay uppercase tracking-wider mb-3">{s.lvl}</div>
-                <p className="text-xs text-white/60 leading-relaxed">{s.d}</p>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="font-medium text-white">{s.n}</div>
+                  <span className="text-[9px] font-mono uppercase tracking-wider text-clay">{s.lvl}</span>
+                </div>
+                <SkillBar lvl={s.lvl} />
+                <p className="text-xs text-white/75 leading-relaxed mt-3">{s.d}</p>
               </div>
             </Reveal>
           ))}

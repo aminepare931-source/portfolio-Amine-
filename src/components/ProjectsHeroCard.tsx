@@ -52,10 +52,10 @@ export default function ProjectsHeroCard() {
           className="relative z-20 flex-1 px-6 sm:px-10 md:px-16 pt-10 sm:pt-14 md:pt-16 flex flex-col items-start"
         >
           <div className="text-xs text-clay uppercase tracking-[0.3em] mb-4">Réalisations</div>
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[0.95] text-white mb-4">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[0.95] text-white mb-4" style={{textShadow:'0 4px 20px rgba(0,0,0,0.85)'}}>
             Des idées,<br />livrées en production.
           </h2>
-          <p className="text-[13px] sm:text-[15px] text-white/60 max-w-md leading-relaxed mb-6">
+          <p className="text-[13px] sm:text-[15px] text-white/85 max-w-md leading-relaxed mb-6" style={{textShadow:'0 2px 10px rgba(0,0,0,0.85)'}}>
             Marketplaces, e-commerces et plateformes construites de bout en bout pour des clients
             africains — du concept au déploiement.
           </p>

@@ -50,13 +50,13 @@ export default function JourneyRoad() {
         <div className="absolute inset-0 bg-black/32" />
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
-          <div className="text-xs text-white/70 uppercase tracking-[0.3em] mb-6">Mon Parcours</div>
-          <h2 className="font-instrument text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] max-w-4xl">
+          <div className="text-xs text-white/80 uppercase tracking-[0.3em] mb-6" style={{textShadow:'0 2px 8px rgba(0,0,0,0.8)'}}>Mon Parcours</div>
+          <h2 className="font-instrument text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] max-w-4xl" style={{textShadow:'0 4px 20px rgba(0,0,0,0.85)'}}>
             DE BOBO-DIOULASSO<br />
             <span className="italic">à</span> DES CLIENTS<br />
             <span className="italic">à travers</span> L'AFRIQUE
           </h2>
-          <p className="mt-5 md:mt-6 text-white/70 text-sm md:text-base font-light max-w-md leading-relaxed">
+          <p className="mt-5 md:mt-6 text-white/85 text-sm md:text-base font-light max-w-md leading-relaxed" style={{textShadow:'0 2px 10px rgba(0,0,0,0.85)'}}>
             Trois ans d'autoformation intensive, transformés en produits réels
             qui tournent en production aujourd'hui.
           </p>
