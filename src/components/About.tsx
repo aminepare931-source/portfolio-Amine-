@@ -1,5 +1,6 @@
 import Reveal from './Reveal'
 import ScrambleIn from './ScrambleIn'
+import { VIDEOS } from '../config/videos'
 
 const STATS = [
   { n: '10+', l: 'Projets livrés' },
@@ -25,7 +26,11 @@ const SERVICES = [
 
 export default function About() {
   return (
-    <section id="about" className="relative py-24 md:py-32 px-6 max-w-[1200px] mx-auto overflow-hidden">
+    <section id="about" className="relative py-24 md:py-32 overflow-hidden">
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover -z-10" src={VIDEOS.statsAbout} />
+      <div className="absolute inset-0 bg-bg/85 -z-10" />
+
+      <div className="relative px-6 max-w-[1200px] mx-auto">
       {/* Watermark géant en fond */}
       <div
         className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center pointer-events-none select-none font-display uppercase leading-none whitespace-nowrap"
@@ -103,11 +108,23 @@ export default function About() {
               ))}
             </div>
             <div className="flex flex-wrap gap-2">
-              {TAGS.map((t) => (
-                <span key={t} className="text-xs font-mono border border-stroke text-muted px-3 py-1.5 hover:border-clay hover:text-clay transition-colors">
-                  {t}
-                </span>
-              ))}
+              {TAGS.map((t, i) => {
+                const palette = [
+                  { bg: 'rgba(255,90,31,0.16)', text: '#FF8A52' },
+                  { bg: 'rgba(232,201,122,0.16)', text: '#E8C97A' },
+                  { bg: 'rgba(201,162,75,0.18)', text: '#D4B366' },
+                ]
+                const c = palette[i % palette.length]
+                return (
+                  <span
+                    key={t}
+                    className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-2 rounded-full"
+                    style={{ background: c.bg, color: c.text }}
+                  >
+                    {t}
+                  </span>
+                )
+              })}
             </div>
           </Reveal>
         </div>
@@ -138,6 +155,7 @@ export default function About() {
             </Reveal>
           ))}
         </div>
+      </div>
       </div>
     </section>
   )

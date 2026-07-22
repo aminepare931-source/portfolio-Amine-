@@ -26,4 +26,5 @@ export const VIDEOS = {
   skills: '/assets/videos/vision-board.mp4',
   parcoursIntro: '/assets/videos/video-4.mp4',
   projectsHeroCard: '/assets/videos/vision-board.mp4',
+  statsAbout: '/assets/videos/reading-nook.mp4',
 }
