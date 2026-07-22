@@ -22,9 +22,9 @@
 
 export const VIDEOS = {
   hero: '/assets/videos/matrix-tunnel.mp4',
-  loadingScreen: '/assets/videos/matrix-tunnel.mp4',
+  loadingScreen: '/assets/videos/reading-nook.mp4',
   skills: '/assets/videos/vision-board.mp4',
   parcoursIntro: '/assets/videos/video-4.mp4',
   projectsHeroCard: '/assets/videos/vision-board.mp4',
-  statsAbout: '/assets/videos/reading-nook.mp4',
+  statsAbout: '/assets/videos/garden-wedding.mp4',
 }

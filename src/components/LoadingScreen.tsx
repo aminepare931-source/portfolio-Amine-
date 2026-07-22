@@ -21,8 +21,9 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
 
   return (
     <div className="fixed inset-0 z-[9999] bg-bg overflow-hidden">
-      {/* Video background */}
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" style={{ opacity: 0.6 }} src={VIDEOS.loadingScreen} />
+      {/* Video background — cadrage propre pour vidéo portrait */}
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover scale-110" style={{ filter: 'blur(40px)', opacity: 0.5 }} src={VIDEOS.loadingScreen} />
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-contain" style={{ opacity: 0.6 }} src={VIDEOS.loadingScreen} />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, #070b0a 0%, transparent 60%)' }} />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #070b0a 0%, transparent 40%)' }} />
 
