@@ -9,10 +9,10 @@ export default function Hero() {
     <section id="hero" className="relative min-h-screen overflow-hidden">
       <video
         autoPlay muted loop playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-25"
+        className="absolute inset-0 w-full h-full object-cover"
         src={VIDEOS.hero}
       />
-      <div className="absolute inset-0 bg-black/65" />
+      <div className="absolute inset-0 bg-black/45" />
 
       <div className="relative z-10 min-h-screen grid md:grid-cols-2 items-center gap-8 px-6 md:px-10 lg:px-16 pt-28 pb-16">
         {/* LEFT — texte */}

@@ -44,7 +44,7 @@ export default function ProjectsHeroCard() {
             className="w-full h-full object-cover scale-105"
             src={VIDEOS.projectsHeroCard}
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/45" />
         </div>
 
         <motion.div
