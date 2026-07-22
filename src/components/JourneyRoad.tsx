@@ -47,7 +47,7 @@ export default function JourneyRoad() {
           className="absolute inset-0 w-full h-full object-cover"
           src={VIDEOS.parcoursIntro}
         />
-        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-black/32" />
 
         <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
           <div className="text-xs text-white/70 uppercase tracking-[0.3em] mb-6">Mon Parcours</div>

@@ -21,7 +21,7 @@
  */
 
 export const VIDEOS = {
-  hero: '/assets/videos/software-engineer.mp4',
+  hero: '/assets/videos/matrix-tunnel.mp4',
   loadingScreen: '/assets/videos/matrix-tunnel.mp4',
   skills: '/assets/videos/vision-board.mp4',
   parcoursIntro: '/assets/videos/video-4.mp4',

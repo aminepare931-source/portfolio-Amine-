@@ -10,9 +10,10 @@ export default function Hero() {
       <video
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover"
+        style={{ filter: 'grayscale(0.55) contrast(1.1)' }}
         src={VIDEOS.hero}
       />
-      <div className="absolute inset-0 bg-black/45" />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,7,6,0.5) 0%, rgba(8,7,6,0.6) 100%)' }} />
 
       <div className="relative z-10 min-h-screen grid md:grid-cols-2 items-center gap-8 px-6 md:px-10 lg:px-16 pt-28 pb-16">
         {/* LEFT — texte */}

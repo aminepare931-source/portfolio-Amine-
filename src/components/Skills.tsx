@@ -93,7 +93,7 @@ export default function Skills() {
         className="absolute inset-0 w-full h-full object-cover opacity-70"
         src={VIDEOS.skills}
       />
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/28" />
 
       <div className="relative z-10 px-6 max-w-[1200px] mx-auto">
         <Reveal>
