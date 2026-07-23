@@ -7,10 +7,10 @@ import { VIDEOS } from '../config/videos'
 export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0 bg-black" />
       <video
-        autoPlay muted loop playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: 'grayscale(0.55) contrast(1.1)' }}
+        autoPlay muted loop playsInline preload="auto"
+        className="absolute inset-0 w-full h-full object-contain"
         src={VIDEOS.hero}
       />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(8,7,6,0.5) 0%, rgba(8,7,6,0.6) 100%)' }} />

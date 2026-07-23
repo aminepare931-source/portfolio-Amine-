@@ -25,10 +25,11 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
 
   return (
     <div className="fixed inset-0 z-[9999] bg-black overflow-hidden">
-      {/* Vidéo nette, plein cadre, comme une télé qu'on regarde */}
+      {/* Vidéo nette, sans recadrage ni zoom (source portrait) */}
+      <div className="absolute inset-0 bg-black" />
       <video
         autoPlay muted loop playsInline preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-contain"
         src={VIDEOS.loadingScreen}
       />
 
