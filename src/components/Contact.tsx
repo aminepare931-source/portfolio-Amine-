@@ -12,7 +12,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 md:py-32 px-6 max-w-[1200px] mx-auto">
+    <section id="contact" className="py-14 sm:py-20 md:py-32 px-6 max-w-[1200px] mx-auto">
       <Reveal>
         <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
           <span className="w-6 h-px bg-clay" /> Contact

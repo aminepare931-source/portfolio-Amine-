@@ -37,7 +37,7 @@ export default function ProjectsHeroCard() {
   return (
     <div className="px-4 sm:px-6 max-w-[1400px] mx-auto mb-10">
       {/* Hero card */}
-      <div className="relative w-full rounded-[28px] sm:rounded-[40px] md:rounded-[48px] bg-surface border border-stroke shadow-[0_40px_100px_-20px_rgba(0,0,0,0.4)] overflow-hidden h-[440px] sm:h-[520px] md:h-[600px] flex flex-col">
+      <div className="relative w-full rounded-[28px] sm:rounded-[40px] md:rounded-[48px] bg-surface border border-stroke shadow-[0_40px_100px_-20px_rgba(0,0,0,0.4)] overflow-hidden h-[340px] sm:h-[440px] md:h-[600px] flex flex-col">
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
           <video
             autoPlay muted loop playsInline

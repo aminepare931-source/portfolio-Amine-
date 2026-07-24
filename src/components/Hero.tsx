@@ -5,7 +5,7 @@ import { VIDEOS } from '../config/videos'
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen overflow-hidden">
+    <section id="hero" className="relative min-h-screen overflow-hidden" style={{ minHeight: "100dvh" }}>
       <div className="absolute inset-0 bg-black" />
       <video
         autoPlay muted loop playsInline preload="auto"

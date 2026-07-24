@@ -29,7 +29,7 @@ const STATS = [
 
 export default function Stats() {
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden">
+    <section className="relative py-12 sm:py-16 md:py-28 overflow-hidden">
       <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src={VIDEOS.statsAbout} />
       <div className="absolute inset-0 bg-black/55" />
 

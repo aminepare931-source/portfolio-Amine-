@@ -41,7 +41,7 @@ export default function JourneyRoad() {
   return (
     <section id="experience" ref={sectionRef} className="relative">
       {/* ATELIER-STYLE INTRO */}
-      <div className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden flex flex-col">
+      <div className="relative w-full h-[46vh] sm:h-[55vh] md:h-[85vh] overflow-hidden flex flex-col">
         <video
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover"
@@ -73,7 +73,7 @@ export default function JourneyRoad() {
         </div>
       </div>
 
-      <div className="road-start py-24 md:py-32 px-6 max-w-[900px] mx-auto">
+      <div className="road-start py-14 sm:py-20 md:py-32 px-6 max-w-[900px] mx-auto">
         <Reveal>
           <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
             <span className="w-6 h-px bg-clay" /> La Route

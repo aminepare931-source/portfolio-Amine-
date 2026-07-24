@@ -24,7 +24,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
   }, [onComplete])
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black overflow-hidden">
+    <div className="fixed inset-0 z-[9999] bg-black overflow-hidden" style={{ height: "100dvh" }}>
       {/* Vidéo nette, sans recadrage ni zoom (source portrait) */}
       <div className="absolute inset-0 bg-black" />
       <video

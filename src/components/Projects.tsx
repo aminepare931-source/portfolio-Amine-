@@ -4,7 +4,7 @@ import ProjectsCarousel from './ProjectsCarousel'
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-16 md:py-24">
+    <section id="projects" className="py-10 sm:py-14 md:py-24">
       <ProjectsHeroCard />
 
       <div className="px-4 sm:px-6 max-w-[1200px] mx-auto">

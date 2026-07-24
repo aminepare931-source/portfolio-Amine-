@@ -88,7 +88,7 @@ export default function ProjectsCarousel() {
         className="relative w-full overflow-hidden rounded-[28px] sm:rounded-[40px]"
         style={{ backgroundColor: bg, transition: 'background-color 650ms cubic-bezier(0.4,0,0.2,1)' }}
       >
-        <div className="relative w-full" style={{ height: isMobile ? '80vh' : '90vh', minHeight: 560, maxHeight: 780, overflow: 'hidden' }}>
+        <div className="relative w-full" style={{ height: isMobile ? '58vh' : '90vh', minHeight: isMobile ? 420 : 560, maxHeight: 780, overflow: 'hidden' }}>
 
           {/* Ghost watermark */}
           <div

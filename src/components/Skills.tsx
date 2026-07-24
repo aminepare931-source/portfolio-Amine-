@@ -102,7 +102,7 @@ export default function Skills() {
   const cat = CATEGORIES.find((c) => c.id === active)!
 
   return (
-    <section id="skills" className="relative py-24 md:py-32 overflow-hidden">
+    <section id="skills" className="relative py-14 sm:py-20 md:py-32 overflow-hidden">
       <video
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover opacity-70"

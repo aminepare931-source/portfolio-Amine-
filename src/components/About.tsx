@@ -26,7 +26,7 @@ const SERVICES = [
 
 export default function About() {
   return (
-    <section id="about" className="relative py-24 md:py-32 overflow-hidden">
+    <section id="about" className="relative py-14 sm:py-20 md:py-32 overflow-hidden">
       <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover -z-10" src={VIDEOS.statsAbout} />
       <div className="absolute inset-0 bg-bg/85 -z-10" />
 
