@@ -26,5 +26,7 @@ export const VIDEOS = {
   skills: '/assets/videos/vision-board.mp4',
   parcoursIntro: '/assets/videos/video-4.mp4',
   projectsHeroCard: '/assets/videos/vision-board.mp4',
-  statsAbout: '/assets/videos/garden-wedding.mp4',
+  statsAbout: '/assets/videos/software-engineer.mp4',
+  softwareEngineer: '/assets/videos/software-engineer.mp4',
+  matrixTunnel: '/assets/videos/matrix-tunnel.mp4',
 }

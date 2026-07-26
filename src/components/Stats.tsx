@@ -1,51 +1,180 @@
 import { useEffect, useState } from 'react'
-import Reveal from './Reveal'
+import { motion } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
+import { Zap, Code, ShieldCheck, Award, ArrowUpRight, CheckCircle } from 'lucide-react'
+import { playClickSound } from '../lib/sound'
 import { VIDEOS } from '../config/videos'
 
 function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
-  const { ref, inView } = useInView<HTMLDivElement>(0.5)
+  const { ref, inView } = useInView<HTMLDivElement>(0.3)
   const [n, setN] = useState(0)
+
   useEffect(() => {
     if (!inView) return
     const t0 = performance.now()
-    const duration = 1600
+    const duration = 1800
     const tick = (t: number) => {
       const p = Math.min(1, (t - t0) / duration)
+      // Ease out cubic
       setN(Math.round((1 - Math.pow(1 - p, 3)) * target))
       if (p < 1) requestAnimationFrame(tick)
     }
     requestAnimationFrame(tick)
   }, [inView, target])
-  return <div ref={ref} className="font-display text-2xl sm:text-4xl md:text-6xl">{n}{suffix}</div>
+
+  return (
+    <div ref={ref} className="font-display text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight">
+      {n}
+      <span className="text-[#FF5A1F]">{suffix}</span>
+    </div>
+  )
 }
 
-/* Palette 3D "pressable" — couleur + ombre plus foncée, façon Duolingo */
-const STATS = [
-  { n: 3, s: '+', l: "Années d'expérience", bg: '#FF5A1F', shadow: '#C4400E' },
-  { n: 10, s: '+', l: 'Projets livrés', bg: '#E8C97A', shadow: '#B89345' },
-  { n: 36, s: '', l: 'Compétences maîtrisées', bg: '#C9A24B', shadow: '#93712A' },
+const STAT_CARDS = [
+  {
+    n: 3,
+    s: '+',
+    label: "Années d'Expérience",
+    tagline: 'Pratique intensive & autodidacte',
+    detail: 'Spécialisé en React, Node.js & architectures cloud depuis 2023',
+    icon: Code,
+    color: '#FF5A1F',
+  },
+  {
+    n: 12,
+    s: '+',
+    label: 'Projets Déployés',
+    labelSub: 'E-Commerce, SAAS & Mobile',
+    detail: 'Applications web complètes avec paiement Mobile Money & Supabase',
+    icon: Zap,
+    color: '#E8C97A',
+  },
+  {
+    n: 100,
+    s: '%',
+    label: 'Rigueur & Fiabilité',
+    labelSub: 'Code propre & sécurisé',
+    detail: 'Respect des délais, tests rigoureux et intégrations API robustes',
+    icon: ShieldCheck,
+    color: '#25D366',
+  },
+  {
+    n: 42,
+    s: '+',
+    label: 'Technologies & Tools',
+    labelSub: 'Ecosystème Web Modern',
+    detail: 'Frontend, Backend, Bases de données, Devops & Automatisation IA',
+    icon: Award,
+    color: '#38BDF8',
+  },
 ]
 
 export default function Stats() {
-  return (
-    <section className="relative py-12 sm:py-16 md:py-28 overflow-hidden">
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src={VIDEOS.statsAbout} />
-      <div className="absolute inset-0 bg-black/55" />
+  const [activeCard, setActiveCard] = useState<number | null>(null)
 
-      <div className="relative z-10 px-6 max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-3 gap-2 sm:gap-5">
-          {STATS.map((s, i) => (
-            <Reveal key={s.l} delay={i * 0.1}>
-              <div
-                className="rounded-2xl sm:rounded-3xl px-2 py-4 sm:px-6 sm:py-8 text-center text-black select-none transition-transform active:translate-y-1"
-                style={{ background: s.bg, boxShadow: `0 4px 0 ${s.shadow}` }}
+  return (
+    <section className="relative py-20 sm:py-28 overflow-hidden bg-[#080706]">
+      {/* Background Cyber Video Layer */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen pointer-events-none"
+        src={VIDEOS.softwareEngineer}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#080706]/90 to-[#080706] pointer-events-none" />
+
+      <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
+        {/* Header Title */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-8">
+          <div>
+            <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-2">
+              <span className="w-8 h-px bg-clay" /> Chiffres Clés & Performance
+            </div>
+            <h2 className="font-display text-3xl sm:text-5xl text-white">
+              Impact mesurable &amp; valeur concrète<span className="text-[#FF5A1F]">.</span>
+            </h2>
+          </div>
+          <p className="text-xs sm:text-sm text-muted max-w-md font-sans">
+            Des résultats fondés sur l'ingénierie moderne, la passion du code et la maîtrise des enjeux technologiques africains.
+          </p>
+        </div>
+
+        {/* 4-Card 2026 Motion Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {STAT_CARDS.map((card, idx) => {
+            const Icon = card.icon
+            const isHovered = activeCard === idx
+
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                onMouseEnter={() => {
+                  playClickSound()
+                  setActiveCard(idx)
+                }}
+                onMouseLeave={() => setActiveCard(null)}
+                className={`relative rounded-3xl p-6 sm:p-7 border transition-all duration-500 cursor-pointer overflow-hidden backdrop-blur-xl ${
+                  isHovered
+                    ? 'bg-surface/90 border-[#FF5A1F]/60 shadow-[0_15px_40px_rgba(255,90,31,0.2)] scale-[1.02]'
+                    : 'bg-surface/40 border-white/10 hover:border-white/20'
+                }`}
               >
-                <CountUp target={s.n} suffix={s.s} />
-                <div className="text-[9px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] mt-1 sm:mt-2 opacity-80 leading-tight">{s.l}</div>
-              </div>
-            </Reveal>
-          ))}
+                {/* Glowing Top Accent Line */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-1 transition-all duration-500 opacity-60"
+                  style={{
+                    background: isHovered
+                      ? `linear-gradient(90deg, transparent, ${card.color}, transparent)`
+                      : 'transparent',
+                  }}
+                />
+
+                {/* Card Icon Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center border transition-transform duration-300"
+                    style={{
+                      backgroundColor: `${card.color}15`,
+                      borderColor: `${card.color}40`,
+                      color: card.color,
+                    }}
+                  >
+                    <Icon size={22} />
+                  </div>
+                  <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">
+                    0{idx + 1}
+                  </span>
+                </div>
+
+                {/* Animated Number */}
+                <div className="mb-2">
+                  <CountUp target={card.n} suffix={card.s} />
+                </div>
+
+                {/* Labels */}
+                <h3 className="font-display text-lg text-white mb-1 font-semibold">
+                  {card.label}
+                </h3>
+                <p className="text-xs text-clay font-mono mb-4">{card.tagline}</p>
+
+                {/* Detail text visible on hover */}
+                <p className="text-xs text-white/70 leading-relaxed border-t border-white/10 pt-3">
+                  {card.detail}
+                </p>
+
+                {/* Corner accent arrow */}
+                <div className="absolute bottom-4 right-4 text-white/20 group-hover:text-clay transition-colors">
+                  <ArrowUpRight size={16} />
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>

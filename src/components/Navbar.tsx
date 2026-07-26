@@ -1,88 +1,293 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
-const LINKS = [
-  { to: '/a-propos', label: 'Profil' },
-  { to: '/competences', label: 'Compétences' },
-  { to: '/projets', label: 'Projets' },
-  { to: '/parcours', label: 'Parcours' },
-  { to: '/galerie', label: 'Galerie' },
-]
+import { Zap, Terminal, Volume2, VolumeX, Menu, X, Download, Globe } from 'lucide-react'
+import RecruiterModal from './RecruiterModal'
+import TerminalDrawer from './TerminalDrawer'
+import { toggleSound, isSoundEnabled, playClickSound } from '../lib/sound'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [recruiterOpen, setRecruiterOpen] = useState(false)
+  const [terminalOpen, setTerminalOpen] = useState(false)
+  const [soundOn, setSoundOn] = useState(isSoundEnabled())
   const location = useLocation()
+  const { lang, toggleLang, t } = useLanguage()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => { setOpen(false); window.scrollTo(0, 0) }, [location.pathname])
+  useEffect(() => {
+    setOpen(false)
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
+  const handleSoundToggle = () => {
+    const newState = toggleSound()
+    setSoundOn(newState)
+    if (newState) playClickSound()
+  }
+
+  const links = [
+    { to: '/a-propos', label: t('Profil', 'Profile') },
+    { to: '/competences', label: t('Compétences', 'Skills') },
+    { to: '/projets', label: t('Projets', 'Projects') },
+    { to: '/parcours', label: t('Parcours', 'Journey') },
+    { to: '/galerie', label: t('Galerie', 'Gallery') },
+  ]
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 sm:pt-4 px-3 sm:px-4 transition-all">
+        {/* Desktop Navbar */}
         <div
-          className={`hidden md:inline-flex items-center rounded-full backdrop-blur-md border border-white/10 bg-surface/90 px-2 py-2 transition-shadow ${
-            scrolled ? 'shadow-lg shadow-black/30' : ''
+          className={`hidden lg:inline-flex items-center gap-1 rounded-full backdrop-blur-xl border border-white/10 bg-[#080706]/80 px-3 py-2 transition-all ${
+            scrolled ? 'shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-clay/30 bg-[#080706]/95' : ''
           }`}
         >
-          <Link to="/" className="w-9 h-9 rounded-full bg-black flex items-center justify-center mr-1 overflow-hidden border border-white/10">
-            <img src="/assets/logo.png" alt="Amine.Dev" className="w-full h-full object-cover scale-125" />
+          {/* Logo */}
+          <Link
+            to="/"
+            onClick={playClickSound}
+            className="flex items-center gap-2 pr-2 hover:opacity-90 transition-opacity"
+          >
+            <div className="w-8 h-8 rounded-full bg-black overflow-hidden border border-clay/40 shrink-0">
+              <img src="/assets/logo.png" alt="Amine.Dev" className="w-full h-full object-cover scale-125" />
+            </div>
+            <span className="font-display tracking-wider text-sm text-white">AMINE<span className="text-clay">.</span>DEV</span>
           </Link>
-          <div className="w-px h-5 bg-stroke mx-1" />
-          {LINKS.map((l) => (
+
+          <div className="w-px h-4 bg-stroke mx-1" />
+
+          {/* Nav Links */}
+          {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className={`text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-colors ${
-                location.pathname === l.to ? 'text-text bg-stroke/50' : 'text-muted hover:text-text hover:bg-stroke/50'
+              onClick={playClickSound}
+              className={`text-xs rounded-full px-3 py-1.5 transition-all ${
+                location.pathname === l.to
+                  ? 'text-white font-medium bg-stroke/60 border border-clay/30'
+                  : 'text-muted hover:text-white hover:bg-stroke/40'
               }`}
             >
               {l.label}
             </Link>
           ))}
-          <div className="w-px h-5 bg-stroke mx-1" />
+
+          <div className="w-px h-4 bg-stroke mx-1" />
+
+          {/* Language Switcher Button */}
+          <button
+            onClick={() => {
+              playClickSound()
+              toggleLang()
+            }}
+            title={t('Passer en Anglais', 'Switch to French')}
+            className="flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-clay hover:border-clay hover:bg-white/10 transition-all"
+          >
+            <Globe size={13} className="text-[#FF5A1F]" />
+            <span>{lang === 'fr' ? 'FR 🇫🇷' : 'EN 🇬🇧'}</span>
+          </button>
+
+          {/* Quick Action Tools */}
+          <button
+            onClick={() => {
+              playClickSound()
+              setTerminalOpen(true)
+            }}
+            title="Ouvrir le Terminal CLI"
+            className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-full text-white/70 hover:text-clay hover:bg-stroke/40 transition-colors"
+          >
+            <Terminal size={13} /> CLI
+          </button>
+
+          <button
+            onClick={handleSoundToggle}
+            title={soundOn ? 'Désactiver le son' : 'Activer le son'}
+            className="text-xs p-1.5 rounded-full text-white/60 hover:text-white hover:bg-stroke/40 transition-colors"
+          >
+            {soundOn ? <Volume2 size={14} className="text-clay" /> : <VolumeX size={14} />}
+          </button>
+
+          {/* Mode Recruteur Highlight Button */}
+          <button
+            onClick={() => {
+              playClickSound()
+              setRecruiterOpen(true)
+            }}
+            className="inline-flex items-center gap-1.5 text-xs font-bold rounded-full px-3.5 py-1.5 bg-[#FF5A1F] text-black hover:scale-105 transition-transform shadow-[0_2px_12px_rgba(255,90,31,0.4)] ml-1"
+          >
+            <Zap size={13} className="fill-black" /> {t('Mode Recruteur ⚡', 'Recruiter Mode ⚡')}
+          </button>
+
           <Link
             to="/contact"
-            className="text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 bg-clay text-black font-medium hover:opacity-90 transition-opacity"
+            onClick={playClickSound}
+            className="text-xs rounded-full px-3.5 py-1.5 bg-clay text-black font-semibold hover:opacity-90 transition-opacity ml-1"
           >
-            Me contacter ↗
+            Contact
           </Link>
         </div>
 
-        {/* Mobile */}
-        <div className="md:hidden w-full flex items-center justify-between rounded-full border border-white/10 bg-surface/90 backdrop-blur-md px-4 py-2.5">
+        {/* Medium screens (Tablet) */}
+        <div
+          className={`hidden md:flex lg:hidden items-center justify-between w-full max-w-2xl rounded-full backdrop-blur-xl border border-white/10 bg-[#080706]/90 px-4 py-2 transition-all ${
+            scrolled ? 'shadow-lg border-clay/30' : ''
+          }`}
+        >
           <Link to="/" className="flex items-center gap-2">
             <img src="/assets/logo.png" alt="Amine.Dev" className="w-8 h-8 rounded-full object-cover" />
-            <span className="font-display text-lg tracking-wide">AMINE<span className="text-clay">.</span>DEV</span>
+            <span className="font-display text-base">AMINE<span className="text-clay">.</span>DEV</span>
           </Link>
-          <button onClick={() => setOpen(!open)} className="text-xs tracking-wider uppercase text-muted">
-            {open ? 'Fermer' : 'Menu'}
-          </button>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                playClickSound()
+                toggleLang()
+              }}
+              className="text-xs font-mono font-bold px-2 py-1 rounded-full bg-white/10 text-clay"
+            >
+              {lang === 'fr' ? 'FR 🇫🇷' : 'EN 🇬🇧'}
+            </button>
+            <button
+              onClick={() => setRecruiterOpen(true)}
+              className="inline-flex items-center gap-1 text-[11px] font-bold rounded-full px-3 py-1.5 bg-[#FF5A1F] text-black"
+            >
+              <Zap size={12} /> Recruteur
+            </button>
+            <button
+              onClick={() => setTerminalOpen(true)}
+              className="p-1.5 rounded-full text-clay"
+            >
+              <Terminal size={16} />
+            </button>
+            <button
+              onClick={() => setOpen(!open)}
+              className="text-xs px-3 py-1.5 rounded-full border border-stroke text-muted"
+            >
+              Menu
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Header */}
+        <div className="md:hidden w-full flex items-center justify-between rounded-full border border-white/10 bg-[#080706]/90 backdrop-blur-md px-4 py-2.5">
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/assets/logo.png" alt="Amine.Dev" className="w-8 h-8 rounded-full object-cover border border-clay/30" />
+            <span className="font-display text-base tracking-wide">AMINE<span className="text-clay">.</span>DEV</span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                playClickSound()
+                toggleLang()
+              }}
+              className="text-[10px] font-mono font-bold px-2 py-1 rounded-full bg-white/10 text-clay"
+            >
+              {lang === 'fr' ? 'FR' : 'EN'}
+            </button>
+
+            <button
+              onClick={() => setRecruiterOpen(true)}
+              className="inline-flex items-center gap-1 text-[10px] font-bold rounded-full px-2.5 py-1 bg-[#FF5A1F] text-black"
+            >
+              <Zap size={11} /> Pitch 30s
+            </button>
+            <button onClick={() => setOpen(!open)} className="p-1 text-muted">
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </nav>
 
+      {/* Mobile Drawer Menu */}
       {open && (
-        <div className="md:hidden fixed inset-0 z-40 bg-bg/98 flex flex-col items-center justify-center gap-8">
-          {LINKS.map((l) => (
+        <div className="md:hidden fixed inset-0 z-40 bg-[#080706]/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-6 px-6">
+          <button
+            onClick={() => setOpen(false)}
+            className="absolute top-5 right-5 p-2 rounded-full border border-stroke text-muted"
+          >
+            <X size={20} />
+          </button>
+
+          <div className="flex items-center gap-2 mb-4">
+            <img src="/assets/logo.png" alt="Amine.Dev" className="w-12 h-12 rounded-full border-2 border-clay" />
+            <div>
+              <div className="font-display text-2xl">AMINE<span className="text-clay">.</span>DEV</div>
+              <div className="text-[10px] text-muted font-mono uppercase">Bobo-Dioulasso 🇧🇫</div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 mb-2">
+            <button
+              onClick={() => {
+                playClickSound()
+                toggleLang()
+              }}
+              className="flex items-center gap-2 text-xs font-mono font-bold px-4 py-2 rounded-full bg-white/10 border border-white/20 text-clay"
+            >
+              <Globe size={14} className="text-[#FF5A1F]" />
+              <span>{lang === 'fr' ? 'Langue: Français 🇫🇷' : 'Language: English 🇬🇧'}</span>
+            </button>
+          </div>
+
+          {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
               onClick={() => setOpen(false)}
-              className="font-display text-4xl tracking-wide text-muted hover:text-text transition-colors"
+              className={`font-display text-3xl tracking-wide transition-colors ${
+                location.pathname === l.to ? 'text-clay font-bold' : 'text-muted hover:text-white'
+              }`}
             >
               {l.label}
             </Link>
           ))}
-          <Link to="/contact" onClick={() => setOpen(false)} className="mt-4 rounded-full bg-clay text-black px-6 py-3 text-sm font-medium">
-            Me contacter
-          </Link>
+
+          <div className="w-12 h-px bg-stroke my-2" />
+
+          <button
+            onClick={() => {
+              setOpen(false)
+              setRecruiterOpen(true)
+            }}
+            className="w-full max-w-xs flex items-center justify-center gap-2 rounded-full bg-[#FF5A1F] text-black px-6 py-3 text-sm font-bold shadow-lg"
+          >
+            <Zap size={16} /> {t('Mode Recruteur (Pitch 30s)', 'Recruiter Mode (30s Pitch)')}
+          </button>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                setOpen(false)
+                setTerminalOpen(true)
+              }}
+              className="flex items-center gap-1.5 text-xs text-clay border border-clay/30 px-4 py-2 rounded-full"
+            >
+              <Terminal size={14} /> Terminal CLI
+            </button>
+            <a
+              href="/assets/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs text-white border border-stroke px-4 py-2 rounded-full"
+            >
+              <Download size={14} /> {t('Télécharger CV', 'Download CV')}
+            </a>
+          </div>
         </div>
       )}
+
+      {/* Recruiter & Terminal Modals */}
+      <RecruiterModal isOpen={recruiterOpen} onClose={() => setRecruiterOpen(false)} />
+      <TerminalDrawer isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </>
   )
 }

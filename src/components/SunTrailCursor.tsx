@@ -39,10 +39,13 @@ export default function SunTrailCursor() {
       particles.current.forEach((p) => {
         p.life -= 0.022
         p.y -= 0.3
-        const c = colors[Math.floor(p.life * 3.9) % colors.length]
+        const radius = Math.max(0, p.r * p.life)
+        if (radius <= 0) return
+        const lifeFactor = Math.max(0, Math.min(1, p.life))
+        const c = colors[Math.floor(lifeFactor * 3.9) % colors.length]
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${c},${Math.max(0, p.life * 0.55)})`
+        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${c},${lifeFactor * 0.55})`
         ctx.fill()
       })
       particles.current = particles.current.filter((p) => p.life > 0)

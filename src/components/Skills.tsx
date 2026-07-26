@@ -1,175 +1,254 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Search, Sparkles, Code2, Database, Palette, Bot, Terminal, ShieldCheck, Lock, Cpu, Globe } from 'lucide-react'
 import Reveal from './Reveal'
 import { VIDEOS } from '../config/videos'
 import { useInView } from '../hooks/useInView'
+import { playClickSound } from '../lib/sound'
+import { useLanguage } from '../context/LanguageContext'
 
-const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 80, Confirmé: 65, Intermédiaire: 45 }
-const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#E8C97A', Confirmé: '#C9A24B', Intermédiaire: '#8a7a5a' }
+const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 85, Confirmé: 70, Intermédiaire: 55 }
+const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#E8C97A', Confirmé: '#25D366', Intermédiaire: '#38BDF8' }
 
 function SkillBar({ lvl }: { lvl: string }) {
-  const { ref, inView } = useInView<HTMLDivElement>(0.4)
-  const pct = LEVEL_PCT[lvl] ?? 50
+  const { ref, inView } = useInView<HTMLDivElement>(0.3)
+  const pct = LEVEL_PCT[lvl] ?? 65
   const color = LEVEL_COLOR[lvl] ?? '#FF5A1F'
+
   return (
-    <div ref={ref} className="h-2 rounded-full bg-white/10 overflow-hidden">
-      <div className="h-full rounded-full transition-all duration-[1200ms] ease-out" style={{ width: inView ? `${pct}%` : '0%', background: color }} />
+    <div ref={ref} className="h-2 rounded-full bg-white/10 overflow-hidden p-0.5 border border-white/5">
+      <div
+        className="h-full rounded-full transition-all duration-[1200ms] ease-out shadow-[0_0_12px_rgba(255,90,31,0.5)]"
+        style={{ width: inView ? `${pct}%` : '0%', background: color }}
+      />
     </div>
   )
 }
 
-const CATEGORIES = [
-  {
-    id: 'frontend', label: 'Frontend', ic: '🖥️',
-    skills: [
-      { n: 'HTML / CSS', lvl: 'Expert', d: 'Flexbox, Grid, animations, responsive, accessibilité.' },
-      { n: 'JavaScript ES6+', lvl: 'Avancé', d: 'DOM API, Fetch, async/await, modules.' },
-      { n: 'UI/UX Interactions', lvl: 'Avancé', d: 'Micro-animations, transitions, expérience fluide.' },
-      { n: 'Responsive & Performance', lvl: 'Expert', d: 'Mobile-first, optimisation, temps de chargement.' },
-      { n: 'Déploiement', lvl: 'Expert', d: 'Cloudflare Pages, Netlify, Vercel, DNS.' },
-      { n: 'E-Commerce', lvl: 'Expert', d: 'Boutiques custom, panier, admin panels.' },
-    ],
-  },
-  {
-    id: 'backend', label: 'Backend & Bases de données', ic: '⚙️',
-    skills: [
-      { n: 'Node.js / Express', lvl: 'Avancé', d: 'APIs REST, middleware, architecture serveur.' },
-      { n: 'Python (Django / Flask)', lvl: 'Confirmé', d: 'Applications web, APIs, scripts d\'automatisation.' },
-      { n: 'Supabase / PostgreSQL', lvl: 'Avancé', d: 'RLS, Realtime, Storage, Auth, Edge Functions.' },
-      { n: 'MySQL / MariaDB', lvl: 'Confirmé', d: 'Modélisation relationnelle, requêtes complexes.' },
-      { n: 'MongoDB', lvl: 'Confirmé', d: 'Bases NoSQL, schémas flexibles, agrégations.' },
-      { n: 'Firebase', lvl: 'Confirmé', d: 'Auth, Firestore, hosting et fonctions rapides.' },
-    ],
-  },
-  {
-    id: 'design', label: 'Design Graphique', ic: '🎨',
-    skills: [
-      { n: 'Figma', lvl: 'Avancé', d: 'Maquettes UI/UX, prototypage, design systems.' },
-      { n: 'Identité visuelle', lvl: 'Confirmé', d: 'Logos, palettes, chartes graphiques.' },
-      { n: 'Typographie', lvl: 'Confirmé', d: 'Association de polices, hiérarchie visuelle.' },
-      { n: 'Visuels réseaux sociaux', lvl: 'Avancé', d: 'Posts, stories, bannières, formats variés.' },
-      { n: 'Présentations', lvl: 'Confirmé', d: 'Pitchs, decks clients, supports commerciaux.' },
-      { n: 'Retouche photo', lvl: 'Intermédiaire', d: 'Détourage, corrections, montages simples.' },
-    ],
-  },
-  {
-    id: 'marketing', label: 'Marketing Digital', ic: '📈',
-    skills: [
-      { n: 'Stratégie réseaux', lvl: 'Confirmé', d: 'Calendrier éditorial, ligne éditoriale.' },
-      { n: 'Community management', lvl: 'Avancé', d: 'Animation de communauté, engagement.' },
-      { n: 'Publicités Meta/Google', lvl: 'Intermédiaire', d: 'Campagnes basiques, ciblage, budget.' },
-      { n: 'SEO on-page', lvl: 'Confirmé', d: 'Balises, structure, performance de contenu.' },
-      { n: 'Analyse & KPIs', lvl: 'Intermédiaire', d: 'Suivi des résultats, ajustement de stratégie.' },
-      { n: 'Growth petites structures', lvl: 'Confirmé', d: 'Acquisition à budget limité, bouche-à-oreille digital.' },
-    ],
-  },
-  {
-    id: 'copy', label: 'Rédaction & Copywriting', ic: '✍️',
-    skills: [
-      { n: 'Textes de vente', lvl: 'Avancé', d: 'Pages produit, landing pages qui convertissent.' },
-      { n: 'Contenu blog / SEO', lvl: 'Confirmé', d: 'Articles optimisés, structure lisible.' },
-      { n: 'Scripts vidéo', lvl: 'Confirmé', d: 'Voix off, storytelling pour formats courts.' },
-      { n: 'Descriptions produits', lvl: 'Expert', d: 'Fiches e-commerce qui donnent envie d\'acheter.' },
-      { n: 'Newsletters', lvl: 'Intermédiaire', d: 'Emails clients, séquences simples.' },
-      { n: 'Bios & pitchs', lvl: 'Avancé', d: 'Présentations courtes et percutantes.' },
-    ],
-  },
-  {
-    id: 'formation', label: 'Formation & Cours', ic: '🎓',
-    skills: [
-      { n: 'Conception de programmes', lvl: 'Confirmé', d: 'Structurer un parcours d\'apprentissage complet.' },
-      { n: 'Supports pédagogiques', lvl: 'Avancé', d: 'Slides, fiches, exercices pratiques.' },
-      { n: 'Tutoriels vidéo', lvl: 'Confirmé', d: 'Explications pas-à-pas, capture d\'écran.' },
-      { n: 'Mentorat', lvl: 'Confirmé', d: 'Accompagnement de développeurs débutants.' },
-      { n: 'Documentation technique', lvl: 'Expert', d: 'Guides clairs pour utilisateurs et clients.' },
-      { n: 'Templates Notion', lvl: 'Avancé', d: 'Outils prêts à l\'emploi pour organiser un projet.' },
-    ],
-  },
-  {
-    id: 'auto', label: 'Automatisation & IA', ic: '🤖',
-    skills: [
-      { n: 'Chatbots WhatsApp/Web', lvl: 'Confirmé', d: 'Réponses automatiques, assistance client.' },
-      { n: 'Intégrations API', lvl: 'Avancé', d: 'Connexion d\'outils, webhooks, synchronisation.' },
-      { n: 'Scripts d\'automatisation', lvl: 'Confirmé', d: 'Tâches répétitives simplifiées.' },
-      { n: 'Prompt engineering', lvl: 'Avancé', d: 'Exploitation efficace des outils IA génératifs.' },
-      { n: 'Outils no-code', lvl: 'Intermédiaire', d: 'Zapier, Make et équivalents pour aller vite.' },
-      { n: 'Veille IA', lvl: 'Confirmé', d: 'Suivi des nouveaux outils et bonnes pratiques.' },
-    ],
-  },
-]
-
 export default function Skills() {
-  const [active, setActive] = useState(CATEGORIES[0].id)
-  const cat = CATEGORIES.find((c) => c.id === active)!
+  const { lang, t } = useLanguage()
+  const [activeTab, setActiveTab] = useState('langs')
+  const [search, setSearch] = useState('')
+
+  const CATEGORIES = [
+    {
+      id: 'langs',
+      label: t('Languages & Core Logic', 'Languages & Core Logic'),
+      icon: Terminal,
+      skills: [
+        { n: 'TypeScript & JavaScript (ES6+)', lvl: 'Expert', d: t('Typage strict, architecture modulaire, async, React & Node.js.', 'Strict typing, modular architecture, async, React & Node.js.') },
+        { n: 'Python', lvl: 'Avancé', d: t('Scripts d\'automatisation, FastAPI, web scraping, scripts IA et analyse.', 'Automation scripts, FastAPI, web scraping, AI scripts & analysis.') },
+        { n: 'C / C++', lvl: 'Confirmé', d: t('Algorithmique bas niveau, gestion mémoire, optimisation de performance.', 'Low-level algorithms, memory management, performance optimization.') },
+        { n: 'PHP (Modern)', lvl: 'Confirmé', d: t('Développement web, intégration d\'APIs, scripts serveur legacy & modernes.', 'Web development, API integration, legacy & modern server scripts.') },
+        { n: 'Go (Golang)', lvl: 'Confirmé', d: t('Services concurrents, micro-outilsCLI ultra rapides, serveurs HTTP.', 'Concurrent services, fast CLI micro-tools, HTTP servers.') },
+        { n: 'Bash / Shell Scripting', lvl: 'Avancé', d: t('Automatisation Linux, scripts d\'administration, CI/CD, cron jobs.', 'Linux automation, admin scripts, CI/CD, cron jobs.') },
+        { n: 'SQL & NoSQL', lvl: 'Expert', d: t('PostgreSQL, Supabase, MySQL, MongoDB, requêtes optimisées, RLS.', 'PostgreSQL, Supabase, MySQL, MongoDB, optimized queries, RLS.') },
+      ],
+    },
+    {
+      id: 'cyber',
+      label: t('Cyber-Sécurité & Protection', 'Cybersecurity & Auditing'),
+      icon: ShieldCheck,
+      skills: [
+        { n: 'Audit & PenTesting Web', lvl: 'Avancé', d: t('Détection de vulnérabilités OWASP Top 10, injections SQL, XSS, CSRF.', 'OWASP Top 10 vulnerability assessment, SQLi, XSS, CSRF checks.') },
+        { n: 'Sécurisation APIs & Tokens', lvl: 'Expert', d: t('Authentification JWT, OAuth2, Rate Limiting, CORS, hachage bcrypt/Argon2.', 'JWT auth, OAuth2, Rate Limiting, CORS, bcrypt/Argon2 hashing.') },
+        { n: 'Hardening & Sécurité Serveur', lvl: 'Avancé', d: t('Configuration UFW/Firewall, SSL/TLS, Cloudflare WAF, gestion des secrets.', 'UFW/Firewall setup, SSL/TLS, Cloudflare WAF, secret management.') },
+        { n: 'Chiffrement & Données Sensibles', lvl: 'Avancé', d: t('Protections des paiements Mobile Money, webhooks signés cryptographiquement.', 'Mobile Money payment protection, cryptographically signed webhooks.') },
+      ],
+    },
+    {
+      id: 'frontend',
+      label: t('Frontend & Création UI', 'Frontend & UI Creation'),
+      icon: Code2,
+      skills: [
+        { n: 'React 18 & Vite', lvl: 'Expert', d: t('Hooks sur mesure, state global, performance SPA, lazy loading.', 'Custom hooks, global state, SPA performance, lazy loading.') },
+        { n: 'Tailwind CSS & Motion', lvl: 'Expert', d: t('Design systems réactifs, Framer Motion, micro-interactions modernes.', 'Responsive design systems, Framer Motion, modern micro-interactions.') },
+        { n: 'Cloudflare Pages & Vercel', lvl: 'Expert', d: t('Déploiement Edge, gestion DNS, Workers, architectures CDN.', 'Edge deployments, DNS management, Workers, CDN architectures.') },
+        { n: 'E-Commerce Custom UI', lvl: 'Expert', d: t('Boutiques sur-mesure, paniers dynamiques, checkout Mobile Money.', 'Tailored stores, dynamic carts, Mobile Money checkout.') },
+      ],
+    },
+    {
+      id: 'backend',
+      label: t('Backend & Cloud Africa', 'Backend & Africa Cloud'),
+      icon: Database,
+      skills: [
+        { n: 'Node.js & Express', lvl: 'Expert', d: t('APIs RESTful, middlewares, auth JWT, proxy de sécurité.', 'RESTful APIs, middlewares, JWT auth, security proxies.') },
+        { n: 'Supabase & PostgreSQL', lvl: 'Expert', d: t('RLS policies, Realtime DB, Storage, Edge Functions.', 'RLS policies, Realtime DB, Storage, Edge Functions.') },
+        { n: 'Passerelles Mobile Money', lvl: 'Expert', d: t('Intégration CinetPay, Orange Money, Moov Money, webhooks sécurisés.', 'CinetPay, Orange Money, Moov Money integration, secured webhooks.') },
+        { n: 'Firebase & NoSQL', lvl: 'Avancé', d: t('Firestore rules, Cloud Functions, Auth, Hosting.', 'Firestore rules, Cloud Functions, Auth, Hosting.') },
+      ],
+    },
+    {
+      id: 'auto',
+      label: t('IA, Automation & Digital', 'AI, Automation & Digital'),
+      icon: Bot,
+      skills: [
+        { n: 'Chatbots WhatsApp Business API', lvl: 'Expert', d: t('Assistants virtuels H24, qualification de leads, relances automatiques.', '24/7 virtual assistants, lead qualification, automated follow-ups.') },
+        { n: 'Gemini AI SDK Integration', lvl: 'Avancé', d: t('Traitement du langage, génération automatique de contenus, workflows IA.', 'NLP, automated content generation, AI workflows.') },
+        { n: 'Création & Branding Digital', lvl: 'Avancé', d: t('Conception de supports visuels, identités de marque, présentations impactantes.', 'Visual assets design, brand identities, high-impact decks.') },
+      ],
+    },
+  ]
+
+  const currentCategory = CATEGORIES.find((c) => c.id === activeTab) || CATEGORIES[0]
+  const isSearching = search.trim().length > 0
+
+  const displayedSkills = isSearching
+    ? CATEGORIES.flatMap((c) =>
+        c.skills.map((s) => ({ ...s, catLabel: c.label }))
+      ).filter(
+        (s) =>
+          s.n.toLowerCase().includes(search.toLowerCase()) ||
+          s.d.toLowerCase().includes(search.toLowerCase()) ||
+          s.lvl.toLowerCase().includes(search.toLowerCase())
+      )
+    : currentCategory.skills
 
   return (
-    <section id="skills" className="relative py-14 sm:py-20 md:py-32 overflow-hidden">
+    <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#060504]">
+      {/* Video Background Layer */}
       <video
-        autoPlay muted loop playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-70"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none mix-blend-screen"
         src={VIDEOS.skills}
       />
-      <div className="absolute inset-0 bg-black/28" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#060504]/90 to-[#080706] pointer-events-none" />
 
-      <div className="relative z-10 px-6 max-w-[1200px] mx-auto">
+      <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
+        {/* Section Header */}
         <Reveal>
-          <div className="liquid-glass-strong rounded-3xl p-8 md:p-12 mb-10">
-            <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
-              <span className="w-6 h-px bg-clay" /> Tech Stack & Compétences
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-8">
+            <div>
+              <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-2">
+                <span className="w-8 h-px bg-clay" /> {t('Arsenal Global & Polyvalent', 'Global & Polyvalent Arsenal')}
+              </div>
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white">
+                {t('Compétences & Maîtrise Multi-Secteurs', 'Skills & Multi-Domain Mastery')}<span className="text-[#FF5A1F]">.</span>
+              </h2>
             </div>
-            <h2 className="font-display text-5xl md:text-6xl mb-4 text-white">Développeur fullstack.</h2>
-            <p className="text-sm text-white/70 max-w-lg">
-              Frontend, backend, bases de données — et bien au-delà. 42 compétences sur tout le spectre du digital.
-            </p>
+
+            {/* Search Input */}
+            <div className="relative w-full md:w-80">
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={t('Rechercher une technologie...', 'Search a technology...')}
+                className="w-full bg-surface/80 border border-white/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-white placeholder-white/40 outline-none focus:border-[#FF5A1F] transition-all backdrop-blur-md"
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch('')}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-white/50 hover:text-white"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
         </Reveal>
 
-        {/* Badges + streak counter (style Duolingo) */}
-        <Reveal delay={0.05}>
-          <div className="flex flex-wrap items-center gap-2 mb-8">
-            <span className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-1.5 rounded-full" style={{ background: 'rgba(255,90,31,0.18)', color: '#FF8A52' }}>Fullstack</span>
-            <span className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-1.5 rounded-full" style={{ background: 'rgba(232,201,122,0.18)', color: '#E8C97A' }}>Autodidacte</span>
-            <span className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-1.5 rounded-full" style={{ background: 'rgba(90,200,120,0.18)', color: '#6FDB9A' }}>Disponible</span>
-            <span className="inline-flex items-center gap-1.5 text-[13px] font-extrabold px-3 py-1.5 rounded-full ml-1" style={{ background: 'rgba(255,90,31,0.12)', color: '#FF8A52' }}>
-              🔥 3 ans de code
-            </span>
-          </div>
-        </Reveal>
-
-        {/* Category tabs — glass pills */}
-        <Reveal delay={0.1}>
-          <div className="flex flex-wrap gap-2 mb-10">
-            {CATEGORIES.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => setActive(c.id)}
-                className={`liquid-glass rounded-full px-4 py-2.5 text-xs md:text-sm transition-transform hover:scale-105 flex items-center gap-2 ${
-                  active === c.id ? 'text-white font-medium' : 'text-white/60'
-                }`}
-                style={active === c.id ? { background: 'rgba(255,90,31,0.18)' } : {}}
+        {/* Auto-Scrolling Continuous Tech Ticker */}
+        <div className="relative overflow-hidden mb-10 py-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md">
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
+            {[...CATEGORIES.flatMap(c => c.skills), ...CATEGORIES.flatMap(c => c.skills)].map((s, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-white/10 mx-2 shrink-0 text-xs font-mono"
               >
-                <span>{c.ic}</span> {c.label}
-              </button>
+                <span className="w-2 h-2 rounded-full" style={{ background: LEVEL_COLOR[s.lvl] || '#FF5A1F' }} />
+                <span className="text-white font-bold">{s.n}</span>
+                <span className="text-[10px] text-white/50">({s.lvl})</span>
+              </div>
             ))}
           </div>
-        </Reveal>
+        </div>
 
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-3 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible">
-          {cat.skills.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.05} className="shrink-0 w-[72vw] xs:w-[65vw] sm:w-[280px] md:w-auto snap-start">
-              <div className="liquid-glass rounded-2xl p-4 sm:p-6 h-full hover:scale-[1.02] transition-transform">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="font-medium text-white text-sm sm:text-base">{s.n}</div>
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-clay">{s.lvl}</span>
+        {/* Category Tabs (Horizontal Scrollable on Mobile) */}
+        {!isSearching && (
+          <div className="flex items-center overflow-x-auto scrollbar-none gap-2 pb-3 mb-8 sm:flex-wrap -mx-2 px-2">
+            {CATEGORIES.map((c) => {
+              const Icon = c.icon
+              const isActive = activeTab === c.id
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => {
+                    playClickSound()
+                    setActiveTab(c.id)
+                  }}
+                  className={`flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl text-xs sm:text-sm font-mono font-bold shrink-0 transition-all duration-300 ${
+                    isActive
+                      ? 'bg-[#FF5A1F] text-black shadow-[0_10px_25px_rgba(255,90,31,0.4)] scale-105'
+                      : 'bg-surface/60 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 backdrop-blur-md'
+                  }`}
+                >
+                  <Icon size={15} />
+                  <span>{c.label}</span>
+                </button>
+              )
+            })}
+          </div>
+        )}
+
+        {/* Skills Cards Grid - 2 Columns on Mobile */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab + (isSearching ? search : '') + lang}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6"
+          >
+            {displayedSkills.map((s) => (
+              <div
+                key={s.n}
+                className="group relative bg-surface/60 border border-white/10 hover:border-[#FF5A1F]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 hover:scale-[1.02] backdrop-blur-xl flex flex-col justify-between shadow-xl"
+              >
+                <div>
+                  {'catLabel' in s && (
+                    <span className="text-[9px] sm:text-[10px] font-mono text-clay uppercase tracking-widest mb-1.5 block truncate">
+                      {(s as any).catLabel}
+                    </span>
+                  )}
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                    <h3 className="font-display text-sm sm:text-lg text-white group-hover:text-[#FF5A1F] transition-colors leading-tight">
+                      {s.n}
+                    </h3>
+                    <span
+                      className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider self-start sm:self-auto shrink-0"
+                      style={{
+                        backgroundColor: `${LEVEL_COLOR[s.lvl]}20`,
+                        color: LEVEL_COLOR[s.lvl],
+                        border: `1px solid ${LEVEL_COLOR[s.lvl]}40`,
+                      }}
+                    >
+                      {s.lvl}
+                    </span>
+                  </div>
+
+                  <p className="text-[11px] sm:text-xs text-white/70 leading-snug sm:leading-relaxed mb-4 font-sans line-clamp-3">
+                    {s.d}
+                  </p>
                 </div>
+
                 <SkillBar lvl={s.lvl} />
-                <p className="text-xs text-white/75 leading-relaxed mt-3">{s.d}</p>
               </div>
-            </Reveal>
-          ))}
-        </div>
-        <div className="flex md:hidden justify-center gap-1 mt-3">
-          {cat.skills.map((_, i) => <span key={i} className="w-1.5 h-1.5 rounded-full bg-white/20" />)}
-        </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {displayedSkills.length === 0 && (
+          <div className="text-center py-16 text-muted text-sm font-mono border border-dashed border-white/10 rounded-3xl">
+            {t(`Aucune technologie ne correspond à "${search}".`, `No technology found for "${search}".`)}
+          </div>
+        )}
       </div>
     </section>
   )

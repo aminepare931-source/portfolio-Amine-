@@ -1,162 +1,286 @@
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Download, Zap, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, Globe, Sparkles, Terminal, Cpu, Lock } from 'lucide-react'
 import Reveal from './Reveal'
-import ScrambleIn from './ScrambleIn'
+import RecruiterModal from './RecruiterModal'
 import { VIDEOS } from '../config/videos'
-
-const STATS = [
-  { n: '10+', l: 'Projets livrés' },
-  { n: '3+', l: 'Années d\'expérience' },
-  { n: '5+', l: 'Domaines maîtrisés' },
-  { n: '∞', l: 'Curiosité' },
-]
-
-const TAGS = [
-  'Self-taught', 'Burkina Faso 🇧🇫', 'Développement Web', 'Design Graphique',
-  'Marketing Digital', 'Copywriting', 'Formation', 'Automatisation & IA',
-  'E-Commerce', 'Mobile Money', 'Supabase', 'Cloudflare',
-]
-
-const SERVICES = [
-  { n: 'Développement Fullstack', d: 'Frontend, backend, bases de données — du concept au déploiement.' },
-  { n: 'Design Graphique', d: 'Identité visuelle, logos, maquettes Figma.' },
-  { n: 'Marketing Digital', d: 'Stratégie réseaux sociaux, community management, SEO.' },
-  { n: 'Rédaction & Copywriting', d: 'Textes de vente, contenu blog, scripts vidéo.' },
-  { n: 'Formation & Cours', d: 'Programmes, supports pédagogiques, mentorat.' },
-  { n: 'Automatisation & IA', d: 'Chatbots, intégrations API, prompt engineering.' },
-]
+import { playClickSound } from '../lib/sound'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function About() {
+  const { lang, t } = useLanguage()
+  const [recruiterOpen, setRecruiterOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState<'bio' | 'pillars' | 'polyglot'>('bio')
+
+  const HIGHLIGHTS = [
+    t('Diplômes d\'État : BAC Professionnel en Énergie Solaire, BEP Énergie Solaire & BEPC', 'State Diplomas: Professional BAC in Solar Energy, BEP Solar Energy & BEPC'),
+    t('Développeur Fullstack & Créateur Digital polyvalent (TypeScript, Python, C/C++, PHP, Go)', 'Fullstack Developer & Versatile Digital Creator (TypeScript, Python, C/C++, PHP, Go)'),
+    t('Cyber-Sécurité & Audits SI : Protection des données, prévention OWASP, sécurisation d\'APIs & Auth JWT', 'Cybersecurity & Auditing: Data protection, OWASP mitigation, API & JWT auth securing'),
+    t('Expert en Intégration Mobile Money Africain (CinetPay, Orange Money, Moov Money)', 'African Mobile Money Integration Expert (CinetPay, Orange Money, Moov Money)'),
+    t('Architecte d\'automatisation IA (Bots WhatsApp Business API, Gemini AI SDK, Scripts Serverless)', 'AI Automation Architect (WhatsApp Business API Bots, Gemini AI SDK, Serverless Scripts)'),
+    t('Basé à Bobo-Dioulasso, Burkina Faso 🇧🇫 — Disponible pour missions Remote Internationales', 'Based in Bobo-Dioulasso, Burkina Faso 🇧🇫 — Ready for Worldwide Remote Projects'),
+  ]
+
+  const PILLARS = [
+    {
+      id: 'vision',
+      title: t('Vision Globale & Utilité', 'Global Vision & Utility'),
+      icon: Globe,
+      desc: t('Concevoir des architectures logicielles sécurisées, fluides et esthétiques répondant aux standards mondiaux.', 'Build secure, smooth, and aesthetically pleasing software architectures matching international standards.'),
+    },
+    {
+      id: 'sec',
+      title: t('Cyber-Sécurité & Rigueur', 'Cybersecurity & Rigor'),
+      icon: ShieldCheck,
+      desc: t('Chaque système est audité contre les failles (OWASP), sécurisé de bout en bout et chiffré.', 'Every system is audited against vulnerabilities (OWASP), end-to-end secured and encrypted.'),
+    },
+    {
+      id: 'polyglot',
+      title: t('Polyglottisme Tech', 'Tech Polyglotism'),
+      icon: Terminal,
+      desc: t('Maîtrise de plusieurs langages (TS, Python, C/C++, PHP, Go, Bash) pour choisir l\'outil idéal à chaque défi.', 'Proficient in multiple languages (TS, Python, C/C++, PHP, Go, Bash) to use the right tool for each challenge.'),
+    },
+  ]
+
   return (
-    <section id="about" className="relative py-14 sm:py-20 md:py-32 overflow-hidden">
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover -z-10" src={VIDEOS.statsAbout} />
-      <div className="absolute inset-0 bg-bg/85 -z-10" />
+    <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#070605]">
+      {/* Video Background Layer */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none mix-blend-screen"
+        src={VIDEOS.statsAbout}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#070605]/95 to-[#080706] pointer-events-none" />
 
-      <div className="relative px-6 max-w-[1200px] mx-auto">
-      {/* Watermark géant en fond */}
-      <div
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center pointer-events-none select-none font-display uppercase leading-none whitespace-nowrap"
-        style={{
-          fontSize: 'clamp(90px, 22vw, 380px)',
-          letterSpacing: '-0.04em',
-          opacity: 0.05,
-          color: '#E8C97A',
-        }}
-      >
-        AMINE.DEV
-      </div>
-
-      <div className="relative grid md:grid-cols-[300px_1fr] gap-16 mb-20">
+      <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
+        {/* Section Header */}
         <Reveal>
-          <div className="relative">
-            <img
-              src="/assets/about1.jpg"
-              alt="Amine Paré"
-              className="w-full rounded-2xl border border-stroke object-cover min-h-[320px]"
-              style={{ boxShadow: '6px 6px 0 #FF5A1F' }}
-            />
-            <div className="absolute -bottom-4 -right-4 w-16 h-16 rounded-full accent-gradient flex items-center justify-center text-black font-display text-xl">
-              3
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-8">
+            <div>
+              <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-2">
+                <span className="w-8 h-px bg-clay" /> {t("À Propos d'Amine Paré", "About Amine Paré")}
+              </div>
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white">
+                {t('Développeur Fullstack & Créateur Digital', 'Fullstack Developer & Digital Creator')}<span className="text-[#FF5A1F]">.</span>
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                onClick={() => {
+                  playClickSound()
+                  setRecruiterOpen(true)
+                }}
+                className="inline-flex items-center gap-2 rounded-full bg-[#FF5A1F] text-black font-bold px-6 py-3 text-xs sm:text-sm hover:scale-105 transition-transform shadow-[0_10px_20px_rgba(255,90,31,0.3)]"
+              >
+                <Zap size={15} className="fill-black" /> {t('Mode Recruteur ⚡', 'Recruiter Mode ⚡')}
+              </button>
+
+              <a
+                href="/assets/cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={playClickSound}
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-white border border-white/20 hover:border-clay px-5 py-3 rounded-full transition-colors backdrop-blur-md"
+              >
+                <Download size={14} /> CV PDF
+              </a>
             </div>
           </div>
         </Reveal>
 
-        <div>
-          <Reveal>
-            <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
-              <span className="w-6 h-px bg-clay" /> Profil
-            </div>
-            <h2 className="font-display text-5xl md:text-6xl leading-[0.95] mb-8">
-              <ScrambleIn text="Amine.Dev" delay={200} />
-              <br />
-              <span className="font-serif italic normal-case text-clay">
-                <ScrambleIn text="Un digital complet." delay={700} />
-              </span>
-            </h2>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <p className="text-sm md:text-base text-muted leading-relaxed mb-4">
-              Salut, moi c'est <strong className="text-text">Amine Paré</strong>, connu en ligne sous <strong className="text-text">Amine.Dev</strong>.
-              Basé à Bobo-Dioulasso, Burkina Faso, je suis <strong className="text-text">développeur fullstack</strong> — frontend, backend,
-              bases de données — formé en construisant de vrais produits plutôt qu'en suivant un programme. Trois ans à apprendre vite,
-              livrer vite, et corriger encore plus vite.
-            </p>
-            <p className="text-sm md:text-base text-muted leading-relaxed mb-4">
-              Contrairement à beaucoup de développeurs, je ne me suis jamais arrêté au code. J'ai appris à
-              <strong className="text-text"> designer</strong> mes propres interfaces, à <strong className="text-text">rédiger</strong> des
-              textes qui vendent, à <strong className="text-text">gérer des réseaux sociaux</strong>, à <strong className="text-text">former</strong> d'autres
-              autodidactes, et à <strong className="text-text">automatiser</strong> des tâches avec des chatbots et des scripts.
-              Je vois le digital comme un tout — pas des cases séparées.
-            </p>
-            <p className="text-sm md:text-base text-muted leading-relaxed mb-4">
-              Cette polyvalence me permet de porter un projet du concept jusqu'au lancement, sans dépendre
-              d'une dizaine de prestataires différents : je conçois, je code, je designe, je rédige, et je fais
-              connaître le produit.
-            </p>
-            <p className="text-sm md:text-base text-muted leading-relaxed">
-              Chaque projet que je livre porte une conviction : <strong className="text-text">la tech peut transformer le Burkina Faso</strong>,
-              et le digital africain mérite des standards aussi élevés qu'ailleurs.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <div className="grid grid-cols-4 gap-4 my-8 py-6 border-y border-stroke">
-              {STATS.map((s) => (
-                <div key={s.l}>
-                  <div className="font-display text-3xl md:text-4xl text-clay">{s.n}</div>
-                  <div className="text-[10px] md:text-xs text-muted uppercase tracking-wide mt-1">{s.l}</div>
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {TAGS.map((t, i) => {
-                const palette = [
-                  { bg: 'rgba(255,90,31,0.16)', text: '#FF8A52' },
-                  { bg: 'rgba(232,201,122,0.16)', text: '#E8C97A' },
-                  { bg: 'rgba(201,162,75,0.18)', text: '#D4B366' },
-                ]
-                const c = palette[i % palette.length]
-                return (
-                  <span
-                    key={t}
-                    className="text-[11px] font-bold uppercase tracking-wide px-3.5 py-2 rounded-full"
-                    style={{ background: c.bg, color: c.text }}
-                  >
-                    {t}
-                  </span>
-                )
-              })}
-            </div>
-          </Reveal>
+        {/* Auto-Scrolling Highlight Marquee */}
+        <div className="relative overflow-hidden mb-10 py-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md">
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
+            {[...HIGHLIGHTS, ...HIGHLIGHTS].map((h, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-white/10 mx-2 shrink-0 text-xs font-mono text-white/90"
+              >
+                <span className="text-[#FF5A1F] font-bold">✦</span>
+                <span>{h}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* SERVICES — style "layer cards" (architecture SynapseX) */}
-      <div className="relative">
-        <Reveal>
-          <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
-            <span className="w-6 h-px bg-clay" /> Ce que je fais
-          </div>
-          <h3 className="font-display text-4xl md:text-5xl mb-3">Six domaines.</h3>
-          <p className="text-sm text-muted max-w-md mb-12">Zéro friction entre l'idée et le produit fini.</p>
-        </Reveal>
-
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-3 -mx-6 px-6 md:mx-0 md:px-0 md:flex-col md:items-center md:max-w-2xl md:mx-auto md:overflow-visible">
-          {SERVICES.map((s, i) => (
-            <Reveal key={s.n} delay={0.4 + i * 0.08} className="shrink-0 w-[68vw] xs:w-[58vw] sm:w-[260px] md:w-full snap-start">
-              <div className="h-full md:min-h-[72px] border border-stroke rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between px-4 py-4 md:px-6 hover:border-clay/40 transition-colors group">
-                <div className="flex items-center gap-3 md:gap-4">
-                  <span className="font-mono text-[11px] tracking-[0.15em] uppercase text-muted/60">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-sm md:text-lg font-light text-text group-hover:text-clay transition-colors">{s.n}</span>
+        {/* Main Grid: Portrait/Media + Interactive Content */}
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
+          
+          {/* Left Column: Portrait & Live Video Reel */}
+          <div className="lg:col-span-5 space-y-6">
+            <Reveal delay={0.1}>
+              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-surface/80 group shadow-2xl backdrop-blur-xl">
+                <img
+                  src="/assets/about1.jpg"
+                  alt="Mouhamed Amine Paré"
+                  className="w-full h-[400px] object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+                
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-[11px] font-mono text-clay mb-2">
+                    <MapPin size={12} /> Bobo-Dioulasso, Burkina Faso 🇧🇫
+                  </div>
+                  <h3 className="font-display text-2xl text-white">Mouhamed Amine Paré</h3>
+                  <p className="text-xs text-white/70 font-mono">Fullstack Developer &amp; Digital Creator (Polyglot Tech)</p>
                 </div>
-                <span className="hidden md:block text-xs text-muted/70 md:text-right md:max-w-[45%]">{s.d}</span>
               </div>
             </Reveal>
-          ))}
+
+            {/* Video widget preview */}
+            <Reveal delay={0.2}>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 h-44 bg-black group shadow-xl">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  src={VIDEOS.softwareEngineer}
+                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center p-6 text-center">
+                  <span className="text-[#FF5A1F] text-xs font-mono font-bold uppercase tracking-widest mb-1">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
+                  <p className="font-display text-base sm:text-lg text-white leading-snug">
+                    {t(
+                      '"Combiner puissance technique, cyber-sécurité et design raffiné pour booster chaque projet."',
+                      '"Combining technical depth, cybersecurity, and refined design to boost every project."'
+                    )}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Right Column: Interactive Story & Pillar Tabs */}
+          <div className="lg:col-span-7 space-y-6">
+            
+            {/* Interactive Tabs Header */}
+            <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-surface/60 border border-white/10 backdrop-blur-md">
+              <button
+                onClick={() => {
+                  playClickSound()
+                  setActiveTab('bio')
+                }}
+                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-mono font-bold transition-all ${
+                  activeTab === 'bio'
+                    ? 'bg-[#FF5A1F] text-black shadow-md'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                👨‍💻 {t('Mon Profil Global', 'My Global Profile')}
+              </button>
+              <button
+                onClick={() => {
+                  playClickSound()
+                  setActiveTab('pillars')
+                }}
+                className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-mono font-bold transition-all ${
+                  activeTab === 'pillars'
+                    ? 'bg-[#FF5A1F] text-black shadow-md'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                ⚡ {t('Piliers & Sécurité', 'Pillars & Security')}
+              </button>
+            </div>
+
+            {/* Tab Content Box */}
+            <AnimatePresence mode="wait">
+              {activeTab === 'bio' && (
+                <motion.div
+                  key="bio"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-surface/60 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 text-sm text-white/80 leading-relaxed backdrop-blur-xl"
+                >
+                  <p>
+                    {t(
+                      "Je m'appelle Mouhamed Amine Paré. Passionné par tout ce qui touche à la tech et au digital depuis toujours, j'ai officiellement commencé le développement à l'âge de 15 ans en 2023. Depuis 3 ans, j'évolue sans relâche pour maîtriser l'informatique dans toute sa profondeur.",
+                      "My name is Mouhamed Amine Paré. Passionate about all things tech and digital since the beginning, I officially started software development at age 15 in 2023. Over the past 3 years, I have continuously evolved to master technology in all its depth."
+                    )}
+                  </p>
+                  <p>
+                    {t(
+                      "Loin de me limiter au simple développement web basique, je me suis formé au fullstacking, à la cyber-sécurité (audits de failles OWASP, protection d'APIs, hardening de serveurs), au polyglottisme code (TypeScript, Python, C/C++, PHP, Go) ainsi qu'à l'intégration Mobile Money (CinetPay) et l'automatisation par bots WhatsApp & IA.",
+                      "Far beyond standard web development, I expanded into fullstack engineering, cybersecurity (OWASP audits, API hardening, server protection), multi-language coding (TypeScript, Python, C/C++, PHP, Go), African Mobile Money integrations (CinetPay), and WhatsApp AI automation."
+                    )}
+                  </p>
+                  <p>
+                    {t(
+                      "En résumé : je suis un booster informatique et créateur digital capable de mener un projet de la sécurité des données jusqu'à l'expérience utilisateur finale.",
+                      "In summary: I am a digital booster and creator capable of leading any project from raw data security to polished end-user design."
+                    )}
+                  </p>
+
+                  {/* Bullet Points - 2-Column Grid on Mobile */}
+                  <div className="pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-2 gap-3">
+                    {HIGHLIGHTS.map((h, i) => (
+                      <div key={i} className="flex items-start gap-2 text-[11px] sm:text-xs text-white/90 font-medium bg-white/5 p-2.5 rounded-xl border border-white/5">
+                        <CheckCircle size={14} className="text-[#FF5A1F] shrink-0 mt-0.5" />
+                        <span className="leading-tight">{h}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === 'pillars' && (
+                <motion.div
+                  key="pillars"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.3 }}
+                  className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+                >
+                  {PILLARS.map((p) => {
+                    const Icon = p.icon
+                    return (
+                      <div
+                        key={p.id}
+                        className="bg-surface/60 border border-white/10 rounded-2xl p-3.5 sm:p-5 hover:border-clay/50 transition-all backdrop-blur-xl flex flex-col items-start gap-2"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-[#FF5A1F]/15 border border-[#FF5A1F]/30 text-[#FF5A1F] flex items-center justify-center shrink-0">
+                          <Icon size={18} />
+                        </div>
+                        <div>
+                          <h4 className="font-display text-sm sm:text-lg text-white mb-1 leading-tight">{p.title}</h4>
+                          <p className="text-[11px] sm:text-xs text-white/70 leading-snug font-sans">{p.desc}</p>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Direct WhatsApp Action Callout */}
+            <div className="bg-gradient-to-r from-[#FF5A1F]/20 via-surface to-black border border-[#FF5A1F]/40 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+              <div>
+                <h4 className="font-display text-xl text-white mb-1">{t('Un projet ambitieux à concrétiser ?', 'An ambitious project to build?')}</h4>
+                <p className="text-xs text-white/70">{t('Discutons de vos besoins techniques & de sécurité dès aujourd\'hui.', 'Let\'s discuss your technical & security requirements today.')}</p>
+              </div>
+              <a
+                href="https://wa.me/22655300858?text=Bonjour%20Amine,%20j'ai%20consulté%20votre%20portfolio..."
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={playClickSound}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-black font-bold px-6 py-3.5 text-xs shrink-0 hover:scale-105 transition-transform shadow-lg"
+              >
+                <MessageCircle size={18} /> {t('Discuter sur WhatsApp', 'Chat on WhatsApp')}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-      </div>
+
+      <RecruiterModal isOpen={recruiterOpen} onClose={() => setRecruiterOpen(false)} />
     </section>
   )
 }
