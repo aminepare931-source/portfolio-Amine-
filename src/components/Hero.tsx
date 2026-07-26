@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Zap, Download, ArrowRight, Sparkles, Code, Globe, ShieldCheck, Cpu, Lock, Terminal } from 'lucide-react'
 import FlipCard from './FlipCard'
 import RecruiterModal from './RecruiterModal'
-import { VIDEOS } from '../config/videos'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -58,17 +57,6 @@ export default function Hero() {
     >
       {/* Background High-Tech Layer */}
       <div className="absolute inset-0 bg-[#060504]" />
-      
-      {/* Matrix Tunnel High-Tech Video Layer */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-screen pointer-events-none scale-105 transition-transform duration-1000"
-        src={VIDEOS.matrixTunnel}
-      />
 
       {/* Cybernetic Radial Gradient Overlay */}
       <div
