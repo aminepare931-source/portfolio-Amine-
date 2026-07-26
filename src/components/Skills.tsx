@@ -153,12 +153,12 @@ export default function Skills() {
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-3 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible">
           {cat.skills.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.05}>
-              <div className="liquid-glass rounded-2xl p-6 h-full hover:scale-[1.02] transition-transform">
+            <Reveal key={s.n} delay={i * 0.05} className="shrink-0 w-[72vw] xs:w-[65vw] sm:w-[280px] md:w-auto snap-start">
+              <div className="liquid-glass rounded-2xl p-4 sm:p-6 h-full hover:scale-[1.02] transition-transform">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="font-medium text-white">{s.n}</div>
+                  <div className="font-medium text-white text-sm sm:text-base">{s.n}</div>
                   <span className="text-[9px] font-mono uppercase tracking-wider text-clay">{s.lvl}</span>
                 </div>
                 <SkillBar lvl={s.lvl} />
@@ -166,6 +166,9 @@ export default function Skills() {
               </div>
             </Reveal>
           ))}
+        </div>
+        <div className="flex md:hidden justify-center gap-1 mt-3">
+          {cat.skills.map((_, i) => <span key={i} className="w-1.5 h-1.5 rounded-full bg-white/20" />)}
         </div>
       </div>
     </section>

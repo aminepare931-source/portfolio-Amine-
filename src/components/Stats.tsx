@@ -17,7 +17,7 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
     }
     requestAnimationFrame(tick)
   }, [inView, target])
-  return <div ref={ref} className="font-display text-4xl sm:text-5xl md:text-6xl">{n}{suffix}</div>
+  return <div ref={ref} className="font-display text-2xl sm:text-4xl md:text-6xl">{n}{suffix}</div>
 }
 
 /* Palette 3D "pressable" — couleur + ombre plus foncée, façon Duolingo */
@@ -34,15 +34,15 @@ export default function Stats() {
       <div className="absolute inset-0 bg-black/55" />
 
       <div className="relative z-10 px-6 max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-3 gap-2 sm:gap-5">
           {STATS.map((s, i) => (
             <Reveal key={s.l} delay={i * 0.1}>
               <div
-                className="rounded-3xl px-6 py-8 text-center text-black select-none transition-transform active:translate-y-1"
-                style={{ background: s.bg, boxShadow: `0 6px 0 ${s.shadow}` }}
+                className="rounded-2xl sm:rounded-3xl px-2 py-4 sm:px-6 sm:py-8 text-center text-black select-none transition-transform active:translate-y-1"
+                style={{ background: s.bg, boxShadow: `0 4px 0 ${s.shadow}` }}
               >
                 <CountUp target={s.n} suffix={s.s} />
-                <div className="text-xs md:text-sm font-bold uppercase tracking-[0.15em] mt-2 opacity-80">{s.l}</div>
+                <div className="text-[9px] sm:text-xs md:text-sm font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] mt-1 sm:mt-2 opacity-80 leading-tight">{s.l}</div>
               </div>
             </Reveal>
           ))}

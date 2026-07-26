@@ -140,17 +140,17 @@ export default function About() {
           <p className="text-sm text-muted max-w-md mb-12">Zéro friction entre l'idée et le produit fini.</p>
         </Reveal>
 
-        <div className="flex flex-col items-center gap-3 max-w-2xl mx-auto">
+        <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-3 -mx-6 px-6 md:mx-0 md:px-0 md:flex-col md:items-center md:max-w-2xl md:mx-auto md:overflow-visible">
           {SERVICES.map((s, i) => (
-            <Reveal key={s.n} delay={0.4 + i * 0.08} className="w-full">
-              <div className="w-full min-h-[72px] border border-stroke rounded-lg flex items-center justify-between px-6 py-4 hover:border-clay/40 transition-colors group">
-                <div className="flex items-center gap-4">
+            <Reveal key={s.n} delay={0.4 + i * 0.08} className="shrink-0 w-[68vw] xs:w-[58vw] sm:w-[260px] md:w-full snap-start">
+              <div className="h-full md:min-h-[72px] border border-stroke rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between px-4 py-4 md:px-6 hover:border-clay/40 transition-colors group">
+                <div className="flex items-center gap-3 md:gap-4">
                   <span className="font-mono text-[11px] tracking-[0.15em] uppercase text-muted/60">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <span className="text-base md:text-lg font-light text-text group-hover:text-clay transition-colors">{s.n}</span>
+                  <span className="text-sm md:text-lg font-light text-text group-hover:text-clay transition-colors">{s.n}</span>
                 </div>
-                <span className="hidden md:block text-xs text-muted/70 text-right max-w-[45%]">{s.d}</span>
+                <span className="hidden md:block text-xs text-muted/70 md:text-right md:max-w-[45%]">{s.d}</span>
               </div>
             </Reveal>
           ))}

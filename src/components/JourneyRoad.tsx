@@ -83,7 +83,7 @@ export default function JourneyRoad() {
           </p>
         </Reveal>
 
-      <div className="relative flex">
+      <div className="relative hidden md:flex">
         {/* Road SVG — thicker, glowing */}
         <svg
           width="6" height="100%" viewBox={`0 0 6 ${n * 300}`}
@@ -145,6 +145,22 @@ export default function JourneyRoad() {
             )
           })}
         </div>
+      </div>
+
+      {/* MOBILE — timeline horizontale compacte */}
+      <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-3 pb-3 -mx-6 px-6">
+        {MILESTONES.map((m, i) => (
+          <div key={m.role} className="shrink-0 w-[78vw] xs:w-[70vw] snap-start bg-surface border border-clay/25 rounded-2xl p-5">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">{m.ic}</span>
+              <span className="text-[10px] font-mono text-clay uppercase tracking-wide">{m.date}</span>
+            </div>
+            <h3 className="font-display text-xl mb-1">{m.role}</h3>
+            <div className="text-[11px] text-muted font-mono mb-2">{m.co}</div>
+            <p className="text-xs text-muted leading-relaxed">{m.d}</p>
+            <div className="text-[9px] text-muted/50 mt-3">{i + 1} / {n}</div>
+          </div>
+        ))}
       </div>
       </div>
     </section>
