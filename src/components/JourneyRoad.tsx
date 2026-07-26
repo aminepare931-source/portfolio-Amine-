@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Reveal from './Reveal'
 import { VIDEOS } from '../config/videos'
+import { Link } from 'react-router-dom'
 
 const MILESTONES = [
   { ic: '🌱', date: '2021 — 2022', role: 'Auto-formation intensive', co: 'Self-taught · Bobo-Dioulasso', d: "Zéro à opérationnel : HTML, CSS, JavaScript, bases de données, premiers scripts backend. Apprentissage par la pratique, pas par la théorie." },
@@ -65,10 +66,10 @@ export default function JourneyRoad() {
               Voir la timeline
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <a href="/projets" className="flex items-center gap-2 border border-white/40 text-white rounded-full px-7 py-3 text-sm hover:bg-white/10 hover:border-white/60 transition-colors">
+            <Link to="/projets" className="flex items-center gap-2 border border-white/40 text-white rounded-full px-7 py-3 text-sm hover:bg-white/10 hover:border-white/60 transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               Voir les projets
-            </a>
+            </Link>
           </div>
         </div>
       </div>

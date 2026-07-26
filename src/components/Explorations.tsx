@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const ITEMS = [
   { src: '/assets/hero.jpg', bg: '#2a1509', label: 'Portrait professionnel' },
@@ -57,7 +58,7 @@ export default function Explorations() {
       className="relative w-full overflow-hidden"
       style={{ backgroundColor: ITEMS[activeIndex].bg, transition: 'background-color 650ms cubic-bezier(0.4,0,0.2,1)' }}
     >
-      <div className="relative w-full" style={{ height: '92vh', minHeight: 560, overflow: 'hidden' }}>
+      <div className="relative w-full" style={{ height: isMobile ? '62vh' : '92vh', minHeight: isMobile ? 440 : 560, overflow: 'hidden' }}>
 
         {/* Ghost watermark */}
         <div
@@ -110,14 +111,14 @@ export default function Explorations() {
         </div>
 
         {/* Bottom-right link */}
-        <a
-          href="#projects"
+        <Link
+          to="/projets"
           className="absolute bottom-6 right-4 sm:bottom-16 sm:right-10 z-[60] flex items-center gap-2 text-white/90 hover:text-white transition-colors uppercase"
           style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(18px, 3.5vw, 44px)', letterSpacing: '-0.02em', lineHeight: 1 }}
         >
           Voir mes projets
           <ArrowRight className="w-5 h-5 sm:w-8 sm:h-8" strokeWidth={2.25} />
-        </a>
+        </Link>
       </div>
     </section>
   )

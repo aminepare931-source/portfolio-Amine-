@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { fetchProjects, Project } from '../lib/supabase'
 import Reveal from './Reveal'
 
@@ -162,14 +163,14 @@ export default function ProjectsCarousel() {
               <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7" strokeWidth={2.25} />
             </a>
           ) : (
-            <a
-              href="/contact"
+            <Link
+              to="/contact"
               className="absolute bottom-6 right-4 sm:bottom-16 sm:right-10 z-[60] flex items-center gap-2 text-white/90 hover:text-white transition-colors uppercase"
               style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(16px, 3vw, 40px)', letterSpacing: '-0.02em', lineHeight: 1 }}
             >
               En savoir plus
               <ArrowRight className="w-5 h-5 sm:w-7 sm:h-7" strokeWidth={2.25} />
-            </a>
+            </Link>
           )}
         </div>
       </section>
