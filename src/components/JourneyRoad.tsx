@@ -362,9 +362,9 @@ export default function JourneyRoad() {
             {t('Parcours Technique & Diplômes d\'État', 'Technical & Academic Qualification')}<span className="text-[#FF5A1F]">.</span>
           </h3>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {/* BAC Pro Énergie Solaire */}
-            <div className="bg-surface/80 border border-clay/30 hover:border-clay rounded-2xl p-6 backdrop-blur-xl relative overflow-hidden group transition-all">
+            <div className="bg-surface/80 border border-clay/30 hover:border-clay rounded-2xl p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden group transition-all">
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#FF5A1F]/10 rounded-full blur-xl pointer-events-none" />
               <div className="flex items-center justify-between mb-3">
                 <span className="text-2xl">⚡</span>
@@ -378,14 +378,14 @@ export default function JourneyRoad() {
               <div className="text-xs text-clay font-mono mb-2">{t('Spécialité : Énergie Solaire', 'Specialty: Solar Energy')}</div>
               <p className="text-xs text-white/70 leading-relaxed font-sans">
                 {t(
-                  'Formation technique rigoureuse en électrotechnique, systèmes solaires photovoltaïques, circuits électriques et logique d\'ingénierie physique.',
-                  'Rigorous technical education in electrotechnics, photovoltaic solar systems, circuit logic, and hardware engineering.'
+                  'Électrotechnique, systèmes photovoltaïques et logique d\'ingénierie physique.',
+                  'Electrotechnics, photovoltaic systems, and hardware engineering logic.'
                 )}
               </p>
             </div>
 
             {/* BEP Énergie Solaire */}
-            <div className="bg-surface/60 border border-white/10 hover:border-white/30 rounded-2xl p-6 backdrop-blur-xl transition-all">
+            <div className="bg-surface/60 border border-white/10 hover:border-white/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-2xl">☀️</span>
                 <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30">
@@ -398,14 +398,14 @@ export default function JourneyRoad() {
               <div className="text-xs text-emerald-400 font-mono mb-2">{t('Option : Énergie Solaire', 'Option: Solar Energy')}</div>
               <p className="text-xs text-white/70 leading-relaxed font-sans">
                 {t(
-                  'Maîtrise des fondamentaux électriques, schémas de câblage, conversion d\'énergie et dépannage d\'équipements.',
-                  'Mastery of electrical fundamentals, wiring diagrams, energy conversion, and equipment troubleshooting.'
+                  'Fondamentaux électriques, câblage et dépannage d\'équipements.',
+                  'Electrical fundamentals, wiring, and equipment troubleshooting.'
                 )}
               </p>
             </div>
 
             {/* BEPC */}
-            <div className="bg-surface/60 border border-white/10 hover:border-white/30 rounded-2xl p-6 backdrop-blur-xl transition-all">
+            <div className="bg-surface/60 border border-white/10 hover:border-white/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-2xl">🎓</span>
                 <span className="text-[10px] font-mono font-bold text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/30">
@@ -418,8 +418,8 @@ export default function JourneyRoad() {
               <div className="text-xs text-sky-400 font-mono mb-2">{t('Brevet d\'Études du Premier Cycle', 'Junior High School Certificate')}</div>
               <p className="text-xs text-white/70 leading-relaxed font-sans">
                 {t(
-                  'Diplôme sanctionnant les études du premier cycle avec mention, socle scientifique et littéraire solide.',
-                  'Successful completion of junior secondary education with a strong scientific and analytical foundation.'
+                  'Études du premier cycle avec mention, socle scientifique solide.',
+                  'Junior secondary education with honors, strong scientific foundation.'
                 )}
               </p>
             </div>
