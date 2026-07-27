@@ -13,12 +13,12 @@ export default function About() {
   const [activeTab, setActiveTab] = useState<'bio' | 'pillars' | 'polyglot'>('bio')
 
   const HIGHLIGHTS = [
-    t('Diplômes d\'État : BAC Professionnel en Énergie Solaire, BEP Énergie Solaire & BEPC', 'State Diplomas: Professional BAC in Solar Energy, BEP Solar Energy & BEPC'),
-    t('Développeur Fullstack & Créateur Digital polyvalent (TypeScript, Python, C/C++, PHP, Go)', 'Fullstack Developer & Versatile Digital Creator (TypeScript, Python, C/C++, PHP, Go)'),
-    t('Cyber-Sécurité & Audits SI : Protection des données, prévention OWASP, sécurisation d\'APIs & Auth JWT', 'Cybersecurity & Auditing: Data protection, OWASP mitigation, API & JWT auth securing'),
-    t('Expert en Intégration Mobile Money Africain (CinetPay, Orange Money, Moov Money)', 'African Mobile Money Integration Expert (CinetPay, Orange Money, Moov Money)'),
-    t('Architecte d\'automatisation IA (Bots WhatsApp Business API, Gemini AI SDK, Scripts Serverless)', 'AI Automation Architect (WhatsApp Business API Bots, Gemini AI SDK, Serverless Scripts)'),
-    t('Basé à Bobo-Dioulasso, Burkina Faso 🇧🇫 — Disponible pour missions Remote Internationales', 'Based in Bobo-Dioulasso, Burkina Faso 🇧🇫 — Ready for Worldwide Remote Projects'),
+    t('BAC Pro Énergie Solaire, BEP & BEPC', 'Professional BAC Solar Energy, BEP & BEPC'),
+    t('Fullstack : TypeScript, Python, C/C++, PHP, Go', 'Fullstack: TypeScript, Python, C/C++, PHP, Go'),
+    t('Cyber-sécurité : audits OWASP, APIs & JWT', 'Cybersecurity: OWASP audits, APIs & JWT'),
+    t('Mobile Money : CinetPay, Orange, Moov', 'Mobile Money: CinetPay, Orange, Moov'),
+    t('Automatisation IA : bots WhatsApp, Gemini SDK', 'AI Automation: WhatsApp bots, Gemini SDK'),
+    t('Bobo-Dioulasso 🇧🇫 — Dispo remote international', 'Bobo-Dioulasso 🇧🇫 — Available worldwide remote'),
   ]
 
   const PILLARS = [
@@ -26,19 +26,19 @@ export default function About() {
       id: 'vision',
       title: t('Vision Globale & Utilité', 'Global Vision & Utility'),
       icon: Globe,
-      desc: t('Concevoir des architectures logicielles sécurisées, fluides et esthétiques répondant aux standards mondiaux.', 'Build secure, smooth, and aesthetically pleasing software architectures matching international standards.'),
+      desc: t('Des architectures sécurisées, fluides et esthétiques, aux standards mondiaux.', 'Secure, smooth, aesthetic architectures, built to global standards.'),
     },
     {
       id: 'sec',
       title: t('Cyber-Sécurité & Rigueur', 'Cybersecurity & Rigor'),
       icon: ShieldCheck,
-      desc: t('Chaque système est audité contre les failles (OWASP), sécurisé de bout en bout et chiffré.', 'Every system is audited against vulnerabilities (OWASP), end-to-end secured and encrypted.'),
+      desc: t('Chaque système audité (OWASP), sécurisé et chiffré de bout en bout.', 'Every system audited (OWASP), secured and encrypted end-to-end.'),
     },
     {
       id: 'polyglot',
       title: t('Polyglottisme Tech', 'Tech Polyglotism'),
       icon: Terminal,
-      desc: t('Maîtrise de plusieurs langages (TS, Python, C/C++, PHP, Go, Bash) pour choisir l\'outil idéal à chaque défi.', 'Proficient in multiple languages (TS, Python, C/C++, PHP, Go, Bash) to use the right tool for each challenge.'),
+      desc: t('TS, Python, C/C++, PHP, Go, Bash — le bon outil pour chaque défi.', 'TS, Python, C/C++, PHP, Go, Bash — the right tool for each challenge.'),
     },
   ]
 
@@ -201,20 +201,8 @@ export default function About() {
                 >
                   <p>
                     {t(
-                      "Je m'appelle Mouhamed Amine Paré. Passionné par tout ce qui touche à la tech et au digital depuis toujours, j'ai officiellement commencé le développement à l'âge de 15 ans en 2023. Depuis 3 ans, j'évolue sans relâche pour maîtriser l'informatique dans toute sa profondeur.",
-                      "My name is Mouhamed Amine Paré. Passionate about all things tech and digital since the beginning, I officially started software development at age 15 in 2023. Over the past 3 years, I have continuously evolved to master technology in all its depth."
-                    )}
-                  </p>
-                  <p>
-                    {t(
-                      "Loin de me limiter au simple développement web basique, je me suis formé au fullstacking, à la cyber-sécurité (audits de failles OWASP, protection d'APIs, hardening de serveurs), au polyglottisme code (TypeScript, Python, C/C++, PHP, Go) ainsi qu'à l'intégration Mobile Money (CinetPay) et l'automatisation par bots WhatsApp & IA.",
-                      "Far beyond standard web development, I expanded into fullstack engineering, cybersecurity (OWASP audits, API hardening, server protection), multi-language coding (TypeScript, Python, C/C++, PHP, Go), African Mobile Money integrations (CinetPay), and WhatsApp AI automation."
-                    )}
-                  </p>
-                  <p>
-                    {t(
-                      "En résumé : je suis un booster informatique et créateur digital capable de mener un projet de la sécurité des données jusqu'à l'expérience utilisateur finale.",
-                      "In summary: I am a digital booster and creator capable of leading any project from raw data security to polished end-user design."
+                      "Mouhamed Amine Paré — développeur fullstack et créateur digital autodidacte, formé en construisant de vrais produits. Code, cyber-sécurité, Mobile Money, automatisation IA : je mène un projet de la sécurité des données jusqu'à l'expérience finale.",
+                      "Mouhamed Amine Paré — self-taught fullstack developer and digital creator, trained by building real products. Code, cybersecurity, Mobile Money, AI automation: I drive a project from data security to final UX."
                     )}
                   </p>
 

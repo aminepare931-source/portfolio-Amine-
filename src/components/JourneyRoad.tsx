@@ -20,8 +20,8 @@ export default function JourneyRoad() {
       role: t('Passion Tech & Univers Digital', 'Tech Passion & Digital Exploration'),
       co: 'Bobo-Dioulasso 🇧🇫',
       d: t(
-        'Exploration passionnée de tout ce qui touche à l\'informatique, aux systèmes et au numérique avant de se lancer directement dans la programmation.',
-        'Passionate exploration of computer systems, hardware, and digital technologies prior to diving into software engineering.'
+        'Exploration passionnée des systèmes et du numérique, avant de se lancer dans la programmation.',
+        'Passionate exploration of computer systems and digital tech, before diving into software engineering.'
       ),
       skills: ['Culture Tech', 'Systèmes & Matériel', 'Graphisme', 'Bureautique & Réseaux'],
     },
@@ -32,8 +32,8 @@ export default function JourneyRoad() {
       role: t('Débuts en Développement & Code', 'Software Engineering Debut (At 15)'),
       co: 'Débuts en Auto-formation',
       d: t(
-        'Lancement officiel dans la programmation à l\'âge de 15 ans en 2023. Découverte intensive d\'HTML5, CSS3, JS ES6+, Python, C/C++ et de l\'algorithmique.',
-        'Official launch into software development at age 15 in 2023. Intensive learning of HTML5/CSS3, JS ES6+, Python, C/C++, and core computer science logic.'
+        'Premiers pas en programmation à 15 ans : HTML5, CSS3, JS ES6+, Python, C/C++ et algorithmique.',
+        'First steps in programming at 15: HTML5/CSS3, JS ES6+, Python, C/C++ and algorithms.'
       ),
       skills: ['JavaScript ES6+', 'Python', 'C / C++', 'Git & GitHub', 'Bases de Données'],
     },
@@ -44,8 +44,8 @@ export default function JourneyRoad() {
       role: t('Expansion Fullstack & Cyber-Sécurité', 'Fullstack Expansion & Cybersecurity'),
       co: 'FASOKO & Audits Web',
       d: t(
-        'Création du portail FASOKO (serverless Cloudflare Workers, PWA). Premiers audits de sécurité web (OWASP Top 10), sécurisation d\'APIs et authentification JWT.',
-        'Built FASOKO news aggregator (Cloudflare Workers, PWA). Web security auditing (OWASP Top 10), API hardening, and JWT authentication.'
+        'FASOKO (Cloudflare Workers, PWA) et premiers audits de sécurité web (OWASP, JWT).',
+        'FASOKO (Cloudflare Workers, PWA) and first web security audits (OWASP, JWT).'
       ),
       skills: ['React 18', 'Cloudflare Workers', 'OWASP Audit', 'JWT Auth', 'Tailwind CSS'],
     },
@@ -56,8 +56,8 @@ export default function JourneyRoad() {
       role: t('E-Commerce & Mobile Money (EMBF)', 'E-Commerce & Mobile Money Lead'),
       co: 'EMBF Boutique',
       d: t(
-        'Conception de la boutique EMBF : backend Supabase RLS, passerelle de paiement Mobile Money CinetPay (Orange/Moov), webhooks signés et bot WhatsApp automatisé.',
-        'Engineered EMBF Boutique: Supabase RLS backend, CinetPay Mobile Money payment integration, signed webhooks, and automated WhatsApp bot.'
+        'EMBF Boutique : Supabase RLS, paiements Mobile Money (CinetPay), bot WhatsApp automatisé.',
+        'EMBF Boutique: Supabase RLS, CinetPay Mobile Money payments, automated WhatsApp bot.'
       ),
       skills: ['Supabase RLS', 'CinetPay API', 'WhatsApp Bot API', 'PostgreSQL', 'Express.js'],
     },
@@ -68,8 +68,8 @@ export default function JourneyRoad() {
       role: t('Booster Informatique & Polyglotte Tech', 'Digital Booster & Tech Polyglot'),
       co: 'TechBF & Missions Globales',
       d: t(
-        'Développement de marketplaces complexes, bots d\'automatisation IA (Gemini SDK), architecture multi-langages (TS, Python, C/C++, PHP, Go) et création digitale globale.',
-        'Engineering complex marketplaces, AI automation bots (Gemini SDK), polyglot backend architectures (TS, Python, C/C++, PHP, Go), and digital creation.'
+        'Marketplaces, bots IA (Gemini SDK) et architectures multi-langages (TS, Python, PHP, Go).',
+        'Marketplaces, AI bots (Gemini SDK) and polyglot architectures (TS, Python, PHP, Go).'
       ),
       skills: ['TypeScript', 'Python / Go', 'PHP / C++', 'Docker & Cloud', 'Cyber Protection'],
     },

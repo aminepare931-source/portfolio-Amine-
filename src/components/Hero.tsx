@@ -131,8 +131,8 @@ export default function Hero() {
             className="text-sm sm:text-base text-muted max-w-xl mb-8 leading-relaxed font-sans"
           >
             {t(
-              "Développeur Fullstack, Créateur Digital & Passionné de Tech globale. De la conception d'applications web complexes & e-commerce Mobile Money, à la cyber-sécurité, aux bots d'automatisation IA et au scripting multi-langages (TypeScript, Python, C/C++, PHP, Go).",
-              "Fullstack Developer, Digital Creator & Tech Booster. From designing complex web applications & Mobile Money e-commerce, to cybersecurity, AI automation bots, and multi-language engineering (TypeScript, Python, C/C++, PHP, Go)."
+              "Développeur Fullstack & Créateur Digital. Applications web, e-commerce Mobile Money, cyber-sécurité et automatisation IA — du concept au déploiement.",
+              "Fullstack Developer & Digital Creator. Web apps, Mobile Money e-commerce, cybersecurity and AI automation — from concept to deployment."
             )}
           </motion.p>
 
