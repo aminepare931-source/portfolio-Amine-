@@ -228,7 +228,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -top-4 -left-2 sm:-left-6 z-20 bg-[#0d1322]/90 border border-clay/40 rounded-2xl p-3 shadow-2xl backdrop-blur-xl flex items-center gap-3 hidden sm:flex"
+            className="absolute -top-4 -left-6 z-20 bg-[#0d1322]/90 border border-clay/40 rounded-2xl p-3 shadow-2xl backdrop-blur-xl flex items-center gap-3 hidden lg:flex"
           >
             <div className="w-9 h-9 rounded-xl bg-[#FF5A1F]/20 text-[#FF5A1F] flex items-center justify-center font-bold text-sm">
               <Globe size={18} />
@@ -243,7 +243,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="absolute -bottom-4 -right-2 sm:-right-6 z-20 bg-[#0d1322]/90 border border-emerald-500/30 rounded-2xl p-3 shadow-2xl backdrop-blur-xl flex items-center gap-3 hidden sm:flex"
+            className="absolute -bottom-4 -right-6 z-20 bg-[#0d1322]/90 border border-emerald-500/30 rounded-2xl p-3 shadow-2xl backdrop-blur-xl flex items-center gap-3 hidden lg:flex"
           >
             <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
               <ShieldCheck size={18} />
