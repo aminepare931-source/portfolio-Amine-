@@ -52,7 +52,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen overflow-hidden flex flex-col justify-between pt-24 pb-12 px-6"
+      className="relative min-h-screen overflow-hidden flex flex-col justify-between pt-20 sm:pt-24 pb-6 sm:pb-12 px-4 sm:px-6"
       style={{ minHeight: '100dvh' }}
     >
       {/* Background High-Tech Layer */}
@@ -73,7 +73,7 @@ export default function Hero() {
       {/* MAIN CONTENT GRID */}
       <motion.div
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        className="relative z-10 w-full max-w-[1320px] mx-auto grid lg:grid-cols-12 items-center gap-12 lg:gap-8 my-auto"
+        className="relative z-10 w-full max-w-[1320px] mx-auto grid lg:grid-cols-12 items-center gap-5 sm:gap-12 lg:gap-8 my-auto"
       >
         {/* LEFT COLUMN: INTRO & PITCH */}
         <div className="lg:col-span-7 max-w-2xl">
@@ -83,7 +83,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-surface/90 border border-clay/30 text-xs text-clay font-mono mb-6 shadow-xl backdrop-blur-md"
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-surface/90 border border-clay/30 text-xs text-clay font-mono mb-4 sm:mb-6 shadow-xl backdrop-blur-md"
           >
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -99,7 +99,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-4xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-white mb-4"
+            className="font-display text-3xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-white mb-2 sm:mb-4"
           >
             Mouhamed <br className="hidden sm:block" />
             <span className="bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
@@ -109,7 +109,7 @@ export default function Hero() {
           </motion.h1>
 
           {/* Dynamic Motion Role Switcher */}
-          <div className="h-10 sm:h-12 flex items-center mb-6 overflow-hidden">
+          <div className="h-8 sm:h-12 flex items-center mb-3 sm:mb-6 overflow-hidden">
             <motion.div
               key={currentRoleIndex + lang}
               initial={{ y: 20, opacity: 0 }}
@@ -128,7 +128,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-sm sm:text-base text-muted max-w-xl mb-8 leading-relaxed font-sans"
+            className="text-sm sm:text-base text-muted max-w-xl mb-5 sm:mb-8 leading-relaxed font-sans"
           >
             {t(
               "Développeur Fullstack & Créateur Digital. Applications web, e-commerce Mobile Money, cyber-sécurité et automatisation IA — du concept au déploiement.",
@@ -141,7 +141,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-3.5"
+            className="flex flex-wrap items-center gap-2 sm:gap-3.5"
           >
             {/* Recruiter Quick Trigger */}
             <button
@@ -149,7 +149,7 @@ export default function Hero() {
                 playClickSound()
                 setRecruiterOpen(true)
               }}
-              className="group relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#ff7a47] text-black font-bold px-7 py-4 text-xs sm:text-sm shadow-[0_10px_25px_rgba(255,90,31,0.4)] hover:shadow-[0_15px_35px_rgba(255,90,31,0.6)] hover:scale-105 transition-all duration-300"
+              className="group relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#ff7a47] text-black font-bold px-5 py-3 sm:px-7 sm:py-4 text-xs sm:text-sm shadow-[0_10px_25px_rgba(255,90,31,0.4)] hover:shadow-[0_15px_35px_rgba(255,90,31,0.6)] hover:scale-105 transition-all duration-300"
             >
               <Zap size={16} className="fill-black group-hover:rotate-12 transition-transform" />
               <span>{t('Mode Recruteur ⚡ (Pitch 30s)', 'Recruiter Mode ⚡ (30s Pitch)')}</span>
@@ -159,7 +159,7 @@ export default function Hero() {
             <Link
               to="/projets"
               onClick={playClickSound}
-              className="inline-flex items-center gap-2 rounded-full bg-surface/80 hover:bg-surface border border-white/20 hover:border-clay/50 text-white px-6 py-4 text-xs sm:text-sm font-medium transition-all backdrop-blur-md hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-full bg-surface/80 hover:bg-surface border border-white/20 hover:border-clay/50 text-white px-5 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm font-medium transition-all backdrop-blur-md hover:scale-105"
             >
               <span>{t('Explorer les Projets', 'Explore Projects')}</span>
               <ArrowRight size={15} className="text-clay" />
@@ -171,7 +171,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={playClickSound}
-              className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white transition-colors border border-white/10 hover:border-white/30 rounded-full px-4 py-3.5"
+              className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white transition-colors border border-white/10 hover:border-white/30 rounded-full px-3 py-2.5 sm:px-4 sm:py-3.5"
             >
               <Download size={14} /> CV PDF
             </a>
@@ -182,7 +182,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="mt-8 overflow-hidden rounded-xl bg-white/5 border border-white/10 p-2.5 backdrop-blur-md"
+            className="mt-5 sm:mt-8 overflow-hidden rounded-xl bg-white/5 border border-white/10 p-2.5 backdrop-blur-md hidden sm:block"
           >
             <div className="flex items-center gap-2 mb-2 text-[10px] font-mono text-clay uppercase font-bold tracking-wider px-2">
               <span>{t('Domaines & Stack Technical :', 'Domains & Stack :')}</span>
@@ -259,7 +259,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full"
+            className="w-full max-w-[260px] sm:max-w-none mx-auto"
           >
             <FlipCard />
           </motion.div>
@@ -271,7 +271,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="relative z-10 w-full max-w-[1320px] mx-auto pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-white/60"
+        className="relative z-10 w-full max-w-[1320px] mx-auto pt-4 sm:pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs font-mono text-white/60"
       >
         <div className="grid grid-cols-2 sm:flex sm:items-center gap-3 sm:gap-6 w-full md:w-auto">
           <span className="flex items-center gap-1.5 text-white bg-white/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-white/5 sm:border-none">
@@ -285,7 +285,7 @@ export default function Hero() {
           </span>
         </div>
 
-        <div className="flex items-center gap-2 text-[10px] text-muted uppercase tracking-widest self-center">
+        <div className="items-center gap-2 text-[10px] text-muted uppercase tracking-widest self-center hidden sm:flex">
           <span>{t("Défiler pour explorer", "Scroll to explore")}</span>
           <span className="animate-bounce text-clay">↓</span>
         </div>
