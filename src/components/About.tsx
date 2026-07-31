@@ -4,10 +4,13 @@ import { Download, Zap, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, G
 import Reveal from './Reveal'
 import RecruiterModal from './RecruiterModal'
 import { VIDEOS } from '../config/videos'
+import { useVisibleVideo } from '../hooks/useVisibleVideo'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function About() {
+  const bgVideoRef = useVisibleVideo<HTMLVideoElement>()
+  const widgetVideoRef = useVisibleVideo<HTMLVideoElement>()
   const { lang, t } = useLanguage()
   const [recruiterOpen, setRecruiterOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<'bio' | 'pillars' | 'polyglot'>('bio')
@@ -46,10 +49,11 @@ export default function About() {
     <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#070605]">
       {/* Video Background Layer */}
       <video
-        autoPlay
+        ref={bgVideoRef}
         muted
         loop
         playsInline
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none mix-blend-screen"
         src={VIDEOS.statsAbout}
       />
@@ -135,10 +139,11 @@ export default function About() {
             <Reveal delay={0.2}>
               <div className="relative rounded-2xl overflow-hidden border border-white/10 h-44 bg-black group shadow-xl">
                 <video
-                  autoPlay
+                  ref={widgetVideoRef}
                   muted
                   loop
                   playsInline
+                  preload="metadata"
                   src={VIDEOS.softwareEngineer}
                   className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
                 />

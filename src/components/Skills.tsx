@@ -6,6 +6,7 @@ import { VIDEOS } from '../config/videos'
 import { useInView } from '../hooks/useInView'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
+import { useVisibleVideo } from '../hooks/useVisibleVideo'
 
 const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 85, Confirmé: 70, Intermédiaire: 55 }
 const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#E8C97A', Confirmé: '#25D366', Intermédiaire: '#38BDF8' }
@@ -26,6 +27,7 @@ function SkillBar({ lvl }: { lvl: string }) {
 }
 
 export default function Skills() {
+  const videoRef = useVisibleVideo<HTMLVideoElement>()
   const { lang, t } = useLanguage()
   const [activeTab, setActiveTab] = useState('langs')
   const [search, setSearch] = useState('')
@@ -108,10 +110,11 @@ export default function Skills() {
     <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#060504]">
       {/* Video Background Layer */}
       <video
-        autoPlay
+        ref={videoRef}
         muted
         loop
         playsInline
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none mix-blend-screen"
         src={VIDEOS.skills}
       />

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ChevronRight, Sparkles, ExternalLink, Code2, Cpu } from 'lucide-react'
 import { VIDEOS } from '../config/videos'
 import { playClickSound } from '../lib/sound'
+import { useVisibleVideo } from '../hooks/useVisibleVideo'
 
 const TOOLS = [
   { slug: 'supabase', name: 'Supabase', color: '3ECF8E' },
@@ -38,6 +39,7 @@ function ToolCard({ tool }: { tool: typeof TOOLS[0] }) {
 }
 
 export default function ProjectsHeroCard() {
+  const videoRef = useVisibleVideo<HTMLVideoElement>()
   const doubled = [...TOOLS, ...TOOLS]
 
   return (
@@ -48,10 +50,11 @@ export default function ProjectsHeroCard() {
         {/* Background High-Tech Video */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
           <video
-            autoPlay
+            ref={videoRef}
             muted
             loop
             playsInline
+            preload="metadata"
             className="w-full h-full object-cover opacity-40 mix-blend-screen scale-105"
             src={VIDEOS.projectsHeroCard}
           />

@@ -6,8 +6,10 @@ import { VIDEOS } from '../config/videos'
 import { Link } from 'react-router-dom'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
+import { useVisibleVideo } from '../hooks/useVisibleVideo'
 
 export default function JourneyRoad() {
+  const videoRef = useVisibleVideo<HTMLVideoElement>()
   const { lang, t } = useLanguage()
   const [activeIndex, setActiveIndex] = useState(0)
   const [viewMode, setViewMode] = useState<'showcase' | 'grid'>('showcase')
@@ -102,10 +104,11 @@ export default function JourneyRoad() {
       <div className="relative w-full rounded-3xl overflow-hidden max-w-[1320px] mx-auto px-6 mb-12">
         <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-black/60 p-8 sm:p-12 backdrop-blur-xl">
           <video
-            autoPlay
+            ref={videoRef}
             muted
             loop
             playsInline
+            preload="metadata"
             className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none mix-blend-screen"
             src={VIDEOS.parcoursIntro}
           />

@@ -4,10 +4,15 @@ export default function MotionBackgroundCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
+    // Respecte le réglage "réduire les animations" du système
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+
+    const isMobile = window.innerWidth < 768
 
     let animationFrameId: number
     let width = (canvas.width = window.innerWidth)
@@ -21,8 +26,10 @@ export default function MotionBackgroundCanvas() {
 
     window.addEventListener('resize', handleResize)
 
-    // Particles setup
-    const particleCount = Math.min(Math.floor(width / 25), 45)
+    // Particles setup — beaucoup plus léger sur mobile
+    const particleCount = isMobile
+      ? Math.min(Math.floor(width / 45), 16)
+      : Math.min(Math.floor(width / 25), 45)
     const particles: Array<{
       x: number
       y: number
@@ -94,19 +101,21 @@ export default function MotionBackgroundCanvas() {
         if (p.y < 0) p.y = height
         if (p.y > height) p.y = 0
 
-        // Connect nearby particles with subtle lines
-        for (let j = idx + 1; j < particles.length; j++) {
-          const p2 = particles[j]
-          const dx = p.x - p2.x
-          const dy = p.y - p2.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 120) {
-            ctx.strokeStyle = `rgba(255, 90, 31, ${(1 - dist / 120) * 0.12})`
-            ctx.lineWidth = 0.8
-            ctx.beginPath()
-            ctx.moveTo(p.x, p.y)
-            ctx.lineTo(p2.x, p2.y)
-            ctx.stroke()
+        // Connect nearby particles with subtle lines (desktop only — coûteux)
+        if (!isMobile) {
+          for (let j = idx + 1; j < particles.length; j++) {
+            const p2 = particles[j]
+            const dx = p.x - p2.x
+            const dy = p.y - p2.y
+            const dist = Math.sqrt(dx * dx + dy * dy)
+            if (dist < 120) {
+              ctx.strokeStyle = `rgba(255, 90, 31, ${(1 - dist / 120) * 0.12})`
+              ctx.lineWidth = 0.8
+              ctx.beginPath()
+              ctx.moveTo(p.x, p.y)
+              ctx.lineTo(p2.x, p2.y)
+              ctx.stroke()
+            }
           }
         }
 
