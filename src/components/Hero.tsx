@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Zap, Download, ArrowRight, Sparkles, Code, Globe, ShieldCheck, Cpu, Lock, Terminal } from 'lucide-react'
+import { Download, ArrowRight, Code, Globe, ShieldCheck } from 'lucide-react'
 import FlipCard from './FlipCard'
-import RecruiterModal from './RecruiterModal'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function Hero() {
-  const [recruiterOpen, setRecruiterOpen] = useState(false)
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0)
   const { lang, t } = useLanguage()
 
@@ -16,7 +14,7 @@ export default function Hero() {
     t('Développeur Fullstack & Créateur Digital 🚀', 'Fullstack Developer & Digital Creator 🚀'),
     t('Cyber-Sécurité, Audits & Protection SI 🛡️', 'Cybersecurity, Security Audits & Protection 🛡️'),
     t('Expert Mobile Money (CinetPay / Orange / Moov) 💳', 'Mobile Money Expert (CinetPay / Orange / Moov) 💳'),
-    t('Architecte IA, WhatsApp Bots & Cloud 🤖', 'AI Architect, WhatsApp Bots & Cloud 🤖'),
+    t('Bots WhatsApp & automatisation', 'WhatsApp bots & automation'),
     t('Polyglotte Code: TS, Python, C/C++, PHP, Go 💻', 'Code Polyglot: TS, Python, C/C++, PHP, Go 💻'),
   ]
 
@@ -143,26 +141,24 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="flex flex-wrap items-center gap-2 sm:gap-3.5"
           >
-            {/* Recruiter Quick Trigger */}
-            <button
-              onClick={() => {
-                playClickSound()
-                setRecruiterOpen(true)
-              }}
-              className="group relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#ff7a47] text-black font-bold px-5 py-3 sm:px-7 sm:py-4 text-xs sm:text-sm shadow-[0_10px_25px_rgba(255,90,31,0.4)] hover:shadow-[0_15px_35px_rgba(255,90,31,0.6)] hover:scale-105 transition-all duration-300"
-            >
-              <Zap size={16} className="fill-black group-hover:rotate-12 transition-transform" />
-              <span>{t('Mode Recruteur ⚡ (Pitch 30s)', 'Recruiter Mode ⚡ (30s Pitch)')}</span>
-            </button>
-
-            {/* View Projects */}
+            {/* Voir les projets */}
             <Link
               to="/projets"
               onClick={playClickSound}
+              className="group relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#ff7a47] text-black font-bold px-5 py-3 sm:px-7 sm:py-4 text-xs sm:text-sm shadow-[0_10px_25px_rgba(255,90,31,0.4)] hover:shadow-[0_15px_35px_rgba(255,90,31,0.6)] hover:scale-105 transition-all duration-300"
+            >
+              <span>{t('Voir mes projets', 'See my projects')}</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+
+            {/* Contact */}
+            <Link
+              to="/contact"
+              onClick={playClickSound}
               className="inline-flex items-center gap-2 rounded-full bg-surface/80 hover:bg-surface border border-white/20 hover:border-clay/50 text-white px-5 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm font-medium transition-all backdrop-blur-md hover:scale-105"
             >
-              <span>{t('Explorer les Projets', 'Explore Projects')}</span>
-              <ArrowRight size={15} className="text-clay" />
+              <span>{t('Me contacter', 'Contact me')}</span>
+              <ArrowRight size={15} className="text-clay"/>
             </Link>
 
             {/* CV PDF */}
@@ -291,7 +287,6 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      <RecruiterModal isOpen={recruiterOpen} onClose={() => setRecruiterOpen(false)} />
     </section>
   )
 }

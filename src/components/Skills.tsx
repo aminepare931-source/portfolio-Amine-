@@ -2,11 +2,9 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Sparkles, Code2, Database, Palette, Bot, Terminal, ShieldCheck, Lock, Cpu, Globe } from 'lucide-react'
 import Reveal from './Reveal'
-import { VIDEOS } from '../config/videos'
 import { useInView } from '../hooks/useInView'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
-import { useVisibleVideo } from '../hooks/useVisibleVideo'
 
 const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 85, Confirmé: 70, Intermédiaire: 55 }
 const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#E8C97A', Confirmé: '#25D366', Intermédiaire: '#38BDF8' }
@@ -27,7 +25,6 @@ function SkillBar({ lvl }: { lvl: string }) {
 }
 
 export default function Skills() {
-  const videoRef = useVisibleVideo<HTMLVideoElement>()
   const { lang, t } = useLanguage()
   const [activeTab, setActiveTab] = useState('langs')
   const [search, setSearch] = useState('')
@@ -108,15 +105,10 @@ export default function Skills() {
 
   return (
     <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#060504]">
-      {/* Video Background Layer */}
-      <video
-        ref={videoRef}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none mix-blend-screen"
-        src={VIDEOS.skills}
+      {/* Fond sombre uni avec lueur douce */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,90,31,0.06) 0%, transparent 60%)' }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#060504]/90 to-[#080706] pointer-events-none" />
 

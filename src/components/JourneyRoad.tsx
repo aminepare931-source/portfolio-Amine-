@@ -2,14 +2,11 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Award, Calendar, CheckCircle2, ChevronRight, Sparkles, Terminal, ShieldCheck, Lock } from 'lucide-react'
 import Reveal from './Reveal'
-import { VIDEOS } from '../config/videos'
 import { Link } from 'react-router-dom'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
-import { useVisibleVideo } from '../hooks/useVisibleVideo'
 
 export default function JourneyRoad() {
-  const videoRef = useVisibleVideo<HTMLVideoElement>()
   const { lang, t } = useLanguage()
   const [activeIndex, setActiveIndex] = useState(0)
   const [viewMode, setViewMode] = useState<'showcase' | 'grid'>('showcase')
@@ -67,7 +64,7 @@ export default function JourneyRoad() {
       id: 'm4',
       ic: '🌟',
       date: 'Présent',
-      role: t('Booster Informatique & Polyglotte Tech', 'Digital Booster & Tech Polyglot'),
+      role: t('Développeur touche-à-tout', 'All-round developer'),
       co: 'TechBF & Missions Globales',
       d: t(
         'Marketplaces, bots IA (Gemini SDK) et architectures multi-langages (TS, Python, PHP, Go).',
@@ -103,14 +100,9 @@ export default function JourneyRoad() {
       {/* Intro Video Background Banner (Compact Header) */}
       <div className="relative w-full rounded-3xl overflow-hidden max-w-[1320px] mx-auto px-6 mb-12">
         <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-black/60 p-8 sm:p-12 backdrop-blur-xl">
-          <video
-            ref={videoRef}
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none mix-blend-screen"
-            src={VIDEOS.parcoursIntro}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: 'radial-gradient(ellipse 70% 60% at 20% 30%, rgba(255,90,31,0.1) 0%, transparent 65%)' }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none" />
 

@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ChevronRight, Sparkles, ExternalLink, Code2, Cpu } from 'lucide-react'
-import { VIDEOS } from '../config/videos'
 import { playClickSound } from '../lib/sound'
-import { useVisibleVideo } from '../hooks/useVisibleVideo'
 
 const TOOLS = [
   { slug: 'supabase', name: 'Supabase', color: '3ECF8E' },
@@ -39,7 +37,6 @@ function ToolCard({ tool }: { tool: typeof TOOLS[0] }) {
 }
 
 export default function ProjectsHeroCard() {
-  const videoRef = useVisibleVideo<HTMLVideoElement>()
   const doubled = [...TOOLS, ...TOOLS]
 
   return (
@@ -47,16 +44,11 @@ export default function ProjectsHeroCard() {
       {/* Main Glassmorphism Showcase Hero Banner */}
       <div className="relative w-full rounded-[28px] sm:rounded-[36px] bg-[#090807] border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.8)] overflow-hidden h-[380px] sm:h-[460px] md:h-[520px] flex flex-col justify-between">
         
-        {/* Background High-Tech Video */}
+        {/* Fond sombre uni */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          <video
-            ref={videoRef}
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="w-full h-full object-cover opacity-40 mix-blend-screen scale-105"
-            src={VIDEOS.projectsHeroCard}
+          <div
+            className="absolute inset-0"
+            style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 20%, rgba(255,90,31,0.1) 0%, transparent 65%)' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/60 to-transparent" />
         </div>

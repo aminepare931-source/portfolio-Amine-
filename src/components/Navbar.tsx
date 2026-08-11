@@ -1,17 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Zap, Terminal, Volume2, VolumeX, Menu, X, Download, Globe } from 'lucide-react'
-import RecruiterModal from './RecruiterModal'
-import TerminalDrawer from './TerminalDrawer'
-import { toggleSound, isSoundEnabled, playClickSound } from '../lib/sound'
+import { Menu, X, Download, Globe } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const [recruiterOpen, setRecruiterOpen] = useState(false)
-  const [terminalOpen, setTerminalOpen] = useState(false)
-  const [soundOn, setSoundOn] = useState(isSoundEnabled())
   const location = useLocation()
   const { lang, toggleLang, t } = useLanguage()
 
@@ -25,12 +19,6 @@ export default function Navbar() {
     setOpen(false)
     window.scrollTo(0, 0)
   }, [location.pathname])
-
-  const handleSoundToggle = () => {
-    const newState = toggleSound()
-    setSoundOn(newState)
-    if (newState) playClickSound()
-  }
 
   const links = [
     { to: '/a-propos', label: t('Profil', 'Profile') },
@@ -50,11 +38,7 @@ export default function Navbar() {
           }`}
         >
           {/* Logo */}
-          <Link
-            to="/"
-            onClick={playClickSound}
-            className="flex items-center gap-2 pr-2 hover:opacity-90 transition-opacity"
-          >
+          <Link to="/" className="flex items-center gap-2 pr-2 hover:opacity-90 transition-opacity">
             <div className="w-8 h-8 rounded-full bg-black overflow-hidden border border-clay/40 shrink-0">
               <img src="/assets/logo.png" alt="Amine.Dev" className="w-full h-full object-cover scale-125" />
             </div>
@@ -68,7 +52,6 @@ export default function Navbar() {
             <Link
               key={l.to}
               to={l.to}
-              onClick={playClickSound}
               className={`text-xs rounded-full px-3 py-1.5 transition-all ${
                 location.pathname === l.to
                   ? 'text-white font-medium bg-stroke/60 border border-clay/30'
@@ -81,12 +64,9 @@ export default function Navbar() {
 
           <div className="w-px h-4 bg-stroke mx-1" />
 
-          {/* Language Switcher Button */}
+          {/* Language Switcher */}
           <button
-            onClick={() => {
-              playClickSound()
-              toggleLang()
-            }}
+            onClick={toggleLang}
             title={t('Passer en Anglais', 'Switch to French')}
             className="flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-clay hover:border-clay hover:bg-white/10 transition-all"
           >
@@ -94,40 +74,8 @@ export default function Navbar() {
             <span>{lang === 'fr' ? 'FR 🇫🇷' : 'EN 🇬🇧'}</span>
           </button>
 
-          {/* Quick Action Tools */}
-          <button
-            onClick={() => {
-              playClickSound()
-              setTerminalOpen(true)
-            }}
-            title="Ouvrir le Terminal CLI"
-            className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-full text-white/70 hover:text-clay hover:bg-stroke/40 transition-colors"
-          >
-            <Terminal size={13} /> CLI
-          </button>
-
-          <button
-            onClick={handleSoundToggle}
-            title={soundOn ? 'Désactiver le son' : 'Activer le son'}
-            className="text-xs p-1.5 rounded-full text-white/60 hover:text-white hover:bg-stroke/40 transition-colors"
-          >
-            {soundOn ? <Volume2 size={14} className="text-clay" /> : <VolumeX size={14} />}
-          </button>
-
-          {/* Mode Recruteur Highlight Button */}
-          <button
-            onClick={() => {
-              playClickSound()
-              setRecruiterOpen(true)
-            }}
-            className="inline-flex items-center gap-1.5 text-xs font-bold rounded-full px-3.5 py-1.5 bg-[#FF5A1F] text-black hover:scale-105 transition-transform shadow-[0_2px_12px_rgba(255,90,31,0.4)] ml-1"
-          >
-            <Zap size={13} className="fill-black" /> {t('Mode Recruteur ⚡', 'Recruiter Mode ⚡')}
-          </button>
-
           <Link
             to="/contact"
-            onClick={playClickSound}
             className="text-xs rounded-full px-3.5 py-1.5 bg-clay text-black font-semibold hover:opacity-90 transition-opacity ml-1"
           >
             Contact
@@ -147,25 +95,10 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => {
-                playClickSound()
-                toggleLang()
-              }}
+              onClick={toggleLang}
               className="text-xs font-mono font-bold px-2 py-1 rounded-full bg-white/10 text-clay"
             >
               {lang === 'fr' ? 'FR 🇫🇷' : 'EN 🇬🇧'}
-            </button>
-            <button
-              onClick={() => setRecruiterOpen(true)}
-              className="inline-flex items-center gap-1 text-[11px] font-bold rounded-full px-3 py-1.5 bg-[#FF5A1F] text-black"
-            >
-              <Zap size={12} /> Recruteur
-            </button>
-            <button
-              onClick={() => setTerminalOpen(true)}
-              className="p-1.5 rounded-full text-clay"
-            >
-              <Terminal size={16} />
             </button>
             <button
               onClick={() => setOpen(!open)}
@@ -185,20 +118,10 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => {
-                playClickSound()
-                toggleLang()
-              }}
+              onClick={toggleLang}
               className="text-[10px] font-mono font-bold px-2 py-1 rounded-full bg-white/10 text-clay"
             >
               {lang === 'fr' ? 'FR' : 'EN'}
-            </button>
-
-            <button
-              onClick={() => setRecruiterOpen(true)}
-              className="inline-flex items-center gap-1 text-[10px] font-bold rounded-full px-2.5 py-1 bg-[#FF5A1F] text-black"
-            >
-              <Zap size={11} /> Pitch 30s
             </button>
             <button onClick={() => setOpen(!open)} className="p-1 text-muted">
               {open ? <X size={20} /> : <Menu size={20} />}
@@ -227,10 +150,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2 mb-2">
             <button
-              onClick={() => {
-                playClickSound()
-                toggleLang()
-              }}
+              onClick={toggleLang}
               className="flex items-center gap-2 text-xs font-mono font-bold px-4 py-2 rounded-full bg-white/10 border border-white/20 text-clay"
             >
               <Globe size={14} className="text-[#FF5A1F]" />
@@ -253,26 +173,14 @@ export default function Navbar() {
 
           <div className="w-12 h-px bg-stroke my-2" />
 
-          <button
-            onClick={() => {
-              setOpen(false)
-              setRecruiterOpen(true)
-            }}
-            className="w-full max-w-xs flex items-center justify-center gap-2 rounded-full bg-[#FF5A1F] text-black px-6 py-3 text-sm font-bold shadow-lg"
-          >
-            <Zap size={16} /> {t('Mode Recruteur (Pitch 30s)', 'Recruiter Mode (30s Pitch)')}
-          </button>
-
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => {
-                setOpen(false)
-                setTerminalOpen(true)
-              }}
-              className="flex items-center gap-1.5 text-xs text-clay border border-clay/30 px-4 py-2 rounded-full"
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 rounded-full bg-clay text-black px-6 py-3 text-sm font-bold"
             >
-              <Terminal size={14} /> Terminal CLI
-            </button>
+              Contact
+            </Link>
             <a
               href="/assets/cv.pdf"
               target="_blank"
@@ -284,10 +192,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-
-      {/* Recruiter & Terminal Modals */}
-      <RecruiterModal isOpen={recruiterOpen} onClose={() => setRecruiterOpen(false)} />
-      <TerminalDrawer isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </>
   )
 }

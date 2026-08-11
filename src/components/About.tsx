@@ -1,18 +1,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Download, Zap, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, Globe, Sparkles, Terminal, Cpu, Lock } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Download, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, Globe, Sparkles, Terminal } from 'lucide-react'
 import Reveal from './Reveal'
-import RecruiterModal from './RecruiterModal'
-import { VIDEOS } from '../config/videos'
-import { useVisibleVideo } from '../hooks/useVisibleVideo'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function About() {
-  const bgVideoRef = useVisibleVideo<HTMLVideoElement>()
-  const widgetVideoRef = useVisibleVideo<HTMLVideoElement>()
   const { lang, t } = useLanguage()
-  const [recruiterOpen, setRecruiterOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<'bio' | 'pillars' | 'polyglot'>('bio')
 
   const HIGHLIGHTS = [
@@ -27,19 +22,19 @@ export default function About() {
   const PILLARS = [
     {
       id: 'vision',
-      title: t('Vision Globale & Utilité', 'Global Vision & Utility'),
+      title: t('Penser produit fini', 'Think finished product'),
       icon: Globe,
-      desc: t('Des architectures sécurisées, fluides et esthétiques, aux standards mondiaux.', 'Secure, smooth, aesthetic architectures, built to global standards.'),
+      desc: t('Pas juste du code qui marche : une interface propre et une expérience fluide.', 'Not just code that works: a clean interface and a smooth experience.'),
     },
     {
       id: 'sec',
-      title: t('Cyber-Sécurité & Rigueur', 'Cybersecurity & Rigor'),
+      title: t('La sécurité, pas en option', 'Security, not optional'),
       icon: ShieldCheck,
       desc: t('Chaque système audité (OWASP), sécurisé et chiffré de bout en bout.', 'Every system audited (OWASP), secured and encrypted end-to-end.'),
     },
     {
       id: 'polyglot',
-      title: t('Polyglottisme Tech', 'Tech Polyglotism'),
+      title: t('Plusieurs langages', 'Multiple languages'),
       icon: Terminal,
       desc: t('TS, Python, C/C++, PHP, Go, Bash — le bon outil pour chaque défi.', 'TS, Python, C/C++, PHP, Go, Bash — the right tool for each challenge.'),
     },
@@ -47,15 +42,10 @@ export default function About() {
 
   return (
     <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#070605]">
-      {/* Video Background Layer */}
-      <video
-        ref={bgVideoRef}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none mix-blend-screen"
-        src={VIDEOS.statsAbout}
+      {/* Fond sombre uni avec lueur douce */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,90,31,0.06) 0%, transparent 60%)' }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#070605]/95 to-[#080706] pointer-events-none" />
 
@@ -73,21 +63,17 @@ export default function About() {
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
-              <button
-                onClick={() => {
-                  playClickSound()
-                  setRecruiterOpen(true)
-                }}
+              <Link
+                to="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-[#FF5A1F] text-black font-bold px-6 py-3 text-xs sm:text-sm hover:scale-105 transition-transform shadow-[0_10px_20px_rgba(255,90,31,0.3)]"
               >
-                <Zap size={15} className="fill-black" /> {t('Mode Recruteur ⚡', 'Recruiter Mode ⚡')}
-              </button>
+                <MessageCircle size={15} /> {t('Me contacter', 'Contact me')}
+              </Link>
 
               <a
                 href="/assets/cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={playClickSound}
                 className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-white border border-white/20 hover:border-clay px-5 py-3 rounded-full transition-colors backdrop-blur-md"
               >
                 <Download size={14} /> CV PDF
@@ -135,20 +121,11 @@ export default function About() {
               </div>
             </Reveal>
 
-            {/* Video widget preview */}
+            {/* Citation */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 h-44 bg-black group shadow-xl">
-                <video
-                  ref={widgetVideoRef}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  src={VIDEOS.softwareEngineer}
-                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center p-6 text-center">
-                  <span className="text-[#FF5A1F] text-xs font-mono font-bold uppercase tracking-widest mb-1">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
+              <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#120c08] to-black shadow-xl">
+                <div className="flex flex-col items-center justify-center p-8 text-center">
+                  <span className="text-[#FF5A1F] text-xs font-mono font-bold uppercase tracking-widest mb-2">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
                   <p className="font-display text-base sm:text-lg text-white leading-snug">
                     {t(
                       '"Combiner puissance technique, cyber-sécurité et design raffiné pour booster chaque projet."',
@@ -273,7 +250,6 @@ export default function About() {
         </div>
       </div>
 
-      <RecruiterModal isOpen={recruiterOpen} onClose={() => setRecruiterOpen(false)} />
     </section>
   )
 }

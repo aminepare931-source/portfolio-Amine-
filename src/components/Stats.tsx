@@ -3,8 +3,6 @@ import { motion } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
 import { Zap, Code, ShieldCheck, Award, ArrowUpRight, CheckCircle } from 'lucide-react'
 import { playClickSound } from '../lib/sound'
-import { VIDEOS } from '../config/videos'
-import { useVisibleVideo } from '../hooks/useVisibleVideo'
 
 function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
   const { ref, inView } = useInView<HTMLDivElement>(0.3)
@@ -71,21 +69,11 @@ const STAT_CARDS = [
 ]
 
 export default function Stats() {
-  const videoRef = useVisibleVideo<HTMLVideoElement>()
   const [activeCard, setActiveCard] = useState<number | null>(null)
 
   return (
     <section className="relative py-20 sm:py-28 overflow-hidden bg-[#080706]">
-      {/* Background Cyber Video Layer */}
-      <video
-        ref={videoRef}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen pointer-events-none"
-        src={VIDEOS.softwareEngineer}
-      />
+      {/* Fond sombre uni */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#080706]/90 to-[#080706] pointer-events-none" />
 
       <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
