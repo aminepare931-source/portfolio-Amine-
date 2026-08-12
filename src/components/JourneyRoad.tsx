@@ -383,14 +383,14 @@ export default function JourneyRoad() {
             <div className="bg-surface/60 border border-white/10 hover:border-white/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-2xl">☀️</span>
-                <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30">
+                <span className="text-[10px] font-mono font-bold text-clay bg-clay/10 px-2.5 py-1 rounded-full border border-clay/30">
                   {t('Brevet d\'Études', 'Technical Certificate')}
                 </span>
               </div>
               <h4 className="font-display text-xl text-white mb-1">
                 BEP
               </h4>
-              <div className="text-xs text-emerald-400 font-mono mb-2">{t('Option : Énergie Solaire', 'Option: Solar Energy')}</div>
+              <div className="text-xs text-clay font-mono mb-2">{t('Option : Énergie Solaire', 'Option: Solar Energy')}</div>
               <p className="text-xs text-white/70 leading-relaxed font-sans">
                 {t(
                   'Fondamentaux électriques, câblage et dépannage d\'équipements.',

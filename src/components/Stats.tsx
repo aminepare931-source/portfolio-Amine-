@@ -46,7 +46,7 @@ const STAT_CARDS = [
     labelSub: 'E-Commerce, SAAS & Mobile',
     detail: 'Applications web complètes avec paiement Mobile Money & Supabase',
     icon: Zap,
-    color: '#E8C97A',
+    color: '#FF5A1F',
   },
   {
     n: 100,
@@ -55,7 +55,7 @@ const STAT_CARDS = [
     labelSub: 'Code propre & sécurisé',
     detail: 'Respect des délais, tests rigoureux et intégrations API robustes',
     icon: ShieldCheck,
-    color: '#25D366',
+    color: '#FF5A1F',
   },
   {
     n: 42,
@@ -64,7 +64,7 @@ const STAT_CARDS = [
     labelSub: 'Ecosystème Web Modern',
     detail: 'Frontend, Backend, Bases de données, Devops & Automatisation IA',
     icon: Award,
-    color: '#38BDF8',
+    color: '#FF5A1F',
   },
 ]
 

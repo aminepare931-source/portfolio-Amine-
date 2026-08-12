@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Download, ArrowRight, Code, Globe, ShieldCheck } from 'lucide-react'
 import FlipCard from './FlipCard'
@@ -11,33 +11,12 @@ export default function Hero() {
   const { lang, t } = useLanguage()
 
   const ROLES = [
-    t('Développeur Fullstack & Créateur Digital 🚀', 'Fullstack Developer & Digital Creator 🚀'),
-    t('Cyber-Sécurité, Audits & Protection SI 🛡️', 'Cybersecurity, Security Audits & Protection 🛡️'),
-    t('Expert Mobile Money (CinetPay / Orange / Moov) 💳', 'Mobile Money Expert (CinetPay / Orange / Moov) 💳'),
+    t('Développeur Fullstack & Créateur Digital', 'Fullstack Developer & Digital Creator'),
+    t('Cyber-sécurité, audits & protection', 'Cybersecurity, audits & protection'),
+    t('Mobile Money (CinetPay, Orange, Moov)', 'Mobile Money (CinetPay, Orange, Moov)'),
     t('Bots WhatsApp & automatisation', 'WhatsApp bots & automation'),
-    t('Polyglotte Code: TS, Python, C/C++, PHP, Go 💻', 'Code Polyglot: TS, Python, C/C++, PHP, Go 💻'),
+    t('TypeScript, Python, C/C++, PHP, Go', 'TypeScript, Python, C/C++, PHP, Go'),
   ]
-
-  // 3D Motion tilt effect for Hero Container
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-
-  const rotateX = useSpring(useTransform(mouseY, [-300, 300], [8, -8]), { stiffness: 150, damping: 20 })
-  const rotateY = useSpring(useTransform(mouseX, [-300, 300], [-8, 8]), { stiffness: 150, damping: 20 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = document.getElementById('hero')?.getBoundingClientRect()
-      if (rect) {
-        const x = e.clientX - rect.left - rect.width / 2
-        const y = e.clientY - rect.top - rect.height / 2
-        mouseX.set(x)
-        mouseY.set(y)
-      }
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
 
   // Role rotator interval
   useEffect(() => {
@@ -61,7 +40,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle at 50% 30%, rgba(255, 90, 31, 0.18) 0%, rgba(8, 7, 6, 0.85) 60%, rgba(6, 5, 4, 0.98) 100%)',
+            'radial-gradient(circle at 50% 30%, rgba(255, 90, 31, 0.12) 0%, rgba(8, 7, 6, 0.9) 60%, rgba(6, 5, 4, 0.98) 100%)',
         }}
       />
 
@@ -69,8 +48,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_30%,#000_70%,transparent_100%)] pointer-events-none" />
 
       {/* MAIN CONTENT GRID */}
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      <div
         className="relative z-10 w-full max-w-[1320px] mx-auto grid lg:grid-cols-12 items-center gap-5 sm:gap-12 lg:gap-8 my-auto"
       >
         {/* LEFT COLUMN: INTRO & PITCH */}
@@ -217,38 +195,8 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: INTERACTIVE 3D FLIP CARD + FLOATING BADGES */}
+        {/* RIGHT COLUMN: PHOTO CARD */}
         <div className="lg:col-span-5 relative flex justify-center items-center">
-          
-          {/* Floating Orbit Metric Pill 1 */}
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -top-4 -left-6 z-20 bg-[#0d1322]/90 border border-clay/40 rounded-2xl p-3 shadow-2xl backdrop-blur-xl flex items-center gap-3 hidden lg:flex"
-          >
-            <div className="w-9 h-9 rounded-xl bg-[#FF5A1F]/20 text-[#FF5A1F] flex items-center justify-center font-bold text-sm">
-              <Globe size={18} />
-            </div>
-            <div>
-              <div className="text-[10px] font-mono text-muted uppercase">{t('Portée', 'Scope')}</div>
-              <div className="text-xs font-bold text-white">{t('Full Remote & Afrique', 'Full Remote & Worldwide')}</div>
-            </div>
-          </motion.div>
-
-          {/* Floating Orbit Metric Pill 2 */}
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-            className="absolute -bottom-4 -right-6 z-20 bg-[#0d1322]/90 border border-emerald-500/30 rounded-2xl p-3 shadow-2xl backdrop-blur-xl flex items-center gap-3 hidden lg:flex"
-          >
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
-              <ShieldCheck size={18} />
-            </div>
-            <div>
-              <div className="text-[10px] font-mono text-muted uppercase">{t('Sécurité & Qualité', 'Security & Quality')}</div>
-              <div className="text-xs font-bold text-white">{t('Audit & Protection 100%', 'Audited & 100% Production Ready')}</div>
-            </div>
-          </motion.div>
 
           {/* FlipCard Component */}
           <motion.div
@@ -260,7 +208,7 @@ export default function Hero() {
             <FlipCard />
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
       {/* BOTTOM TICKER / SCROLL INDICATOR */}
       <motion.div

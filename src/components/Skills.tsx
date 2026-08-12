@@ -7,7 +7,7 @@ import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
 const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 85, Confirmé: 70, Intermédiaire: 55 }
-const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#E8C97A', Confirmé: '#25D366', Intermédiaire: '#38BDF8' }
+const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#FF5A1F', Confirmé: '#FF5A1F', Intermédiaire: '#FF5A1F' }
 
 function SkillBar({ lvl }: { lvl: string }) {
   const { ref, inView } = useInView<HTMLDivElement>(0.3)

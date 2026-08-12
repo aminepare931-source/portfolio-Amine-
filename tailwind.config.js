@@ -9,16 +9,12 @@ export default {
         surface2: '#181614',
         stroke: 'rgba(255,255,255,0.08)',
         text: '#f2ede2',
-        muted: '#7a726a',
+        muted: '#9a938b',
         clay: '#ff5a1f',
-        sand: '#e8c97a',
-        savanna: '#c9a24b',
       },
       fontFamily: {
         display: ['"Bebas Neue"', 'sans-serif'],
-        serif: ['"Fraunces"', 'serif'],
-        instrument: ['"Instrument Serif"', 'serif'],
-        body: ['"Cabinet Grotesk"', 'system-ui', 'sans-serif'],
+        sans: ['"Inter"', 'system-ui', 'sans-serif'],
         mono: ['"DM Mono"', 'monospace'],
       },
       borderRadius: {
