@@ -32,7 +32,7 @@ export const FEATURED_PROJECTS: ProjectCaseStudy[] = [
     size: 'Large',
     emoji: '🛒',
     color: '#FF5A1F',
-    img: '/assets/about1.jpg',
+    img: null,
     featured: true,
     position: 1,
     metrics: [
@@ -61,7 +61,7 @@ export const FEATURED_PROJECTS: ProjectCaseStudy[] = [
     size: 'Large',
     emoji: '🏗️',
     color: '#E8C97A',
-    img: '/assets/hero.jpg',
+    img: null,
     featured: true,
     position: 2,
     metrics: [
@@ -89,7 +89,7 @@ export const FEATURED_PROJECTS: ProjectCaseStudy[] = [
     size: 'Medium',
     emoji: '📰',
     color: '#C9A24B',
-    img: '/assets/about2.jpg',
+    img: null,
     featured: true,
     position: 3,
     metrics: [

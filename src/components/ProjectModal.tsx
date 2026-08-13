@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ExternalLink, CheckCircle, Cpu, BarChart3, Layers, Sparkles } from 'lucide-react'
-import { Project } from '../lib/supabase'
+import { ProjectCaseStudy } from '../data/projectsData'
 
 interface ProjectModalProps {
-  project: Project | null
+  project: ProjectCaseStudy | null
   onClose: () => void
 }
 
