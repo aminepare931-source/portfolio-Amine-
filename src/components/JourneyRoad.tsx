@@ -96,7 +96,7 @@ export default function JourneyRoad() {
   }
 
   return (
-    <section id="experience" className="relative bg-[#070605] overflow-hidden py-16 sm:py-24">
+    <section id="experience" className="relative bg-[#0a0e16] overflow-hidden py-16 sm:py-24">
       {/* Intro Video Background Banner (Compact Header) */}
       <div className="relative w-full rounded-3xl overflow-hidden max-w-[1320px] mx-auto px-6 mb-12">
         <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-black/60 p-8 sm:p-12 backdrop-blur-xl">
@@ -107,8 +107,8 @@ export default function JourneyRoad() {
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none" />
 
           <div className="relative z-10 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/80 border border-[#FF5A1F]/40 text-xs font-mono text-clay uppercase tracking-[0.25em] mb-4">
-              <Award size={14} className="text-[#FF5A1F]" /> {t('Mon Parcours Global', 'My Global Journey')}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/80 border border-[#3B82F6]/40 text-xs font-mono text-clay uppercase tracking-[0.25em] mb-4">
+              <Award size={14} className="text-[#3B82F6]" /> {t('Mon Parcours Global', 'My Global Journey')}
             </div>
 
             <h2 className="font-display text-3xl sm:text-5xl text-white leading-tight mb-4">
@@ -127,7 +127,7 @@ export default function JourneyRoad() {
                 }}
                 className={`px-5 py-2.5 rounded-full text-xs font-mono font-bold transition-all ${
                   viewMode === 'showcase'
-                    ? 'bg-[#FF5A1F] text-black shadow-lg'
+                    ? 'bg-[#3B82F6] text-black shadow-lg'
                     : 'bg-white/10 text-white/70 hover:text-white'
                 }`}
               >
@@ -141,7 +141,7 @@ export default function JourneyRoad() {
                 }}
                 className={`px-5 py-2.5 rounded-full text-xs font-mono font-bold transition-all ${
                   viewMode === 'grid'
-                    ? 'bg-[#FF5A1F] text-black shadow-lg'
+                    ? 'bg-[#3B82F6] text-black shadow-lg'
                     : 'bg-white/10 text-white/70 hover:text-white'
                 }`}
               >
@@ -160,7 +160,7 @@ export default function JourneyRoad() {
                 <span className="w-8 h-px bg-clay" /> {t('Chronologie Horizontale & Interactive', 'Horizontal Interactive Timeline')}
               </div>
               <h3 className="font-display text-3xl sm:text-4xl text-white">
-                {t('La Route du Code & de la Sécurité', 'The Road of Code & Security')}<span className="text-[#FF5A1F]">.</span>
+                {t('La Route du Code & de la Sécurité', 'The Road of Code & Security')}<span className="text-[#3B82F6]">.</span>
               </h3>
             </div>
 
@@ -172,13 +172,13 @@ export default function JourneyRoad() {
                 </span>
                 <button
                   onClick={prevStep}
-                  className="w-10 h-10 rounded-full border border-white/20 bg-surface/80 text-white flex items-center justify-center hover:bg-[#FF5A1F] hover:text-black hover:border-[#FF5A1F] transition-all"
+                  className="w-10 h-10 rounded-full border border-white/20 bg-surface/80 text-white flex items-center justify-center hover:bg-[#3B82F6] hover:text-black hover:border-[#3B82F6] transition-all"
                 >
                   <ArrowLeft size={16} />
                 </button>
                 <button
                   onClick={nextStep}
-                  className="w-10 h-10 rounded-full border border-white/20 bg-surface/80 text-white flex items-center justify-center hover:bg-[#FF5A1F] hover:text-black hover:border-[#FF5A1F] transition-all"
+                  className="w-10 h-10 rounded-full border border-white/20 bg-surface/80 text-white flex items-center justify-center hover:bg-[#3B82F6] hover:text-black hover:border-[#3B82F6] transition-all"
                 >
                   <ArrowRight size={16} />
                 </button>
@@ -196,7 +196,7 @@ export default function JourneyRoad() {
                 {/* Connecting Laser Line */}
                 <div className="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-1 bg-white/10 z-0">
                   <div
-                    className="h-full bg-[#FF5A1F] transition-all duration-500 shadow-[0_0_10px_#FF5A1F]"
+                    className="h-full bg-[#3B82F6] transition-all duration-500 shadow-[0_0_10px_#3B82F6]"
                     style={{ width: `${(activeIndex / (MILESTONES.length - 1)) * 100}%` }}
                   />
                 </div>
@@ -217,9 +217,9 @@ export default function JourneyRoad() {
                       <div
                         className={`w-12 h-12 rounded-2xl flex items-center justify-center text-lg transition-all duration-300 font-bold ${
                           isActive
-                            ? 'bg-[#FF5A1F] text-black scale-110 shadow-[0_0_20px_rgba(255,90,31,0.6)] border-2 border-white'
+                            ? 'bg-[#3B82F6] text-black scale-110 shadow-[0_0_20px_rgba(59, 130, 246,0.6)] border-2 border-white'
                             : isPassed
-                            ? 'bg-[#FF5A1F]/20 text-[#FF5A1F] border border-[#FF5A1F]/50'
+                            ? 'bg-[#3B82F6]/20 text-[#3B82F6] border border-[#3B82F6]/50'
                             : 'bg-black/80 text-white/40 border border-white/10 group-hover:border-white/30'
                         }`}
                       >
@@ -227,7 +227,7 @@ export default function JourneyRoad() {
                       </div>
                       <span
                         className={`text-[11px] font-mono mt-2 transition-colors ${
-                          isActive ? 'text-[#FF5A1F] font-bold' : 'text-white/60'
+                          isActive ? 'text-[#3B82F6] font-bold' : 'text-white/60'
                         }`}
                       >
                         {m.date}
@@ -248,7 +248,7 @@ export default function JourneyRoad() {
                 transition={{ duration: 0.3 }}
                 className="bg-surface/80 border border-white/15 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-2xl relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-96 h-96 bg-[#FF5A1F]/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-96 h-96 bg-[#3B82F6]/10 rounded-full blur-3xl pointer-events-none" />
 
                 <div className="grid md:grid-cols-12 gap-8 items-center">
                   <div className="md:col-span-8 space-y-4">
@@ -288,7 +288,7 @@ export default function JourneyRoad() {
                   </div>
 
                   <div className="md:col-span-4 bg-black/50 border border-white/10 rounded-2xl p-6 space-y-4 text-center">
-                    <div className="w-16 h-16 rounded-full bg-[#FF5A1F]/20 border border-[#FF5A1F]/40 text-[#FF5A1F] flex items-center justify-center mx-auto text-2xl font-bold font-mono">
+                    <div className="w-16 h-16 rounded-full bg-[#3B82F6]/20 border border-[#3B82F6]/40 text-[#3B82F6] flex items-center justify-center mx-auto text-2xl font-bold font-mono">
                       0{activeIndex + 1}
                     </div>
                     <div>
@@ -298,7 +298,7 @@ export default function JourneyRoad() {
                     <Link
                       to="/projets"
                       onClick={playClickSound}
-                      className="inline-flex items-center justify-center gap-2 w-full rounded-full bg-white/10 hover:bg-[#FF5A1F] hover:text-black text-white text-xs font-mono font-bold py-3 transition-colors"
+                      className="inline-flex items-center justify-center gap-2 w-full rounded-full bg-white/10 hover:bg-[#3B82F6] hover:text-black text-white text-xs font-mono font-bold py-3 transition-colors"
                     >
                       <span>{t('Projets associés', 'Associated Projects')}</span>
                       <ChevronRight size={14} />
@@ -314,14 +314,14 @@ export default function JourneyRoad() {
             {MILESTONES.map((m) => (
               <div
                 key={m.id}
-                className="bg-surface/60 border border-white/10 hover:border-[#FF5A1F]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 backdrop-blur-xl flex flex-col justify-between shadow-xl"
+                className="bg-surface/60 border border-white/10 hover:border-[#3B82F6]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 backdrop-blur-xl flex flex-col justify-between shadow-xl"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2 sm:mb-4">
                     <span className="text-xl sm:text-3xl p-1.5 sm:p-2 rounded-xl bg-black/50 border border-white/10">
                       {m.ic}
                     </span>
-                    <span className="text-[9px] sm:text-[10px] font-mono font-bold text-clay uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/30">
+                    <span className="text-[9px] sm:text-[10px] font-mono font-bold text-clay uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/30">
                       {m.date}
                     </span>
                   </div>
@@ -350,20 +350,20 @@ export default function JourneyRoad() {
         {/* Diplômes & Formations Académiques - 2 Columns on Mobile */}
         <div className="mt-12 sm:mt-16 pt-10 sm:pt-12 border-t border-white/10">
           <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-3">
-            <Award size={16} className="text-[#FF5A1F]" />
+            <Award size={16} className="text-[#3B82F6]" />
             <span>{t('Formations & Diplômes Académiques', 'Academic Degrees & Diplomas')}</span>
           </div>
           <h3 className="font-display text-2xl sm:text-3xl text-white mb-6">
-            {t('Parcours Technique & Diplômes d\'État', 'Technical & Academic Qualification')}<span className="text-[#FF5A1F]">.</span>
+            {t('Parcours Technique & Diplômes d\'État', 'Technical & Academic Qualification')}<span className="text-[#3B82F6]">.</span>
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {/* BAC Pro Énergie Solaire */}
             <div className="bg-surface/80 border border-clay/30 hover:border-clay rounded-2xl p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden group transition-all">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-[#FF5A1F]/10 rounded-full blur-xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-24 h-24 bg-[#3B82F6]/10 rounded-full blur-xl pointer-events-none" />
               <div className="flex items-center justify-between mb-3">
                 <span className="text-2xl">⚡</span>
-                <span className="text-[10px] font-mono font-bold text-[#FF5A1F] bg-[#FF5A1F]/10 px-2.5 py-1 rounded-full border border-[#FF5A1F]/30">
+                <span className="text-[10px] font-mono font-bold text-[#3B82F6] bg-[#3B82F6]/10 px-2.5 py-1 rounded-full border border-[#3B82F6]/30">
                   {t('Diplôme d\'État', 'State Diploma')}
                 </span>
               </div>

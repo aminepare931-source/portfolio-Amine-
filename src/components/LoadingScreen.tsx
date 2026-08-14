@@ -25,7 +25,7 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
   }, [onComplete])
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#080706] flex flex-col items-center justify-center gap-6">
+    <div className="fixed inset-0 z-[9999] bg-[#0a0e16] flex flex-col items-center justify-center gap-6">
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

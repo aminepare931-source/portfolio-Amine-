@@ -37,7 +37,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             ) : (
               <div
                 className="w-full h-full flex flex-col items-center justify-center p-6 text-center"
-                style={{ background: `linear-gradient(135deg, #0f0e0c 0%, ${project.color || '#FF5A1F'}33 100%)` }}
+                style={{ background: `linear-gradient(135deg, #0d1219 0%, ${project.color || '#3B82F6'}33 100%)` }}
               >
                 <span className="text-5xl mb-2">{project.emoji || '🚀'}</span>
                 <span className="font-display text-3xl text-white">{project.name}</span>
@@ -144,7 +144,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#FF5A1F] text-black font-medium px-6 py-3 rounded-full hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center gap-2 bg-[#3B82F6] text-black font-medium px-6 py-3 rounded-full hover:scale-105 transition-transform text-sm"
               >
                 Visiter la plateforme live <ExternalLink size={16} />
               </a>

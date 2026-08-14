@@ -41,13 +41,13 @@ export default function About() {
   ]
 
   return (
-    <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#070605]">
+    <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#0a0e16]">
       {/* Fond sombre uni avec lueur douce */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 60%)' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#070605]/95 to-[#080706] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e16] via-[#0a0e16]/95 to-[#0a0e16] pointer-events-none" />
 
       <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
         {/* Section Header */}
@@ -58,14 +58,14 @@ export default function About() {
                 <span className="w-8 h-px bg-clay" /> {t("À Propos d'Amine Paré", "About Amine Paré")}
               </div>
               <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white">
-                {t('Développeur Fullstack & Créateur Digital', 'Fullstack Developer & Digital Creator')}<span className="text-[#FF5A1F]">.</span>
+                {t('Développeur Fullstack & Créateur Digital', 'Fullstack Developer & Digital Creator')}<span className="text-[#3B82F6]">.</span>
               </h2>
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-[#FF5A1F] text-black font-bold px-6 py-3 text-xs sm:text-sm hover:scale-105 transition-transform shadow-[0_10px_20px_rgba(255,90,31,0.3)]"
+                className="inline-flex items-center gap-2 rounded-full bg-[#3B82F6] text-black font-bold px-6 py-3 text-xs sm:text-sm hover:scale-105 transition-transform shadow-[0_10px_20px_rgba(59, 130, 246,0.3)]"
               >
                 <MessageCircle size={15} /> {t('Me contacter', 'Contact me')}
               </Link>
@@ -90,7 +90,7 @@ export default function About() {
                 key={i}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-white/10 mx-2 shrink-0 text-xs font-mono text-white/90"
               >
-                <span className="text-[#FF5A1F] font-bold">✦</span>
+                <span className="text-[#3B82F6] font-bold">✦</span>
                 <span>{h}</span>
               </div>
             ))}
@@ -123,9 +123,9 @@ export default function About() {
 
             {/* Citation */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#120c08] to-black shadow-xl">
+              <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#0d1420] to-black shadow-xl">
                 <div className="flex flex-col items-center justify-center p-8 text-center">
-                  <span className="text-[#FF5A1F] text-xs font-mono font-bold uppercase tracking-widest mb-2">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
+                  <span className="text-[#3B82F6] text-xs font-mono font-bold uppercase tracking-widest mb-2">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
                   <p className="font-display text-base sm:text-lg text-white leading-snug">
                     {t(
                       '"Combiner puissance technique, cyber-sécurité et design raffiné pour booster chaque projet."',
@@ -149,7 +149,7 @@ export default function About() {
                 }}
                 className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-mono font-bold transition-all ${
                   activeTab === 'bio'
-                    ? 'bg-[#FF5A1F] text-black shadow-md'
+                    ? 'bg-[#3B82F6] text-black shadow-md'
                     : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
@@ -162,7 +162,7 @@ export default function About() {
                 }}
                 className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-mono font-bold transition-all ${
                   activeTab === 'pillars'
-                    ? 'bg-[#FF5A1F] text-black shadow-md'
+                    ? 'bg-[#3B82F6] text-black shadow-md'
                     : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
@@ -192,7 +192,7 @@ export default function About() {
                   <div className="pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-2 gap-3">
                     {HIGHLIGHTS.map((h, i) => (
                       <div key={i} className="flex items-start gap-2 text-[11px] sm:text-xs text-white/90 font-medium bg-white/5 p-2.5 rounded-xl border border-white/5">
-                        <CheckCircle size={14} className="text-[#FF5A1F] shrink-0 mt-0.5" />
+                        <CheckCircle size={14} className="text-[#3B82F6] shrink-0 mt-0.5" />
                         <span className="leading-tight">{h}</span>
                       </div>
                     ))}
@@ -216,7 +216,7 @@ export default function About() {
                         key={p.id}
                         className="bg-surface/60 border border-white/10 rounded-2xl p-3.5 sm:p-5 hover:border-clay/50 transition-all backdrop-blur-xl flex flex-col items-start gap-2"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-[#FF5A1F]/15 border border-[#FF5A1F]/30 text-[#FF5A1F] flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 rounded-xl bg-[#3B82F6]/15 border border-[#3B82F6]/30 text-[#3B82F6] flex items-center justify-center shrink-0">
                           <Icon size={18} />
                         </div>
                         <div>
@@ -231,7 +231,7 @@ export default function About() {
             </AnimatePresence>
 
             {/* Direct WhatsApp Action Callout */}
-            <div className="bg-gradient-to-r from-[#FF5A1F]/20 via-surface to-black border border-[#FF5A1F]/40 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+            <div className="bg-gradient-to-r from-[#3B82F6]/20 via-surface to-black border border-[#3B82F6]/40 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
               <div>
                 <h4 className="font-display text-xl text-white mb-1">{t('Un projet ambitieux à concrétiser ?', 'An ambitious project to build?')}</h4>
                 <p className="text-xs text-white/70">{t('Discutons de vos besoins techniques & de sécurité dès aujourd\'hui.', 'Let\'s discuss your technical & security requirements today.')}</p>

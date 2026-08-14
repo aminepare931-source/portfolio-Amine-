@@ -40,7 +40,7 @@ export default function Contact() {
           <span className="w-8 h-px bg-clay" /> Démarrer une collaboration
         </div>
         <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
-          Inscrivons vos idées dans le réel<span className="text-[#FF5A1F]">.</span>
+          Inscrivons vos idées dans le réel<span className="text-[#3B82F6]">.</span>
         </h2>
       </Reveal>
 
@@ -55,14 +55,14 @@ export default function Contact() {
 
               <div className="space-y-4 pt-2">
                 {/* Email Box */}
-                <div className="flex items-center justify-between bg-black/50 border border-white/10 rounded-2xl p-4 hover:border-[#FF5A1F]/50 transition-colors">
+                <div className="flex items-center justify-between bg-black/50 border border-white/10 rounded-2xl p-4 hover:border-[#3B82F6]/50 transition-colors">
                   <div className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-xl bg-[#FF5A1F]/20 text-[#FF5A1F] flex items-center justify-center shrink-0">
+                    <div className="w-11 h-11 rounded-xl bg-[#3B82F6]/20 text-[#3B82F6] flex items-center justify-center shrink-0">
                       <Mail size={20} />
                     </div>
                     <div>
                       <div className="text-[10px] font-mono text-muted uppercase">Email Direct</div>
-                      <a href="mailto:aminepare931@gmail.com" className="text-xs sm:text-sm font-semibold text-white hover:text-[#FF5A1F] transition-colors">
+                      <a href="mailto:aminepare931@gmail.com" className="text-xs sm:text-sm font-semibold text-white hover:text-[#3B82F6] transition-colors">
                         aminepare931@gmail.com
                       </a>
                     </div>
@@ -118,7 +118,7 @@ export default function Contact() {
           <Reveal delay={0.15}>
             <form onSubmit={handleSubmit} className="bg-surface/80 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-2xl backdrop-blur-xl">
               <h3 className="font-display text-2xl text-white mb-2 flex items-center gap-2">
-                <Sparkles size={20} className="text-[#FF5A1F]" /> Envoyer un message direct
+                <Sparkles size={20} className="text-[#3B82F6]" /> Envoyer un message direct
               </h3>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -130,7 +130,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="ex: Jean Dupont"
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#FF5A1F] transition-colors"
+                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
 
@@ -142,7 +142,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="jean@exemple.com"
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#FF5A1F] transition-colors"
+                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
               </div>
@@ -155,7 +155,7 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="ex: Création de site e-commerce / Opportunité de recrutement"
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#FF5A1F] transition-colors"
+                  className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
                 />
               </div>
 
@@ -167,13 +167,13 @@ export default function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Expliquez brièvement votre besoin, vos délais et vos objectifs..."
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#FF5A1F] transition-colors resize-none"
+                  className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#ff7a47] text-black font-bold py-4 text-sm hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(255,90,31,0.4)]"
+                className="w-full rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-black font-bold py-4 text-sm hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(59, 130, 246,0.4)]"
               >
                 {sent ? (
                   <>

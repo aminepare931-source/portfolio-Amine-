@@ -33,7 +33,7 @@ export default function Hero() {
       style={{ minHeight: '100dvh' }}
     >
       {/* Background High-Tech Layer */}
-      <div className="absolute inset-0 bg-[#060504]" />
+      <div className="absolute inset-0 bg-[#080b12]" />
 
       {/* Cybernetic Radial Gradient Overlay */}
       <div
@@ -81,7 +81,7 @@ export default function Hero() {
             <span className="bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
               Amine Paré
             </span>
-            <span className="text-[#FF5A1F] inline-block animate-bounce">.</span>
+            <span className="text-[#3B82F6] inline-block animate-bounce">.</span>
           </motion.h1>
 
           {/* Dynamic Motion Role Switcher */}
@@ -92,7 +92,7 @@ export default function Hero() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="flex items-center gap-2 text-base sm:text-xl font-mono text-[#FF5A1F] font-semibold"
+              className="flex items-center gap-2 text-base sm:text-xl font-mono text-[#3B82F6] font-semibold"
             >
               <Code size={20} className="shrink-0 text-clay" />
               <span>{ROLES[currentRoleIndex]}</span>
@@ -123,7 +123,7 @@ export default function Hero() {
             <Link
               to="/projets"
               onClick={playClickSound}
-              className="group relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#ff7a47] text-black font-bold px-5 py-3 sm:px-7 sm:py-4 text-xs sm:text-sm shadow-[0_10px_25px_rgba(255,90,31,0.4)] hover:shadow-[0_15px_35px_rgba(255,90,31,0.6)] hover:scale-105 transition-all duration-300"
+              className="group relative inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-black font-bold px-5 py-3 sm:px-7 sm:py-4 text-xs sm:text-sm shadow-[0_10px_25px_rgba(59, 130, 246,0.4)] hover:shadow-[0_15px_35px_rgba(59, 130, 246,0.6)] hover:scale-105 transition-all duration-300"
             >
               <span>{t('Voir mes projets', 'See my projects')}</span>
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -186,7 +186,7 @@ export default function Hero() {
               ].map((tech, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1 rounded-lg bg-surface/80 border border-white/10 text-white/90 text-xs font-mono font-semibold mx-1.5 shrink-0 hover:border-[#FF5A1F]/50 transition-colors"
+                  className="px-3 py-1 rounded-lg bg-surface/80 border border-white/10 text-white/90 text-xs font-mono font-semibold mx-1.5 shrink-0 hover:border-[#3B82F6]/50 transition-colors"
                 >
                   {tech}
                 </span>
@@ -219,13 +219,13 @@ export default function Hero() {
       >
         <div className="grid grid-cols-2 sm:flex sm:items-center gap-3 sm:gap-6 w-full md:w-auto">
           <span className="flex items-center gap-1.5 text-white bg-white/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-white/5 sm:border-none">
-            <span className="text-[#FF5A1F] font-bold">3+</span> {t("Années Expérience", "Years Experience")}
+            <span className="text-[#3B82F6] font-bold">3+</span> {t("Années Expérience", "Years Experience")}
           </span>
           <span className="flex items-center gap-1.5 text-white bg-white/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-white/5 sm:border-none">
-            <span className="text-[#FF5A1F] font-bold">12+</span> {t("Projets Livrés", "Projects Delivered")}
+            <span className="text-[#3B82F6] font-bold">12+</span> {t("Projets Livrés", "Projects Delivered")}
           </span>
           <span className="col-span-2 sm:col-span-1 flex items-center gap-1.5 text-white bg-white/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-white/5 sm:border-none justify-center sm:justify-start">
-            <span className="text-[#FF5A1F] font-bold">100%</span> {t("Créateur Digital & Autodidacte", "Digital Creator & Self-Taught")}
+            <span className="text-[#3B82F6] font-bold">100%</span> {t("Créateur Digital & Autodidacte", "Digital Creator & Self-Taught")}
           </span>
         </div>
 

@@ -18,7 +18,7 @@ function ToolCard({ tool }: { tool: typeof TOOLS[0] }) {
   return (
     <div
       onClick={playClickSound}
-      className="group relative h-16 w-32 md:h-20 md:w-36 shrink-0 flex items-center justify-center rounded-2xl bg-surface/80 border border-white/10 shadow-lg hover:border-[#FF5A1F]/50 transition-all duration-300 overflow-hidden cursor-pointer backdrop-blur-md"
+      className="group relative h-16 w-32 md:h-20 md:w-36 shrink-0 flex items-center justify-center rounded-2xl bg-surface/80 border border-white/10 shadow-lg hover:border-[#3B82F6]/50 transition-all duration-300 overflow-hidden cursor-pointer backdrop-blur-md"
     >
       <div
         className="absolute inset-0 scale-150 opacity-0 group-hover:scale-100 group-hover:opacity-20 transition-all duration-500"
@@ -50,7 +50,7 @@ export default function ProjectsHeroCard() {
             className="absolute inset-0"
             style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 20%, rgba(255,255,255,0.04) 0%, transparent 65%)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e16] via-[#0a0e16]/60 to-transparent" />
         </div>
 
         {/* Content Box */}
@@ -60,8 +60,8 @@ export default function ProjectsHeroCard() {
           transition={{ duration: 0.8 }}
           className="relative z-20 px-6 sm:px-12 pt-10 sm:pt-14 flex flex-col items-start max-w-2xl"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 border border-[#FF5A1F]/40 text-xs font-mono text-clay mb-4 backdrop-blur-md">
-            <Sparkles size={13} className="text-[#FF5A1F]" /> Portfolio &amp; Projets Clés
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 border border-[#3B82F6]/40 text-xs font-mono text-clay mb-4 backdrop-blur-md">
+            <Sparkles size={13} className="text-[#3B82F6]" /> Portfolio &amp; Projets Clés
           </div>
 
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.02] text-white mb-4">
@@ -77,7 +77,7 @@ export default function ProjectsHeroCard() {
 
           <div className="flex items-center gap-3">
             <Link to="/contact" onClick={playClickSound}>
-              <button className="bg-gradient-to-r from-[#FF5A1F] to-[#ff7a47] text-black font-bold rounded-full px-7 py-3.5 text-xs sm:text-sm hover:scale-105 transition-all shadow-[0_10px_20px_rgba(255,90,31,0.4)] flex items-center gap-2">
+              <button className="bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-black font-bold rounded-full px-7 py-3.5 text-xs sm:text-sm hover:scale-105 transition-all shadow-[0_10px_20px_rgba(59, 130, 246,0.4)] flex items-center gap-2">
                 <span>Démarrer un projet</span>
                 <ChevronRight size={16} />
               </button>

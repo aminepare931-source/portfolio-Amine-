@@ -24,7 +24,7 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
   return (
     <div ref={ref} className="font-display text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight">
       {n}
-      <span className="text-[#FF5A1F]">{suffix}</span>
+      <span className="text-[#3B82F6]">{suffix}</span>
     </div>
   )
 }
@@ -37,7 +37,7 @@ const STAT_CARDS = [
     tagline: 'Pratique intensive & autodidacte',
     detail: 'Spécialisé en React, Node.js & architectures cloud depuis 2023',
     icon: Code,
-    color: '#FF5A1F',
+    color: '#3B82F6',
   },
   {
     n: 12,
@@ -46,7 +46,7 @@ const STAT_CARDS = [
     labelSub: 'E-Commerce, SAAS & Mobile',
     detail: 'Applications web complètes avec paiement Mobile Money & Supabase',
     icon: Zap,
-    color: '#FF5A1F',
+    color: '#3B82F6',
   },
   {
     n: 100,
@@ -55,7 +55,7 @@ const STAT_CARDS = [
     labelSub: 'Code propre & sécurisé',
     detail: 'Respect des délais, tests rigoureux et intégrations API robustes',
     icon: ShieldCheck,
-    color: '#FF5A1F',
+    color: '#3B82F6',
   },
   {
     n: 42,
@@ -64,7 +64,7 @@ const STAT_CARDS = [
     labelSub: 'Ecosystème Web Modern',
     detail: 'Frontend, Backend, Bases de données, Devops & Automatisation IA',
     icon: Award,
-    color: '#FF5A1F',
+    color: '#3B82F6',
   },
 ]
 
@@ -72,9 +72,9 @@ export default function Stats() {
   const [activeCard, setActiveCard] = useState<number | null>(null)
 
   return (
-    <section className="relative py-20 sm:py-28 overflow-hidden bg-[#080706]">
+    <section className="relative py-20 sm:py-28 overflow-hidden bg-[#0a0e16]">
       {/* Fond sombre uni */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#080706]/90 to-[#080706] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e16] via-[#0a0e16]/90 to-[#0a0e16] pointer-events-none" />
 
       <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
         {/* Header Title */}
@@ -84,7 +84,7 @@ export default function Stats() {
               <span className="w-8 h-px bg-clay" /> Chiffres Clés & Performance
             </div>
             <h2 className="font-display text-3xl sm:text-5xl text-white">
-              Impact mesurable &amp; valeur concrète<span className="text-[#FF5A1F]">.</span>
+              Impact mesurable &amp; valeur concrète<span className="text-[#3B82F6]">.</span>
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-muted max-w-md font-sans">
@@ -112,7 +112,7 @@ export default function Stats() {
                 onMouseLeave={() => setActiveCard(null)}
                 className={`relative rounded-3xl p-6 sm:p-7 border transition-all duration-500 cursor-pointer overflow-hidden backdrop-blur-xl ${
                   isHovered
-                    ? 'bg-surface/90 border-[#FF5A1F]/60 shadow-[0_15px_40px_rgba(255,90,31,0.2)] scale-[1.02]'
+                    ? 'bg-surface/90 border-[#3B82F6]/60 shadow-[0_15px_40px_rgba(59, 130, 246,0.2)] scale-[1.02]'
                     : 'bg-surface/40 border-white/10 hover:border-white/20'
                 }`}
               >

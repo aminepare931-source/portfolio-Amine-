@@ -134,7 +134,7 @@ export default function Explorations() {
   return (
     <section
       id="galerie"
-      className="relative w-full overflow-hidden transition-colors duration-700 bg-[#070605]"
+      className="relative w-full overflow-hidden transition-colors duration-700 bg-[#0a0e16]"
       style={{ backgroundColor: activeItem.bg }}
     >
       <div
@@ -160,7 +160,7 @@ export default function Explorations() {
 
         {/* Top Brand Tag */}
         <div className="absolute top-6 left-6 z-[60] flex items-center gap-2 text-xs font-mono uppercase text-white/80 tracking-widest bg-black/40 px-3.5 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
-          <MapPin size={13} className="text-[#FF5A1F]" />
+          <MapPin size={13} className="text-[#3B82F6]" />
           <span>Amine Paré • Burkina Faso</span>
         </div>
 
@@ -196,7 +196,7 @@ export default function Explorations() {
                     playClickSound()
                     setModalOpen(true)
                   }}
-                  className="absolute top-4 right-4 bg-black/70 hover:bg-[#FF5A1F] hover:text-black transition-colors text-white text-xs font-mono p-2.5 rounded-full border border-white/20 backdrop-blur-md shadow-lg"
+                  className="absolute top-4 right-4 bg-black/70 hover:bg-[#3B82F6] hover:text-black transition-colors text-white text-xs font-mono p-2.5 rounded-full border border-white/20 backdrop-blur-md shadow-lg"
                 >
                   <Maximize2 size={14} />
                 </button>
@@ -239,7 +239,7 @@ export default function Explorations() {
         <Link
           to="/projets"
           onClick={playClickSound}
-          className="absolute bottom-6 right-6 sm:bottom-12 sm:right-12 z-[60] flex items-center gap-2 text-white hover:text-[#FF5A1F] transition-colors font-display text-2xl sm:text-4xl uppercase"
+          className="absolute bottom-6 right-6 sm:bottom-12 sm:right-12 z-[60] flex items-center gap-2 text-white hover:text-[#3B82F6] transition-colors font-display text-2xl sm:text-4xl uppercase"
         >
           <span>Voir les projets</span>
           <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -258,7 +258,7 @@ export default function Explorations() {
           >
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-[#FF5A1F] hover:text-black transition-colors"
+              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-[#3B82F6] hover:text-black transition-colors"
             >
               <X size={20} />
             </button>

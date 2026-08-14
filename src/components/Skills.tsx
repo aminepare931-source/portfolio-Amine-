@@ -7,17 +7,17 @@ import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
 const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 85, Confirmé: 70, Intermédiaire: 55 }
-const LEVEL_COLOR: Record<string, string> = { Expert: '#FF5A1F', Avancé: '#FF5A1F', Confirmé: '#FF5A1F', Intermédiaire: '#FF5A1F' }
+const LEVEL_COLOR: Record<string, string> = { Expert: '#3B82F6', Avancé: '#3B82F6', Confirmé: '#3B82F6', Intermédiaire: '#3B82F6' }
 
 function SkillBar({ lvl }: { lvl: string }) {
   const { ref, inView } = useInView<HTMLDivElement>(0.3)
   const pct = LEVEL_PCT[lvl] ?? 65
-  const color = LEVEL_COLOR[lvl] ?? '#FF5A1F'
+  const color = LEVEL_COLOR[lvl] ?? '#3B82F6'
 
   return (
     <div ref={ref} className="h-2 rounded-full bg-white/10 overflow-hidden p-0.5 border border-white/5">
       <div
-        className="h-full rounded-full transition-all duration-[1200ms] ease-out shadow-[0_0_12px_rgba(255,90,31,0.5)]"
+        className="h-full rounded-full transition-all duration-[1200ms] ease-out shadow-[0_0_12px_rgba(59, 130, 246,0.5)]"
         style={{ width: inView ? `${pct}%` : '0%', background: color }}
       />
     </div>
@@ -104,13 +104,13 @@ export default function Skills() {
     : currentCategory.skills
 
   return (
-    <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#060504]">
+    <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#080b12]">
       {/* Fond sombre uni avec lueur douce */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 60%)' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#060504]/90 to-[#080706] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e16] via-[#080b12]/90 to-[#0a0e16] pointer-events-none" />
 
       <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
         {/* Section Header */}
@@ -121,7 +121,7 @@ export default function Skills() {
                 <span className="w-8 h-px bg-clay" /> {t('Arsenal Global & Polyvalent', 'Global & Polyvalent Arsenal')}
               </div>
               <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white">
-                {t('Compétences & Maîtrise Multi-Secteurs', 'Skills & Multi-Domain Mastery')}<span className="text-[#FF5A1F]">.</span>
+                {t('Compétences & Maîtrise Multi-Secteurs', 'Skills & Multi-Domain Mastery')}<span className="text-[#3B82F6]">.</span>
               </h2>
             </div>
 
@@ -133,7 +133,7 @@ export default function Skills() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('Rechercher une technologie...', 'Search a technology...')}
-                className="w-full bg-surface/80 border border-white/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-white placeholder-white/40 outline-none focus:border-[#FF5A1F] transition-all backdrop-blur-md"
+                className="w-full bg-surface/80 border border-white/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-white placeholder-white/40 outline-none focus:border-[#3B82F6] transition-all backdrop-blur-md"
               />
               {search && (
                 <button
@@ -155,7 +155,7 @@ export default function Skills() {
                 key={idx}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-white/10 mx-2 shrink-0 text-xs font-mono"
               >
-                <span className="w-2 h-2 rounded-full" style={{ background: LEVEL_COLOR[s.lvl] || '#FF5A1F' }} />
+                <span className="w-2 h-2 rounded-full" style={{ background: LEVEL_COLOR[s.lvl] || '#3B82F6' }} />
                 <span className="text-white font-bold">{s.n}</span>
                 <span className="text-[10px] text-white/50">({s.lvl})</span>
               </div>
@@ -178,7 +178,7 @@ export default function Skills() {
                   }}
                   className={`flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl text-xs sm:text-sm font-mono font-bold shrink-0 transition-all duration-300 ${
                     isActive
-                      ? 'bg-[#FF5A1F] text-black shadow-[0_10px_25px_rgba(255,90,31,0.4)] scale-105'
+                      ? 'bg-[#3B82F6] text-black shadow-[0_10px_25px_rgba(59, 130, 246,0.4)] scale-105'
                       : 'bg-surface/60 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 backdrop-blur-md'
                   }`}
                 >
@@ -203,7 +203,7 @@ export default function Skills() {
             {displayedSkills.map((s) => (
               <div
                 key={s.n}
-                className="group relative bg-surface/60 border border-white/10 hover:border-[#FF5A1F]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 hover:scale-[1.02] backdrop-blur-xl flex flex-col justify-between shadow-xl"
+                className="group relative bg-surface/60 border border-white/10 hover:border-[#3B82F6]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 hover:scale-[1.02] backdrop-blur-xl flex flex-col justify-between shadow-xl"
               >
                 <div>
                   {'catLabel' in s && (
@@ -213,7 +213,7 @@ export default function Skills() {
                   )}
                   
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                    <h3 className="font-display text-sm sm:text-lg text-white group-hover:text-[#FF5A1F] transition-colors leading-tight">
+                    <h3 className="font-display text-sm sm:text-lg text-white group-hover:text-[#3B82F6] transition-colors leading-tight">
                       {s.n}
                     </h3>
                     <span

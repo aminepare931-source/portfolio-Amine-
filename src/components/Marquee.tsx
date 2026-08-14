@@ -17,7 +17,7 @@ export default function Marquee() {
   const doubled = [...TECH_ITEMS, ...TECH_ITEMS]
 
   return (
-    <div className="relative overflow-hidden border-y border-white/10 bg-[#080706] py-5 z-20">
+    <div className="relative overflow-hidden border-y border-white/10 bg-[#0a0e16] py-5 z-20">
       <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
         {doubled.map((item, i) => {
           const Icon = item.icon

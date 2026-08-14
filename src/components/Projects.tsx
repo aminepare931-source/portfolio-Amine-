@@ -32,7 +32,7 @@ export default function Projects() {
               >
                 <div
                   className="aspect-video flex items-center justify-center relative"
-                  style={{ background: `linear-gradient(135deg, #0f0e0c 0%, ${p.color}22 100%)` }}
+                  style={{ background: `linear-gradient(135deg, #0d1219 0%, ${p.color}22 100%)` }}
                 >
                   <span className="text-5xl">{p.emoji}</span>
                   {p.featured && (

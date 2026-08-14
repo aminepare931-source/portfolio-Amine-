@@ -7,16 +7,16 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  background: #080706;
+  background: #0a0e16;
   color: #f2ede2;
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-::selection { background: #FF5A1F; color: #000; }
+::selection { background: #3B82F6; color: #000; }
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-thumb { background: #FF5A1F; }
+::-webkit-scrollbar-thumb { background: #3B82F6; }
 
 @keyframes scroll-down {
   0% { transform: translateY(-100%); opacity: 0; }

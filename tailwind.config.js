@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#080706',
-        surface: '#111010',
-        surface2: '#181614',
-        stroke: 'rgba(255,255,255,0.08)',
-        text: '#f2ede2',
-        muted: '#9a938b',
-        clay: '#ff5a1f',
+        bg: '#0a0e16',
+        surface: '#10151f',
+        surface2: '#171e2b',
+        stroke: 'rgba(255,255,255,0.09)',
+        text: '#e9edf3',
+        muted: '#8b93a3',
+        clay: '#3b82f6',
       },
       fontFamily: {
         display: ['"Bebas Neue"', 'sans-serif'],
