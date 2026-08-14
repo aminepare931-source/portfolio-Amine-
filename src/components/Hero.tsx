@@ -40,7 +40,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle at 50% 30%, rgba(255, 90, 31, 0.12) 0%, rgba(8, 7, 6, 0.9) 60%, rgba(6, 5, 4, 0.98) 100%)',
+            'radial-gradient(circle at 50% 30%, rgba(255,255,255,0.04) 0%, rgba(8, 7, 6, 0.9) 60%, rgba(6, 5, 4, 0.98) 100%)',
         }}
       />
 

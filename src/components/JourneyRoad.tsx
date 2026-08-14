@@ -102,7 +102,7 @@ export default function JourneyRoad() {
         <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-black/60 p-8 sm:p-12 backdrop-blur-xl">
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse 70% 60% at 20% 30%, rgba(255,90,31,0.1) 0%, transparent 65%)' }}
+            style={{ background: 'radial-gradient(ellipse 70% 60% at 20% 30%, rgba(255,255,255,0.04) 0%, transparent 65%)' }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none" />
 

@@ -45,7 +45,7 @@ export default function About() {
       {/* Fond sombre uni avec lueur douce */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,90,31,0.06) 0%, transparent 60%)' }}
+        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 60%)' }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-[#080706] via-[#070605]/95 to-[#080706] pointer-events-none" />
 

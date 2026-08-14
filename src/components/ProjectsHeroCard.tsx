@@ -48,7 +48,7 @@ export default function ProjectsHeroCard() {
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
           <div
             className="absolute inset-0"
-            style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 20%, rgba(255,90,31,0.1) 0%, transparent 65%)' }}
+            style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 20%, rgba(255,255,255,0.04) 0%, transparent 65%)' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/60 to-transparent" />
         </div>
