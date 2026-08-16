@@ -205,7 +205,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-head);min-heigh
     </div>
   </div>
 
-  <div class="admin-main">
+  <!-- ONGLETS -->
+  <div style="display:flex;gap:.5rem;padding:1.2rem 2.5rem 0">
+    <button class="btn outline" id="tab-projects" onclick="showTab('projects')" style="border-color:var(--orange);color:var(--orange)">📂 Projets</button>
+    <button class="btn outline" id="tab-settings" onclick="showTab('settings')">📇 Contact &amp; Réseaux</button>
+  </div>
+
+  <div id="panel-projects" class="admin-main">
     <!-- LISTE -->
     <div>
       <div class="stats">
@@ -320,6 +326,53 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-head);min-heigh
   </div>
 </div>
 
+<!-- PANNEAU CONTACT & RÉSEAUX -->
+<div id="panel-settings" class="admin-main" style="display:none;grid-template-columns:1fr">
+  <div class="form-panel" style="max-width:560px;margin:0 auto;position:static">
+    <div class="panel-head">
+      <div class="panel-title">Contact &amp; <span>Réseaux</span></div>
+    </div>
+
+    <div class="fg">
+      <label class="fl">Email <span class="req">*</span></label>
+      <input class="fi" id="set-email" type="email" placeholder="ton@email.com"/>
+    </div>
+    <div class="fg">
+      <label class="fl">Téléphone (affiché)</label>
+      <input class="fi" id="set-phone" type="text" placeholder="+226 55 30 08 68"/>
+    </div>
+    <div class="fg">
+      <label class="fl">WhatsApp (chiffres seulement, avec indicatif)</label>
+      <input class="fi" id="set-whatsapp" type="text" placeholder="22655300868"/>
+      <div class="fhint">Sans le + ni espaces. Ex: 22655300868</div>
+    </div>
+    <div class="fg">
+      <label class="fl">LinkedIn (lien complet)</label>
+      <input class="fi" id="set-linkedin" type="url" placeholder="https://linkedin.com/in/..."/>
+    </div>
+    <div class="fg">
+      <label class="fl">TikTok (lien complet)</label>
+      <input class="fi" id="set-tiktok" type="url" placeholder="https://tiktok.com/@..."/>
+    </div>
+    <div class="fg">
+      <label class="fl">Facebook (lien complet)</label>
+      <input class="fi" id="set-facebook" type="url" placeholder="https://facebook.com/..."/>
+    </div>
+    <div class="fg">
+      <label class="fl">Lien boutique / formations</label>
+      <input class="fi" id="set-store-url" type="url" placeholder="https://..."/>
+    </div>
+    <div class="fg">
+      <label class="fl">Texte affiché pour la boutique</label>
+      <input class="fi" id="set-store-label" type="text" placeholder="Voir mes formations"/>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-submit" id="btn-save-settings" onclick="saveSettings()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL SUPPRESSION -->
 <div class="modal" id="modal-del">
   <div class="modal-box">
@@ -336,8 +389,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-head);min-heigh
 
 <script>
 /* ══ CONFIG ══ */
-const SB_URL = 'https://btjdrlmudyfjkztfzkss.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0amRybG11ZHlmamt6dGZ6a3NzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0MzY5MTEsImV4cCI6MjA5NzAxMjkxMX0.AaCJhrRtS2gxnlI0YEqPPyTXv9Z_dPvSPAYvtEXA5XE';
+const SB_URL = 'https://ytpghkntnuuppmreeboo.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0cGdoa250bnV1cHBtcmVlYm9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMTY5NzEsImV4cCI6MjA5Nzc5Mjk3MX0.D4i-P18kRs0_nsMX5Kk8EYdnTV-ZIxDVfI_OvoAmE4E';
 const HEADERS = { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
 const PASS = 'amine2026'; // ← Change ici
 const SESSION = 'ap_admin_v2';
@@ -627,6 +680,66 @@ function showToast(msg, type='') {
   el.textContent = msg;
   t.appendChild(el);
   setTimeout(()=>el.remove(), 3500);
+}
+
+/* ══ ONGLETS ══ */
+function showTab(name) {
+  const isProjects = name === 'projects';
+  document.getElementById('panel-projects').style.display = isProjects ? 'grid' : 'none';
+  document.getElementById('panel-settings').style.display = isProjects ? 'none' : 'grid';
+  document.getElementById('tab-projects').style.borderColor = isProjects ? 'var(--orange)' : '';
+  document.getElementById('tab-projects').style.color = isProjects ? 'var(--orange)' : '';
+  document.getElementById('tab-settings').style.borderColor = isProjects ? '' : 'var(--orange)';
+  document.getElementById('tab-settings').style.color = isProjects ? '' : 'var(--orange)';
+  if (!isProjects) loadSettings();
+}
+
+/* ══ PARAMÈTRES CONTACT & RÉSEAUX ══ */
+async function loadSettings() {
+  try {
+    const r = await fetch(`${SB_URL}/rest/v1/site_settings?select=*&limit=1`, { headers: HEADERS });
+    const data = await r.json();
+    const s = (Array.isArray(data) && data[0]) || {};
+    document.getElementById('set-email').value = s.email || 'aminepare931@gmail.com';
+    document.getElementById('set-phone').value = s.phone || '+226 55 30 08 68';
+    document.getElementById('set-whatsapp').value = s.whatsapp || '22655300868';
+    document.getElementById('set-linkedin').value = s.linkedin || '';
+    document.getElementById('set-tiktok').value = s.tiktok || '';
+    document.getElementById('set-facebook').value = s.facebook || '';
+    document.getElementById('set-store-url').value = s.store_url || '';
+    document.getElementById('set-store-label').value = s.store_label || '';
+  } catch (e) {
+    showToast('Erreur chargement paramètres: ' + e.message, 'err');
+  }
+}
+
+async function saveSettings() {
+  const payload = {
+    id: 1,
+    email: document.getElementById('set-email').value.trim(),
+    phone: document.getElementById('set-phone').value.trim(),
+    whatsapp: document.getElementById('set-whatsapp').value.trim(),
+    linkedin: document.getElementById('set-linkedin').value.trim() || null,
+    tiktok: document.getElementById('set-tiktok').value.trim() || null,
+    facebook: document.getElementById('set-facebook').value.trim() || null,
+    store_url: document.getElementById('set-store-url').value.trim() || null,
+    store_label: document.getElementById('set-store-label').value.trim() || null,
+  };
+  const btn = document.getElementById('btn-save-settings');
+  btn.disabled = true;
+  try {
+    const r = await fetch(`${SB_URL}/rest/v1/site_settings?on_conflict=id`, {
+      method: 'POST',
+      headers: { ...HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
+      body: JSON.stringify(payload),
+    });
+    if (!r.ok) throw new Error(await r.text());
+    showToast('✅ Coordonnées enregistrées !', 'ok');
+  } catch (e) {
+    showToast('❌ Erreur : ' + e.message, 'err');
+  } finally {
+    btn.disabled = false;
+  }
 }
 </script>
 </body>

@@ -1,17 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, MessageCircle, Copy, Check, Send, MapPin, Sparkles, Phone, ShieldCheck } from 'lucide-react'
+import { Mail, MessageCircle, Copy, Check, Send, MapPin, Sparkles, Phone, ShieldCheck, Linkedin, Facebook, ShoppingBag } from 'lucide-react'
 import Reveal from './Reveal'
 import { playClickSound } from '../lib/sound'
+import { fetchSettings, DEFAULT_SETTINGS, SiteSettings } from '../lib/supabase'
+
+/* Icône TikTok — pas dans lucide-react, en SVG simple */
+function TikTokIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+    </svg>
+  )
+}
 
 export default function Contact() {
   const [sent, setSent] = useState(false)
   const [copied, setCopied] = useState(false)
   const [formData, setFormData] = useState({ name: '', email: '', subject: 'Projet / Opportunité', message: '' })
+  const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS)
+
+  useEffect(() => {
+    fetchSettings().then(setSettings)
+  }, [])
 
   const copyEmail = () => {
     playClickSound()
-    navigator.clipboard.writeText('aminepare931@gmail.com')
+    navigator.clipboard.writeText(settings.email)
     setCopied(true)
     setTimeout(() => setCopied(false), 2500)
   }
@@ -22,7 +37,7 @@ export default function Contact() {
     setSent(true)
 
     // Open mailto client with prefilled data
-    const mailtoUrl = `mailto:aminepare931@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+    const mailtoUrl = `mailto:${settings.email}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
       `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     )}`
     window.location.href = mailtoUrl
@@ -62,8 +77,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <div className="text-[10px] font-mono text-muted uppercase">Email Direct</div>
-                      <a href="mailto:aminepare931@gmail.com" className="text-xs sm:text-sm font-semibold text-white hover:text-[#3B82F6] transition-colors">
-                        aminepare931@gmail.com
+                      <a href={`mailto:${settings.email}`} className="text-xs sm:text-sm font-semibold text-white hover:text-[#3B82F6] transition-colors">
+                        {settings.email}
                       </a>
                     </div>
                   </div>
@@ -78,7 +93,7 @@ export default function Contact() {
 
                 {/* WhatsApp Box */}
                 <a
-                  href="https://wa.me/22655300858?text=Bonjour%20Amine,%20je%20souhaite%20discuter%20d'un%20projet..."
+                  href={`https://wa.me/${settings.whatsapp}?text=Bonjour%20Amine,%20je%20souhaite%20discuter%20d'un%20projet...`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={playClickSound}
@@ -91,12 +106,55 @@ export default function Contact() {
                     <div>
                       <div className="text-[10px] font-mono text-[#25D366] uppercase font-bold">Réponse sous 2h</div>
                       <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#25D366] transition-colors">
-                        +226 55 30 08 58 (WhatsApp)
+                        {settings.phone} (WhatsApp)
                       </div>
                     </div>
                   </div>
                   <span className="text-xs font-bold text-[#25D366] uppercase tracking-wider pr-2">Discuter ↗</span>
                 </a>
+
+                {/* Réseaux sociaux */}
+                {(settings.linkedin || settings.tiktok || settings.facebook) && (
+                  <div className="flex gap-2.5 pt-1">
+                    {settings.linkedin && (
+                      <a href={settings.linkedin} target="_blank" rel="noopener noreferrer" onClick={playClickSound}
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#0A66C2]/10 border border-[#0A66C2]/30 hover:bg-[#0A66C2]/20 text-[#0A66C2] rounded-xl py-3 transition-colors">
+                        <Linkedin size={18} /> <span className="text-xs font-bold">LinkedIn</span>
+                      </a>
+                    )}
+                    {settings.tiktok && (
+                      <a href={settings.tiktok} target="_blank" rel="noopener noreferrer" onClick={playClickSound}
+                        className="flex-1 flex items-center justify-center gap-2 bg-white/5 border border-white/20 hover:bg-white/10 text-white rounded-xl py-3 transition-colors">
+                        <TikTokIcon size={16} /> <span className="text-xs font-bold">TikTok</span>
+                      </a>
+                    )}
+                    {settings.facebook && (
+                      <a href={settings.facebook} target="_blank" rel="noopener noreferrer" onClick={playClickSound}
+                        className="flex-1 flex items-center justify-center gap-2 bg-[#1877F2]/10 border border-[#1877F2]/30 hover:bg-[#1877F2]/20 text-[#1877F2] rounded-xl py-3 transition-colors">
+                        <Facebook size={18} /> <span className="text-xs font-bold">Facebook</span>
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* Boutique / formations */}
+                {settings.store_url && (
+                  <a href={settings.store_url} target="_blank" rel="noopener noreferrer" onClick={playClickSound}
+                    className="flex items-center justify-between bg-clay/10 border border-clay/30 rounded-2xl p-4 hover:bg-clay/20 transition-all group">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-11 h-11 rounded-xl bg-clay/20 text-clay flex items-center justify-center shrink-0">
+                        <ShoppingBag size={20} />
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-mono text-clay uppercase font-bold">Boutique</div>
+                        <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-clay transition-colors">
+                          {settings.store_label || 'Voir mes formations'}
+                        </div>
+                      </div>
+                    </div>
+                    <span className="text-xs font-bold text-clay uppercase tracking-wider pr-2">Découvrir ↗</span>
+                  </a>
+                )}
 
                 {/* Location */}
                 <div className="flex items-center gap-3.5 bg-black/50 border border-white/10 rounded-2xl p-4">

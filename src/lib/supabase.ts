@@ -31,7 +31,7 @@ export async function fetchProjects(): Promise<Project[]> {
     if (res.ok) {
       const data = await res.json()
       if (Array.isArray(data) && data.length > 0) {
-        return data.map((item: any, idx: number) => {
+        return data.map((item: any) => {
           const match = FEATURED_PROJECTS.find(p => p.id === item.id || p.name.toLowerCase() === item.name?.toLowerCase())
           return {
             ...item,
@@ -50,3 +50,47 @@ export async function fetchProjects(): Promise<Project[]> {
   return FEATURED_PROJECTS
 }
 
+/* ═══════════════════════════════════════
+   PARAMÈTRES DU SITE (contact, réseaux sociaux, liens)
+   Éditables depuis l'admin — un seul enregistrement (id = 1)
+═══════════════════════════════════════ */
+export interface SiteSettings {
+  id?: number
+  email: string
+  phone: string
+  whatsapp: string
+  linkedin: string | null
+  tiktok: string | null
+  facebook: string | null
+  store_url: string | null
+  store_label: string | null
+}
+
+export const DEFAULT_SETTINGS: SiteSettings = {
+  email: 'aminepare931@gmail.com',
+  phone: '+226 55 30 08 68',
+  whatsapp: '22655300868',
+  linkedin: null,
+  tiktok: null,
+  facebook: null,
+  store_url: null,
+  store_label: null,
+}
+
+export async function fetchSettings(): Promise<SiteSettings> {
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/site_settings?select=*&limit=1`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+    )
+    if (res.ok) {
+      const data = await res.json()
+      if (Array.isArray(data) && data.length > 0) {
+        return { ...DEFAULT_SETTINGS, ...data[0] }
+      }
+    }
+  } catch (e) {
+    console.warn('Supabase settings fetch fallback to defaults', e)
+  }
+  return DEFAULT_SETTINGS
+}

@@ -329,7 +329,7 @@ export default function JourneyRoad() {
                   <h4 className="font-display text-sm sm:text-xl text-white mb-1 leading-tight">{m.role}</h4>
                   <div className="text-[10px] sm:text-xs text-white/50 font-mono mb-2">{m.co}</div>
 
-                  <p className="text-[11px] sm:text-xs text-white/70 leading-snug sm:leading-relaxed font-sans mb-3 line-clamp-3">{m.d}</p>
+                  <p className="hidden sm:block text-xs text-white/70 leading-relaxed font-sans mb-3 line-clamp-3">{m.d}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-1 pt-2 sm:pt-3 border-t border-white/10">
@@ -371,7 +371,7 @@ export default function JourneyRoad() {
                 BAC Professionnel
               </h4>
               <div className="text-xs text-clay font-mono mb-2">{t('Spécialité : Énergie Solaire', 'Specialty: Solar Energy')}</div>
-              <p className="text-xs text-white/70 leading-relaxed font-sans">
+              <p className="hidden sm:block text-xs text-white/70 leading-relaxed font-sans">
                 {t(
                   'Électrotechnique, systèmes photovoltaïques et logique d\'ingénierie physique.',
                   'Electrotechnics, photovoltaic systems, and hardware engineering logic.'
@@ -391,7 +391,7 @@ export default function JourneyRoad() {
                 BEP
               </h4>
               <div className="text-xs text-clay font-mono mb-2">{t('Option : Énergie Solaire', 'Option: Solar Energy')}</div>
-              <p className="text-xs text-white/70 leading-relaxed font-sans">
+              <p className="hidden sm:block text-xs text-white/70 leading-relaxed font-sans">
                 {t(
                   'Fondamentaux électriques, câblage et dépannage d\'équipements.',
                   'Electrical fundamentals, wiring, and equipment troubleshooting.'
@@ -411,7 +411,7 @@ export default function JourneyRoad() {
                 BEPC
               </h4>
               <div className="text-xs text-sky-400 font-mono mb-2">{t('Brevet d\'Études du Premier Cycle', 'Junior High School Certificate')}</div>
-              <p className="text-xs text-white/70 leading-relaxed font-sans">
+              <p className="hidden sm:block text-xs text-white/70 leading-relaxed font-sans">
                 {t(
                   'Études du premier cycle avec mention, socle scientifique solide.',
                   'Junior secondary education with honors, strong scientific foundation.'

@@ -228,7 +228,7 @@ export default function Skills() {
                     </span>
                   </div>
 
-                  <p className="text-[11px] sm:text-xs text-white/70 leading-snug sm:leading-relaxed mb-4 font-sans line-clamp-3">
+                  <p className="hidden sm:block text-xs text-white/70 leading-relaxed mb-4 font-sans line-clamp-3">
                     {s.d}
                   </p>
                 </div>

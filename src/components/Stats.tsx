@@ -93,7 +93,7 @@ export default function Stats() {
         </div>
 
         {/* 4-Card 2026 Motion Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {STAT_CARDS.map((card, idx) => {
             const Icon = card.icon
             const isHovered = activeCard === idx
@@ -110,7 +110,7 @@ export default function Stats() {
                   setActiveCard(idx)
                 }}
                 onMouseLeave={() => setActiveCard(null)}
-                className={`relative rounded-3xl p-6 sm:p-7 border transition-all duration-500 cursor-pointer overflow-hidden backdrop-blur-xl ${
+                className={`relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 border transition-all duration-500 cursor-pointer overflow-hidden backdrop-blur-xl ${
                   isHovered
                     ? 'bg-surface/90 border-[#3B82F6]/60 shadow-[0_15px_40px_rgba(59, 130, 246,0.2)] scale-[1.02]'
                     : 'bg-surface/40 border-white/10 hover:border-white/20'
@@ -154,8 +154,8 @@ export default function Stats() {
                 </h3>
                 <p className="text-xs text-clay font-mono mb-4">{card.tagline}</p>
 
-                {/* Detail text visible on hover */}
-                <p className="text-xs text-white/70 leading-relaxed border-t border-white/10 pt-3">
+                {/* Detail text — masqué sur mobile pour rester compact */}
+                <p className="hidden sm:block text-xs text-white/70 leading-relaxed border-t border-white/10 pt-3">
                   {card.detail}
                 </p>
 
