@@ -134,7 +134,7 @@ export default function Explorations() {
   return (
     <section
       id="galerie"
-      className="relative w-full overflow-hidden transition-colors duration-700 bg-[#0a0e16]"
+      className="relative w-full overflow-hidden transition-colors duration-700 bg-[#ffffff]"
       style={{ backgroundColor: activeItem.bg }}
     >
       <div
@@ -147,7 +147,7 @@ export default function Explorations() {
       >
         {/* Ghost Background Watermark */}
         <div
-          className="absolute inset-x-0 flex items-center justify-center pointer-events-none select-none uppercase whitespace-nowrap text-white/5 font-display"
+          className="absolute inset-x-0 flex items-center justify-center pointer-events-none select-none uppercase whitespace-nowrap text-slate-900/5 font-display"
           style={{
             top: '12%',
             fontSize: 'clamp(70px, 22vw, 300px)',
@@ -159,7 +159,7 @@ export default function Explorations() {
         </div>
 
         {/* Top Brand Tag */}
-        <div className="absolute top-6 left-6 z-[60] flex items-center gap-2 text-xs font-mono uppercase text-white/80 tracking-widest bg-black/40 px-3.5 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
+        <div className="absolute top-6 left-6 z-[60] flex items-center gap-2 text-xs font-mono uppercase text-slate-900/80 tracking-widest bg-slate-900/40 px-3.5 py-1.5 rounded-full border border-slate-900/10 backdrop-blur-md">
           <MapPin size={13} className="text-[#3B82F6]" />
           <span>Amine Paré • Burkina Faso</span>
         </div>
@@ -179,7 +179,7 @@ export default function Explorations() {
                   setActiveIndex(i)
                 }
               }}
-              className="group overflow-hidden rounded-3xl shadow-2xl border border-white/20 bg-black relative"
+              className="group overflow-hidden rounded-3xl shadow-2xl border border-slate-900/20 bg-white relative"
             >
               <img
                 src={it.src}
@@ -196,7 +196,7 @@ export default function Explorations() {
                     playClickSound()
                     setModalOpen(true)
                   }}
-                  className="absolute top-4 right-4 bg-black/70 hover:bg-[#3B82F6] hover:text-black transition-colors text-white text-xs font-mono p-2.5 rounded-full border border-white/20 backdrop-blur-md shadow-lg"
+                  className="absolute top-4 right-4 bg-white/70 hover:bg-[#3B82F6] hover:text-black transition-colors text-slate-900 text-xs font-mono p-2.5 rounded-full border border-slate-900/20 backdrop-blur-md shadow-lg"
                 >
                   <Maximize2 size={14} />
                 </button>
@@ -207,28 +207,28 @@ export default function Explorations() {
 
         {/* Bottom Left Info & Controls */}
         <div className="absolute bottom-6 left-6 sm:bottom-12 sm:left-12 z-[60] max-w-md">
-          <div className="inline-flex items-center gap-1.5 text-xs font-mono text-clay uppercase tracking-widest mb-2 bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md">
+          <div className="inline-flex items-center gap-1.5 text-xs font-mono text-clay uppercase tracking-widest mb-2 bg-white/60 px-3 py-1 rounded-full border border-slate-900/10 backdrop-blur-md">
             <Sparkles size={13} /> Photo {activeIndex + 1} / {n}
           </div>
 
-          <h3 className="font-display text-2xl sm:text-3xl text-white uppercase mb-1">
+          <h3 className="font-display text-2xl sm:text-3xl text-slate-900 uppercase mb-1">
             {activeItem.label}
           </h3>
 
-          <p className="hidden sm:block text-xs text-white/80 leading-relaxed mb-4 font-sans">
+          <p className="hidden sm:block text-xs text-slate-900/80 leading-relaxed mb-4 font-sans">
             {activeItem.desc}
           </p>
 
           <div className="flex gap-3">
             <button
               onClick={() => navigate('prev')}
-              className="w-12 h-12 rounded-full border border-white/30 bg-black/60 text-white flex items-center justify-center hover:scale-105 hover:border-white transition-all backdrop-blur-md shadow-lg"
+              className="w-12 h-12 rounded-full border border-slate-900/30 bg-white/60 text-slate-900 flex items-center justify-center hover:scale-105 hover:border-slate-900 transition-all backdrop-blur-md shadow-lg"
             >
               <ArrowLeft size={20} />
             </button>
             <button
               onClick={() => navigate('next')}
-              className="w-12 h-12 rounded-full border border-white/30 bg-black/60 text-white flex items-center justify-center hover:scale-105 hover:border-white transition-all backdrop-blur-md shadow-lg"
+              className="w-12 h-12 rounded-full border border-slate-900/30 bg-white/60 text-slate-900 flex items-center justify-center hover:scale-105 hover:border-slate-900 transition-all backdrop-blur-md shadow-lg"
             >
               <ArrowRight size={20} />
             </button>
@@ -239,7 +239,7 @@ export default function Explorations() {
         <Link
           to="/projets"
           onClick={playClickSound}
-          className="absolute bottom-6 right-6 sm:bottom-12 sm:right-12 z-[60] flex items-center gap-2 text-white hover:text-[#3B82F6] transition-colors font-display text-2xl sm:text-4xl uppercase"
+          className="absolute bottom-6 right-6 sm:bottom-12 sm:right-12 z-[60] flex items-center gap-2 text-slate-900 hover:text-[#3B82F6] transition-colors font-display text-2xl sm:text-4xl uppercase"
         >
           <span>Voir les projets</span>
           <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -250,15 +250,15 @@ export default function Explorations() {
       {modalOpen && (
         <div
           onClick={() => setModalOpen(false)}
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-white/95 backdrop-blur-2xl flex items-center justify-center p-4"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-3xl w-full bg-surface border border-white/20 rounded-3xl overflow-hidden shadow-2xl p-4"
+            className="relative max-w-3xl w-full bg-surface border border-slate-900/20 rounded-3xl overflow-hidden shadow-2xl p-4"
           >
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-[#3B82F6] hover:text-black transition-colors"
+              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-white/80 text-slate-900 flex items-center justify-center hover:bg-[#3B82F6] hover:text-black transition-colors"
             >
               <X size={20} />
             </button>
@@ -270,8 +270,8 @@ export default function Explorations() {
             />
 
             <div className="px-2">
-              <h4 className="font-display text-2xl text-white mb-1">{activeItem.label}</h4>
-              <p className="text-xs text-white/70 font-sans">{activeItem.desc}</p>
+              <h4 className="font-display text-2xl text-slate-900 mb-1">{activeItem.label}</h4>
+              <p className="text-xs text-slate-900/70 font-sans">{activeItem.desc}</p>
             </div>
           </div>
         </div>

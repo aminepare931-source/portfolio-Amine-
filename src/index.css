@@ -7,14 +7,14 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  background: #0a0e16;
-  color: #f2ede2;
+  background: #ffffff;
+  color: #0f172a;
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-::selection { background: #3B82F6; color: #000; }
+::selection { background: #2563eb; color: #fff; }
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-thumb { background: #3B82F6; }
 

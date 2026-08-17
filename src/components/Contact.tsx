@@ -54,7 +54,7 @@ export default function Contact() {
         <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-3">
           <span className="w-8 h-px bg-clay" /> Démarrer une collaboration
         </div>
-        <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white mb-6">
+        <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-slate-900 mb-6">
           Inscrivons vos idées dans le réel<span className="text-[#3B82F6]">.</span>
         </h2>
       </Reveal>
@@ -63,21 +63,21 @@ export default function Contact() {
         {/* Left Column: Direct Contact Info */}
         <div className="lg:col-span-5 space-y-6">
           <Reveal delay={0.1}>
-            <div className="bg-surface/60 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 backdrop-blur-xl shadow-2xl">
-              <p className="text-sm text-white/80 leading-relaxed font-sans">
+            <div className="bg-surface/60 border border-slate-900/10 rounded-3xl p-6 sm:p-8 space-y-6 backdrop-blur-xl shadow-2xl">
+              <p className="text-sm text-slate-900/80 leading-relaxed font-sans">
                 Vous recherchez un développeur fullstack réactif, capable de prendre en charge votre projet de la conception au déploiement ? Je réponds généralement sous 2 heures.
               </p>
 
               <div className="space-y-4 pt-2">
                 {/* Email Box */}
-                <div className="flex items-center justify-between bg-black/50 border border-white/10 rounded-2xl p-4 hover:border-[#3B82F6]/50 transition-colors">
+                <div className="flex items-center justify-between bg-white/50 border border-slate-900/10 rounded-2xl p-4 hover:border-[#3B82F6]/50 transition-colors">
                   <div className="flex items-center gap-3.5">
                     <div className="w-11 h-11 rounded-xl bg-[#3B82F6]/20 text-[#3B82F6] flex items-center justify-center shrink-0">
                       <Mail size={20} />
                     </div>
                     <div>
                       <div className="text-[10px] font-mono text-muted uppercase">Email Direct</div>
-                      <a href={`mailto:${settings.email}`} className="text-xs sm:text-sm font-semibold text-white hover:text-[#3B82F6] transition-colors">
+                      <a href={`mailto:${settings.email}`} className="text-xs sm:text-sm font-semibold text-slate-900 hover:text-[#3B82F6] transition-colors">
                         {settings.email}
                       </a>
                     </div>
@@ -85,7 +85,7 @@ export default function Contact() {
                   <button
                     onClick={copyEmail}
                     title="Copier l'email"
-                    className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors"
+                    className="p-2.5 rounded-xl bg-slate-900/5 hover:bg-slate-900/10 text-slate-900/70 hover:text-slate-900 transition-colors"
                   >
                     {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
                   </button>
@@ -105,7 +105,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <div className="text-[10px] font-mono text-[#25D366] uppercase font-bold">Réponse sous 2h</div>
-                      <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#25D366] transition-colors">
+                      <div className="text-xs sm:text-sm font-semibold text-slate-900 group-hover:text-[#25D366] transition-colors">
                         {settings.phone} (WhatsApp)
                       </div>
                     </div>
@@ -124,7 +124,7 @@ export default function Contact() {
                     )}
                     {settings.tiktok && (
                       <a href={settings.tiktok} target="_blank" rel="noopener noreferrer" onClick={playClickSound}
-                        className="flex-1 flex items-center justify-center gap-2 bg-white/5 border border-white/20 hover:bg-white/10 text-white rounded-xl py-3 transition-colors">
+                        className="flex-1 flex items-center justify-center gap-2 bg-slate-900/5 border border-slate-900/20 hover:bg-slate-900/10 text-slate-900 rounded-xl py-3 transition-colors">
                         <TikTokIcon size={16} /> <span className="text-xs font-bold">TikTok</span>
                       </a>
                     )}
@@ -147,7 +147,7 @@ export default function Contact() {
                       </div>
                       <div>
                         <div className="text-[10px] font-mono text-clay uppercase font-bold">Boutique</div>
-                        <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-clay transition-colors">
+                        <div className="text-xs sm:text-sm font-semibold text-slate-900 group-hover:text-clay transition-colors">
                           {settings.store_label || 'Voir mes formations'}
                         </div>
                       </div>
@@ -157,13 +157,13 @@ export default function Contact() {
                 )}
 
                 {/* Location */}
-                <div className="flex items-center gap-3.5 bg-black/50 border border-white/10 rounded-2xl p-4">
-                  <div className="w-11 h-11 rounded-xl bg-white/5 text-clay flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-3.5 bg-white/50 border border-slate-900/10 rounded-2xl p-4">
+                  <div className="w-11 h-11 rounded-xl bg-slate-900/5 text-clay flex items-center justify-center shrink-0">
                     <MapPin size={20} />
                   </div>
                   <div>
                     <div className="text-[10px] font-mono text-muted uppercase">Localisation</div>
-                    <div className="text-xs sm:text-sm text-white font-medium">Bobo-Dioulasso, Burkina Faso 🇧🇫</div>
+                    <div className="text-xs sm:text-sm text-slate-900 font-medium">Bobo-Dioulasso, Burkina Faso 🇧🇫</div>
                   </div>
                 </div>
               </div>
@@ -174,8 +174,8 @@ export default function Contact() {
         {/* Right Column: Contact Form */}
         <div className="lg:col-span-7">
           <Reveal delay={0.15}>
-            <form onSubmit={handleSubmit} className="bg-surface/80 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-2xl backdrop-blur-xl">
-              <h3 className="font-display text-2xl text-white mb-2 flex items-center gap-2">
+            <form onSubmit={handleSubmit} className="bg-surface/80 border border-slate-900/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-2xl backdrop-blur-xl">
+              <h3 className="font-display text-2xl text-slate-900 mb-2 flex items-center gap-2">
                 <Sparkles size={20} className="text-[#3B82F6]" /> Envoyer un message direct
               </h3>
 
@@ -188,7 +188,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="ex: Jean Dupont"
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
+                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
 
@@ -200,7 +200,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="jean@exemple.com"
-                    className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
+                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
               </div>
@@ -213,7 +213,7 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="ex: Création de site e-commerce / Opportunité de recrutement"
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
+                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
                 />
               </div>
 
@@ -225,7 +225,7 @@ export default function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Expliquez brièvement votre besoin, vos délais et vos objectifs..."
-                  className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors resize-none"
+                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors resize-none"
                 />
               </div>
 

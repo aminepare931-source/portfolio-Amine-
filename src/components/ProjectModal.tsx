@@ -19,7 +19,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/85 backdrop-blur-md"
+          className="fixed inset-0 bg-white/85 backdrop-blur-md"
         />
 
         {/* Modal Content */}
@@ -28,25 +28,25 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.94, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#0b0a08] border border-stroke rounded-3xl p-6 sm:p-8 md:p-10 shadow-[0_30px_90px_rgba(0,0,0,0.8)] text-text"
+          className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white border border-stroke rounded-3xl p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(15,23,42,0.18)] text-text"
         >
           {/* Top Banner Image / Graphic */}
-          <div className="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-6 border border-white/10">
+          <div className="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-6 border border-slate-900/10">
             {project.img ? (
               <img src={project.img} alt={project.name} className="w-full h-full object-cover" />
             ) : (
               <div
                 className="w-full h-full flex flex-col items-center justify-center p-6 text-center"
-                style={{ background: `linear-gradient(135deg, #0d1219 0%, ${project.color || '#3B82F6'}33 100%)` }}
+                style={{ background: `linear-gradient(135deg, #f8fafc 0%, ${project.color || '#3B82F6'}33 100%)` }}
               >
                 <span className="text-5xl mb-2">{project.emoji || '🚀'}</span>
-                <span className="font-display text-3xl text-white">{project.name}</span>
+                <span className="font-display text-3xl text-slate-900">{project.name}</span>
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0b0a08] via-transparent to-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/40" />
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black transition-colors"
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/60 backdrop-blur-md border border-slate-900/20 flex items-center justify-center text-slate-900 hover:bg-white transition-colors"
             >
               <X size={20} />
             </button>
@@ -59,13 +59,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 Étude de Cas
               </span>
               {(project.tags || []).map((tag) => (
-                <span key={tag} className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/5 text-white/70">
+                <span key={tag} className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-900/5 text-slate-900/70">
                   {tag}
                 </span>
               ))}
             </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl text-white mt-2">
+            <h2 className="font-display text-3xl sm:text-4xl text-slate-900 mt-2">
               {project.name}
             </h2>
             <p className="text-sm sm:text-base text-clay font-medium mt-1">
@@ -81,7 +81,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   <div className="flex items-center gap-1.5 text-xs text-muted mb-1">
                     <BarChart3 size={14} className="text-clay" /> {m.label}
                   </div>
-                  <div className="font-display text-xl sm:text-2xl text-white">{m.value}</div>
+                  <div className="font-display text-xl sm:text-2xl text-slate-900">{m.value}</div>
                 </div>
               ))}
             </div>
@@ -105,7 +105,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </h3>
               <div className="space-y-2">
                 {project.keyFeatures.map((feat, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/90 bg-surface/40 p-3 rounded-xl border border-white/5">
+                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-900/90 bg-surface/40 p-3 rounded-xl border border-slate-900/5">
                     <CheckCircle size={15} className="text-emerald-400 shrink-0 mt-0.5" />
                     <span>{feat}</span>
                   </div>
@@ -122,7 +122,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {project.architecture.map((arch, idx) => (
-                  <span key={idx} className="text-xs font-mono bg-surface border border-stroke px-3 py-1.5 rounded-lg text-white/80">
+                  <span key={idx} className="text-xs font-mono bg-surface border border-stroke px-3 py-1.5 rounded-lg text-slate-900/80">
                     ⚡ {arch}
                   </span>
                 ))}
@@ -134,7 +134,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="pt-4 border-t border-stroke flex items-center justify-between gap-4">
             <button
               onClick={onClose}
-              className="text-xs text-muted hover:text-white transition-colors"
+              className="text-xs text-muted hover:text-slate-900 transition-colors"
             >
               Fermer l'aperçu
             </button>

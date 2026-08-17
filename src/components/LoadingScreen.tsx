@@ -25,21 +25,21 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
   }, [onComplete])
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#0a0e16] flex flex-col items-center justify-center gap-6">
+    <div className="fixed inset-0 z-[9999] bg-[#ffffff] flex flex-col items-center justify-center gap-6">
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="w-16 h-16 rounded-full bg-black border-2 border-clay overflow-hidden flex items-center justify-center"
+        className="w-16 h-16 rounded-full bg-white border-2 border-clay overflow-hidden flex items-center justify-center"
       >
         <img src="/assets/logo.png" alt="Amine.Dev" className="w-full h-full object-cover scale-125" />
       </motion.div>
 
-      <div className="font-display text-lg tracking-wider text-white">
+      <div className="font-display text-lg tracking-wider text-slate-900">
         AMINE<span className="text-clay">.</span>DEV
       </div>
 
-      <div className="w-40 h-[2px] bg-white/10 rounded-full overflow-hidden">
+      <div className="w-40 h-[2px] bg-slate-900/10 rounded-full overflow-hidden">
         <div
           className="h-full bg-clay transition-all duration-75"
           style={{ width: `${count}%` }}

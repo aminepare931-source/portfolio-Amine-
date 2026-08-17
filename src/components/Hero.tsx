@@ -33,14 +33,14 @@ export default function Hero() {
       style={{ minHeight: '100dvh' }}
     >
       {/* Background High-Tech Layer */}
-      <div className="absolute inset-0 bg-[#080b12]" />
+      <div className="absolute inset-0 bg-[#f1f5f9]" />
 
       {/* Cybernetic Radial Gradient Overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle at 50% 30%, rgba(255,255,255,0.04) 0%, rgba(8, 7, 6, 0.9) 60%, rgba(6, 5, 4, 0.98) 100%)',
+            'radial-gradient(circle at 50% 30%, rgba(37,99,235,0.05) 0%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.98) 100%)',
         }}
       />
 
@@ -65,8 +65,8 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="text-white font-medium">{t('Disponible Remote & Freelance', 'Available for Remote & Freelance')}</span>
-            <span className="text-white/30">•</span>
+            <span className="text-slate-900 font-medium">{t('Disponible Remote & Freelance', 'Available for Remote & Freelance')}</span>
+            <span className="text-slate-900/30">•</span>
             <span className="text-clay">Bobo-Dioulasso 🇧🇫</span>
           </motion.div>
 
@@ -75,7 +75,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-3xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-white mb-2 sm:mb-4"
+            className="font-display text-3xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-slate-900 mb-2 sm:mb-4"
           >
             Mouhamed <br className="hidden sm:block" />
             <span className="bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
@@ -133,7 +133,7 @@ export default function Hero() {
             <Link
               to="/contact"
               onClick={playClickSound}
-              className="inline-flex items-center gap-2 rounded-full bg-surface/80 hover:bg-surface border border-white/20 hover:border-clay/50 text-white px-5 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm font-medium transition-all backdrop-blur-md hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-full bg-surface/80 hover:bg-surface border border-slate-900/20 hover:border-clay/50 text-slate-900 px-5 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm font-medium transition-all backdrop-blur-md hover:scale-105"
             >
               <span>{t('Me contacter', 'Contact me')}</span>
               <ArrowRight size={15} className="text-clay"/>
@@ -145,7 +145,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={playClickSound}
-              className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white transition-colors border border-white/10 hover:border-white/30 rounded-full px-3 py-2.5 sm:px-4 sm:py-3.5"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-900/70 hover:text-slate-900 transition-colors border border-slate-900/10 hover:border-slate-900/30 rounded-full px-3 py-2.5 sm:px-4 sm:py-3.5"
             >
               <Download size={14} /> CV PDF
             </a>
@@ -156,7 +156,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="mt-5 sm:mt-8 overflow-hidden rounded-xl bg-white/5 border border-white/10 p-2.5 backdrop-blur-md hidden sm:block"
+            className="mt-5 sm:mt-8 overflow-hidden rounded-xl bg-slate-900/5 border border-slate-900/10 p-2.5 backdrop-blur-md hidden sm:block"
           >
             <div className="flex items-center gap-2 mb-2 text-[10px] font-mono text-clay uppercase font-bold tracking-wider px-2">
               <span>{t('Domaines & Stack Technical :', 'Domains & Stack :')}</span>
@@ -186,7 +186,7 @@ export default function Hero() {
               ].map((tech, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1 rounded-lg bg-surface/80 border border-white/10 text-white/90 text-xs font-mono font-semibold mx-1.5 shrink-0 hover:border-[#3B82F6]/50 transition-colors"
+                  className="px-3 py-1 rounded-lg bg-surface/80 border border-slate-900/10 text-slate-900/90 text-xs font-mono font-semibold mx-1.5 shrink-0 hover:border-[#3B82F6]/50 transition-colors"
                 >
                   {tech}
                 </span>
@@ -215,16 +215,16 @@ export default function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="relative z-10 w-full max-w-[1320px] mx-auto pt-4 sm:pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs font-mono text-white/60"
+        className="relative z-10 w-full max-w-[1320px] mx-auto pt-4 sm:pt-6 border-t border-slate-900/10 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs font-mono text-slate-900/60"
       >
         <div className="grid grid-cols-2 sm:flex sm:items-center gap-3 sm:gap-6 w-full md:w-auto">
-          <span className="flex items-center gap-1.5 text-white bg-white/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-white/5 sm:border-none">
+          <span className="flex items-center gap-1.5 text-slate-900 bg-slate-900/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-slate-900/5 sm:border-none">
             <span className="text-[#3B82F6] font-bold">3+</span> {t("Années Expérience", "Years Experience")}
           </span>
-          <span className="flex items-center gap-1.5 text-white bg-white/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-white/5 sm:border-none">
+          <span className="flex items-center gap-1.5 text-slate-900 bg-slate-900/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-slate-900/5 sm:border-none">
             <span className="text-[#3B82F6] font-bold">12+</span> {t("Projets Livrés", "Projects Delivered")}
           </span>
-          <span className="col-span-2 sm:col-span-1 flex items-center gap-1.5 text-white bg-white/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-white/5 sm:border-none justify-center sm:justify-start">
+          <span className="col-span-2 sm:col-span-1 flex items-center gap-1.5 text-slate-900 bg-slate-900/5 sm:bg-transparent p-2 sm:p-0 rounded-xl border border-slate-900/5 sm:border-none justify-center sm:justify-start">
             <span className="text-[#3B82F6] font-bold">100%</span> {t("Créateur Digital & Autodidacte", "Digital Creator & Self-Taught")}
           </span>
         </div>

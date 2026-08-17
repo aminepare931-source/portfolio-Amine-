@@ -22,7 +22,7 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
   }, [inView, target])
 
   return (
-    <div ref={ref} className="font-display text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight">
+    <div ref={ref} className="font-display text-4xl sm:text-5xl lg:text-6xl text-slate-900 tracking-tight">
       {n}
       <span className="text-[#3B82F6]">{suffix}</span>
     </div>
@@ -72,18 +72,18 @@ export default function Stats() {
   const [activeCard, setActiveCard] = useState<number | null>(null)
 
   return (
-    <section className="relative py-20 sm:py-28 overflow-hidden bg-[#0a0e16]">
+    <section className="relative py-20 sm:py-28 overflow-hidden bg-[#ffffff]">
       {/* Fond sombre uni */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e16] via-[#0a0e16]/90 to-[#0a0e16] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#ffffff]/90 to-[#ffffff] pointer-events-none" />
 
       <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
         {/* Header Title */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-slate-900/10 pb-8">
           <div>
             <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-2">
               <span className="w-8 h-px bg-clay" /> Chiffres Clés & Performance
             </div>
-            <h2 className="font-display text-3xl sm:text-5xl text-white">
+            <h2 className="font-display text-3xl sm:text-5xl text-slate-900">
               Impact mesurable &amp; valeur concrète<span className="text-[#3B82F6]">.</span>
             </h2>
           </div>
@@ -113,7 +113,7 @@ export default function Stats() {
                 className={`relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 border transition-all duration-500 cursor-pointer overflow-hidden backdrop-blur-xl ${
                   isHovered
                     ? 'bg-surface/90 border-[#3B82F6]/60 shadow-[0_15px_40px_rgba(59, 130, 246,0.2)] scale-[1.02]'
-                    : 'bg-surface/40 border-white/10 hover:border-white/20'
+                    : 'bg-surface/40 border-slate-900/10 hover:border-slate-900/20'
                 }`}
               >
                 {/* Glowing Top Accent Line */}
@@ -138,7 +138,7 @@ export default function Stats() {
                   >
                     <Icon size={22} />
                   </div>
-                  <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">
+                  <span className="text-[10px] font-mono text-slate-900/40 uppercase tracking-widest">
                     0{idx + 1}
                   </span>
                 </div>
@@ -149,18 +149,18 @@ export default function Stats() {
                 </div>
 
                 {/* Labels */}
-                <h3 className="font-display text-lg text-white mb-1 font-semibold">
+                <h3 className="font-display text-lg text-slate-900 mb-1 font-semibold">
                   {card.label}
                 </h3>
                 <p className="text-xs text-clay font-mono mb-4">{card.tagline}</p>
 
                 {/* Detail text — masqué sur mobile pour rester compact */}
-                <p className="hidden sm:block text-xs text-white/70 leading-relaxed border-t border-white/10 pt-3">
+                <p className="hidden sm:block text-xs text-slate-900/70 leading-relaxed border-t border-slate-900/10 pt-3">
                   {card.detail}
                 </p>
 
                 {/* Corner accent arrow */}
-                <div className="absolute bottom-4 right-4 text-white/20 group-hover:text-clay transition-colors">
+                <div className="absolute bottom-4 right-4 text-slate-900/20 group-hover:text-clay transition-colors">
                   <ArrowUpRight size={16} />
                 </div>
               </motion.div>

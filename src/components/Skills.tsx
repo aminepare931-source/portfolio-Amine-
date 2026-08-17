@@ -15,7 +15,7 @@ function SkillBar({ lvl }: { lvl: string }) {
   const color = LEVEL_COLOR[lvl] ?? '#3B82F6'
 
   return (
-    <div ref={ref} className="h-2 rounded-full bg-white/10 overflow-hidden p-0.5 border border-white/5">
+    <div ref={ref} className="h-2 rounded-full bg-slate-900/10 overflow-hidden p-0.5 border border-slate-900/5">
       <div
         className="h-full rounded-full transition-all duration-[1200ms] ease-out shadow-[0_0_12px_rgba(59, 130, 246,0.5)]"
         style={{ width: inView ? `${pct}%` : '0%', background: color }}
@@ -104,41 +104,41 @@ export default function Skills() {
     : currentCategory.skills
 
   return (
-    <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#080b12]">
+    <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#f1f5f9]">
       {/* Fond sombre uni avec lueur douce */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 60%)' }}
+        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37,99,235,0.04) 0%, transparent 60%)' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e16] via-[#080b12]/90 to-[#0a0e16] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#f1f5f9]/90 to-[#ffffff] pointer-events-none" />
 
       <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
         {/* Section Header */}
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-white/10 pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-slate-900/10 pb-8">
             <div>
               <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-2">
                 <span className="w-8 h-px bg-clay" /> {t('Arsenal Global & Polyvalent', 'Global & Polyvalent Arsenal')}
               </div>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white">
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-slate-900">
                 {t('Compétences & Maîtrise Multi-Secteurs', 'Skills & Multi-Domain Mastery')}<span className="text-[#3B82F6]">.</span>
               </h2>
             </div>
 
             {/* Search Input */}
             <div className="relative w-full md:w-80">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" />
+              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-900/50" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('Rechercher une technologie...', 'Search a technology...')}
-                className="w-full bg-surface/80 border border-white/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-white placeholder-white/40 outline-none focus:border-[#3B82F6] transition-all backdrop-blur-md"
+                className="w-full bg-surface/80 border border-slate-900/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-slate-900 placeholder-white/40 outline-none focus:border-[#3B82F6] transition-all backdrop-blur-md"
               />
               {search && (
                 <button
                   onClick={() => setSearch('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-white/50 hover:text-white"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-900/50 hover:text-slate-900"
                 >
                   ✕
                 </button>
@@ -148,16 +148,16 @@ export default function Skills() {
         </Reveal>
 
         {/* Auto-Scrolling Continuous Tech Ticker */}
-        <div className="relative overflow-hidden mb-10 py-3 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md">
+        <div className="relative overflow-hidden mb-10 py-3 rounded-2xl bg-slate-900/40 border border-slate-900/10 backdrop-blur-md">
           <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
             {[...CATEGORIES.flatMap(c => c.skills), ...CATEGORIES.flatMap(c => c.skills)].map((s, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-white/10 mx-2 shrink-0 text-xs font-mono"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-slate-900/10 mx-2 shrink-0 text-xs font-mono"
               >
                 <span className="w-2 h-2 rounded-full" style={{ background: LEVEL_COLOR[s.lvl] || '#3B82F6' }} />
-                <span className="text-white font-bold">{s.n}</span>
-                <span className="text-[10px] text-white/50">({s.lvl})</span>
+                <span className="text-slate-900 font-bold">{s.n}</span>
+                <span className="text-[10px] text-slate-900/50">({s.lvl})</span>
               </div>
             ))}
           </div>
@@ -179,7 +179,7 @@ export default function Skills() {
                   className={`flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl text-xs sm:text-sm font-mono font-bold shrink-0 transition-all duration-300 ${
                     isActive
                       ? 'bg-[#3B82F6] text-black shadow-[0_10px_25px_rgba(59, 130, 246,0.4)] scale-105'
-                      : 'bg-surface/60 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 backdrop-blur-md'
+                      : 'bg-surface/60 border border-slate-900/10 text-slate-900/70 hover:text-slate-900 hover:bg-slate-900/10 backdrop-blur-md'
                   }`}
                 >
                   <Icon size={15} />
@@ -203,7 +203,7 @@ export default function Skills() {
             {displayedSkills.map((s) => (
               <div
                 key={s.n}
-                className="group relative bg-surface/60 border border-white/10 hover:border-[#3B82F6]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 hover:scale-[1.02] backdrop-blur-xl flex flex-col justify-between shadow-xl"
+                className="group relative bg-surface/60 border border-slate-900/10 hover:border-[#3B82F6]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 hover:scale-[1.02] backdrop-blur-xl flex flex-col justify-between shadow-xl"
               >
                 <div>
                   {'catLabel' in s && (
@@ -213,7 +213,7 @@ export default function Skills() {
                   )}
                   
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                    <h3 className="font-display text-sm sm:text-lg text-white group-hover:text-[#3B82F6] transition-colors leading-tight">
+                    <h3 className="font-display text-sm sm:text-lg text-slate-900 group-hover:text-[#3B82F6] transition-colors leading-tight">
                       {s.n}
                     </h3>
                     <span
@@ -228,7 +228,7 @@ export default function Skills() {
                     </span>
                   </div>
 
-                  <p className="hidden sm:block text-xs text-white/70 leading-relaxed mb-4 font-sans line-clamp-3">
+                  <p className="hidden sm:block text-xs text-slate-900/70 leading-relaxed mb-4 font-sans line-clamp-3">
                     {s.d}
                   </p>
                 </div>
@@ -240,7 +240,7 @@ export default function Skills() {
         </AnimatePresence>
 
         {displayedSkills.length === 0 && (
-          <div className="text-center py-16 text-muted text-sm font-mono border border-dashed border-white/10 rounded-3xl">
+          <div className="text-center py-16 text-muted text-sm font-mono border border-dashed border-slate-900/10 rounded-3xl">
             {t(`Aucune technologie ne correspond à "${search}".`, `No technology found for "${search}".`)}
           </div>
         )}
