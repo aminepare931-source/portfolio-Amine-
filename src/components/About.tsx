@@ -115,21 +115,21 @@ export default function About() {
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-900/20 text-[11px] font-mono text-clay mb-2">
                     <MapPin size={12} /> Bobo-Dioulasso, Burkina Faso 🇧🇫
                   </div>
-                  <h3 className="font-display text-2xl text-slate-900">Mouhamed Amine Paré</h3>
-                  <p className="text-xs text-slate-900/70 font-mono">Fullstack Developer &amp; Digital Creator (Polyglot Tech)</p>
+                  <h3 className="font-display text-2xl text-white">Mouhamed Amine Paré</h3>
+                  <p className="text-xs text-white/80 font-mono">Fullstack Developer &amp; Digital Creator (Polyglot Tech)</p>
                 </div>
               </div>
             </Reveal>
 
             {/* Citation */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#eff4fb] to-black shadow-xl">
+              <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#eff4fb] to-surface2 shadow-xl">
                 <div className="flex flex-col items-center justify-center p-8 text-center">
                   <span className="text-[#3B82F6] text-xs font-mono font-bold uppercase tracking-widest mb-2">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
                   <p className="font-display text-base sm:text-lg text-slate-900 leading-snug">
                     {t(
                       '"Je préfère un projet qui marche vraiment, en production, à une démo qui brille sur le papier."',
-                      '"Combining technical depth, cybersecurity, and refined design to boost every project."'
+                      '"I\'d rather ship something that actually works in production than a demo that only looks good on paper."'
                     )}
                   </p>
                 </div>
@@ -231,13 +231,13 @@ export default function About() {
             </AnimatePresence>
 
             {/* Direct WhatsApp Action Callout */}
-            <div className="bg-gradient-to-r from-[#3B82F6]/20 via-surface to-black border border-[#3B82F6]/40 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+            <div className="bg-gradient-to-r from-[#3B82F6]/10 via-surface to-surface2 border border-[#3B82F6]/40 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
               <div>
                 <h4 className="font-display text-xl text-slate-900 mb-1">{t('Un projet ambitieux à concrétiser ?', 'An ambitious project to build?')}</h4>
                 <p className="text-xs text-slate-900/70">{t('Discutons de vos besoins techniques & de sécurité dès aujourd\'hui.', 'Let\'s discuss your technical & security requirements today.')}</p>
               </div>
               <a
-                href="https://wa.me/22655300858?text=Bonjour%20Amine,%20j'ai%20consulté%20votre%20portfolio..."
+                href="https://wa.me/22655300868?text=Bonjour%20Amine,%20j'ai%20consulté%20votre%20portfolio..."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={playClickSound}

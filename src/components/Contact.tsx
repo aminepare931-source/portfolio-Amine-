@@ -188,7 +188,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="ex: Jean Dupont"
-                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
+                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
 
@@ -200,7 +200,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="jean@exemple.com"
-                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
+                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
               </div>
@@ -213,7 +213,7 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="ex: Création de site e-commerce / Opportunité de recrutement"
-                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors"
+                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
                 />
               </div>
 
@@ -225,7 +225,7 @@ export default function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Expliquez brièvement votre besoin, vos délais et vos objectifs..."
-                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-white/30 outline-none focus:border-[#3B82F6] transition-colors resize-none"
+                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors resize-none"
                 />
               </div>
 

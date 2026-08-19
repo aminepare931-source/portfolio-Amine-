@@ -7,25 +7,25 @@ import { playClickSound } from '../lib/sound'
 const ITEMS = [
   {
     src: '/assets/hero.jpg',
-    bg: '#1a0d05',
+    bg: '#eef4ff',
     label: 'Portrait Professionnel',
     desc: 'L\'attitude et la rigueur d\'un développeur prêt pour l\'international.',
   },
   {
     src: '/assets/about1.jpg',
-    bg: '#140c06',
+    bg: '#f5f8ff',
     label: 'Style Décontracté & Créatif',
     desc: 'Session de travail intensive à Bobo-Dioulasso, Burkina Faso.',
   },
   {
     src: '/assets/about2.jpg',
-    bg: '#1e0e04',
+    bg: '#eef6fb',
     label: 'Tenue Traditionnelle',
     desc: 'Fierté des racines africaines et vision résolument tournée vers le futur.',
   },
   {
     src: '/assets/about1.jpg',
-    bg: '#0f0c09',
+    bg: '#f7f9fc',
     label: 'Amine.Dev Studio',
     desc: 'Derrière l\'écran de code, concevoir des architectures robustes.',
   },
@@ -159,7 +159,7 @@ export default function Explorations() {
         </div>
 
         {/* Top Brand Tag */}
-        <div className="absolute top-6 left-6 z-[60] flex items-center gap-2 text-xs font-mono uppercase text-slate-900/80 tracking-widest bg-slate-900/40 px-3.5 py-1.5 rounded-full border border-slate-900/10 backdrop-blur-md">
+        <div className="absolute top-6 left-6 z-[60] flex items-center gap-2 text-xs font-mono uppercase text-slate-900/80 tracking-widest bg-white/70 px-3.5 py-1.5 rounded-full border border-slate-900/10 backdrop-blur-md">
           <MapPin size={13} className="text-[#3B82F6]" />
           <span>Amine Paré • Burkina Faso</span>
         </div>

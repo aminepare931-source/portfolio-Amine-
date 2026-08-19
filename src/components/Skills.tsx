@@ -133,7 +133,7 @@ export default function Skills() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('Rechercher une technologie...', 'Search a technology...')}
-                className="w-full bg-surface/80 border border-slate-900/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-slate-900 placeholder-white/40 outline-none focus:border-[#3B82F6] transition-all backdrop-blur-md"
+                className="w-full bg-surface/80 border border-slate-900/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-900/40 outline-none focus:border-[#3B82F6] transition-all backdrop-blur-md"
               />
               {search && (
                 <button
