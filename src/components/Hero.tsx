@@ -78,7 +78,7 @@ export default function Hero() {
             className="font-display text-3xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-slate-900 mb-2 sm:mb-4"
           >
             Mouhamed <br className="hidden sm:block" />
-            <span className="bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-slate-900 via-[#1e293b] to-[#3B82F6] bg-clip-text text-transparent">
               Amine Paré
             </span>
             <span className="text-[#3B82F6] inline-block animate-bounce">.</span>

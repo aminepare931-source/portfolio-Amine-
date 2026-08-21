@@ -89,11 +89,14 @@ export default function Projects() {
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 gap-5">
-            {projects.map((p, i) => (
-              <Reveal key={p.id} delay={i * 0.08} className={i === 0 ? 'sm:col-span-2' : ''}>
-                <ProjectCard p={p} big={i === 0} onOpen={() => setActiveProject(p)} />
-              </Reveal>
-            ))}
+            {projects.map((p, i) => {
+              const isBig = p.size === 'featured' || p.size === 'full'
+              return (
+                <Reveal key={p.id} delay={i * 0.08} className={isBig ? 'sm:col-span-2' : ''}>
+                  <ProjectCard p={p} big={isBig} onOpen={() => setActiveProject(p)} />
+                </Reveal>
+              )
+            })}
           </div>
         )}
       </div>

@@ -66,7 +66,7 @@ export default function ProjectsHeroCard() {
 
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.02] text-slate-900 mb-4">
             Des idées,<br />
-            <span className="text-gradient bg-gradient-to-r from-white via-white to-clay bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-slate-900 via-[#1e293b] to-clay bg-clip-text text-transparent">
               livrées en production.
             </span>
           </h2>
