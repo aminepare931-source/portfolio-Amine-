@@ -68,9 +68,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <h2 className="font-display text-3xl sm:text-4xl text-slate-900 mt-2">
               {project.name}
             </h2>
-            <p className="text-sm sm:text-base text-clay font-medium mt-1">
-              {project.tagline || project.description}
-            </p>
+            {project.tagline && project.tagline !== project.description && (
+              <p className="text-sm sm:text-base text-clay font-medium mt-1">
+                {project.tagline}
+              </p>
+            )}
           </div>
 
           {/* Key Metrics */}
