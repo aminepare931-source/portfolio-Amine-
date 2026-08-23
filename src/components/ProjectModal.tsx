@@ -31,9 +31,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white border border-stroke rounded-3xl p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(15,23,42,0.18)] text-text"
         >
           {/* Top Banner Image / Graphic */}
-          <div className="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-6 border border-slate-900/10">
+          <div className="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-6 border border-slate-900/10 bg-surface">
             {project.img ? (
-              <img src={project.img} alt={project.name} className="w-full h-full object-cover" />
+              <img src={project.img} alt={project.name} className="w-full h-full object-contain" />
             ) : (
               <div
                 className="w-full h-full flex flex-col items-center justify-center p-6 text-center"

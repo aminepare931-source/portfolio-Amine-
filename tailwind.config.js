@@ -13,7 +13,7 @@ export default {
         clay: '#2563eb',
       },
       fontFamily: {
-        display: ['"Bebas Neue"', 'sans-serif'],
+        display: ['"Space Grotesk"', 'sans-serif'],
         sans: ['"Inter"', 'system-ui', 'sans-serif'],
         mono: ['"DM Mono"', 'monospace'],
       },

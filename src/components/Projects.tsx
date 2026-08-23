@@ -24,11 +24,11 @@ function ProjectCard({ p, big, index, onOpen }: { p: Project; big?: boolean; ind
       </span>
 
       <div
-        className={`relative flex items-center justify-center overflow-hidden ${big ? 'aspect-[21/9]' : 'aspect-video'}`}
+        className={`relative flex items-center justify-center overflow-hidden bg-surface ${big ? 'aspect-[21/9]' : 'aspect-video'}`}
         style={p.img ? {} : { background: `linear-gradient(135deg, #f8fafc 0%, ${color}20 60%, ${color}10 100%)` }}
       >
         {p.img ? (
-          <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img src={p.img} alt={p.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" />
         ) : (
           <span className={big ? 'text-7xl' : 'text-5xl'} style={{ filter: `drop-shadow(0 8px 20px ${color}40)` }}>
             {p.emoji || '💻'}
