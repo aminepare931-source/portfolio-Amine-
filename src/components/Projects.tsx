@@ -61,7 +61,7 @@ function ProjectCard({ p, big, index, onOpen }: { p: Project; big?: boolean; ind
         <h3 className={`font-display group-hover:text-clay transition-colors mb-2 ${big ? 'text-3xl sm:text-4xl' : 'text-2xl'}`}>
           {p.name}
         </h3>
-        <p className={`text-muted leading-relaxed ${big ? 'text-sm max-w-xl' : 'text-xs'}`}>{p.description}</p>
+        <p className={`text-muted leading-relaxed line-clamp-2 sm:line-clamp-none ${big ? 'text-sm max-w-xl' : 'text-xs'}`}>{p.description}</p>
 
         <div className="mt-5 pt-4 border-t border-stroke flex items-center justify-between">
           <span className="text-xs font-mono text-clay font-bold uppercase tracking-wide flex items-center gap-1.5">

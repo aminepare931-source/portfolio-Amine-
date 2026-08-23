@@ -181,7 +181,7 @@ export default function About() {
                   transition={{ duration: 0.3 }}
                   className="bg-surface/60 border border-slate-900/10 rounded-3xl p-6 sm:p-8 space-y-4 text-sm text-slate-900/80 leading-relaxed backdrop-blur-xl"
                 >
-                  <p>
+                  <p className="line-clamp-3 sm:line-clamp-none">
                     {t(
                       "Mouhamed Amine Paré — développeur fullstack et créateur digital autodidacte, formé en construisant de vrais produits. Code, cyber-sécurité, Mobile Money, automatisation IA : je mène un projet de la sécurité des données jusqu'à l'expérience finale.",
                       "Mouhamed Amine Paré — self-taught fullstack developer and digital creator, trained by building real products. Code, cybersecurity, Mobile Money, AI automation: I drive a project from data security to final UX."

@@ -265,7 +265,7 @@ export default function JourneyRoad() {
 
                     <h4 className="font-display text-3xl sm:text-4xl text-slate-900">{current.role}</h4>
 
-                    <p className="text-sm text-slate-900/80 leading-relaxed font-sans max-w-2xl">
+                    <p className="text-sm text-slate-900/80 leading-relaxed font-sans max-w-2xl line-clamp-2 sm:line-clamp-none">
                       {current.d}
                     </p>
 
