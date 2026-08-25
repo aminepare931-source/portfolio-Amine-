@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Download, Globe, Briefcase } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
-const AMINE_DIGITAL_URL = 'https://amine-digital.vercel.app'
+const AMINE_DIGITAL_URL = 'https://amine-digital-services.vercel.app'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
