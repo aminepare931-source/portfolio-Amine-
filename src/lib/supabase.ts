@@ -20,6 +20,7 @@ export interface Project {
   keyFeatures?: string[]
   metrics?: { label: string; value: string }[]
   architecture?: string[]
+  status?: 'deployed' | 'in_progress' | 'paused' | 'done'
 }
 
 export async function fetchProjects(): Promise<Project[]> {

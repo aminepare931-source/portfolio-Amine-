@@ -8,7 +8,7 @@ import Projects from '../components/Projects'
 import JourneyRoad from '../components/JourneyRoad'
 import Explorations from '../components/Explorations'
 import BottomMarquee from '../components/BottomMarquee'
-import Contact from '../components/Contact'
+import Contact from '../components/ContactCTA'
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
       <About />
       <PatternDivider />
       <Skills />
-      <Projects />
+      <Projects limit={4} showViewAll />
       <JourneyRoad />
       <Explorations />
       <BottomMarquee />

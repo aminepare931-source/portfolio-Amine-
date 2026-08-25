@@ -285,6 +285,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-head);min-heigh
       </div>
 
       <div class="fg" style="margin-top:1rem">
+        <label class="fl">Statut du projet</label>
+        <select class="fs" id="f-status">
+          <option value="deployed">🟢 Déployé</option>
+          <option value="in_progress">🟡 En cours</option>
+          <option value="paused">🟠 En pause</option>
+          <option value="done">✅ Terminé</option>
+        </select>
+      </div>
+
+      <div class="fg" style="margin-top:1rem">
         <label class="fl">Couleur accent</label>
         <div class="color-opts" id="color-opts">
           <div class="color-opt active" data-c="#FF4D00" style="background:#FF4D00"></div>
@@ -512,6 +522,7 @@ async function saveProject() {
     img: imgData || null,
     featured: document.getElementById('f-featured').checked,
     position: parseInt(document.getElementById('f-position').value) || 0,
+    status: document.getElementById('f-status').value,
     updated_at: new Date().toISOString()
   };
 
@@ -546,6 +557,7 @@ function editProject(id) {
   document.getElementById('f-emoji').value = p.emoji || '';
   document.getElementById('f-position').value = p.position ?? 0;
   document.getElementById('f-featured').checked = p.featured || false;
+  document.getElementById('f-status').value = p.status || 'deployed';
   tags = [...(p.tags||[])]; renderTags();
   selColor = p.color || '#FF4D00';
   document.querySelectorAll('.color-opt').forEach(o => o.classList.toggle('active', o.dataset.c === selColor));
@@ -569,6 +581,7 @@ function resetForm() {
   document.getElementById('f-size').value='wide';
   document.getElementById('f-position').value='';
   document.getElementById('f-featured').checked=false;
+  document.getElementById('f-status').value='deployed';
   renderTags();
   document.getElementById('img-prev').classList.remove('show');
   document.getElementById('img-prev').src='';
@@ -627,7 +640,7 @@ function renderList(projects) {
         : `<div class="proj-thumb-ph" style="color:${p.color||'#FF4D00'}">${p.emoji||'📁'}</div>`
       }
       <div class="proj-info">
-        <div class="proj-name">${p.featured?'★ ':''}${p.name}</div>
+        <div class="proj-name">${p.featured?'★ ':''}${p.name} ${statusBadge(p.status)}</div>
         <div class="proj-tags">
           ${(p.tags||[]).slice(0,3).map(t=>`<span class="proj-tag">${t}</span>`).join('')}
           ${(p.tags||[]).length>3?`<span class="proj-tag">+${p.tags.length-3}</span>`:''}
@@ -642,6 +655,17 @@ function renderList(projects) {
   `).join('').replace(/\{\{/g,'').replace(/\}\}/g,'');
 
   initDrag();
+}
+
+function statusBadge(s) {
+  const map = {
+    deployed: ['🟢','Déployé'],
+    in_progress: ['🟡','En cours'],
+    paused: ['🟠','En pause'],
+    done: ['✅','Terminé']
+  };
+  const [dot, label] = map[s] || map.deployed;
+  return `<span style="font-size:.6rem;opacity:.75">${dot} ${label}</span>`;
 }
 
 function sizeLabel(s) {

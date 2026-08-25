@@ -50,10 +50,6 @@ export default function Footer() {
         </a>
       </div>
 
-      <span className="flex items-center gap-2 text-green-600">
-        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" /> Disponible pour missions
-      </span>
-
       <Link to="/" className="hover:text-clay transition-colors">Retour en haut ↑</Link>
     </footer>
   )
