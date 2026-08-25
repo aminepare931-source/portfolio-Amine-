@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Download, Globe } from 'lucide-react'
+import { Menu, X, Download, Globe, Briefcase } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+
+const AMINE_DIGITAL_URL = 'https://amine-digital.vercel.app'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -44,6 +46,15 @@ export default function Navbar() {
             </div>
             <span className="font-display tracking-wider text-sm text-slate-900">AMINE<span className="text-clay">.</span>DEV</span>
           </Link>
+
+          <a
+            href={AMINE_DIGITAL_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1.5 text-xs rounded-full px-3 py-1.5 border border-clay/30 text-clay font-medium hover:bg-clay/5 transition-colors mr-1"
+          >
+            <Briefcase size={12} /> {t('Voir l\'entreprise', 'View the company')}
+          </a>
 
           <div className="w-px h-4 bg-stroke mx-1" />
 
@@ -94,6 +105,14 @@ export default function Navbar() {
           </Link>
 
           <div className="flex items-center gap-2">
+            <a
+              href={AMINE_DIGITAL_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden sm:flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-clay/30 text-clay"
+            >
+              <Briefcase size={12} /> {t('Entreprise', 'Company')}
+            </a>
             <button
               onClick={toggleLang}
               className="text-xs font-mono font-bold px-2 py-1 rounded-full bg-slate-900/10 text-clay"
@@ -174,6 +193,14 @@ export default function Navbar() {
           <div className="w-12 h-px bg-stroke my-2" />
 
           <div className="flex items-center gap-3">
+            <a
+              href={AMINE_DIGITAL_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 rounded-full border border-clay/40 text-clay px-5 py-3 text-sm font-bold"
+            >
+              <Briefcase size={14} /> {t('Entreprise', 'Company')}
+            </a>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
