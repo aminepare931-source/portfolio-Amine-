@@ -18,7 +18,10 @@ export default function Footer() {
           <div className="font-mono uppercase text-xs tracking-widest text-clay mb-3">Navigation</div>
           <ul className="space-y-2 text-slate-900/70">
             <li><Link to="/services" className="hover:text-clay transition-colors">Services</Link></li>
+            <li><Link to="/a-propos" className="hover:text-clay transition-colors">À propos</Link></li>
+            <li><Link to="/processus" className="hover:text-clay transition-colors">Processus</Link></li>
             <li><Link to="/tarifs" className="hover:text-clay transition-colors">Tarifs</Link></li>
+            <li><Link to="/journal" className="hover:text-clay transition-colors">Journal</Link></li>
             <li><Link to="/contact" className="hover:text-clay transition-colors">Contact</Link></li>
           </ul>
         </div>

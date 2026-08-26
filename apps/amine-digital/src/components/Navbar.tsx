@@ -5,6 +5,16 @@ import { Menu, X, Clock, ArrowRight } from 'lucide-react'
 const NAV = [
   { to: '/', label: 'Accueil' },
   { to: '/services', label: 'Services' },
+  { to: '/a-propos', label: 'À propos' },
+  { to: '/tarifs', label: 'Tarifs' },
+]
+
+const NAV_MOBILE = [
+  { to: '/', label: 'Accueil' },
+  { to: '/services', label: 'Services' },
+  { to: '/processus', label: 'Processus' },
+  { to: '/a-propos', label: 'À propos' },
+  { to: '/journal', label: 'Journal' },
   { to: '/tarifs', label: 'Tarifs' },
 ]
 
@@ -114,7 +124,7 @@ export default function Navbar() {
             <Clock size={13} /> {time} (GMT) · Bobo-Dioulasso
           </div>
           <nav className="flex flex-col gap-1 mb-6">
-            {NAV.map((item) => (
+            {NAV_MOBILE.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
