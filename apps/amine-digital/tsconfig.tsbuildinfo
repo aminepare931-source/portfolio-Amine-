@@ -1,1 +1,1 @@
-{"root":["./src/App.tsx","./src/main.tsx","./src/components/Footer.tsx","./src/components/Navbar.tsx","./src/pages/ContactPage.tsx","./src/pages/HomePage.tsx","./src/pages/PricingPage.tsx","./src/pages/ServicesPage.tsx"],"version":"5.9.3"}
+{"root":["./src/App.tsx","./src/main.tsx","./src/components/Footer.tsx","./src/components/HeroShader.tsx","./src/components/Navbar.tsx","./src/pages/ContactPage.tsx","./src/pages/HomePage.tsx","./src/pages/PricingPage.tsx","./src/pages/ServicesPage.tsx"],"version":"5.9.3"}
