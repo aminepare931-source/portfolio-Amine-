@@ -19,10 +19,10 @@ export default function ServicesPage() {
           <Link
             key={s.slug}
             to={`/services/${s.slug}`}
-            className="group border border-stroke rounded-3xl p-7 hover:border-clay/40 hover:-translate-y-1 transition-all bg-surface/30"
+            className="group border border-stroke rounded-md p-7 hover:border-clay/40 hover:-translate-y-1 transition-all bg-surface/30"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="w-11 h-11 rounded-2xl bg-clay/10 text-clay flex items-center justify-center">
+              <div className="w-11 h-11 rounded-md bg-clay/10 text-clay flex items-center justify-center">
                 <s.icon size={20} />
               </div>
               <ArrowUpRight size={18} className="text-slate-900/30 group-hover:text-clay group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
@@ -36,7 +36,7 @@ export default function ServicesPage() {
       <div className="text-center mt-16">
         <Link
           to="/tarifs"
-          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-7 py-3.5 rounded-sm hover:opacity-90 transition-opacity"
         >
           Voir les tarifs <ArrowRight size={16} />
         </Link>

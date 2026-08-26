@@ -28,29 +28,29 @@ export default function AboutPage() {
       </Fade>
 
       <div className="grid sm:grid-cols-3 gap-5 mb-16">
-        <div className="border border-stroke rounded-2xl p-6">
+        <div className="border border-stroke rounded-md p-6">
           <MapPin size={20} className="text-clay mb-3" />
           <div className="font-display text-lg mb-1">Basé à Bobo-Dioulasso</div>
           <p className="text-sm text-muted">Je connais le marché local et ses contraintes concrètes.</p>
         </div>
-        <div className="border border-stroke rounded-2xl p-6">
+        <div className="border border-stroke rounded-md p-6">
           <Code2 size={20} className="text-clay mb-3" />
           <div className="font-display text-lg mb-1">Approche pratique</div>
           <p className="text-sm text-muted">Autodidacte, formé en construisant de vrais produits.</p>
         </div>
-        <div className="border border-stroke rounded-2xl p-6">
+        <div className="border border-stroke rounded-md p-6">
           <Shield size={20} className="text-clay mb-3" />
           <div className="font-display text-lg mb-1">Un seul interlocuteur</div>
           <p className="text-sm text-muted">De la conception à la sécurité, sans intermédiaires.</p>
         </div>
       </div>
 
-      <div className="text-center border border-stroke rounded-[2rem] bg-surface/40 px-8 py-12">
+      <div className="text-center border border-stroke rounded-md bg-surface/40 px-8 py-12">
         <Sparkles size={22} className="text-clay mx-auto mb-4" />
         <h2 className="font-display text-2xl sm:text-3xl mb-4">Envie d'en discuter ?</h2>
         <Link
           to="/contact"
-          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-7 py-3.5 rounded-sm hover:opacity-90 transition-opacity"
         >
           Me contacter <ArrowRight size={16} />
         </Link>

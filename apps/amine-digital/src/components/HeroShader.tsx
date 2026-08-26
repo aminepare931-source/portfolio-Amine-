@@ -23,10 +23,10 @@ export default function HeroShader() {
         <Swirl colorA="#ffffff" colorB="#f0f0f0" detail={1.7} />
         <ChromaFlow
           baseColor="#ffffff"
-          downColor="#2563eb"
-          leftColor="#2563eb"
-          rightColor="#2563eb"
-          upColor="#2563eb"
+          downColor="#0a3d91"
+          leftColor="#0a3d91"
+          rightColor="#0a3d91"
+          upColor="#0a3d91"
           momentum={13}
           radius={3.5}
         />

@@ -23,7 +23,7 @@ export default function ContactPage() {
       <div className="grid sm:grid-cols-3 gap-4 mb-14">
         {CONTACTS.map((c) => {
           const content = (
-            <div className="border border-stroke rounded-2xl p-5 hover:border-clay/40 transition-colors h-full">
+            <div className="border border-stroke rounded-md p-5 hover:border-clay/40 transition-colors h-full">
               <c.icon size={18} className="text-clay mb-3" />
               <div className="text-xs font-mono uppercase tracking-widest text-muted mb-1">{c.label}</div>
               <div className="text-sm font-medium">{c.value}</div>
@@ -37,7 +37,7 @@ export default function ContactPage() {
         })}
       </div>
 
-      <div className="border border-stroke rounded-3xl p-7 sm:p-10 bg-surface/40">
+      <div className="border border-stroke rounded-md p-7 sm:p-10 bg-surface/40">
         {sent ? (
           <div className="text-center py-10">
             <div className="text-3xl mb-3">✅</div>
@@ -52,11 +52,11 @@ export default function ContactPage() {
             }}
             className="grid sm:grid-cols-2 gap-4"
           >
-            <input required placeholder="Nom" className="border border-stroke rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
-            <input required type="email" placeholder="Email" className="border border-stroke rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
-            <input placeholder="Téléphone / WhatsApp" className="sm:col-span-2 border border-stroke rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
-            <textarea required placeholder="Décrivez votre projet..." rows={5} className="sm:col-span-2 border border-stroke rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay resize-none" />
-            <button type="submit" className="sm:col-span-2 inline-flex items-center justify-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-full hover:opacity-90 transition-opacity">
+            <input required placeholder="Nom" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
+            <input required type="email" placeholder="Email" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
+            <input placeholder="Téléphone / WhatsApp" className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
+            <textarea required placeholder="Décrivez votre projet..." rows={5} className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay resize-none" />
+            <button type="submit" className="sm:col-span-2 inline-flex items-center justify-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-sm hover:opacity-90 transition-opacity">
               <Send size={16} /> Envoyer le message
             </button>
           </form>

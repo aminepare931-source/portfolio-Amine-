@@ -37,7 +37,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-stroke py-6 text-center text-xs text-muted font-mono">
-        © {new Date().getFullYear()} AMINE DIGITAL — Tous droits réservés
+        © 2023 AMINE DIGITAL — Tous droits réservés
       </div>
     </footer>
   )

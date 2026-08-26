@@ -30,9 +30,9 @@ export default function FloatingCta() {
           href={WHATSAPP}
           target="_blank"
           rel="noreferrer"
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-gray-900 px-5 py-3.5 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(24,21,16,0.35)] transition-all duration-300 hover:-translate-y-0.5 md:px-6"
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-sm bg-gray-900 px-5 py-3.5 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(24,21,16,0.35)] transition-all duration-300 hover:-translate-y-0.5 md:px-6"
         >
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#25D366] text-white">
+          <span className="flex h-6 w-6 items-center justify-center rounded-sm bg-[#25D366] text-white">
             <MessageCircle className="h-3.5 w-3.5" />
           </span>
           WhatsApp — réponse ~2h

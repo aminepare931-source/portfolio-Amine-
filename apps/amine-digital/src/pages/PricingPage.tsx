@@ -37,7 +37,7 @@ export default function PricingPage() {
       </div>
 
       <div className="mb-14 text-center">
-        <span className="inline-block text-xs font-mono text-clay bg-clay/10 border border-dashed border-clay/40 px-4 py-2 rounded-full">
+        <span className="inline-block text-xs font-mono text-clay bg-clay/10 border border-dashed border-clay/40 px-4 py-2 rounded-sm">
           ⚠️ Prix à compléter — remplace les [Ton prix] par tes vrais montants (FCFA)
         </span>
       </div>
@@ -46,12 +46,12 @@ export default function PricingPage() {
         {PLANS.map((plan) => (
           <div
             key={plan.name}
-            className={`relative rounded-3xl p-7 border flex flex-col ${
+            className={`relative rounded-md p-7 border flex flex-col ${
               plan.highlight ? 'border-clay bg-clay text-white shadow-2xl scale-[1.02]' : 'border-stroke'
             }`}
           >
             {plan.highlight && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-clay text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white text-clay text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-sm">
                 Populaire
               </span>
             )}
@@ -69,7 +69,7 @@ export default function PricingPage() {
               href="https://wa.me/22655300868"
               target="_blank"
               rel="noreferrer"
-              className={`inline-flex items-center justify-center gap-2 font-semibold px-5 py-3 rounded-full transition-opacity hover:opacity-90 ${
+              className={`inline-flex items-center justify-center gap-2 font-semibold px-5 py-3 rounded-sm transition-opacity hover:opacity-90 ${
                 plan.highlight ? 'bg-white text-clay' : 'bg-clay text-white'
               }`}
             >

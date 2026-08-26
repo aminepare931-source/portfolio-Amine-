@@ -19,7 +19,7 @@ export default function ProcessPage() {
         <div className="space-y-10">
           {PROCESS.map((step) => (
             <div key={step.n} className="relative flex gap-5 sm:gap-7">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-clay text-white font-display text-lg flex items-center justify-center shrink-0 z-10">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-md bg-clay text-white font-display text-lg flex items-center justify-center shrink-0 z-10">
                 {step.n}
               </div>
               <div className="pt-1.5">
@@ -34,7 +34,7 @@ export default function ProcessPage() {
       <div className="text-center mt-16">
         <Link
           to="/contact"
-          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-7 py-3.5 rounded-full hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-7 py-3.5 rounded-sm hover:opacity-90 transition-opacity"
         >
           Démarrer la première étape <ArrowRight size={16} />
         </Link>

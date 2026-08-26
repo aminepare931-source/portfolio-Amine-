@@ -1,6 +1,6 @@
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Menu, X, Clock, ArrowRight } from 'lucide-react'
+import { Menu, X, Clock, MapPin, Mail } from 'lucide-react'
 
 const NAV = [
   { to: '/', label: 'Accueil' },
@@ -49,65 +49,69 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-50 px-3 sm:px-5 pt-3 sm:pt-4">
-        <div className="max-w-[1200px] mx-auto flex items-center justify-between bg-white rounded-full p-[5px] shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-          <Link to="/" className="flex items-center gap-2 pl-2 pr-1" onClick={() => setOpen(false)}>
-            <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-900 text-white flex items-center justify-center text-[10px] sm:text-[11px] font-bold tracking-tight shrink-0">
-              AD
-            </span>
-            <span className="hidden sm:flex items-center gap-6 ml-3 text-sm text-gray-900">
-              {NAV.map((item) => (
+      <header className="fixed top-0 inset-x-0 z-50">
+        {/* Bandeau secondaire — mentions officielles */}
+        <div className="hidden sm:block bg-govDark text-white/85 text-[11px] font-mono">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-8 py-1.5 flex items-center justify-between">
+            <div className="flex items-center gap-5">
+              <span className="flex items-center gap-1.5"><MapPin size={11} /> Bobo-Dioulasso, Burkina Faso</span>
+              <span className="flex items-center gap-1.5"><Mail size={11} /> amine.dg.dev@gmail.com</span>
+            </div>
+            <span className="flex items-center gap-1.5"><Clock size={11} /> {time} (GMT)</span>
+          </div>
+        </div>
+
+        {/* Barre principale */}
+        <div className="bg-white border-b-2 border-gov shadow-sm">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+              <span className="w-10 h-10 rounded-sm bg-gov text-white flex items-center justify-center text-xs font-bold tracking-tight shrink-0">
+                AD
+              </span>
+              <span className="hidden sm:block leading-tight">
+                <span className="block font-display text-sm text-gray-900 tracking-wide">AMINE DIGITAL</span>
+                <span className="block text-[10px] font-mono text-gov uppercase tracking-widest">Services numériques</span>
+              </span>
+            </Link>
+
+            <nav className="hidden md:flex items-center border border-stroke rounded-sm overflow-hidden text-sm">
+              {NAV.map((item, i) => (
                 <NavLink
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `hover:text-gray-500 transition-colors duration-300 ${isActive ? 'text-gray-900 font-medium' : 'text-gray-700'}`
+                    `px-4 py-2 font-medium transition-colors ${i !== 0 ? 'border-l border-stroke' : ''} ${
+                      isActive ? 'bg-gov text-white' : 'text-gray-700 hover:bg-surface'
+                    }`
                   }
                 >
                   {item.label}
                 </NavLink>
               ))}
-            </span>
-          </Link>
+            </nav>
 
-          <div className="hidden md:flex items-center gap-4 pr-1">
-            <span className="hidden lg:inline text-[13px] text-gray-600">Basé à Bobo-Dioulasso</span>
-            <span className="flex items-center gap-1.5 text-[13px] text-gray-600">
-              <Clock size={14} /> {time} (GMT)
-            </span>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="group flex items-center gap-3 bg-gray-900 text-white text-[13px] font-medium rounded-full pl-5 pr-2 py-2"
-            >
-              <span className="overflow-hidden h-[20px] flex flex-col">
-                <span
-                  className="flex flex-col transition-transform duration-500"
-                  style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.1,0.25,1)' }}
-                >
-                  <span className="group-hover:-translate-y-full transition-transform duration-500" style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.1,0.25,1)' }}>
-                    Discuter du projet
-                  </span>
-                </span>
-              </span>
-              <span className="w-6 h-6 rounded-full bg-white text-gray-900 flex items-center justify-center transition-transform duration-500 group-hover:-rotate-45" style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.1,0.25,1)' }}>
-                <ArrowRight size={13} />
-              </span>
-            </a>
+            <div className="flex items-center gap-2">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="hidden md:inline-flex items-center bg-gov text-white text-sm font-semibold rounded-sm px-5 py-2.5 hover:bg-govDark transition-colors"
+              >
+                Nous contacter
+              </a>
+              <button
+                onClick={() => setOpen(!open)}
+                className="md:hidden w-10 h-10 flex items-center justify-center rounded-sm bg-gov text-white"
+                aria-label="Menu"
+              >
+                {open ? <X size={18} /> : <Menu size={18} />}
+              </button>
+            </div>
           </div>
-
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-gray-900 text-white mr-0.5"
-            aria-label="Menu"
-          >
-            {open ? <X size={18} /> : <Menu size={18} />}
-          </button>
         </div>
       </header>
 
-      {/* Mobile menu overlay */}
+      {/* Menu mobile */}
       <div
         className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
           open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -115,35 +119,35 @@ export default function Navbar() {
       >
         <div className="absolute inset-0 bg-black/60" onClick={() => setOpen(false)} />
         <div
-          className={`absolute inset-x-3 bottom-3 bg-white rounded-2xl p-6 transition-transform duration-500 ${
-            open ? 'translate-y-0' : 'translate-y-full'
+          className={`absolute inset-x-0 top-[64px] bg-white border-t-2 border-gov p-5 transition-transform duration-400 ${
+            open ? 'translate-y-0' : '-translate-y-full'
           }`}
-          style={{ transitionTimingFunction: 'cubic-bezier(0.32,0.72,0,1)' }}
         >
-          <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-6">
+          <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-5 font-mono">
             <Clock size={13} /> {time} (GMT) · Bobo-Dioulasso
           </div>
-          <nav className="flex flex-col gap-1 mb-6">
-            {NAV_MOBILE.map((item) => (
+          <nav className="flex flex-col border border-stroke rounded-sm overflow-hidden mb-4">
+            {NAV_MOBILE.map((item, i) => (
               <NavLink
                 key={item.to}
                 to={item.to}
-                className="text-[28px] font-medium text-gray-900 py-2"
+                className={({ isActive }) =>
+                  `px-4 py-3 text-sm font-medium ${i !== 0 ? 'border-t border-stroke' : ''} ${
+                    isActive ? 'bg-gov text-white' : 'text-gray-800'
+                  }`
+                }
               >
                 {item.label}
               </NavLink>
             ))}
-            <Link to="/contact" className="text-[28px] font-medium text-gray-900 py-2">
-              Contact
-            </Link>
           </nav>
           <a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-center gap-2 bg-gray-900 text-white font-semibold py-3.5 rounded-full text-sm"
+            className="flex items-center justify-center gap-2 bg-gov text-white font-semibold py-3 rounded-sm text-sm"
           >
-            Démarrer un projet <ArrowRight size={15} />
+            Nous contacter
           </a>
         </div>
       </div>

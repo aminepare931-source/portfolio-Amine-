@@ -14,7 +14,7 @@ function TextRollButton({ to, children, tone = 'dark' }: { to: string; children:
   return (
     <Link
       to={to}
-      className={`group inline-flex items-center gap-3 ${bg} text-white text-[13px] sm:text-sm font-medium rounded-full pl-5 sm:pl-6 pr-2 py-2 transition-colors`}
+      className={`group inline-flex items-center gap-3 ${bg} text-white text-[13px] sm:text-sm font-medium rounded-sm pl-5 sm:pl-6 pr-2 py-2 transition-colors`}
     >
       <span className="overflow-hidden h-[20px] flex flex-col">
         <span
@@ -26,7 +26,7 @@ function TextRollButton({ to, children, tone = 'dark' }: { to: string; children:
         </span>
       </span>
       <span
-        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white ${arrowText} flex items-center justify-center transition-transform duration-500 group-hover:-rotate-45 shrink-0`}
+        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-white ${arrowText} flex items-center justify-center transition-transform duration-500 group-hover:-rotate-45 shrink-0`}
         style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.1,0.25,1)' }}
       >
         <ArrowRight size={14} />
@@ -38,10 +38,10 @@ function TextRollButton({ to, children, tone = 'dark' }: { to: string; children:
 function SectionBadge({ n, label, border = 'border-gray-200' }: { n: number; label: string; border?: string }) {
   return (
     <div className="px-5 sm:px-8 lg:px-12 flex items-center gap-3 mb-6 sm:mb-8">
-      <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
+      <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
         {n}
       </span>
-      <span className={`text-[12px] sm:text-[13px] font-medium border ${border} rounded-full px-3 sm:px-4 py-1 sm:py-1.5`}>
+      <span className={`text-[12px] sm:text-[13px] font-medium border ${border} rounded-sm px-3 sm:px-4 py-1 sm:py-1.5`}>
         {label}
       </span>
     </div>
@@ -86,7 +86,7 @@ export default function HomePage() {
               href="https://wa.me/22655300868"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 text-[13px] sm:text-sm font-medium rounded-full px-6 py-3 border border-gray-200 hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 text-[13px] sm:text-sm font-medium rounded-sm px-6 py-3 border border-gray-200 hover:bg-gray-50 transition-colors"
             >
               Discuter sur WhatsApp
             </a>
@@ -111,8 +111,8 @@ export default function HomePage() {
           <div className="px-5 sm:px-8 lg:px-12">
             <div className="grid sm:grid-cols-2 gap-5 mb-10">
               {PILLARS.map((p) => (
-                <div key={p.title} className="border border-stroke rounded-3xl p-7">
-                  <div className="w-11 h-11 rounded-2xl bg-clay/10 text-clay flex items-center justify-center mb-4">
+                <div key={p.title} className="border border-stroke rounded-md p-7">
+                  <div className="w-11 h-11 rounded-md bg-clay/10 text-clay flex items-center justify-center mb-4">
                     <p.icon size={20} />
                   </div>
                   <h3 className="font-display text-xl mb-2">{p.title}</h3>
@@ -146,7 +146,7 @@ export default function HomePage() {
 
           <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-3 gap-5 mb-10">
             {PROCESS.slice(0, 3).map((step) => (
-              <div key={step.n} className="bg-white rounded-2xl p-6 border border-stroke">
+              <div key={step.n} className="bg-white rounded-md p-6 border border-stroke">
                 <div className="font-display text-clay text-2xl mb-3">{step.n}</div>
                 <h3 className="font-display text-lg mb-2">{step.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{step.desc}</p>
@@ -178,10 +178,10 @@ export default function HomePage() {
               <Link
                 key={s.slug}
                 to={`/services/${s.slug}`}
-                className="group border border-stroke rounded-2xl p-6 hover:border-clay/40 hover:-translate-y-1 transition-all"
+                className="group border border-stroke rounded-md p-6 hover:border-clay/40 hover:-translate-y-1 transition-all"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-clay/10 text-clay flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-sm bg-clay/10 text-clay flex items-center justify-center">
                     <s.icon size={18} />
                   </div>
                   <ArrowUpRight size={16} className="text-slate-900/30 group-hover:text-clay transition-colors" />
@@ -213,7 +213,7 @@ export default function HomePage() {
 
           <div className="px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-7">
             {[1, 2].map((n) => (
-              <div key={n} className="aspect-[329/246] rounded-2xl border-2 border-dashed border-gray-300 bg-white/50 flex flex-col items-center justify-center text-center p-6">
+              <div key={n} className="aspect-[329/246] rounded-md border-2 border-dashed border-gray-300 bg-white/50 flex flex-col items-center justify-center text-center p-6">
                 <div className="text-3xl mb-2">📁</div>
                 <p className="text-sm font-medium text-gray-500">Projet client à venir</p>
                 <p className="text-xs text-gray-400 mt-1">Espace réservé pour une future réalisation</p>
@@ -254,7 +254,7 @@ export default function HomePage() {
 
       {/* 7 — CTA FINAL */}
       <section className="bg-[#F5F5F5] px-5 sm:px-8 lg:px-12 py-20 sm:py-28">
-        <div className="max-w-[900px] mx-auto text-center bg-white border border-stroke rounded-[2rem] px-8 py-14">
+        <div className="max-w-[900px] mx-auto text-center bg-white border border-stroke rounded-md px-8 py-14">
           <h2 className="font-display text-3xl sm:text-4xl mb-4">Un projet en tête ?</h2>
           <p className="text-slate-900/70 mb-8 max-w-md mx-auto">
             Décrivez-moi votre besoin, je vous réponds avec une proposition claire et un tarif adapté.

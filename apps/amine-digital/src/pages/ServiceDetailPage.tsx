@@ -17,14 +17,14 @@ export default function ServiceDetailPage() {
         <ArrowLeft size={15} /> Tous les services
       </Link>
 
-      <div className="w-14 h-14 rounded-2xl bg-clay/10 text-clay flex items-center justify-center mb-6">
+      <div className="w-14 h-14 rounded-md bg-clay/10 text-clay flex items-center justify-center mb-6">
         <service.icon size={26} />
       </div>
 
       <h1 className="font-display text-4xl sm:text-5xl mb-5">{service.title}</h1>
       <p className="text-lg text-slate-900/70 mb-10 leading-relaxed">{service.longDesc}</p>
 
-      <div className="border border-stroke rounded-3xl p-7 sm:p-8 bg-surface/40 mb-10">
+      <div className="border border-stroke rounded-md p-7 sm:p-8 bg-surface/40 mb-10">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-4">Ce que ça comprend</div>
         <ul className="space-y-3">
           {service.items.map((item) => (
@@ -40,13 +40,13 @@ export default function ServiceDetailPage() {
           href="https://wa.me/22655300868"
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-full hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-sm hover:opacity-90 transition-opacity"
         >
           Discuter de ce service <ArrowRight size={16} />
         </a>
         <Link
           to="/tarifs"
-          className="inline-flex items-center gap-2 border border-stroke font-semibold px-6 py-3.5 rounded-full hover:bg-slate-900/5 transition-colors"
+          className="inline-flex items-center gap-2 border border-stroke font-semibold px-6 py-3.5 rounded-sm hover:bg-slate-900/5 transition-colors"
         >
           Voir les tarifs
         </Link>

@@ -26,7 +26,7 @@ export default function BlogPostPage() {
       <div className="border-t border-stroke pt-8 text-center">
         <Link
           to="/contact"
-          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-6 py-3 rounded-full hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-6 py-3 rounded-sm hover:opacity-90 transition-opacity"
         >
           Un projet en tête ? Discutons-en <ArrowRight size={15} />
         </Link>
