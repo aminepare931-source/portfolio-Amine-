@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import Cursor from './components/Cursor'
+import FloatingCta from './components/FloatingCta'
+import { useLenis } from './hooks/useLenis'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import ProcessPage from './pages/ProcessPage'
@@ -12,8 +15,11 @@ import BlogPostPage from './pages/BlogPostPage'
 import ContactPage from './pages/ContactPage'
 
 export default function App() {
+  useLenis()
+
   return (
     <BrowserRouter>
+      <Cursor />
       <Navbar />
       <main>
         <Routes>
@@ -29,6 +35,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <FloatingCta />
     </BrowserRouter>
   )
 }

@@ -66,7 +66,7 @@ export default function PricingPage() {
               ))}
             </ul>
             <a
-              href="https://wa.me/22600000000"
+              href="https://wa.me/22655300868"
               target="_blank"
               rel="noreferrer"
               className={`inline-flex items-center justify-center gap-2 font-semibold px-5 py-3 rounded-full transition-opacity hover:opacity-90 ${

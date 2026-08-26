@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck } from
 import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
 import { ARTICLES } from '../data/articles'
+import { Line, Fade } from '../components/Reveal'
 
 const HeroShader = lazy(() => import('../components/HeroShader'))
 
@@ -75,32 +76,29 @@ export default function HomePage() {
         <div className="relative z-20 max-w-[1200px] mx-auto w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16 lg:pb-20">
           <div className="text-[13px] sm:text-sm text-gray-900 tracking-wide mb-5 sm:mb-8">AMINE DIGITAL</div>
           <h1 className="font-medium text-gray-900 leading-[1.08] tracking-[-0.03em]" style={{ fontSize: 'clamp(1.75rem, 7vw, 4.2rem)' }}>
-            Votre présence digitale,
-            <br className="hidden sm:block" />
-            <span className="sm:hidden"> </span>
-            construite pour vendre,
-            <br className="hidden sm:block" />
-            <span className="sm:hidden"> </span>
-            pas juste pour exister.
+            <Line>Votre présence digitale,</Line>
+            <Line delay={0.08}>construite pour vendre,</Line>
+            <Line delay={0.16}>pas juste pour exister.</Line>
           </h1>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-8 sm:mt-12">
+          <Fade delay={0.5} className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-8 sm:mt-12">
             <TextRollButton to="/tarifs" tone="orange">Voir les tarifs</TextRollButton>
             <a
-              href="https://wa.me/22600000000"
+              href="https://wa.me/22655300868"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 text-[13px] sm:text-sm font-medium rounded-full px-6 py-3 border border-gray-200 hover:bg-gray-50 transition-colors"
             >
               Discuter sur WhatsApp
             </a>
-          </div>
+          </Fade>
         </div>
       </section>
 
       {/* 2 — À PROPOS */}
       <section className="bg-white pt-16 sm:pt-20 lg:pt-32 pb-12 sm:pb-16 lg:pb-24 overflow-hidden">
         <div className="max-w-[1200px] mx-auto">
-          <SectionBadge n={1} label="À propos d'AMINE DIGITAL" />
+          <Fade>
+            <SectionBadge n={1} label="À propos d'AMINE DIGITAL" />
           <h2
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.12] tracking-[-0.02em] mb-12 sm:mb-16 lg:mb-20"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 3.2rem)' }}
@@ -108,6 +106,7 @@ export default function HomePage() {
             Un seul interlocuteur, du concept
             <br className="hidden lg:block" /> au lancement de votre projet.
           </h2>
+          </Fade>
 
           <div className="px-5 sm:px-8 lg:px-12">
             <div className="grid sm:grid-cols-2 gap-5 mb-10">
@@ -135,13 +134,15 @@ export default function HomePage() {
       {/* 3 — PROCESSUS */}
       <section className="bg-[#F5F5F5] pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
         <div className="max-w-[1200px] mx-auto">
-          <SectionBadge n={2} label="Comment on travaille" border="border-gray-300" />
+          <Fade>
+            <SectionBadge n={2} label="Comment on travaille" border="border-gray-300" />
           <h2
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 3.2rem)' }}
           >
             Notre processus
           </h2>
+          </Fade>
 
           <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-3 gap-5 mb-10">
             {PROCESS.slice(0, 3).map((step) => (
@@ -162,13 +163,15 @@ export default function HomePage() {
       {/* 4 — SERVICES */}
       <section className="bg-white pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
         <div className="max-w-[1200px] mx-auto">
-          <SectionBadge n={3} label="Ce que je fais" />
+          <Fade>
+            <SectionBadge n={3} label="Ce que je fais" />
           <h2
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 3.2rem)' }}
           >
             Nos services
           </h2>
+          </Fade>
 
           <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
             {SERVICES.map((s) => (
@@ -198,13 +201,15 @@ export default function HomePage() {
       {/* 5 — RÉALISATIONS */}
       <section className="bg-[#F5F5F5] pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-28">
         <div className="max-w-[1200px] mx-auto">
-          <SectionBadge n={4} label="Réalisations clients" border="border-gray-300" />
+          <Fade>
+            <SectionBadge n={4} label="Réalisations clients" border="border-gray-300" />
           <h2
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
             style={{ fontSize: 'clamp(1.75rem, 7vw, 4.2rem)' }}
           >
             Nos projets
           </h2>
+          </Fade>
 
           <div className="px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-7">
             {[1, 2].map((n) => (
@@ -221,13 +226,15 @@ export default function HomePage() {
       {/* 6 — JOURNAL */}
       <section className="bg-white pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
         <div className="max-w-[1200px] mx-auto">
-          <SectionBadge n={5} label="Journal" />
+          <Fade>
+            <SectionBadge n={5} label="Journal" />
           <h2
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 3.2rem)' }}
           >
             Conseils & réflexions
           </h2>
+          </Fade>
 
           <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-3 gap-5 mb-10">
             {ARTICLES.map((a) => (

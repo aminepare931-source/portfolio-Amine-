@@ -18,7 +18,7 @@ const NAV_MOBILE = [
   { to: '/tarifs', label: 'Tarifs' },
 ]
 
-const WHATSAPP_URL = 'https://wa.me/22600000000'
+const WHATSAPP_URL = 'https://wa.me/22655300868'
 
 function useLocalTime() {
   const [time, setTime] = useState('')

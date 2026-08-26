@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, MapPin, Code2, Shield, Sparkles } from 'lucide-react'
+import { Line, Fade } from '../components/Reveal'
 
 export default function AboutPage() {
   return (
     <div className="px-6 pt-36 pb-24 max-w-[800px] mx-auto">
       <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">À propos</div>
-      <h1 className="font-display text-4xl sm:text-5xl mb-8">L'histoire derrière AMINE DIGITAL</h1>
+      <h1 className="font-display text-4xl sm:text-5xl mb-8"><Line>L'histoire derrière AMINE DIGITAL</Line></h1>
 
-      <div className="space-y-6 text-slate-900/80 leading-relaxed text-base sm:text-lg mb-14">
+      <Fade className="space-y-6 text-slate-900/80 leading-relaxed text-base sm:text-lg mb-14">
         <p>
           AMINE DIGITAL est né d'un constat simple : beaucoup d'entreprises et d'entrepreneurs burkinabè ont
           besoin d'une présence en ligne solide, mais font face à des prestataires dispersés — un pour le site,
@@ -24,7 +25,7 @@ export default function AboutPage() {
           design, marketing, automatisation, sécurité — sous un seul interlocuteur, du premier échange jusqu'au
           suivi après livraison.
         </p>
-      </div>
+      </Fade>
 
       <div className="grid sm:grid-cols-3 gap-5 mb-16">
         <div className="border border-stroke rounded-2xl p-6">

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { MessageCircle, Mail, MapPin, Send } from 'lucide-react'
 
 const CONTACTS = [
-  { icon: MessageCircle, label: 'WhatsApp', value: 'Écrire directement', href: 'https://wa.me/22600000000' },
+  { icon: MessageCircle, label: 'WhatsApp', value: 'Écrire directement', href: 'https://wa.me/22655300868' },
   { icon: Mail, label: 'Email', value: 'amine.dg.dev@gmail.com', href: 'mailto:amine.dg.dev@gmail.com' },
   { icon: MapPin, label: 'Localisation', value: 'Bobo-Dioulasso, Burkina Faso', href: null },
 ]

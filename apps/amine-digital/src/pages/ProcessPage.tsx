@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { PROCESS } from '../data/process'
+import { Line } from '../components/Reveal'
 
 export default function ProcessPage() {
   return (
     <div className="px-6 pt-36 pb-24 max-w-[800px] mx-auto">
       <div className="text-center mb-16">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Comment on travaille</div>
-        <h1 className="font-display text-4xl sm:text-5xl mb-4">Notre processus</h1>
+        <h1 className="font-display text-4xl sm:text-5xl mb-4"><Line>Notre processus</Line></h1>
         <p className="text-slate-900/70 max-w-lg mx-auto">
           Six étapes claires, du premier échange jusqu'au suivi après livraison.
         </p>
