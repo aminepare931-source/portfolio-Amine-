@@ -27,21 +27,27 @@ export default function AboutPage() {
         </p>
       </Fade>
 
-      <div className="grid sm:grid-cols-3 gap-5 mb-16">
-        <div className="border border-stroke rounded-md p-6">
-          <MapPin size={20} className="text-clay mb-3" />
-          <div className="font-display text-lg mb-1">Basé à Bobo-Dioulasso</div>
-          <p className="text-sm text-muted">Je connais le marché local et ses contraintes concrètes.</p>
+      <div className="flex flex-col sm:flex-row sm:divide-x divide-stroke border-y border-stroke mb-16">
+        <div className="flex items-start gap-3 py-5 sm:py-2 sm:px-6 flex-1 first:sm:pl-0">
+          <MapPin size={18} className="text-clay mt-0.5 shrink-0" />
+          <div>
+            <div className="font-display text-base mb-0.5">Basé à Bobo-Dioulasso</div>
+            <p className="text-xs text-muted">Je connais le marché local et ses contraintes concrètes.</p>
+          </div>
         </div>
-        <div className="border border-stroke rounded-md p-6">
-          <Code2 size={20} className="text-clay mb-3" />
-          <div className="font-display text-lg mb-1">Approche pratique</div>
-          <p className="text-sm text-muted">Autodidacte, formé en construisant de vrais produits.</p>
+        <div className="flex items-start gap-3 py-5 sm:py-2 sm:px-6 flex-1">
+          <Code2 size={18} className="text-clay mt-0.5 shrink-0" />
+          <div>
+            <div className="font-display text-base mb-0.5">Approche pratique</div>
+            <p className="text-xs text-muted">Autodidacte, formé en construisant de vrais produits.</p>
+          </div>
         </div>
-        <div className="border border-stroke rounded-md p-6">
-          <Shield size={20} className="text-clay mb-3" />
-          <div className="font-display text-lg mb-1">Un seul interlocuteur</div>
-          <p className="text-sm text-muted">De la conception à la sécurité, sans intermédiaires.</p>
+        <div className="flex items-start gap-3 py-5 sm:py-2 sm:px-6 flex-1">
+          <Shield size={18} className="text-clay mt-0.5 shrink-0" />
+          <div>
+            <div className="font-display text-base mb-0.5">Un seul interlocuteur</div>
+            <p className="text-xs text-muted">De la conception à la sécurité, sans intermédiaires.</p>
+          </div>
         </div>
       </div>
 

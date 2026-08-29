@@ -155,25 +155,28 @@ export default function HomePage() {
           </h2>
           </Fade>
 
-          <div className="px-5 sm:px-8 lg:px-12">
-            <div className="grid sm:grid-cols-2 gap-5 mb-10">
-              {PILLARS.map((p) => (
-                <div key={p.title} className="border border-stroke rounded-md p-7">
-                  <div className="w-11 h-11 rounded-md bg-clay/10 text-clay flex items-center justify-center mb-4">
-                    <p.icon size={20} />
+          <div className="px-5 sm:px-8 lg:px-12 grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-16 mb-10">
+            <div>
+              {PILLARS.map((p, i) => (
+                <div key={p.title} className={`group flex items-start gap-4 py-5 ${i !== 0 ? 'border-t border-stroke' : ''}`}>
+                  <span className="font-display text-2xl text-gov/30 group-hover:text-gov transition-colors duration-300 w-8 shrink-0">
+                    0{i + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-lg mb-1">{p.title}</h3>
+                    <p className="text-sm text-muted leading-relaxed">{p.desc}</p>
                   </div>
-                  <h3 className="font-display text-xl mb-2">{p.title}</h3>
-                  <p className="text-sm text-muted leading-relaxed">{p.desc}</p>
                 </div>
               ))}
             </div>
 
-            <p className="text-[15px] sm:text-lg leading-[1.65] font-medium text-gray-900 max-w-xl mb-8">
-              Développeur autodidacte basé à Bobo-Dioulasso, j'accompagne entreprises et entrepreneurs burkinabè
-              dans la construction de leur présence en ligne — du premier croquis jusqu'au site en production.
-            </p>
-
-            <TextRollButton to="/a-propos">En savoir plus sur AMINE DIGITAL</TextRollButton>
+            <div className="lg:pt-2">
+              <p className="text-[15px] sm:text-lg leading-[1.65] font-medium text-gray-900 max-w-xl mb-8">
+                Développeur autodidacte basé à Bobo-Dioulasso, j'accompagne entreprises et entrepreneurs burkinabè
+                dans la construction de leur présence en ligne — du premier croquis jusqu'au site en production.
+              </p>
+              <TextRollButton to="/a-propos">En savoir plus sur AMINE DIGITAL</TextRollButton>
+            </div>
           </div>
         </div>
       </section>
@@ -191,14 +194,21 @@ export default function HomePage() {
           </h2>
           </Fade>
 
-          <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-3 gap-5 mb-10">
-            {PROCESS.slice(0, 3).map((step) => (
-              <div key={step.n} className="bg-bg rounded-md p-6 border border-stroke">
-                <div className="font-display text-clay text-2xl mb-3">{step.n}</div>
-                <h3 className="font-display text-lg mb-2">{step.title}</h3>
-                <p className="text-sm text-muted leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
+          <div className="px-5 sm:px-8 lg:px-12 mb-10">
+            <div className="relative grid sm:grid-cols-3 gap-8 sm:gap-4">
+              <div className="hidden sm:block absolute top-5 left-[16.5%] right-[16.5%] h-px bg-stroke" />
+              {PROCESS.slice(0, 3).map((step) => (
+                <div key={step.n} className="relative flex sm:flex-col items-start sm:items-center gap-4 sm:gap-4 sm:text-center">
+                  <div className="w-10 h-10 rounded-sm bg-gov text-white font-display flex items-center justify-center shrink-0 relative z-10">
+                    {step.n}
+                  </div>
+                  <div>
+                    <h3 className="font-display text-base mb-1">{step.title}</h3>
+                    <p className="text-sm text-muted leading-relaxed sm:max-w-[220px] sm:mx-auto">{step.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="px-5 sm:px-8 lg:px-12">
@@ -220,26 +230,28 @@ export default function HomePage() {
           </h2>
           </Fade>
 
-          <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-            {SERVICES.map((s, i) => (
-              <Link
-                key={s.slug}
-                to={`/services/${s.slug}`}
-                className="group border border-stroke rounded-md overflow-hidden hover:border-clay/40 hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] bg-bg"
-              >
-                <div
-                  className="aspect-[16/9] flex items-center justify-center relative overflow-hidden"
-                  style={{ background: i % 2 === 0 ? 'linear-gradient(135deg, #0a3d9122, #0a3d9108)' : 'linear-gradient(135deg, #0a3d9115, #0a3d9105)' }}
+          <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-4 mb-10">
+            {SERVICES.map((s, i) => {
+              const featured = i === 0
+              return (
+                <Link
+                  key={s.slug}
+                  to={`/services/${s.slug}`}
+                  className={`group relative border border-stroke rounded-md overflow-hidden hover:border-clay/40 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] bg-bg flex flex-col justify-between ${
+                    featured ? 'lg:col-span-2 lg:row-span-2 p-8' : 'p-6'
+                  }`}
                 >
-                  <s.icon size={34} className="text-gov/70" />
-                  <ArrowUpRight size={16} className="absolute top-3 right-3 text-gov/40 group-hover:text-gov group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-display text-lg mb-1.5">{s.title}</h3>
-                  <p className="text-xs text-muted leading-relaxed">{s.teaser}</p>
-                </div>
-              </Link>
-            ))}
+                  <div className="flex items-start justify-between">
+                    <s.icon size={featured ? 30 : 22} className="text-gov" />
+                    <ArrowUpRight size={16} className="text-gov/30 group-hover:text-gov group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
+                  </div>
+                  <div className={featured ? 'mt-10' : 'mt-6'}>
+                    <h3 className={`font-display mb-1.5 ${featured ? 'text-2xl' : 'text-base'}`}>{s.title}</h3>
+                    <p className={`text-muted leading-relaxed ${featured ? 'text-sm max-w-xs' : 'text-xs'}`}>{s.teaser}</p>
+                  </div>
+                </Link>
+              )
+            })}
           </div>
 
           <div className="px-5 sm:px-8 lg:px-12">
@@ -286,14 +298,36 @@ export default function HomePage() {
           </h2>
           </Fade>
 
-          <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-3 gap-5 mb-10">
-            {ARTICLES.map((a) => (
-              <Link key={a.slug} to={`/journal/${a.slug}`} className="group">
-                <div className="text-xs font-mono text-muted mb-2">{a.date}</div>
-                <h3 className="font-display text-lg mb-2 group-hover:text-clay transition-colors leading-snug">{a.title}</h3>
-                <p className="text-xs text-muted leading-relaxed">{a.excerpt}</p>
+          <div className="px-5 sm:px-8 lg:px-12 grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 mb-10">
+            {ARTICLES[0] && (
+              <Link to={`/journal/${ARTICLES[0].slug}`} className="group block border-t-2 border-gov pt-5">
+                <div className="text-xs font-mono text-muted mb-3">{ARTICLES[0].date}</div>
+                <h3 className="font-display text-2xl sm:text-3xl mb-3 leading-snug group-hover:text-clay transition-colors">
+                  {ARTICLES[0].title}
+                </h3>
+                <p className="text-sm text-muted leading-relaxed max-w-md mb-4">{ARTICLES[0].excerpt}</p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-gov">
+                  Lire l'article <ArrowUpRight size={14} />
+                </span>
               </Link>
-            ))}
+            )}
+
+            <div>
+              {ARTICLES.slice(1).map((a, i) => (
+                <Link
+                  key={a.slug}
+                  to={`/journal/${a.slug}`}
+                  className={`group flex items-start justify-between gap-4 py-5 ${i !== 0 ? 'border-t border-stroke' : 'border-t border-stroke lg:border-t-0'}`}
+                >
+                  <div>
+                    <div className="text-xs font-mono text-muted mb-1.5">{a.date}</div>
+                    <h4 className="font-display text-base mb-1 group-hover:text-clay transition-colors leading-snug">{a.title}</h4>
+                    <p className="text-xs text-muted leading-relaxed line-clamp-2">{a.excerpt}</p>
+                  </div>
+                  <ArrowUpRight size={16} className="text-gov/30 group-hover:text-gov shrink-0 mt-1 transition-colors" />
+                </Link>
+              ))}
+            </div>
           </div>
 
           <div className="px-5 sm:px-8 lg:px-12">
