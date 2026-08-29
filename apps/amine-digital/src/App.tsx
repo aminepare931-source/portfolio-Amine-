@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Cursor from './components/Cursor'
 import FloatingCta from './components/FloatingCta'
+import Preloader from './components/Preloader'
 import PageTransition from './components/PageTransition'
 import { useLenis } from './hooks/useLenis'
 import HomePage from './pages/HomePage'
@@ -40,6 +41,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <Preloader />
       <Cursor />
       <Navbar />
       <main>

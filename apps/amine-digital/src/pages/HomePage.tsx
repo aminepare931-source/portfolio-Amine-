@@ -5,6 +5,7 @@ import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
+import Stats from '../components/Stats'
 import { EASE_OUT, EASE_SOFT, EASE_OUT_CSS } from '../lib/anim'
 
 const HeroShader = lazy(() => import('../components/HeroShader'))
@@ -180,6 +181,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <Stats />
 
       {/* 3 — PROCESSUS */}
       <section className="bg-surface2 pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
