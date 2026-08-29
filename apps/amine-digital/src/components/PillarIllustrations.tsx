@@ -60,3 +60,37 @@ export function SecurityIllustration() {
     </Badge>
   )
 }
+
+export function MobileIllustration() {
+  return (
+    <Badge>
+      <svg viewBox="0 0 48 48" className="w-8 h-8 sm:w-9 sm:h-9" fill="none">
+        <rect x="14" y="5" width="20" height="38" rx="3" stroke="#0a3d91" strokeWidth="2" />
+        <line x1="14" y1="12" x2="34" y2="12" stroke="#0a3d91" strokeWidth="2" />
+        <line x1="14" y1="36" x2="34" y2="36" stroke="#0a3d91" strokeWidth="2" />
+        <circle cx="24" cy="39.5" r="1.4" fill="#0a3d91" />
+        <rect x="18" y="17" width="12" height="8" rx="1.5" fill="#0a3d91" fillOpacity="0.25" />
+        <line x1="18" y1="29" x2="27" y2="29" stroke="#0a3d91" strokeWidth="1.6" strokeLinecap="round" />
+        <line x1="18" y1="32" x2="24" y2="32" stroke="#0a3d91" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
+      </svg>
+    </Badge>
+  )
+}
+
+export function AutomationIllustration() {
+  return (
+    <Badge>
+      <svg viewBox="0 0 48 48" className="w-8 h-8 sm:w-9 sm:h-9" fill="none">
+        <circle cx="18" cy="24" r="8" stroke="#0a3d91" strokeWidth="2" />
+        <path
+          d="M18 12v3M18 33v3M6 24h3M27 24h3M9.5 15.5l2 2M24.5 32.5l2 2M9.5 32.5l2-2M24.5 15.5l2-2"
+          stroke="#0a3d91"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path d="M30 30l6 6M36 30l-6 6" stroke="#0a3d91" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+        <circle cx="18" cy="24" r="2.4" fill="#0a3d91" />
+      </svg>
+    </Badge>
+  )
+}
