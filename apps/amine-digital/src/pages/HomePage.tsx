@@ -9,6 +9,7 @@ import Stats from '../components/Stats'
 import Marquee from '../components/Marquee'
 import Testimonials from '../components/Testimonials'
 import Magnetic from '../components/Magnetic'
+import { WebDevIllustration, DesignIllustration, MarketingIllustration, SecurityIllustration } from '../components/PillarIllustrations'
 import { EASE_OUT, EASE_SOFT, EASE_OUT_CSS } from '../lib/anim'
 
 const HeroShader = lazy(() => import('../components/HeroShader'))
@@ -56,10 +57,10 @@ function SectionBadge({ n, label, border = 'border-gray-200' }: { n: number; lab
 }
 
 const PILLARS = [
-  { icon: Code2, title: 'Développement Web & Mobile', desc: 'Sites vitrines, boutiques en ligne, applications sur mesure.' },
-  { icon: Palette, title: 'Design & Identité', desc: 'Logo, charte graphique, supports visuels qui marquent.' },
-  { icon: Megaphone, title: 'Marketing Digital', desc: 'Réseaux sociaux, contenu, campagnes qui font venir des clients.' },
-  { icon: ShieldCheck, title: 'Cybersécurité', desc: 'Sécurisation de vos données, de vos comptes, de votre présence en ligne.' },
+  { icon: Code2, illustration: WebDevIllustration, title: 'Développement Web & Mobile', desc: 'Sites vitrines, boutiques en ligne, applications sur mesure.' },
+  { icon: Palette, illustration: DesignIllustration, title: 'Design & Identité', desc: 'Logo, charte graphique, supports visuels qui marquent.' },
+  { icon: Megaphone, illustration: MarketingIllustration, title: 'Marketing Digital', desc: 'Réseaux sociaux, contenu, campagnes qui font venir des clients.' },
+  { icon: ShieldCheck, illustration: SecurityIllustration, title: 'Cybersécurité', desc: 'Sécurisation de vos données, de vos comptes, de votre présence en ligne.' },
 ]
 
 export default function HomePage() {
@@ -172,6 +173,7 @@ export default function HomePage() {
                   <span className="font-display text-2xl text-gov/30 group-hover:text-gov transition-colors duration-300 w-8 shrink-0">
                     0{i + 1}
                   </span>
+                  <p.illustration />
                   <div>
                     <h3 className="font-display text-lg mb-1">{p.title}</h3>
                     <p className="text-sm text-muted leading-relaxed">{p.desc}</p>
