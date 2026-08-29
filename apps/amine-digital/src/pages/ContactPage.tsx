@@ -52,10 +52,10 @@ export default function ContactPage() {
             }}
             className="grid sm:grid-cols-2 gap-4"
           >
-            <input required placeholder="Nom" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
-            <input required type="email" placeholder="Email" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
-            <input placeholder="Téléphone / WhatsApp" className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay" />
-            <textarea required placeholder="Décrivez votre projet..." rows={5} className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-white focus:outline-none focus:border-clay resize-none" />
+            <input required placeholder="Nom" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
+            <input required type="email" placeholder="Email" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
+            <input placeholder="Téléphone / WhatsApp" className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
+            <textarea required placeholder="Décrivez votre projet..." rows={5} className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay resize-none" />
             <button type="submit" className="sm:col-span-2 inline-flex items-center justify-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-sm hover:opacity-90 transition-opacity">
               <Send size={16} /> Envoyer le message
             </button>

@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#ffffff',
-        surface: '#f6f8fa',
-        surface2: '#eef1f5',
-        stroke: 'rgba(15,23,42,0.14)',
+        bg: '#eef3fb',
+        surface: '#e4ecf8',
+        surface2: '#d9e4f5',
+        stroke: 'rgba(10,61,145,0.16)',
         text: '#0f172a',
         muted: '#5b6472',
         clay: '#0a3d91',

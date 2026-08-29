@@ -62,7 +62,7 @@ export default function Navbar() {
         </div>
 
         {/* Barre principale */}
-        <div className="bg-white border-b-2 border-gov shadow-sm">
+        <div className="bg-bg border-b-2 border-gov shadow-sm">
           <div className="max-w-[1200px] mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
               <span className="w-10 h-10 rounded-sm bg-gov text-white flex items-center justify-center text-xs font-bold tracking-tight shrink-0">
@@ -119,7 +119,7 @@ export default function Navbar() {
       >
         <div className="absolute inset-0 bg-black/60" onClick={() => setOpen(false)} />
         <div
-          className={`absolute inset-x-0 top-[64px] bg-white border-t-2 border-gov p-5 transition-transform duration-400 ${
+          className={`absolute inset-x-0 top-[64px] bg-bg border-t-2 border-gov p-5 transition-transform duration-400 ${
             open ? 'translate-y-0' : '-translate-y-full'
           }`}
         >
