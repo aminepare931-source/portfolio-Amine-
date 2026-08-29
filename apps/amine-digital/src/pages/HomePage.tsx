@@ -8,6 +8,7 @@ import { Line, Fade } from '../components/Reveal'
 import Stats from '../components/Stats'
 import Marquee from '../components/Marquee'
 import Testimonials from '../components/Testimonials'
+import Magnetic from '../components/Magnetic'
 import { EASE_OUT, EASE_SOFT, EASE_OUT_CSS } from '../lib/anim'
 
 const HeroShader = lazy(() => import('../components/HeroShader'))
@@ -16,26 +17,28 @@ function TextRollButton({ to, children, tone = 'dark' }: { to: string; children:
   const bg = tone === 'dark' ? 'bg-gray-900' : 'bg-clay hover:bg-blue-700'
   const arrowText = tone === 'dark' ? 'text-gray-900' : 'text-clay'
   return (
-    <Link
-      to={to}
-      className={`group inline-flex items-center gap-3 ${bg} text-white text-[13px] sm:text-sm font-medium rounded-sm pl-5 sm:pl-6 pr-2 py-2 transition-colors`}
-    >
-      <span className="overflow-hidden h-[20px] flex flex-col">
+    <Magnetic strength={0.25}>
+      <Link
+        to={to}
+        className={`group inline-flex items-center gap-3 ${bg} text-white text-[13px] sm:text-sm font-medium rounded-sm pl-5 sm:pl-6 pr-2 py-2 transition-colors`}
+      >
+        <span className="overflow-hidden h-[20px] flex flex-col">
+          <span
+            className="group-hover:-translate-y-full transition-transform duration-500 flex flex-col"
+            style={{ transitionTimingFunction: EASE_OUT_CSS }}
+          >
+            <span>{children}</span>
+            <span>{children}</span>
+          </span>
+        </span>
         <span
-          className="group-hover:-translate-y-full transition-transform duration-500 flex flex-col"
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-white ${arrowText} flex items-center justify-center transition-transform duration-500 group-hover:-rotate-45 shrink-0`}
           style={{ transitionTimingFunction: EASE_OUT_CSS }}
         >
-          <span>{children}</span>
-          <span>{children}</span>
+          <ArrowRight size={14} />
         </span>
-      </span>
-      <span
-        className={`w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-white ${arrowText} flex items-center justify-center transition-transform duration-500 group-hover:-rotate-45 shrink-0`}
-        style={{ transitionTimingFunction: EASE_OUT_CSS }}
-      >
-        <ArrowRight size={14} />
-      </span>
-    </Link>
+      </Link>
+    </Magnetic>
   )
 }
 
@@ -106,14 +109,16 @@ export default function HomePage() {
 
               <Fade delay={0.5} className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-8">
                 <TextRollButton to="/tarifs" tone="orange">Voir les tarifs</TextRollButton>
-                <a
-                  href="https://wa.me/22655300868"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-bg text-gray-900 text-[13px] sm:text-sm font-medium rounded-sm px-6 py-3 border border-gray-200 hover:bg-gray-50 transition-colors"
-                >
-                  Discuter sur WhatsApp
-                </a>
+                <Magnetic strength={0.25}>
+                  <a
+                    href="https://wa.me/22655300868"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-bg text-gray-900 text-[13px] sm:text-sm font-medium rounded-sm px-6 py-3 border border-gray-200 hover:bg-gray-50 transition-colors"
+                  >
+                    Discuter sur WhatsApp
+                  </a>
+                </Magnetic>
               </Fade>
 
               {/* Ligne de repères */}
