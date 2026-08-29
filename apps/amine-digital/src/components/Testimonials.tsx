@@ -7,7 +7,7 @@ export default function Testimonials() {
       <div className="max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-12">
         <div className="flex items-center gap-3 mb-10">
           <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-sm bg-gray-900 text-white flex items-center justify-center text-[11px] sm:text-xs font-semibold">
-            6
+            5
           </span>
           <span className="text-[12px] sm:text-[13px] font-medium border border-gray-200 rounded-sm px-3 sm:px-4 py-1 sm:py-1.5">
             Avis clients

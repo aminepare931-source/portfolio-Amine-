@@ -272,36 +272,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5 — RÉALISATIONS */}
-      <section className="bg-surface2 pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-28">
-        <div className="max-w-[1200px] mx-auto">
-          <Fade>
-            <SectionBadge n={4} label="Réalisations clients" border="border-gray-300" />
-          <h2
-            className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
-            style={{ fontSize: 'clamp(1.75rem, 7vw, 4.2rem)' }}
-          >
-            Nos projets
-          </h2>
-          </Fade>
-
-          <div className="px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-7">
-            {[1, 2].map((n) => (
-              <div key={n} className="aspect-[329/246] rounded-md border-2 border-dashed border-gray-300 bg-bg/60 flex flex-col items-center justify-center text-center p-6">
-                <div className="text-3xl mb-2">📁</div>
-                <p className="text-sm font-medium text-gray-500">Projet client à venir</p>
-                <p className="text-xs text-gray-400 mt-1">Espace réservé pour une future réalisation</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 6 — JOURNAL */}
       <section className="bg-bg pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
         <div className="max-w-[1200px] mx-auto">
           <Fade>
-            <SectionBadge n={5} label="Journal" />
+            <SectionBadge n={4} label="Journal" />
           <h2
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 3.2rem)' }}
