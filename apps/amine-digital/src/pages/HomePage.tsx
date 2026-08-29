@@ -6,6 +6,8 @@ import { PROCESS } from '../data/process'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
 import Stats from '../components/Stats'
+import Marquee from '../components/Marquee'
+import Testimonials from '../components/Testimonials'
 import { EASE_OUT, EASE_SOFT, EASE_OUT_CSS } from '../lib/anim'
 
 const HeroShader = lazy(() => import('../components/HeroShader'))
@@ -141,6 +143,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <Marquee />
 
       {/* 2 — À PROPOS */}
       <section className="bg-bg pt-16 sm:pt-20 lg:pt-32 pb-12 sm:pb-16 lg:pb-24 overflow-hidden">
@@ -338,6 +342,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <Testimonials />
 
       {/* 7 — CTA FINAL */}
       <section className="bg-surface2 px-5 sm:px-8 lg:px-12 py-20 sm:py-28">

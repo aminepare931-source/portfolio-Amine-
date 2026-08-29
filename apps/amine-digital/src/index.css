@@ -7,7 +7,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  background: #ffffff;
+  background: #eef3fb;
   color: #0f172a;
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
@@ -17,3 +17,8 @@ body {
 ::selection { background: #2563eb; color: #fff; }
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-thumb { background: #3B82F6; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
