@@ -5,6 +5,7 @@ import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
+import { EASE_OUT, EASE_SOFT, EASE_OUT_CSS } from '../lib/anim'
 
 const HeroShader = lazy(() => import('../components/HeroShader'))
 
@@ -19,7 +20,7 @@ function TextRollButton({ to, children, tone = 'dark' }: { to: string; children:
       <span className="overflow-hidden h-[20px] flex flex-col">
         <span
           className="group-hover:-translate-y-full transition-transform duration-500 flex flex-col"
-          style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.1,0.25,1)' }}
+          style={{ transitionTimingFunction: EASE_OUT_CSS }}
         >
           <span>{children}</span>
           <span>{children}</span>
@@ -27,7 +28,7 @@ function TextRollButton({ to, children, tone = 'dark' }: { to: string; children:
       </span>
       <span
         className={`w-7 h-7 sm:w-8 sm:h-8 rounded-sm bg-white ${arrowText} flex items-center justify-center transition-transform duration-500 group-hover:-rotate-45 shrink-0`}
-        style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.1,0.25,1)' }}
+        style={{ transitionTimingFunction: EASE_OUT_CSS }}
       >
         <ArrowRight size={14} />
       </span>
@@ -224,14 +225,14 @@ export default function HomePage() {
               <Link
                 key={s.slug}
                 to={`/services/${s.slug}`}
-                className="group border border-stroke rounded-md overflow-hidden hover:border-clay/40 hover:-translate-y-1 transition-all bg-bg"
+                className="group border border-stroke rounded-md overflow-hidden hover:border-clay/40 hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] bg-bg"
               >
                 <div
                   className="aspect-[16/9] flex items-center justify-center relative overflow-hidden"
                   style={{ background: i % 2 === 0 ? 'linear-gradient(135deg, #0a3d9122, #0a3d9108)' : 'linear-gradient(135deg, #0a3d9115, #0a3d9105)' }}
                 >
                   <s.icon size={34} className="text-gov/70" />
-                  <ArrowUpRight size={16} className="absolute top-3 right-3 text-gov/40 group-hover:text-gov group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  <ArrowUpRight size={16} className="absolute top-3 right-3 text-gov/40 group-hover:text-gov group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-display text-lg mb-1.5">{s.title}</h3>

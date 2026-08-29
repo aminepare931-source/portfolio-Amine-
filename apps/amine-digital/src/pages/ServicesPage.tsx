@@ -19,13 +19,13 @@ export default function ServicesPage() {
           <Link
             key={s.slug}
             to={`/services/${s.slug}`}
-            className="group border border-stroke rounded-md p-7 hover:border-clay/40 hover:-translate-y-1 transition-all bg-surface/30"
+            className="group border border-stroke rounded-md p-7 hover:border-clay/40 hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] bg-surface/30"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="w-11 h-11 rounded-md bg-clay/10 text-clay flex items-center justify-center">
                 <s.icon size={20} />
               </div>
-              <ArrowUpRight size={18} className="text-slate-900/30 group-hover:text-clay group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              <ArrowUpRight size={18} className="text-slate-900/30 group-hover:text-clay group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
             </div>
             <h3 className="font-display text-2xl mb-2">{s.title}</h3>
             <p className="text-sm text-muted leading-relaxed">{s.teaser}</p>

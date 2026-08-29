@@ -1,8 +1,10 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Cursor from './components/Cursor'
 import FloatingCta from './components/FloatingCta'
+import PageTransition from './components/PageTransition'
 import { useLenis } from './hooks/useLenis'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
@@ -14,6 +16,25 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import ContactPage from './pages/ContactPage'
 
+function AnimatedRoutes() {
+  const location = useLocation()
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+        <Route path="/a-propos" element={<PageTransition><AboutPage /></PageTransition>} />
+        <Route path="/processus" element={<PageTransition><ProcessPage /></PageTransition>} />
+        <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />
+        <Route path="/services/:slug" element={<PageTransition><ServiceDetailPage /></PageTransition>} />
+        <Route path="/tarifs" element={<PageTransition><PricingPage /></PageTransition>} />
+        <Route path="/journal" element={<PageTransition><BlogPage /></PageTransition>} />
+        <Route path="/journal/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
+        <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  )
+}
+
 export default function App() {
   useLenis()
 
@@ -22,17 +43,7 @@ export default function App() {
       <Cursor />
       <Navbar />
       <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/a-propos" element={<AboutPage />} />
-          <Route path="/processus" element={<ProcessPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/services/:slug" element={<ServiceDetailPage />} />
-          <Route path="/tarifs" element={<PricingPage />} />
-          <Route path="/journal" element={<BlogPage />} />
-          <Route path="/journal/:slug" element={<BlogPostPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
+        <AnimatedRoutes />
       </main>
       <Footer />
       <FloatingCta />

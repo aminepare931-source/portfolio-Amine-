@@ -60,7 +60,7 @@ export default function ServiceDetailPage() {
           <div className="text-xs font-mono uppercase tracking-widest text-muted mb-1">Service suivant</div>
           <div className="font-display text-2xl group-hover:text-clay transition-colors">{next.title}</div>
         </div>
-        <ArrowRight size={22} className="text-slate-900/30 group-hover:text-clay group-hover:translate-x-1 transition-all" />
+        <ArrowRight size={22} className="text-slate-900/30 group-hover:text-clay group-hover:translate-x-1 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
       </Link>
     </div>
   )
