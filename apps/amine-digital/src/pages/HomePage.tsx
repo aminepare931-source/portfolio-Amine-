@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, lazy } from 'react'
 import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck, Smartphone, Bot, MapPin, HeadphonesIcon } from 'lucide-react'
 import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
-import { fetchProjects, Project } from '../lib/supabase'
 
 const HeroShader = lazy(() => import('../components/HeroShader'))
 
@@ -57,16 +56,6 @@ const PILLARS = [
 ]
 
 export default function HomePage() {
-  const [projects, setProjects] = useState<Project[]>([])
-
-  useEffect(() => {
-    fetchProjects().then(setProjects)
-  }, [])
-
-  const projectsWithImg = projects.filter((p) => p.img)
-  const heroProject = projectsWithImg[0]
-  const showcaseProjects = projectsWithImg.slice(0, 2)
-
   return (
     <>
       {/* 1 — HERO */}
@@ -134,16 +123,12 @@ export default function HomePage() {
             {/* Photo de projet réel */}
             <Fade delay={0.2} className="relative">
               <div className="relative aspect-[4/5] sm:aspect-[4/4.5] rounded-sm overflow-hidden border-2 border-gov shadow-[0_20px_50px_rgba(10,61,145,0.18)] bg-bg">
-                {heroProject ? (
-                  <img src={heroProject.img!} alt={heroProject.name} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-gov/10 to-gov/5 text-center p-6">
-                    <Code2 size={28} className="text-gov" />
-                    <p className="text-xs text-gray-500 font-mono">Photo réelle à venir</p>
-                  </div>
-                )}
+                <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-gov/10 to-gov/5 text-center p-6">
+                  <Code2 size={28} className="text-gov" />
+                  <p className="text-xs text-gray-500 font-mono">Photo réelle à venir</p>
+                </div>
                 <div className="absolute inset-x-0 bottom-0 bg-govDark text-white text-xs font-mono px-4 py-3 flex items-center justify-between">
-                  <span>{heroProject ? heroProject.name : 'Projet en cours'}</span>
+                  <span>Projet en cours</span>
                   <ArrowUpRight size={14} />
                 </div>
               </div>
@@ -276,22 +261,13 @@ export default function HomePage() {
           </Fade>
 
           <div className="px-5 sm:px-8 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-7">
-            {showcaseProjects.length > 0
-              ? showcaseProjects.map((p) => (
-                  <div key={p.id} className="group relative aspect-[329/246] rounded-md overflow-hidden border border-stroke bg-bg">
-                    <img src={p.img!} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-x-0 bottom-0 bg-govDark/90 text-white text-sm font-medium px-4 py-3">
-                      {p.name}
-                    </div>
-                  </div>
-                ))
-              : [1, 2].map((n) => (
-                  <div key={n} className="aspect-[329/246] rounded-md border-2 border-dashed border-gray-300 bg-bg/60 flex flex-col items-center justify-center text-center p-6">
-                    <div className="text-3xl mb-2">📁</div>
-                    <p className="text-sm font-medium text-gray-500">Projet client à venir</p>
-                    <p className="text-xs text-gray-400 mt-1">Espace réservé pour une future réalisation</p>
-                  </div>
-                ))}
+            {[1, 2].map((n) => (
+              <div key={n} className="aspect-[329/246] rounded-md border-2 border-dashed border-gray-300 bg-bg/60 flex flex-col items-center justify-center text-center p-6">
+                <div className="text-3xl mb-2">📁</div>
+                <p className="text-sm font-medium text-gray-500">Projet client à venir</p>
+                <p className="text-xs text-gray-400 mt-1">Espace réservé pour une future réalisation</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
