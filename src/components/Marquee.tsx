@@ -1,15 +1,16 @@
 import { motion } from 'framer-motion'
-import { Cpu, Zap, ShieldCheck, Code, Globe, Terminal, Sparkles, Layers, Database } from 'lucide-react'
+import { Zap, ShieldCheck, Sparkles } from 'lucide-react'
+import { SiReact, SiTypescript, SiNodedotjs, SiSupabase, SiTailwindcss, SiCloudflare } from 'react-icons/si'
 
 const TECH_ITEMS = [
-  { name: 'React & Vite', icon: Code },
-  { name: 'TypeScript', icon: Terminal },
-  { name: 'Node.js & Express', icon: Cpu },
-  { name: 'Supabase', icon: Database },
+  { name: 'React & Vite', icon: SiReact },
+  { name: 'TypeScript', icon: SiTypescript },
+  { name: 'Node.js & Express', icon: SiNodedotjs },
+  { name: 'Supabase', icon: SiSupabase },
   { name: 'Mobile Money (CinetPay)', icon: Zap },
   { name: 'WhatsApp API', icon: Sparkles },
-  { name: 'Tailwind CSS', icon: Layers },
-  { name: 'Cloudflare', icon: Globe },
+  { name: 'Tailwind CSS', icon: SiTailwindcss },
+  { name: 'Cloudflare', icon: SiCloudflare },
   { name: 'REST APIs', icon: ShieldCheck },
 ]
 

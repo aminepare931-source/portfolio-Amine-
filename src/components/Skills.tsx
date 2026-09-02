@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Sparkles, Code2, Database, Palette, Bot, Terminal, ShieldCheck, Lock, Cpu, Globe } from 'lucide-react'
+import {
+  SiTypescript, SiPython, SiCplusplus, SiPhp, SiGo, SiGnubash, SiPostgresql,
+  SiReact, SiTailwindcss, SiCloudflare, SiVercel, SiNodedotjs, SiSupabase,
+  SiFirebase, SiWhatsapp, SiGooglegemini,
+} from 'react-icons/si'
 import Reveal from './Reveal'
 import { useInView } from '../hooks/useInView'
 import { playClickSound } from '../lib/sound'
@@ -35,13 +40,13 @@ export default function Skills() {
       label: t('Languages & Core Logic', 'Languages & Core Logic'),
       icon: Terminal,
       skills: [
-        { n: 'TypeScript & JavaScript (ES6+)', lvl: 'Expert', d: t('Typage strict, architecture modulaire, async, React & Node.js.', 'Strict typing, modular architecture, async, React & Node.js.') },
-        { n: 'Python', lvl: 'Avancé', d: t('Scripts d\'automatisation, FastAPI, web scraping, scripts IA et analyse.', 'Automation scripts, FastAPI, web scraping, AI scripts & analysis.') },
-        { n: 'C / C++', lvl: 'Confirmé', d: t('Algorithmique bas niveau, gestion mémoire, optimisation de performance.', 'Low-level algorithms, memory management, performance optimization.') },
-        { n: 'PHP (Modern)', lvl: 'Confirmé', d: t('Développement web, intégration d\'APIs, scripts serveur legacy & modernes.', 'Web development, API integration, legacy & modern server scripts.') },
-        { n: 'Go (Golang)', lvl: 'Confirmé', d: t('Services concurrents, micro-outilsCLI ultra rapides, serveurs HTTP.', 'Concurrent services, fast CLI micro-tools, HTTP servers.') },
-        { n: 'Bash / Shell Scripting', lvl: 'Avancé', d: t('Automatisation Linux, scripts d\'administration, CI/CD, cron jobs.', 'Linux automation, admin scripts, CI/CD, cron jobs.') },
-        { n: 'SQL & NoSQL', lvl: 'Expert', d: t('PostgreSQL, Supabase, MySQL, MongoDB, requêtes optimisées, RLS.', 'PostgreSQL, Supabase, MySQL, MongoDB, optimized queries, RLS.') },
+        { n: 'TypeScript & JavaScript (ES6+)', logo: SiTypescript, lvl: 'Expert', d: t('Typage strict, architecture modulaire, async, React & Node.js.', 'Strict typing, modular architecture, async, React & Node.js.') },
+        { n: 'Python', logo: SiPython, lvl: 'Avancé', d: t('Scripts d\'automatisation, FastAPI, web scraping, scripts IA et analyse.', 'Automation scripts, FastAPI, web scraping, AI scripts & analysis.') },
+        { n: 'C / C++', logo: SiCplusplus, lvl: 'Confirmé', d: t('Algorithmique bas niveau, gestion mémoire, optimisation de performance.', 'Low-level algorithms, memory management, performance optimization.') },
+        { n: 'PHP (Modern)', logo: SiPhp, lvl: 'Confirmé', d: t('Développement web, intégration d\'APIs, scripts serveur legacy & modernes.', 'Web development, API integration, legacy & modern server scripts.') },
+        { n: 'Go (Golang)', logo: SiGo, lvl: 'Confirmé', d: t('Services concurrents, micro-outilsCLI ultra rapides, serveurs HTTP.', 'Concurrent services, fast CLI micro-tools, HTTP servers.') },
+        { n: 'Bash / Shell Scripting', logo: SiGnubash, lvl: 'Avancé', d: t('Automatisation Linux, scripts d\'administration, CI/CD, cron jobs.', 'Linux automation, admin scripts, CI/CD, cron jobs.') },
+        { n: 'SQL & NoSQL', logo: SiPostgresql, lvl: 'Expert', d: t('PostgreSQL, Supabase, MySQL, MongoDB, requêtes optimisées, RLS.', 'PostgreSQL, Supabase, MySQL, MongoDB, optimized queries, RLS.') },
       ],
     },
     {
@@ -60,9 +65,9 @@ export default function Skills() {
       label: t('Frontend & Création UI', 'Frontend & UI Creation'),
       icon: Code2,
       skills: [
-        { n: 'React 18 & Vite', lvl: 'Expert', d: t('Hooks sur mesure, state global, performance SPA, lazy loading.', 'Custom hooks, global state, SPA performance, lazy loading.') },
-        { n: 'Tailwind CSS & Motion', lvl: 'Expert', d: t('Design systems réactifs, Framer Motion, micro-interactions modernes.', 'Responsive design systems, Framer Motion, modern micro-interactions.') },
-        { n: 'Cloudflare Pages & Vercel', lvl: 'Expert', d: t('Déploiement Edge, gestion DNS, Workers, architectures CDN.', 'Edge deployments, DNS management, Workers, CDN architectures.') },
+        { n: 'React 18 & Vite', logo: SiReact, lvl: 'Expert', d: t('Hooks sur mesure, state global, performance SPA, lazy loading.', 'Custom hooks, global state, SPA performance, lazy loading.') },
+        { n: 'Tailwind CSS & Motion', logo: SiTailwindcss, lvl: 'Expert', d: t('Design systems réactifs, Framer Motion, micro-interactions modernes.', 'Responsive design systems, Framer Motion, modern micro-interactions.') },
+        { n: 'Cloudflare Pages & Vercel', logo: SiVercel, lvl: 'Expert', d: t('Déploiement Edge, gestion DNS, Workers, architectures CDN.', 'Edge deployments, DNS management, Workers, CDN architectures.') },
         { n: 'E-Commerce Custom UI', lvl: 'Expert', d: t('Boutiques sur-mesure, paniers dynamiques, checkout Mobile Money.', 'Tailored stores, dynamic carts, Mobile Money checkout.') },
       ],
     },
@@ -71,10 +76,10 @@ export default function Skills() {
       label: t('Backend & Cloud Africa', 'Backend & Africa Cloud'),
       icon: Database,
       skills: [
-        { n: 'Node.js & Express', lvl: 'Expert', d: t('APIs RESTful, middlewares, auth JWT, proxy de sécurité.', 'RESTful APIs, middlewares, JWT auth, security proxies.') },
-        { n: 'Supabase & PostgreSQL', lvl: 'Expert', d: t('RLS policies, Realtime DB, Storage, Edge Functions.', 'RLS policies, Realtime DB, Storage, Edge Functions.') },
+        { n: 'Node.js & Express', logo: SiNodedotjs, lvl: 'Expert', d: t('APIs RESTful, middlewares, auth JWT, proxy de sécurité.', 'RESTful APIs, middlewares, JWT auth, security proxies.') },
+        { n: 'Supabase & PostgreSQL', logo: SiSupabase, lvl: 'Expert', d: t('RLS policies, Realtime DB, Storage, Edge Functions.', 'RLS policies, Realtime DB, Storage, Edge Functions.') },
         { n: 'Passerelles Mobile Money', lvl: 'Expert', d: t('Intégration CinetPay, Orange Money, Moov Money, webhooks sécurisés.', 'CinetPay, Orange Money, Moov Money integration, secured webhooks.') },
-        { n: 'Firebase & NoSQL', lvl: 'Avancé', d: t('Firestore rules, Cloud Functions, Auth, Hosting.', 'Firestore rules, Cloud Functions, Auth, Hosting.') },
+        { n: 'Firebase & NoSQL', logo: SiFirebase, lvl: 'Avancé', d: t('Firestore rules, Cloud Functions, Auth, Hosting.', 'Firestore rules, Cloud Functions, Auth, Hosting.') },
       ],
     },
     {
@@ -82,8 +87,8 @@ export default function Skills() {
       label: t('IA, Automation & Digital', 'AI, Automation & Digital'),
       icon: Bot,
       skills: [
-        { n: 'Chatbots WhatsApp Business API', lvl: 'Expert', d: t('Assistants virtuels H24, qualification de leads, relances automatiques.', '24/7 virtual assistants, lead qualification, automated follow-ups.') },
-        { n: 'Gemini AI SDK Integration', lvl: 'Avancé', d: t('Traitement du langage, génération automatique de contenus, workflows IA.', 'NLP, automated content generation, AI workflows.') },
+        { n: 'Chatbots WhatsApp Business API', logo: SiWhatsapp, lvl: 'Expert', d: t('Assistants virtuels H24, qualification de leads, relances automatiques.', '24/7 virtual assistants, lead qualification, automated follow-ups.') },
+        { n: 'Gemini AI SDK Integration', logo: SiGooglegemini, lvl: 'Avancé', d: t('Traitement du langage, génération automatique de contenus, workflows IA.', 'NLP, automated content generation, AI workflows.') },
         { n: 'Création & Branding Digital', lvl: 'Avancé', d: t('Conception de supports visuels, identités de marque, présentations impactantes.', 'Visual assets design, brand identities, high-impact decks.') },
       ],
     },
@@ -213,7 +218,12 @@ export default function Skills() {
                   )}
                   
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                    <h3 className="font-display text-sm sm:text-lg text-slate-900 group-hover:text-[#3B82F6] transition-colors leading-tight">
+                    <h3 className="flex items-center gap-1.5 font-display text-sm sm:text-lg text-slate-900 group-hover:text-[#3B82F6] transition-colors leading-tight">
+                      {'logo' in s && (s as any).logo && (
+                        <span className="text-clay/70 group-hover:text-clay transition-colors shrink-0">
+                          {(() => { const Logo = (s as any).logo; return <Logo size={15} /> })()}
+                        </span>
+                      )}
                       {s.n}
                     </h3>
                     <span

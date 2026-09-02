@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Download, ArrowRight, Code, Globe, ShieldCheck } from 'lucide-react'
+import { Download, ArrowRight, Code, Globe, ShieldCheck, Zap } from 'lucide-react'
+import { SiReact, SiNodedotjs, SiPython, SiOwasp, SiCplusplus, SiPhp, SiGo, SiWhatsapp, SiSupabase } from 'react-icons/si'
 import FlipCard from './FlipCard'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
@@ -163,32 +164,33 @@ export default function Hero() {
             </div>
             <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
               {[
-                'React 18 / TS',
-                'Node.js & Express',
-                'Python & FastAPI',
-                'CyberSec OWASP & Auth',
-                'C / C++ Algorithmes',
-                'PHP & Modern Web',
-                'Go (Golang)',
-                'CinetPay Mobile Money',
-                'WhatsApp Business API',
-                'Supabase & PostgreSQL',
-                'React 18 / TS',
-                'Node.js & Express',
-                'Python & FastAPI',
-                'CyberSec OWASP & Auth',
-                'C / C++ Algorithmes',
-                'PHP & Modern Web',
-                'Go (Golang)',
-                'CinetPay Mobile Money',
-                'WhatsApp Business API',
-                'Supabase & PostgreSQL',
+                { n: 'React 18', logo: SiReact },
+                { n: 'Node.js', logo: SiNodedotjs },
+                { n: 'Python', logo: SiPython },
+                { n: 'OWASP', logo: SiOwasp },
+                { n: 'C / C++', logo: SiCplusplus },
+                { n: 'PHP', logo: SiPhp },
+                { n: 'Go', logo: SiGo },
+                { n: 'Mobile Money', logo: Zap },
+                { n: 'WhatsApp API', logo: SiWhatsapp },
+                { n: 'Supabase', logo: SiSupabase },
+                { n: 'React 18', logo: SiReact },
+                { n: 'Node.js', logo: SiNodedotjs },
+                { n: 'Python', logo: SiPython },
+                { n: 'OWASP', logo: SiOwasp },
+                { n: 'C / C++', logo: SiCplusplus },
+                { n: 'PHP', logo: SiPhp },
+                { n: 'Go', logo: SiGo },
+                { n: 'Mobile Money', logo: Zap },
+                { n: 'WhatsApp API', logo: SiWhatsapp },
+                { n: 'Supabase', logo: SiSupabase },
               ].map((tech, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1 rounded-lg bg-surface/80 border border-slate-900/10 text-slate-900/90 text-xs font-mono font-semibold mx-1.5 shrink-0 hover:border-[#3B82F6]/50 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface/80 border border-slate-900/10 text-slate-900/90 text-xs font-mono font-semibold mx-1.5 shrink-0 hover:border-[#3B82F6]/50 transition-colors"
                 >
-                  {tech}
+                  <tech.logo size={13} className="text-clay/70" />
+                  {tech.n}
                 </span>
               ))}
             </div>
