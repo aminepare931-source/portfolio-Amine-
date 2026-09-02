@@ -218,14 +218,15 @@ export default function Skills() {
                   )}
                   
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                    <h3 className="flex items-center gap-1.5 font-display text-sm sm:text-lg text-slate-900 group-hover:text-[#3B82F6] transition-colors leading-tight">
-                      {'logo' in s && (s as any).logo && (
-                        <span className="text-clay/70 group-hover:text-clay transition-colors shrink-0">
-                          {(() => { const Logo = (s as any).logo; return <Logo size={15} /> })()}
-                        </span>
-                      )}
-                      {s.n}
-                    </h3>
+                    {'logo' in s && (s as any).logo ? (
+                      <span className="text-clay/80 group-hover:text-clay group-hover:scale-110 transition-all shrink-0" title={s.n}>
+                        {(() => { const Logo = (s as any).logo; return <Logo size={26} /> })()}
+                      </span>
+                    ) : (
+                      <h3 className="font-display text-sm sm:text-lg text-slate-900 group-hover:text-[#3B82F6] transition-colors leading-tight">
+                        {s.n}
+                      </h3>
+                    )}
                     <span
                       className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider self-start sm:self-auto shrink-0"
                       style={{
