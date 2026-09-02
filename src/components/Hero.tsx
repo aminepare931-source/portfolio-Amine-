@@ -152,28 +152,18 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          {/* Tech stack auto-scrolling marquee */}
+          {/* Tech stack — grille statique */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="mt-5 sm:mt-8 overflow-hidden rounded-xl bg-slate-900/5 border border-slate-900/10 p-2.5 backdrop-blur-md hidden sm:block"
+            className="mt-5 sm:mt-8 rounded-xl bg-slate-900/5 border border-slate-900/10 p-3 backdrop-blur-md hidden sm:block"
           >
-            <div className="flex items-center gap-2 mb-2 text-[10px] font-mono text-clay uppercase font-bold tracking-wider px-2">
+            <div className="flex items-center gap-2 mb-2.5 text-[10px] font-mono text-clay uppercase font-bold tracking-wider px-1">
               <span>{t('Domaines & Stack Technical :', 'Domains & Stack :')}</span>
             </div>
-            <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
+            <div className="flex flex-wrap gap-2">
               {[
-                { n: 'React 18', logo: SiReact },
-                { n: 'Node.js', logo: SiNodedotjs },
-                { n: 'Python', logo: SiPython },
-                { n: 'OWASP', logo: SiOwasp },
-                { n: 'C / C++', logo: SiCplusplus },
-                { n: 'PHP', logo: SiPhp },
-                { n: 'Go', logo: SiGo },
-                { n: 'Mobile Money', logo: Zap },
-                { n: 'WhatsApp API', logo: SiWhatsapp },
-                { n: 'Supabase', logo: SiSupabase },
                 { n: 'React 18', logo: SiReact },
                 { n: 'Node.js', logo: SiNodedotjs },
                 { n: 'Python', logo: SiPython },
@@ -187,7 +177,7 @@ export default function Hero() {
               ].map((tech, idx) => (
                 <span
                   key={idx}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface/80 border border-slate-900/10 text-slate-900/90 text-xs font-mono font-semibold mx-1.5 shrink-0 hover:border-[#3B82F6]/50 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface/80 border border-slate-900/10 text-slate-900/90 text-xs font-mono font-semibold hover:border-[#3B82F6]/50 transition-colors"
                 >
                   <tech.logo size={13} className="text-clay/70" />
                   {tech.n}

@@ -15,17 +15,15 @@ const TECH_ITEMS = [
 ]
 
 export default function Marquee() {
-  const doubled = [...TECH_ITEMS, ...TECH_ITEMS]
-
   return (
-    <div className="relative overflow-hidden border-y border-slate-900/10 bg-[#ffffff] py-5 z-20">
-      <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
-        {doubled.map((item, i) => {
+    <div className="relative border-y border-slate-900/10 bg-[#ffffff] py-5 z-20">
+      <div className="flex flex-wrap justify-center gap-3 px-4 max-w-[1320px] mx-auto">
+        {TECH_ITEMS.map((item, i) => {
           const Icon = item.icon
           return (
             <div
               key={i}
-              className="group flex items-center gap-2.5 px-6 py-2 rounded-full bg-slate-900/5 hover:bg-slate-900/10 border border-slate-900/10 hover:border-clay/40 transition-colors mx-3 shrink-0"
+              className="group flex items-center gap-2.5 px-6 py-2 rounded-full bg-slate-900/5 hover:bg-slate-900/10 border border-slate-900/10 hover:border-clay/40 transition-colors"
             >
               <Icon size={16} className="text-slate-900/50 group-hover:text-clay transition-colors" />
               <span className="font-sans text-xs sm:text-sm font-medium text-slate-900/80 group-hover:text-slate-900 tracking-wide">
