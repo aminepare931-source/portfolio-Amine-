@@ -161,7 +161,7 @@ export default function Explorations() {
             zIndex: 2,
           }}
         >
-          GALERIE
+          PORTRAITS
         </div>
 
         {/* Top Brand Tag */}

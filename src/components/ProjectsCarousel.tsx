@@ -164,9 +164,12 @@ export default function ProjectsCarousel({
           <span>{t('Réalisations', 'Case studies')}</span>
         </div>
 
-        {/* Status badge top-right */}
-        <div className="absolute top-6 right-6 z-[60] flex items-center gap-1.5 bg-white/80 backdrop-blur-md text-[10px] font-mono font-medium px-3 py-1.5 rounded-full shadow-md border border-slate-900/10">
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: status.dot }} />
+        {/* Status badge — fond coloré plein, bien visible */}
+        <div
+          className="absolute top-6 right-6 z-[60] flex items-center gap-2 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-full shadow-lg border-2 border-white/40"
+          style={{ background: status.dot }}
+        >
+          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
           {status.label}
         </div>
 

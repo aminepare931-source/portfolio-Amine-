@@ -27,7 +27,7 @@ export default function Navbar() {
     { to: '/competences', label: t('Compétences', 'Skills') },
     { to: '/projets', label: t('Projets', 'Projects') },
     { to: '/parcours', label: t('Parcours', 'Journey') },
-    { to: '/galerie', label: t('Galerie', 'Gallery') },
+    { to: '/galerie', label: t('Portraits', 'Portraits') },
   ]
 
   return (
