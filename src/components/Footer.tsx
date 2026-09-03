@@ -26,7 +26,14 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-stroke py-6 px-6 flex flex-col md:flex-row items-center justify-between gap-4 max-w-[1200px] mx-auto text-xs text-muted font-mono">
-      <span>© 2025 Amine.Dev — Amine Paré, Bobo-Dioulasso, Burkina Faso</span>
+      <span className="flex items-center gap-2.5">
+        <img
+          src="/assets/footer-avatar.jpg"
+          alt="Mouhamed Amine Paré"
+          className="w-7 h-7 rounded-full object-cover border border-stroke"
+        />
+        © 2025 Amine.Dev — Amine Paré, Bobo-Dioulasso, Burkina Faso
+      </span>
 
       <div className="flex items-center gap-3">
         {socials.map((s) => (

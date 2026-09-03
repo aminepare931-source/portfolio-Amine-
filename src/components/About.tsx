@@ -121,17 +121,24 @@ export default function About() {
               </div>
             </Reveal>
 
-            {/* Citation */}
+            {/* Citation + 2e photo en médaillon */}
             <Reveal delay={0.2}>
               <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#eff4fb] to-surface2 shadow-xl">
-                <div className="flex flex-col items-center justify-center p-8 text-center">
-                  <span className="text-[#3B82F6] text-xs font-mono font-bold uppercase tracking-widest mb-2">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
-                  <p className="font-display text-base sm:text-lg text-slate-900 leading-snug">
-                    {t(
-                      '"Je préfère un projet qui marche vraiment, en production, à une démo qui brille sur le papier."',
-                      '"I\'d rather ship something that actually works in production than a demo that only looks good on paper."'
-                    )}
-                  </p>
+                <div className="flex items-center gap-4 p-6 sm:p-8">
+                  <img
+                    src="/assets/about2.jpg"
+                    alt="Mouhamed Amine Paré"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-clay/30 shrink-0"
+                  />
+                  <div>
+                    <span className="text-[#3B82F6] text-xs font-mono font-bold uppercase tracking-widest mb-1 block">{t('Philosophie & Vision', 'Philosophy & Vision')}</span>
+                    <p className="font-display text-sm sm:text-base text-slate-900 leading-snug">
+                      {t(
+                        '"Je préfère un projet qui marche vraiment, en production, à une démo qui brille sur le papier."',
+                        '"I\'d rather ship something that actually works in production than a demo that only looks good on paper."'
+                      )}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Reveal>

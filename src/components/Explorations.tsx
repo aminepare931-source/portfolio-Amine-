@@ -20,14 +20,20 @@ const ITEMS = [
   {
     src: '/assets/about2.jpg',
     bg: '#eef6fb',
-    label: 'Tenue Traditionnelle',
+    label: 'Regard vers l\'avenir',
     desc: 'Fierté des racines africaines et vision résolument tournée vers le futur.',
   },
   {
-    src: '/assets/about1.jpg',
+    src: '/assets/contact-avatar.jpg',
     bg: '#f7f9fc',
-    label: 'Amine.Dev Studio',
-    desc: 'Derrière l\'écran de code, concevoir des architectures robustes.',
+    label: 'Tenue Traditionnelle',
+    desc: 'Entre héritage burkinabè et exigence professionnelle.',
+  },
+  {
+    src: '/assets/gallery-behind.jpg',
+    bg: '#eef2f9',
+    label: 'Coulisses',
+    desc: 'Loin de l\'écran, la vie continue à Bobo-Dioulasso.',
   },
 ]
 

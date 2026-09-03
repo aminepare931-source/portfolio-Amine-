@@ -19,6 +19,11 @@ export default function ContactCTA() {
           </div>
 
           <div className="relative z-10 flex flex-col items-center">
+            <img
+              src="/assets/contact-avatar.jpg"
+              alt="Mouhamed Amine Paré"
+              className="w-14 h-14 rounded-full object-cover border-2 border-clay/40 shadow-lg mb-4"
+            />
             <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-4">
               <span className="w-8 h-px bg-clay" /> {t('Démarrer une collaboration', 'Start a collaboration')}
             </div>
