@@ -15,63 +15,123 @@ export default function JourneyRoad() {
   const MILESTONES = [
     {
       id: 'm0',
-      ic: '💡',
-      date: 'Avant 2023',
-      role: t('Passion Tech & Univers Digital', 'Tech Passion & Digital Exploration'),
-      co: 'Bobo-Dioulasso 🇧🇫',
+      ic: '🎨',
+      date: '2023',
+      role: t('Digital & Création', 'Digital & Creation'),
+      co: t('Graphisme, e-commerce, contenu digital', 'Graphic design, e-commerce, digital content'),
       d: t(
-        'Curiosité pour l\'informatique dès le collège : montage et dépannage d\'ordinateurs, découverte du web et des réseaux, avant les premières lignes de code.',
-        'Curiosity for computers from middle school: assembling and repairing PCs, discovering the web and networks, before writing the first lines of code.'
+        'Premières expériences dans le digital : graphisme, création visuelle, e-commerce et création de contenu. Une période qui apprend à créer, présenter et vendre en ligne.',
+        'First experiences in digital: graphic design, visual creation, e-commerce and content creation. A period focused on creating, presenting and selling online.'
       ),
-      skills: ['Culture Tech', 'Systèmes & Matériel', 'Graphisme', 'Bureautique & Réseaux'],
+      skills: ['Graphisme', 'E-commerce', 'Création de contenu', 'Produits digitaux'],
     },
     {
       id: 'm1',
-      ic: '🚀',
-      date: '2023 (À 15 ans)',
-      role: t('Débuts en Développement & Code', 'Software Engineering Debut (At 15)'),
-      co: 'Débuts en Auto-formation',
+      ic: '🖥️',
+      date: '2023 — 2024',
+      role: t('Informatique & Systèmes', 'Computing & Systems'),
+      co: t('Maintenance & administration système', 'Maintenance & system administration'),
       d: t(
-        'Premiers pas en programmation à 15 ans : HTML5, CSS3, JS ES6+, Python, C/C++ et algorithmique.',
-        'First steps in programming at 15: HTML5/CSS3, JS ES6+, Python, C/C++ and algorithms.'
+        'Formation en maintenance informatique : installation, configuration et dépannage sur Windows, Linux et Ubuntu. Une vraie base pour comprendre ce qui se passe derrière les logiciels.',
+        'Training in computer maintenance: installation, configuration and troubleshooting on Windows, Linux and Ubuntu. A real foundation for understanding what happens behind the software.'
       ),
-      skills: ['JavaScript ES6+', 'Python', 'C / C++', 'Git & GitHub', 'Bases de Données'],
+      skills: ['Windows / Linux / Ubuntu', 'Terminal', 'Configuration système', 'Dépannage'],
     },
     {
       id: 'm2',
-      ic: '🛡️',
-      date: '2023 — 2024',
-      role: t('Expansion Fullstack & Cyber-Sécurité', 'Fullstack Expansion & Cybersecurity'),
-      co: t('Projets web & audits de sécurité', 'Web projects & security audits'),
+      ic: '🚀',
+      date: '2024',
+      role: t('Entrée dans le Développement', 'Entering Development'),
+      co: t('Fondamentaux du développement web', 'Web development fundamentals'),
       d: t(
-        'Développement d\'applications web modernes avec Cloudflare Workers et progressive web apps, puis premiers audits de sécurité selon les standards OWASP et JWT.',
-        'Development of modern web apps with Cloudflare Workers and progressive web apps, then first security audits following OWASP and JWT standards.'
+        'Passage du digital à la programmation : découverte des fondamentaux du développement web avant de construire de vraies applications.',
+        'Transition from digital to programming: discovering web development fundamentals before building real applications.'
       ),
-      skills: ['React 18', 'Cloudflare Workers', 'OWASP Audit', 'JWT Auth', 'Tailwind CSS'],
+      skills: ['HTML / CSS / JS', 'Logique de programmation'],
     },
     {
       id: 'm3',
-      ic: '💳',
-      date: '2024 — Présent',
-      role: t('E-Commerce & Mobile Money (EMBF)', 'E-Commerce & Mobile Money Lead'),
-      co: t('E-commerce & paiements mobiles', 'E-commerce & mobile payments'),
+      ic: '🎯',
+      date: '2024 — 2025',
+      role: t('Spécialisation Frontend', 'Frontend Specialization'),
+      co: t('Interfaces modernes & interactives', 'Modern & interactive interfaces'),
       d: t(
-        'Développement d\'une boutique en ligne complète : base de données sécurisée, intégration des paiements Mobile Money et bot WhatsApp pour automatiser le service client.',
-        'Development of a complete online store: secure database, Mobile Money payment integration, and a WhatsApp bot to automate customer service.'
+        'Spécialisation en développement Frontend : interfaces modernes, responsives et interactives avec React, Vite, Tailwind CSS et TypeScript.',
+        'Frontend development specialization: modern, responsive and interactive interfaces with React, Vite, Tailwind CSS and TypeScript.'
       ),
-      skills: ['Supabase RLS', 'CinetPay API', 'WhatsApp Bot API', 'PostgreSQL', 'Express.js'],
+      skills: ['React', 'Vite', 'Tailwind CSS', 'TypeScript', 'Animations'],
     },
     {
       id: 'm4',
-      ic: '🌟',
-      date: 'Présent',
-      role: t('Développeur touche-à-tout', 'All-round developer'),
-      co: t('Missions variées & architectures multi-langages', 'Varied missions & multi-language architectures'),
+      ic: '⚙️',
+      date: '2025',
+      role: t('Backend & Fullstack', 'Backend & Fullstack'),
+      co: t('API, bases de données, architecture', 'APIs, databases, architecture'),
       d: t(
-        'Conception de marketplaces, création de bots intelligents basés sur l\'IA générative, et maîtrise de plusieurs langages : TypeScript, Python, PHP et Go.',
-        'Design of marketplaces, creation of AI-powered bots, and mastery of several languages: TypeScript, Python, PHP and Go.'
+        'Approfondissement du Backend : API, bases de données, authentification, logique métier. Une évolution vers un profil Fullstack, capable de gérer une application de bout en bout.',
+        'Deepening Backend skills: APIs, databases, authentication, business logic. An evolution toward a Fullstack profile, able to handle an application end-to-end.'
       ),
-      skills: ['TypeScript', 'Python / Go', 'PHP / C++', 'Docker & Cloud', 'Cyber Protection'],
+      skills: ['API REST', 'Bases de données', 'Authentification', 'Architecture'],
+    },
+    {
+      id: 'm5',
+      ic: '📱',
+      date: '2025',
+      role: t('Web & Mobile', 'Web & Mobile'),
+      co: t('Produits multiplateformes', 'Cross-platform products'),
+      d: t(
+        'Élargissement vers le développement mobile, pour créer des produits accessibles aussi bien sur le Web que sur mobile.',
+        'Expansion into mobile development, to build products accessible on both the Web and mobile.'
+      ),
+      skills: ['Développement mobile', 'Multiplateforme'],
+    },
+    {
+      id: 'm6',
+      ic: '🔀',
+      date: '2025 — 2026',
+      role: t('Git & GitHub', 'Git & GitHub'),
+      co: t('Gestion de projet & collaboration', 'Project management & collaboration'),
+      d: t(
+        'Maîtrise de Git et GitHub : gestion des versions, branches, pull requests, workflows de développement et déploiement — le passage à une vraie gestion de projet.',
+        'Mastery of Git and GitHub: version control, branches, pull requests, development workflows and deployment — the shift to real project management.'
+      ),
+      skills: ['Git', 'GitHub', 'Branches & PR', 'Workflows CI/CD'],
+    },
+    {
+      id: 'm7',
+      ic: '🛡️',
+      date: '2026',
+      role: t('Sécurité', 'Security'),
+      co: t('Sécurisation des applications', 'Application security'),
+      d: t(
+        'Renforcement des compétences en sécurité : authentification, autorisations, protection des API et bonnes pratiques pour construire des applications plus sûres.',
+        'Strengthening security skills: authentication, authorization, API protection and best practices for building safer applications.'
+      ),
+      skills: ['Authentification & Autorisation', 'Protection API', 'Bonnes pratiques'],
+    },
+    {
+      id: 'm8',
+      ic: '🤖',
+      date: '2026',
+      role: t('Intelligence Artificielle', 'Artificial Intelligence'),
+      co: t('Intégration IA dans les applications', 'AI integration in applications'),
+      d: t(
+        'Intégration de l\'intelligence artificielle dans les applications : au-delà de l\'usage de l\'IA pour générer du code, la création de fonctionnalités basées sur l\'IA.',
+        'Integrating artificial intelligence into applications: beyond using AI to generate code, building actual AI-powered features.'
+      ),
+      skills: ['Intégration IA', 'Fonctionnalités IA'],
+    },
+    {
+      id: 'm9',
+      ic: '⚡',
+      date: t('2026 — Présent', '2026 — Present'),
+      role: t('Automatisation', 'Automation'),
+      co: t('Systèmes connectés & processus automatisés', 'Connected systems & automated processes'),
+      d: t(
+        'Aujourd\'hui, connecter différents outils et services pour automatiser des tâches et construire des systèmes capables d\'exécuter des processus avec moins d\'intervention humaine.',
+        'Today, connecting different tools and services to automate tasks and build systems capable of running processes with less human intervention.'
+      ),
+      skills: ['Automatisation', 'Intégrations API', 'Systèmes connectés'],
     },
   ]
 
