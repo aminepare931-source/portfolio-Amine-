@@ -16,12 +16,12 @@ export default function JourneyRoad() {
     {
       id: 'm0',
       ic: '🎨',
-      date: '2023',
+      date: t('Avant 2023', 'Before 2023'),
       role: t('Digital & Création', 'Digital & Creation'),
       co: t('Graphisme, e-commerce, contenu digital', 'Graphic design, e-commerce, digital content'),
       d: t(
-        'Premières expériences dans le digital : graphisme, création visuelle, e-commerce et création de contenu. Une période qui apprend à créer, présenter et vendre en ligne.',
-        'First experiences in digital: graphic design, visual creation, e-commerce and content creation. A period focused on creating, presenting and selling online.'
+        'Déjà avant 2023, premières expériences dans le digital : graphisme, création visuelle, e-commerce et création de contenu. Une période qui apprend à créer, présenter et vendre en ligne.',
+        'Already before 2023, first experiences in digital: graphic design, visual creation, e-commerce and content creation. A period focused on creating, presenting and selling online.'
       ),
       skills: ['Graphisme', 'E-commerce', 'Création de contenu', 'Produits digitaux'],
     },
