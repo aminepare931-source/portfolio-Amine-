@@ -10,6 +10,7 @@ export default function JourneyRoad() {
   const { lang, t } = useLanguage()
   const [activeIndex, setActiveIndex] = useState(0)
   const [viewMode, setViewMode] = useState<'showcase' | 'grid'>('showcase')
+  const [hubOpen, setHubOpen] = useState(false)
 
   const MILESTONES = [
     {
@@ -189,6 +190,64 @@ export default function JourneyRoad() {
         {/* SHOWCASE INTERACTIVE HORIZONTAL TIMELINE (NO LONG VERTICAL SCROLL) */}
         {viewMode === 'showcase' ? (
           <div className="space-y-8">
+            {/* Hub central: survol pour dévoiler tout le parcours */}
+            <div className="flex flex-col items-center py-6 sm:py-10">
+              <motion.button
+                onMouseEnter={() => setHubOpen(true)}
+                onMouseLeave={() => setHubOpen(false)}
+                onClick={() => { playClickSound(); setActiveIndex(activeIndex) }}
+                whileHover={{ scale: 1.08 }}
+                className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#3B82F6] text-black flex items-center justify-center text-3xl sm:text-4xl font-bold shadow-[0_0_40px_rgba(59,130,246,0.5)] border-4 border-white cursor-pointer"
+              >
+                {current.ic}
+              </motion.button>
+
+              <span className="text-xs font-mono text-slate-900/50 mt-3">
+                {t('Survolez pour voir tout le parcours', 'Hover to reveal the full journey')}
+              </span>
+
+              {/* Route qui se dévoile de gauche à droite */}
+              <AnimatePresence>
+                {hubOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, scaleX: 0 }}
+                    animate={{ opacity: 1, scaleX: 1 }}
+                    exit={{ opacity: 0, scaleX: 0 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ transformOrigin: 'left' }}
+                    className="w-full max-w-3xl mt-6 relative"
+                  >
+                    <div className="relative h-1 bg-slate-900/10 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: '0%' }}
+                        animate={{ width: '100%' }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        className="h-full bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]"
+                      />
+                    </div>
+                    <div className="flex justify-between mt-3 px-1">
+                      {MILESTONES.map((m, idx) => (
+                        <motion.div
+                          key={m.id}
+                          initial={{ opacity: 0, y: -6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.15 + idx * 0.05 }}
+                          className="flex flex-col items-center gap-1"
+                        >
+                          <span
+                            className={`text-lg ${idx === activeIndex ? 'scale-125' : 'opacity-50'} transition-transform`}
+                          >
+                            {m.ic}
+                          </span>
+                          <span className="text-[9px] font-mono text-slate-900/50 hidden sm:block">{m.date}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {/* Horizontal Timeline Bar */}
             <div className="relative p-2 rounded-2xl bg-surface/60 border border-slate-900/10 backdrop-blur-xl overflow-x-auto scrollbar-none">
               <div className="flex items-center justify-between min-w-[700px] relative px-4 py-2">
