@@ -20,8 +20,8 @@ export default function JourneyRoad() {
       role: t('Passion Tech & Univers Digital', 'Tech Passion & Digital Exploration'),
       co: 'Bobo-Dioulasso 🇧🇫',
       d: t(
-        'Exploration passionnée des systèmes et du numérique, avant de se lancer dans la programmation.',
-        'Passionate exploration of computer systems and digital tech, before diving into software engineering.'
+        'Curiosité pour l\'informatique dès le collège : montage et dépannage d\'ordinateurs, découverte du web et des réseaux, avant les premières lignes de code.',
+        'Curiosity for computers from middle school: assembling and repairing PCs, discovering the web and networks, before writing the first lines of code.'
       ),
       skills: ['Culture Tech', 'Systèmes & Matériel', 'Graphisme', 'Bureautique & Réseaux'],
     },
@@ -42,10 +42,10 @@ export default function JourneyRoad() {
       ic: '🛡️',
       date: '2023 — 2024',
       role: t('Expansion Fullstack & Cyber-Sécurité', 'Fullstack Expansion & Cybersecurity'),
-      co: 'FASOKO & Audits Web',
+      co: t('Projets web & audits de sécurité', 'Web projects & security audits'),
       d: t(
-        'FASOKO (Cloudflare Workers, PWA) et premiers audits de sécurité web (OWASP, JWT).',
-        'FASOKO (Cloudflare Workers, PWA) and first web security audits (OWASP, JWT).'
+        'Développement d\'applications web modernes avec Cloudflare Workers et progressive web apps, puis premiers audits de sécurité selon les standards OWASP et JWT.',
+        'Development of modern web apps with Cloudflare Workers and progressive web apps, then first security audits following OWASP and JWT standards.'
       ),
       skills: ['React 18', 'Cloudflare Workers', 'OWASP Audit', 'JWT Auth', 'Tailwind CSS'],
     },
@@ -54,10 +54,10 @@ export default function JourneyRoad() {
       ic: '💳',
       date: '2024 — Présent',
       role: t('E-Commerce & Mobile Money (EMBF)', 'E-Commerce & Mobile Money Lead'),
-      co: 'EMBF Boutique',
+      co: t('E-commerce & paiements mobiles', 'E-commerce & mobile payments'),
       d: t(
-        'EMBF Boutique : Supabase RLS, paiements Mobile Money (CinetPay), bot WhatsApp automatisé.',
-        'EMBF Boutique: Supabase RLS, CinetPay Mobile Money payments, automated WhatsApp bot.'
+        'Développement d\'une boutique en ligne complète : base de données sécurisée, intégration des paiements Mobile Money et bot WhatsApp pour automatiser le service client.',
+        'Development of a complete online store: secure database, Mobile Money payment integration, and a WhatsApp bot to automate customer service.'
       ),
       skills: ['Supabase RLS', 'CinetPay API', 'WhatsApp Bot API', 'PostgreSQL', 'Express.js'],
     },
@@ -66,10 +66,10 @@ export default function JourneyRoad() {
       ic: '🌟',
       date: 'Présent',
       role: t('Développeur touche-à-tout', 'All-round developer'),
-      co: 'TechBF & Missions Globales',
+      co: t('Missions variées & architectures multi-langages', 'Varied missions & multi-language architectures'),
       d: t(
-        'Marketplaces, bots IA (Gemini SDK) et architectures multi-langages (TS, Python, PHP, Go).',
-        'Marketplaces, AI bots (Gemini SDK) and polyglot architectures (TS, Python, PHP, Go).'
+        'Conception de marketplaces, création de bots intelligents basés sur l\'IA générative, et maîtrise de plusieurs langages : TypeScript, Python, PHP et Go.',
+        'Design of marketplaces, creation of AI-powered bots, and mastery of several languages: TypeScript, Python, PHP and Go.'
       ),
       skills: ['TypeScript', 'Python / Go', 'PHP / C++', 'Docker & Cloud', 'Cyber Protection'],
     },
