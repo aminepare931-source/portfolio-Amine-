@@ -11,6 +11,7 @@ export default function JourneyRoad() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [viewMode, setViewMode] = useState<'showcase' | 'grid'>('showcase')
   const [hubOpen, setHubOpen] = useState(false)
+  const [diplomaHover, setDiplomaHover] = useState(false)
 
   const MILESTONES = [
     {
@@ -439,67 +440,93 @@ export default function JourneyRoad() {
             {t('Parcours Technique & Diplômes d\'État', 'Technical & Academic Qualification')}<span className="text-[#3B82F6]">.</span>
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {/* BAC Pro Énergie Solaire */}
-            <div className="bg-surface/80 border border-clay/30 hover:border-clay rounded-2xl p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden group transition-all">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-[#3B82F6]/10 rounded-full blur-xl pointer-events-none" />
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-2xl">⚡</span>
-                <span className="text-[10px] font-mono font-bold text-[#3B82F6] bg-[#3B82F6]/10 px-2.5 py-1 rounded-full border border-[#3B82F6]/30">
-                  {t('Diplôme d\'État', 'State Diploma')}
-                </span>
-              </div>
-              <h4 className="font-display text-xl text-slate-900 group-hover:text-clay transition-colors mb-1">
-                BAC Professionnel
-              </h4>
-              <div className="text-xs text-clay font-mono mb-2">{t('Spécialité : Énergie Solaire', 'Specialty: Solar Energy')}</div>
-              <p className="hidden sm:block text-xs text-slate-900/70 leading-relaxed font-sans">
-                {t(
-                  'Électrotechnique, systèmes photovoltaïques et logique d\'ingénierie physique.',
-                  'Electrotechnics, photovoltaic systems, and hardware engineering logic.'
-                )}
-              </p>
-            </div>
-
-            {/* BEP Énergie Solaire */}
-            <div className="bg-surface/60 border border-slate-900/10 hover:border-slate-900/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-2xl">☀️</span>
-                <span className="text-[10px] font-mono font-bold text-clay bg-clay/10 px-2.5 py-1 rounded-full border border-clay/30">
-                  {t('Brevet d\'Études', 'Technical Certificate')}
-                </span>
-              </div>
-              <h4 className="font-display text-xl text-slate-900 mb-1">
-                BEP
-              </h4>
-              <div className="text-xs text-clay font-mono mb-2">{t('Option : Énergie Solaire', 'Option: Solar Energy')}</div>
-              <p className="hidden sm:block text-xs text-slate-900/70 leading-relaxed font-sans">
-                {t(
-                  'Fondamentaux électriques, câblage et dépannage d\'équipements.',
-                  'Electrical fundamentals, wiring, and equipment troubleshooting.'
-                )}
-              </p>
-            </div>
-
-            {/* BEPC */}
-            <div className="bg-surface/60 border border-slate-900/10 hover:border-slate-900/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all">
+          <div className="relative flex flex-col items-center py-4">
+            {/* BEPC — carte centrale, déclencheur */}
+            <div
+              onMouseEnter={() => setDiplomaHover(true)}
+              onMouseLeave={() => setDiplomaHover(false)}
+              className="relative z-20 w-full max-w-xs bg-surface/80 border-2 border-sky-400/40 hover:border-sky-400 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all cursor-pointer shadow-lg"
+            >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-2xl">🎓</span>
                 <span className="text-[10px] font-mono font-bold text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/30">
                   {t('Premier Cycle', 'General Education')}
                 </span>
               </div>
-              <h4 className="font-display text-xl text-slate-900 mb-1">
-                BEPC
-              </h4>
+              <h4 className="font-display text-xl text-slate-900 mb-1">BEPC</h4>
               <div className="text-xs text-sky-400 font-mono mb-2">{t('Brevet d\'Études du Premier Cycle', 'Junior High School Certificate')}</div>
-              <p className="hidden sm:block text-xs text-slate-900/70 leading-relaxed font-sans">
+              <p className="text-xs text-slate-900/70 leading-relaxed font-sans">
                 {t(
                   'Études du premier cycle avec mention, socle scientifique solide.',
                   'Junior secondary education with honors, strong scientific foundation.'
                 )}
               </p>
+              <div className="text-center mt-2 text-[10px] font-mono text-slate-900/40">
+                {t('Survolez pour voir la suite du parcours →', 'Hover to see what came next →')}
+              </div>
             </div>
+
+            {/* BEP + BAC — se révèlent au survol de la BEPC */}
+            <AnimatePresence>
+              {diplomaHover && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full overflow-hidden"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-5 max-w-2xl mx-auto">
+                    {/* BEP Énergie Solaire */}
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.35, delay: 0.05 }}
+                      className="bg-surface/60 border border-slate-900/10 hover:border-slate-900/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-2xl">☀️</span>
+                        <span className="text-[10px] font-mono font-bold text-clay bg-clay/10 px-2.5 py-1 rounded-full border border-clay/30">
+                          {t('Brevet d\'Études', 'Technical Certificate')}
+                        </span>
+                      </div>
+                      <h4 className="font-display text-xl text-slate-900 mb-1">BEP</h4>
+                      <div className="text-xs text-clay font-mono mb-2">{t('Option : Énergie Solaire', 'Option: Solar Energy')}</div>
+                      <p className="text-xs text-slate-900/70 leading-relaxed font-sans">
+                        {t(
+                          'Fondamentaux électriques, câblage et dépannage d\'équipements.',
+                          'Electrical fundamentals, wiring, and equipment troubleshooting.'
+                        )}
+                      </p>
+                    </motion.div>
+
+                    {/* BAC Pro Énergie Solaire */}
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.35, delay: 0.1 }}
+                      className="bg-surface/80 border border-clay/30 hover:border-clay rounded-2xl p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden transition-all"
+                    >
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-[#3B82F6]/10 rounded-full blur-xl pointer-events-none" />
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-2xl">⚡</span>
+                        <span className="text-[10px] font-mono font-bold text-[#3B82F6] bg-[#3B82F6]/10 px-2.5 py-1 rounded-full border border-[#3B82F6]/30">
+                          {t('Diplôme d\'État', 'State Diploma')}
+                        </span>
+                      </div>
+                      <h4 className="font-display text-xl text-slate-900 mb-1">BAC Professionnel</h4>
+                      <div className="text-xs text-clay font-mono mb-2">{t('Spécialité : Énergie Solaire', 'Specialty: Solar Energy')}</div>
+                      <p className="text-xs text-slate-900/70 leading-relaxed font-sans">
+                        {t(
+                          'Électrotechnique, systèmes photovoltaïques et logique d\'ingénierie physique.',
+                          'Electrotechnics, photovoltaic systems, and hardware engineering logic.'
+                        )}
+                      </p>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
