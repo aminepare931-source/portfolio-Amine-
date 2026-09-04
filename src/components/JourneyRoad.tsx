@@ -227,73 +227,37 @@ export default function JourneyRoad() {
                     </div>
                     <div className="flex justify-between mt-3 px-1">
                       {MILESTONES.map((m, idx) => (
-                        <motion.div
+                        <motion.button
                           key={m.id}
+                          onClick={() => {
+                            playClickSound()
+                            setActiveIndex(idx)
+                          }}
                           initial={{ opacity: 0, y: -6 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.15 + idx * 0.05 }}
-                          className="flex flex-col items-center gap-1"
+                          className="flex flex-col items-center gap-1 cursor-pointer group"
                         >
                           <span
-                            className={`text-lg ${idx === activeIndex ? 'scale-125' : 'opacity-50'} transition-transform`}
+                            className={`text-lg transition-transform group-hover:scale-125 ${
+                              idx === activeIndex ? 'scale-125' : 'opacity-50'
+                            }`}
                           >
                             {m.ic}
                           </span>
-                          <span className="text-[9px] font-mono text-slate-900/50 hidden sm:block">{m.date}</span>
-                        </motion.div>
+                          <span
+                            className={`text-[9px] font-mono hidden sm:block transition-colors ${
+                              idx === activeIndex ? 'text-[#3B82F6] font-bold' : 'text-slate-900/50 group-hover:text-slate-900'
+                            }`}
+                          >
+                            {m.date}
+                          </span>
+                        </motion.button>
                       ))}
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
-
-            {/* Horizontal Timeline Bar */}
-            <div className="relative p-2 rounded-2xl bg-surface/60 border border-slate-900/10 backdrop-blur-xl overflow-x-auto scrollbar-none">
-              <div className="flex items-center justify-between min-w-[700px] relative px-4 py-2">
-                {/* Connecting Laser Line */}
-                <div className="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-1 bg-slate-900/10 z-0">
-                  <div
-                    className="h-full bg-[#3B82F6] transition-all duration-500 shadow-[0_0_10px_#3B82F6]"
-                    style={{ width: `${(activeIndex / (MILESTONES.length - 1)) * 100}%` }}
-                  />
-                </div>
-
-                {/* Step Nodes */}
-                {MILESTONES.map((m, idx) => {
-                  const isActive = idx === activeIndex
-                  const isPassed = idx <= activeIndex
-                  return (
-                    <button
-                      key={m.id}
-                      onClick={() => {
-                        playClickSound()
-                        setActiveIndex(idx)
-                      }}
-                      className="relative z-10 flex flex-col items-center group cursor-pointer"
-                    >
-                      <div
-                        className={`w-12 h-12 rounded-2xl flex items-center justify-center text-lg transition-all duration-300 font-bold ${
-                          isActive
-                            ? 'bg-[#3B82F6] text-black scale-110 shadow-[0_0_20px_rgba(59, 130, 246,0.6)] border-2 border-slate-900'
-                            : isPassed
-                            ? 'bg-[#3B82F6]/20 text-[#3B82F6] border border-[#3B82F6]/50'
-                            : 'bg-white/80 text-slate-900/40 border border-slate-900/10 group-hover:border-slate-900/30'
-                        }`}
-                      >
-                        {m.ic}
-                      </div>
-                      <span
-                        className={`text-[11px] font-mono mt-2 transition-colors ${
-                          isActive ? 'text-[#3B82F6] font-bold' : 'text-slate-900/60'
-                        }`}
-                      >
-                        {m.date}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
             </div>
 
             {/* Active Milestone Card Box */}
