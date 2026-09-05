@@ -251,70 +251,100 @@ export default function JourneyRoad() {
         {/* SHOWCASE INTERACTIVE HORIZONTAL TIMELINE (NO LONG VERTICAL SCROLL) */}
         {viewMode === 'showcase' ? (
           <div className="space-y-8">
-            {/* Hub central: survol pour dévoiler tout le parcours */}
+            {/* Hub central: survol pour dévoiler tout le parcours — version explosive */}
             <div className="flex flex-col items-center py-6 sm:py-10">
-              <motion.button
-                onMouseEnter={() => setHubOpen(true)}
-                onMouseLeave={() => setHubOpen(false)}
-                onClick={() => { playClickSound(); setActiveIndex(activeIndex) }}
-                whileHover={{ scale: 1.08 }}
-                className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#3B82F6] text-black flex items-center justify-center text-3xl sm:text-4xl font-bold shadow-[0_0_40px_rgba(59,130,246,0.5)] border-4 border-white cursor-pointer"
-              >
-                {current.ic}
-              </motion.button>
+              <div className="relative flex items-center justify-center">
+                {/* Ondes de choc au survol */}
+                <AnimatePresence>
+                  {hubOpen && (
+                    <>
+                      {[0, 0.15, 0.3].map((delay, i) => (
+                        <motion.span
+                          key={i}
+                          initial={{ scale: 0.6, opacity: 0.6 }}
+                          animate={{ scale: 2.4, opacity: 0 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 1.1, delay, repeat: Infinity, ease: 'easeOut' }}
+                          className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-[#3B82F6] pointer-events-none"
+                        />
+                      ))}
+                    </>
+                  )}
+                </AnimatePresence>
+
+                <motion.button
+                  onMouseEnter={() => { setHubOpen(true); playClickSound() }}
+                  onMouseLeave={() => setHubOpen(false)}
+                  onClick={() => { playClickSound(); setActiveIndex(activeIndex) }}
+                  animate={hubOpen ? { scale: [1, 1.25, 1.12], rotate: [0, -8, 0] } : { scale: 1, rotate: 0 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 12 }}
+                  className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#3B82F6] text-black flex items-center justify-center text-3xl sm:text-4xl font-bold shadow-[0_0_60px_rgba(59,130,246,0.8)] border-4 border-white cursor-pointer"
+                >
+                  {current.ic}
+                </motion.button>
+              </div>
 
               <span className="text-xs font-mono text-slate-900/50 mt-3">
-                {t('Survolez pour voir tout le parcours', 'Hover to reveal the full journey')}
+                {t('Survolez pour faire exploser le parcours', 'Hover to blast open the full journey')}
               </span>
 
-              {/* Route qui se dévoile de gauche à droite */}
+              {/* Route + jalons qui explosent depuis le centre */}
               <AnimatePresence>
                 {hubOpen && (
                   <motion.div
                     initial={{ opacity: 0, scaleX: 0 }}
                     animate={{ opacity: 1, scaleX: 1 }}
                     exit={{ opacity: 0, scaleX: 0 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ transformOrigin: 'left' }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ transformOrigin: 'center' }}
                     className="w-full max-w-3xl mt-6 relative"
                   >
                     <div className="relative h-1 bg-slate-900/10 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: '0%' }}
                         animate={{ width: '100%' }}
-                        transition={{ duration: 0.6, ease: 'easeOut' }}
-                        className="h-full bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]"
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
+                        className="h-full bg-[#3B82F6] shadow-[0_0_16px_#3B82F6]"
                       />
                     </div>
-                    <div className="flex justify-between mt-3 px-1">
-                      {MILESTONES.map((m, idx) => (
-                        <motion.button
-                          key={m.id}
-                          onClick={() => {
-                            playClickSound()
-                            setActiveIndex(idx)
-                          }}
-                          initial={{ opacity: 0, y: -6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.15 + idx * 0.05 }}
-                          className="flex flex-col items-center gap-1 cursor-pointer group"
-                        >
-                          <span
-                            className={`text-lg transition-transform group-hover:scale-125 ${
-                              idx === activeIndex ? 'scale-125' : 'opacity-50'
-                            }`}
+                    <div className="flex justify-between mt-4 px-1">
+                      {MILESTONES.map((m, idx) => {
+                        const distanceFromCenter = idx - (MILESTONES.length - 1) / 2
+                        return (
+                          <motion.button
+                            key={m.id}
+                            onClick={() => {
+                              playClickSound()
+                              setActiveIndex(idx)
+                            }}
+                            initial={{ opacity: 0, scale: 0, y: -30, rotate: distanceFromCenter * 25 }}
+                            animate={{ opacity: 1, scale: 1, y: 0, rotate: 0 }}
+                            transition={{
+                              type: 'spring',
+                              stiffness: 260,
+                              damping: 14,
+                              delay: 0.08 + Math.abs(distanceFromCenter) * 0.05,
+                            }}
+                            whileHover={{ scale: 1.4, rotate: [0, -10, 10, 0] }}
+                            className="flex flex-col items-center gap-1 cursor-pointer group"
                           >
-                            {m.ic}
-                          </span>
-                          <span
-                            className={`text-[9px] font-mono hidden sm:block transition-colors ${
-                              idx === activeIndex ? 'text-[#3B82F6] font-bold' : 'text-slate-900/50 group-hover:text-slate-900'
-                            }`}
-                          >
-                            {m.date}
-                          </span>
-                        </motion.button>
-                      ))}
+                            <span
+                              className={`text-lg sm:text-xl transition-transform drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] ${
+                                idx === activeIndex ? 'scale-125' : 'opacity-60'
+                              }`}
+                            >
+                              {m.ic}
+                            </span>
+                            <span
+                              className={`text-[9px] font-mono hidden sm:block transition-colors ${
+                                idx === activeIndex ? 'text-[#3B82F6] font-bold' : 'text-slate-900/50 group-hover:text-slate-900'
+                              }`}
+                            >
+                              {m.date}
+                            </span>
+                          </motion.button>
+                        )
+                      })}
                     </div>
                   </motion.div>
                 )}
@@ -442,31 +472,52 @@ export default function JourneyRoad() {
 
           <div className="relative flex flex-col items-center py-4">
             {/* BEPC — carte centrale, déclencheur */}
-            <div
-              onMouseEnter={() => setDiplomaHover(true)}
-              onMouseLeave={() => setDiplomaHover(false)}
-              className="relative z-20 w-full max-w-xs bg-surface/80 border-2 border-sky-400/40 hover:border-sky-400 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all cursor-pointer shadow-lg"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-2xl">🎓</span>
-                <span className="text-[10px] font-mono font-bold text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/30">
-                  {t('Premier Cycle', 'General Education')}
-                </span>
-              </div>
-              <h4 className="font-display text-xl text-slate-900 mb-1">BEPC</h4>
-              <div className="text-xs text-sky-400 font-mono mb-2">{t('Brevet d\'Études du Premier Cycle', 'Junior High School Certificate')}</div>
-              <p className="text-xs text-slate-900/70 leading-relaxed font-sans">
-                {t(
-                  'Études du premier cycle avec mention, socle scientifique solide.',
-                  'Junior secondary education with honors, strong scientific foundation.'
+            <div className="relative">
+              <AnimatePresence>
+                {diplomaHover && (
+                  <>
+                    {[0, 0.15, 0.3].map((delay, i) => (
+                      <motion.span
+                        key={i}
+                        initial={{ scale: 0.85, opacity: 0.5 }}
+                        animate={{ scale: 1.6, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.1, delay, repeat: Infinity, ease: 'easeOut' }}
+                        className="absolute inset-0 rounded-2xl border-2 border-sky-400 pointer-events-none"
+                      />
+                    ))}
+                  </>
                 )}
-              </p>
-              <div className="text-center mt-2 text-[10px] font-mono text-slate-900/40">
-                {t('Survolez pour voir la suite du parcours →', 'Hover to see what came next →')}
-              </div>
+              </AnimatePresence>
+
+              <motion.div
+                onMouseEnter={() => { setDiplomaHover(true); playClickSound() }}
+                onMouseLeave={() => setDiplomaHover(false)}
+                animate={diplomaHover ? { scale: [1, 1.06, 1.02], boxShadow: '0 0 50px rgba(56,189,248,0.6)' } : { scale: 1, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}
+                transition={{ type: 'spring', stiffness: 260, damping: 14 }}
+                className="relative z-20 w-full max-w-xs mx-auto bg-surface/80 border-2 border-sky-400/40 hover:border-sky-400 rounded-2xl p-5 sm:p-6 backdrop-blur-xl cursor-pointer"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-2xl">🎓</span>
+                  <span className="text-[10px] font-mono font-bold text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/30">
+                    {t('Premier Cycle', 'General Education')}
+                  </span>
+                </div>
+                <h4 className="font-display text-xl text-slate-900 mb-1">BEPC</h4>
+                <div className="text-xs text-sky-400 font-mono mb-2">{t('Brevet d\'Études du Premier Cycle', 'Junior High School Certificate')}</div>
+                <p className="text-xs text-slate-900/70 leading-relaxed font-sans">
+                  {t(
+                    'Études du premier cycle avec mention, socle scientifique solide.',
+                    'Junior secondary education with honors, strong scientific foundation.'
+                  )}
+                </p>
+                <div className="text-center mt-2 text-[10px] font-mono text-slate-900/40">
+                  {t('Survolez pour faire exploser la suite →', 'Hover to blast open what came next →')}
+                </div>
+              </motion.div>
             </div>
 
-            {/* BEP + BAC — se révèlent au survol de la BEPC */}
+            {/* BEP + BAC — jaillissent de la BEPC au survol */}
             <AnimatePresence>
               {diplomaHover && (
                 <motion.div
@@ -479,10 +530,11 @@ export default function JourneyRoad() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-5 max-w-2xl mx-auto">
                     {/* BEP Énergie Solaire */}
                     <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.35, delay: 0.05 }}
-                      className="bg-surface/60 border border-slate-900/10 hover:border-slate-900/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl transition-all"
+                      initial={{ opacity: 0, x: -60, scale: 0.3, rotate: -20 }}
+                      animate={{ opacity: 1, x: 0, scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 15, delay: 0.08 }}
+                      whileHover={{ scale: 1.05, rotate: -2 }}
+                      className="bg-surface/60 border border-slate-900/10 hover:border-slate-900/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl shadow-lg"
                     >
                       <div className="flex items-center justify-between mb-3">
                         <span className="text-2xl">☀️</span>
@@ -502,10 +554,11 @@ export default function JourneyRoad() {
 
                     {/* BAC Pro Énergie Solaire */}
                     <motion.div
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.35, delay: 0.1 }}
-                      className="bg-surface/80 border border-clay/30 hover:border-clay rounded-2xl p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden transition-all"
+                      initial={{ opacity: 0, x: 60, scale: 0.3, rotate: 20 }}
+                      animate={{ opacity: 1, x: 0, scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 260, damping: 15, delay: 0.14 }}
+                      whileHover={{ scale: 1.05, rotate: 2 }}
+                      className="bg-surface/80 border border-clay/30 hover:border-clay rounded-2xl p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden shadow-lg"
                     >
                       <div className="absolute top-0 right-0 w-24 h-24 bg-[#3B82F6]/10 rounded-full blur-xl pointer-events-none" />
                       <div className="flex items-center justify-between mb-3">
