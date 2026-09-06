@@ -29,6 +29,12 @@ const ITEMS = [
     label: 'Tenue Traditionnelle',
     desc: 'Entre héritage burkinabè et exigence professionnelle.',
   },
+  {
+    src: '/assets/about1.jpg',
+    bg: '#f5f8ff',
+    label: 'Portrait Studio',
+    desc: 'Séance photo professionnelle, entre rigueur et élégance.',
+  },
 ]
 
 export default function Explorations() {
