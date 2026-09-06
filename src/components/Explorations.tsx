@@ -35,6 +35,12 @@ const ITEMS = [
     label: 'Portrait Studio',
     desc: 'Séance photo professionnelle, entre rigueur et élégance.',
   },
+  {
+    src: '/assets/footer-avatar.jpg',
+    bg: '#f6f7f9',
+    label: 'Portrait Sobre',
+    desc: 'Simplicité et élégance, l\'essentiel mis en avant.',
+  },
 ]
 
 export default function Explorations() {
