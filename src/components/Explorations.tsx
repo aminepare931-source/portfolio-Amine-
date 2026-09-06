@@ -29,12 +29,6 @@ const ITEMS = [
     label: 'Tenue Traditionnelle',
     desc: 'Entre héritage burkinabè et exigence professionnelle.',
   },
-  {
-    src: '/assets/gallery-behind.jpg',
-    bg: '#eef2f9',
-    label: 'Coulisses',
-    desc: 'Loin de l\'écran, la vie continue à Bobo-Dioulasso.',
-  },
 ]
 
 export default function Explorations() {
