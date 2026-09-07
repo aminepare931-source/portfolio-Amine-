@@ -4,21 +4,21 @@ import { Check, ArrowRight } from 'lucide-react'
 const PLANS = [
   {
     name: 'Starter',
-    price: '[Ton prix]',
+    price: '20 000 FCFA',
     tagline: 'Pour démarrer en ligne',
     features: ['Site vitrine (jusqu\'à 5 pages)', 'Design responsive mobile', 'Nom de domaine (1 an)', 'Livraison en 5-7 jours'],
     highlight: false,
   },
   {
     name: 'Pro',
-    price: '[Ton prix]',
+    price: '50 000 FCFA',
     tagline: 'Pour vendre en ligne',
     features: ['Tout Starter, plus :', 'Boutique en ligne + Mobile Money', 'Réseaux sociaux configurés', 'Support 1 mois inclus'],
     highlight: true,
   },
   {
     name: 'Sur-mesure',
-    price: 'Sur devis',
+    price: 'À partir de 100 000 FCFA',
     tagline: 'Application, automatisation, projet spécifique',
     features: ['Application mobile ou web métier', 'Automatisation / IA', 'Accompagnement complet', 'Devis personnalisé'],
     highlight: false,
@@ -34,12 +34,6 @@ export default function PricingPage() {
         <p className="text-slate-900/70 max-w-lg mx-auto">
           Trois formules, adaptables selon votre budget et votre projet.
         </p>
-      </div>
-
-      <div className="mb-14 text-center">
-        <span className="inline-block text-xs font-mono text-clay bg-clay/10 border border-dashed border-clay/40 px-4 py-2 rounded-sm">
-          ⚠️ Prix à compléter — remplace les [Ton prix] par tes vrais montants (FCFA)
-        </span>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-5">
