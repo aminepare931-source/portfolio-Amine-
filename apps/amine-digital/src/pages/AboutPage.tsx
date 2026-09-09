@@ -8,7 +8,19 @@ export default function AboutPage() {
       <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">À propos</div>
       <h1 className="font-display text-4xl sm:text-5xl mb-8"><Line>L'histoire derrière AMINE DIGITAL</Line></h1>
 
-      <Fade className="space-y-6 text-slate-900/80 leading-relaxed text-base sm:text-lg mb-14">
+      <Fade className="flex items-center gap-4 mb-10 border border-stroke rounded-md p-4 bg-surface/30 max-w-sm">
+        <img
+          src="/assets/founder.jpg"
+          alt="Fondateur d'AMINE DIGITAL"
+          className="w-16 h-16 rounded-full object-cover border-2 border-clay/30 shrink-0"
+        />
+        <div>
+          <div className="font-display text-base text-slate-900">Mouhamed Amine Paré</div>
+          <div className="text-xs text-clay font-mono uppercase tracking-wide">Fondateur, AMINE DIGITAL</div>
+        </div>
+      </Fade>
+
+      <Fade delay={0.1} className="space-y-6 text-slate-900/80 leading-relaxed text-base sm:text-lg mb-14">
         <p>
           AMINE DIGITAL est né d'un constat simple : beaucoup d'entreprises et d'entrepreneurs burkinabè ont
           besoin d'une présence en ligne solide, mais font face à des prestataires dispersés — un pour le site,
