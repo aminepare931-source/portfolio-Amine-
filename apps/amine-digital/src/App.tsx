@@ -16,6 +16,7 @@ import PricingPage from './pages/PricingPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import ContactPage from './pages/ContactPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -31,6 +32,7 @@ function AnimatedRoutes() {
         <Route path="/journal" element={<PageTransition><BlogPage /></PageTransition>} />
         <Route path="/journal/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
       </Routes>
     </AnimatePresence>
   )
