@@ -11,6 +11,7 @@ import ProjectsPage from './pages/ProjectsPage'
 import ParcoursPage from './pages/ParcoursPage'
 import GaleriePage from './pages/GaleriePage'
 import ContactPage from './pages/ContactPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/parcours" element={<ParcoursPage />} />
             <Route path="/galerie" element={<GaleriePage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />
