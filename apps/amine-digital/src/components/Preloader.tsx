@@ -36,9 +36,9 @@ export default function Preloader() {
             initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, ease: EASE_OUT }}
-            className="w-14 h-14 rounded-sm bg-white text-gov flex items-center justify-center font-display text-lg font-bold mb-6"
+            className="w-16 h-16 rounded-sm bg-white flex items-center justify-center p-2 mb-6"
           >
-            AD
+            <img src="/assets/logo-icon.png" alt="AMINE DIGITAL" className="w-full h-full object-contain" />
           </motion.div>
 
           <div className="w-40 h-px bg-white/20 overflow-hidden">

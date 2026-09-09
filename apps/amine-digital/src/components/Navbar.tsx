@@ -65,9 +65,7 @@ export default function Navbar() {
         <div className="bg-bg border-b-2 border-gov shadow-sm">
           <div className="max-w-[1200px] mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-              <span className="w-10 h-10 rounded-sm bg-gov text-white flex items-center justify-center text-xs font-bold tracking-tight shrink-0">
-                AD
-              </span>
+              <img src="/assets/logo-icon.png" alt="AMINE DIGITAL" className="w-10 h-10 object-contain shrink-0" />
               <span className="hidden sm:block leading-tight">
                 <span className="block font-display text-sm text-gray-900 tracking-wide">AMINE DIGITAL</span>
                 <span className="block text-[10px] font-mono text-gov uppercase tracking-widest">Services numériques</span>
