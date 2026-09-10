@@ -4,6 +4,7 @@ import Stats from '../components/Stats'
 import About from '../components/About'
 import PatternDivider from '../components/PatternDivider'
 import Skills from '../components/Skills'
+import GithubActivity from '../components/GithubActivity'
 import Projects from '../components/Projects'
 import JourneyRoad from '../components/JourneyRoad'
 import Explorations from '../components/Explorations'
@@ -19,6 +20,7 @@ export default function Home() {
       <About />
       <PatternDivider />
       <Skills />
+      <GithubActivity />
       <Projects limit={4} showViewAll />
       <JourneyRoad />
       <Explorations />
