@@ -8,6 +8,7 @@ import GithubActivity from '../components/GithubActivity'
 import Projects from '../components/Projects'
 import JourneyRoad from '../components/JourneyRoad'
 import Explorations from '../components/Explorations'
+import Testimonials from '../components/Testimonials'
 import BottomMarquee from '../components/BottomMarquee'
 import Contact from '../components/ContactCTA'
 
@@ -24,6 +25,7 @@ export default function Home() {
       <Projects limit={4} showViewAll />
       <JourneyRoad />
       <Explorations />
+      <Testimonials />
       <BottomMarquee />
       <Contact />
     </>
