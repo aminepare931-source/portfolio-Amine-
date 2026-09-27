@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import ProjectsHeroCard from './ProjectsHeroCard'
-import ProjectsCarousel from './ProjectsCarousel'
+import ProjectsList from './ProjectsList'
 import ProjectModal from './ProjectModal'
 import { fetchProjects, Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
+import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
+import { playClickSound } from '../lib/sound'
 
 export default function Projects({ limit, showViewAll }: { limit?: number; showViewAll?: boolean } = {}) {
   const [projects, setProjects] = useState<Project[]>([])
@@ -33,11 +36,22 @@ export default function Projects({ limit, showViewAll }: { limit?: number; showV
           {t('Les projets arrivent bientôt.', 'Projects coming soon.')}
         </div>
       ) : (
-        <ProjectsCarousel
-          projects={visibleProjects}
-          onOpen={setActiveProject}
-          showAllLink={showViewAll && projects.length > (limit || 0)}
-        />
+        <>
+          <ProjectsList projects={visibleProjects} onOpen={setActiveProject} />
+
+          {showViewAll && projects.length > (limit || 0) && (
+            <div className="px-4 sm:px-6 max-w-[1200px] mx-auto flex justify-center mt-10">
+              <Link
+                to="/projets"
+                onClick={playClickSound}
+                className="group inline-flex items-center gap-2 rounded-full border border-slate-900/15 bg-surface/60 hover:bg-slate-900/5 px-6 py-3 text-sm font-semibold text-slate-900 transition-colors"
+              >
+                {t('Voir tous les projets', 'View all projects')}
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          )}
+        </>
       )}
 
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
