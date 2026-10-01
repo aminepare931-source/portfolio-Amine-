@@ -32,17 +32,14 @@ export async function fetchProjects(): Promise<Project[]> {
     if (res.ok) {
       const data = await res.json()
       if (Array.isArray(data) && data.length > 0) {
-        return data.map((item: any) => {
-          const match = FEATURED_PROJECTS.find(p => p.id === item.id || p.name.toLowerCase() === item.name?.toLowerCase())
-          return {
-            ...item,
-            tagline: item.tagline || match?.tagline || item.description,
-            fullDescription: item.fullDescription || match?.fullDescription || item.description,
-            keyFeatures: item.keyFeatures || match?.keyFeatures || ['Architecture évolutive', 'Interface optimisée', 'Gestion de données sécurisée'],
-            metrics: item.metrics || match?.metrics || [{ label: 'Performance', value: 'Optimisée' }],
-            architecture: item.architecture || match?.architecture || ['React / TypeScript', 'Supabase / Cloud backend'],
-          }
-        })
+        return data.map((item: any) => ({
+          ...item,
+          tagline: item.tagline || undefined,
+          fullDescription: item.fullDescription || undefined,
+          keyFeatures: item.keyFeatures && item.keyFeatures.length > 0 ? item.keyFeatures : undefined,
+          metrics: item.metrics && item.metrics.length > 0 ? item.metrics : undefined,
+          architecture: item.architecture && item.architecture.length > 0 ? item.architecture : undefined,
+        }))
       }
     }
   } catch (e) {

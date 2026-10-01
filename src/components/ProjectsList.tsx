@@ -68,14 +68,14 @@ export default function ProjectsList({
         })}
       </div>
 
-      {/* Liste éditoriale */}
+      {/* Cartes horizontales */}
       {filtered.length === 0 ? (
         <div className="text-center py-16 text-muted text-sm border border-dashed border-stroke rounded-3xl">
           {t('Aucun projet dans cette catégorie.', 'No project in this category.')}
         </div>
       ) : (
-        <div className="border-t border-stroke">
-          {filtered.map((p, i) => {
+        <div className="flex flex-col gap-5">
+          {filtered.map((p) => {
             const status = statusMeta(p.status, t)
             return (
               <button
@@ -84,51 +84,48 @@ export default function ProjectsList({
                   playClickSound()
                   onOpen(p)
                 }}
-                className="group w-full flex items-center gap-4 sm:gap-6 py-6 border-b border-stroke text-left transition-colors hover:bg-surface/40"
+                className="group w-full flex flex-col sm:flex-row items-stretch gap-0 text-left rounded-3xl border border-stroke overflow-hidden hover:border-clay/40 hover:-translate-y-0.5 transition-all bg-surface/20"
               >
-                <span className="font-display text-xl sm:text-2xl text-slate-900/25 group-hover:text-clay transition-colors w-8 sm:w-10 shrink-0">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-
                 {p.img ? (
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border border-stroke shrink-0 bg-surface">
-                    <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
+                  <div className="sm:w-[40%] aspect-[16/9] sm:aspect-auto overflow-hidden bg-surface shrink-0">
+                    <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                 ) : (
                   <div
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl shrink-0 flex items-center justify-center text-2xl border border-stroke"
+                    className="sm:w-[40%] aspect-[16/9] sm:aspect-auto flex items-center justify-center text-5xl shrink-0"
                     style={{ background: p.color ? `${p.color}15` : '#f1f5f9' }}
                   >
                     {p.emoji || '🧩'}
                   </div>
                 )}
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 className="font-display text-lg sm:text-2xl text-slate-900 group-hover:text-clay transition-colors truncate">
+                <div className="flex-1 min-w-0 p-6 sm:p-8 flex flex-col justify-center">
+                  <div className="flex items-center gap-2 flex-wrap mb-2">
+                    <h3 className="font-display text-2xl sm:text-3xl text-slate-900 group-hover:text-clay transition-colors">
                       {p.name}
                     </h3>
-                    <span className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-wide px-2 py-0.5 rounded-full border border-stroke shrink-0">
+                    <span className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-wide px-2.5 py-1 rounded-full border border-stroke shrink-0">
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: status.dot }} />
                       {status.label}
                     </span>
                   </div>
-                  <p className="text-xs sm:text-sm text-muted line-clamp-1">{p.tagline || p.description}</p>
+                  <p className="text-sm sm:text-base text-muted leading-relaxed mb-4 max-w-xl">
+                    {p.tagline || p.description}
+                  </p>
                   {p.tags && p.tags.length > 0 && (
-                    <div className="hidden sm:flex gap-1.5 mt-2">
-                      {p.tags.slice(0, 3).map((tag) => (
-                        <span key={tag} className="text-[10px] font-mono text-slate-900/50 bg-surface px-2 py-0.5 rounded-full border border-stroke">
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {p.tags.slice(0, 4).map((tag) => (
+                        <span key={tag} className="text-xs font-mono text-slate-900/60 bg-surface px-2.5 py-1 rounded-full border border-stroke">
                           {tag}
                         </span>
                       ))}
                     </div>
                   )}
+                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-clay">
+                    {t('Voir le projet', 'View project')}
+                    <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </span>
                 </div>
-
-                <ArrowUpRight
-                  size={20}
-                  className="text-slate-900/20 group-hover:text-clay group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0"
-                />
               </button>
             )
           })}
