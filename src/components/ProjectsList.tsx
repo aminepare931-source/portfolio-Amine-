@@ -68,13 +68,13 @@ export default function ProjectsList({
         })}
       </div>
 
-      {/* Cartes horizontales */}
+      {/* Grille classique */}
       {filtered.length === 0 ? (
         <div className="text-center py-16 text-muted text-sm border border-dashed border-stroke rounded-3xl">
           {t('Aucun projet dans cette catégorie.', 'No project in this category.')}
         </div>
       ) : (
-        <div className="flex flex-col gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((p) => {
             const status = statusMeta(p.status, t)
             return (
@@ -84,47 +84,44 @@ export default function ProjectsList({
                   playClickSound()
                   onOpen(p)
                 }}
-                className="group w-full flex flex-col sm:flex-row items-stretch gap-0 text-left rounded-3xl border border-stroke overflow-hidden hover:border-clay/40 hover:-translate-y-0.5 transition-all bg-surface/20"
+                className="group flex flex-col text-left rounded-2xl border border-stroke overflow-hidden hover:border-clay/40 hover:-translate-y-1 transition-all bg-surface/20"
               >
                 {p.img ? (
-                  <div className="sm:w-[40%] aspect-[16/9] sm:aspect-auto overflow-hidden bg-surface shrink-0">
+                  <div className="aspect-video overflow-hidden bg-surface">
                     <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                 ) : (
                   <div
-                    className="sm:w-[40%] aspect-[16/9] sm:aspect-auto flex items-center justify-center text-5xl shrink-0"
+                    className="aspect-video flex items-center justify-center text-4xl"
                     style={{ background: p.color ? `${p.color}15` : '#f1f5f9' }}
                   >
                     {p.emoji || '🧩'}
                   </div>
                 )}
 
-                <div className="flex-1 min-w-0 p-6 sm:p-8 flex flex-col justify-center">
-                  <div className="flex items-center gap-2 flex-wrap mb-2">
-                    <h3 className="font-display text-2xl sm:text-3xl text-slate-900 group-hover:text-clay transition-colors">
+                <div className="flex-1 p-5">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <h3 className="font-display text-lg text-slate-900 group-hover:text-clay transition-colors truncate">
                       {p.name}
                     </h3>
-                    <span className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-wide px-2.5 py-1 rounded-full border border-stroke shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: status.dot }} />
-                      {status.label}
-                    </span>
+                    <ArrowUpRight size={16} className="text-slate-900/20 group-hover:text-clay group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
                   </div>
-                  <p className="text-sm sm:text-base text-muted leading-relaxed mb-4 max-w-xl">
+                  <span className="inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-wide px-2 py-0.5 rounded-full border border-stroke mb-3">
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: status.dot }} />
+                    {status.label}
+                  </span>
+                  <p className="text-xs text-muted leading-relaxed line-clamp-2 mb-3">
                     {p.tagline || p.description}
                   </p>
                   {p.tags && p.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {p.tags.slice(0, 4).map((tag) => (
-                        <span key={tag} className="text-xs font-mono text-slate-900/60 bg-surface px-2.5 py-1 rounded-full border border-stroke">
+                    <div className="flex flex-wrap gap-1.5">
+                      {p.tags.slice(0, 3).map((tag) => (
+                        <span key={tag} className="text-[10px] font-mono text-slate-900/50 bg-surface px-2 py-0.5 rounded-full border border-stroke">
                           {tag}
                         </span>
                       ))}
                     </div>
                   )}
-                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-clay">
-                    {t('Voir le projet', 'View project')}
-                    <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </span>
                 </div>
               </button>
             )
