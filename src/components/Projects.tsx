@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import ProjectsHeroCard from './ProjectsHeroCard'
 import ProjectsList from './ProjectsList'
-import ProjectModal from './ProjectModal'
 import { fetchProjects, Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
 import { Link } from 'react-router-dom'
@@ -11,7 +10,6 @@ import { playClickSound } from '../lib/sound'
 export default function Projects({ limit, showViewAll }: { limit?: number; showViewAll?: boolean } = {}) {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeProject, setActiveProject] = useState<Project | null>(null)
   const { t } = useLanguage()
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function Projects({ limit, showViewAll }: { limit?: number; showV
         </div>
       ) : (
         <>
-          <ProjectsList projects={visibleProjects} onOpen={setActiveProject} />
+          <ProjectsList projects={visibleProjects} />
 
           {showViewAll && projects.length > (limit || 0) && (
             <div className="px-4 sm:px-6 max-w-[1200px] mx-auto flex justify-center mt-10">
@@ -53,8 +51,6 @@ export default function Projects({ limit, showViewAll }: { limit?: number; showV
           )}
         </>
       )}
-
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import { Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
@@ -18,10 +19,8 @@ function statusMeta(status: Project['status'], t: (fr: string, en: string) => st
 
 export default function ProjectsList({
   projects,
-  onOpen,
 }: {
   projects: Project[]
-  onOpen: (p: Project) => void
 }) {
   const { t } = useLanguage()
   const [filter, setFilter] = useState<StatusKey>('all')
@@ -78,17 +77,15 @@ export default function ProjectsList({
           {filtered.map((p) => {
             const status = statusMeta(p.status, t)
             return (
-              <button
+              <Link
                 key={p.id}
-                onClick={() => {
-                  playClickSound()
-                  onOpen(p)
-                }}
+                to={`/projets/${p.id}`}
+                onClick={() => playClickSound()}
                 className="group flex flex-col text-left rounded-2xl border border-stroke overflow-hidden hover:border-clay/40 hover:-translate-y-1 transition-all bg-surface/20"
               >
                 {p.img ? (
-                  <div className="aspect-video overflow-hidden bg-surface">
-                    <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="aspect-video overflow-hidden bg-surface flex items-center justify-center p-2">
+                    <img src={p.img} alt={p.name} className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-500" />
                   </div>
                 ) : (
                   <div
@@ -123,7 +120,7 @@ export default function ProjectsList({
                     </div>
                   )}
                 </div>
-              </button>
+              </Link>
             )
           })}
         </div>

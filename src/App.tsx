@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import AboutPage from './pages/AboutPage'
 import SkillsPage from './pages/SkillsPage'
 import ProjectsPage from './pages/ProjectsPage'
+import ProjectDetailPage from './pages/ProjectDetailPage'
 import ParcoursPage from './pages/ParcoursPage'
 import GaleriePage from './pages/GaleriePage'
 import ContactPage from './pages/ContactPage'
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/a-propos" element={<AboutPage />} />
             <Route path="/competences" element={<SkillsPage />} />
             <Route path="/projets" element={<ProjectsPage />} />
+            <Route path="/projets/:id" element={<ProjectDetailPage />} />
             <Route path="/parcours" element={<ParcoursPage />} />
             <Route path="/galerie" element={<GaleriePage />} />
             <Route path="/contact" element={<ContactPage />} />
