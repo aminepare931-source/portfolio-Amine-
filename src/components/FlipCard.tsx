@@ -10,6 +10,7 @@ export default function FlipCard() {
   const y = useMotionValue(0)
   const rotate = useTransform(x, [-120, 0, 120], [-16, 0, 16])
   const strapStretch = useTransform(y, [0, 150], [0, 70])
+  const strapHeight = useTransform(strapStretch, (v) => 108 + v)
 
   function snapBack() {
     animate(x, 0, { type: 'spring', stiffness: 180, damping: 11 })
@@ -17,27 +18,30 @@ export default function FlipCard() {
   }
 
   return (
-    <div className="relative w-full max-w-sm mx-auto flex flex-col items-center select-none" style={{ paddingTop: 58 }}>
+    <div className="relative w-full max-w-sm mx-auto flex flex-col items-center select-none" style={{ paddingTop: 128 }}>
       {/* Lanière + clip — fixes, le badge pend depuis ce point */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-0 pointer-events-none">
         <motion.div
-          className="w-8 rounded-[3px]"
+          className="w-10 rounded-[4px] relative border border-[#1e3a8a]/40"
           style={{
-            height: useTransform(strapStretch, (v) => 46 + v),
+            height: strapHeight,
             background:
-              'repeating-linear-gradient(127deg, #1d4ed8 0px, #1d4ed8 7px, #3B82F6 7px, #3B82F6 14px)',
-            boxShadow: 'inset 0 0 6px rgba(0,0,0,0.25), 0 3px 8px rgba(15,23,42,0.15)',
+              'repeating-linear-gradient(124deg, #1d4ed8 0px, #1d4ed8 9px, #2563eb 9px, #2563eb 16px, #60A5FA 16px, #60A5FA 18px)',
+            boxShadow: '0 6px 14px rgba(29,78,216,0.35), inset 0 0 8px rgba(0,0,0,0.3)',
           }}
-        />
+        >
+          {/* liseré central façon lanière tissée */}
+          <span className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-white/25" />
+        </motion.div>
         {/* clip métallique */}
         <div
-          className="w-5 h-5 -mt-px rounded-[2px] shrink-0"
+          className="w-6 h-6 -mt-px rounded-[3px] shrink-0 relative z-10"
           style={{
-            background: 'linear-gradient(165deg,#f1f5f9 0%,#cbd5e1 45%,#64748b 100%)',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+            background: 'linear-gradient(165deg,#f8fafc 0%,#cbd5e1 45%,#64748b 100%)',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.35)',
           }}
         />
-        <div className="w-2.5 h-2.5 rounded-full border-2 border-slate-400 -mt-0.5" style={{ background: '#e2e8f0' }} />
+        <div className="w-3 h-3 rounded-full border-2 border-slate-400 -mt-0.5" style={{ background: '#e2e8f0' }} />
       </div>
 
       {/* Badge — déplaçable, pivote depuis le haut comme suspendu */}
@@ -92,27 +96,38 @@ export default function FlipCard() {
               </div>
             </div>
 
-            {/* FACE ARRIÈRE — logo / branding */}
+            {/* FACE ARRIÈRE — terminal / JSON profil */}
             <div
-              className="absolute inset-0 rounded-[26px] overflow-hidden border-[3px] border-[#0b1226] flex flex-col"
+              className="absolute inset-0 rounded-[26px] overflow-hidden border-[3px] border-[#0b1226] bg-[#0b0f19] p-5 flex flex-col"
               style={{
                 backfaceVisibility: 'hidden',
                 transform: 'rotateY(180deg)',
                 boxShadow: '0 22px 50px rgba(15,23,42,0.28)',
-                background: 'linear-gradient(160deg,#0b1226 0%,#13244a 55%,#1d4ed8 100%)',
               }}
             >
               <div className="absolute top-3 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#0b1226] border border-white/10 z-10" />
 
-              <div className="flex-1 flex items-center justify-center">
-                <span className="font-display font-black text-white text-[7rem] sm:text-[8rem] leading-none tracking-tighter opacity-95">
-                  A<span className="text-[#60A5FA]">D</span>
-                </span>
+              <div className="flex items-center gap-2 mb-4 shrink-0 pt-1">
+                <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                <span className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                <span className="flex-1 text-center text-[11px] text-white/40 font-mono">aminedev@portfolio:~ — zsh</span>
               </div>
-
-              <div className="p-5 sm:p-6 text-right">
-                <p className="font-display font-bold text-white text-sm sm:text-base leading-tight">AMINE</p>
-                <p className="text-white/50 text-[9px] uppercase tracking-[0.25em]">Digital &amp; Dev</p>
+              <div className="font-mono text-[11px] sm:text-[12px] leading-relaxed overflow-hidden">
+                <p><span className="text-[#5fd3ff]">→</span> <span className="text-white/70">~ node init-profile.js</span></p>
+                <p><span className="text-[#c792ea]">const</span> <span className="text-[#f78c6c]">développeur</span> <span className="text-white/70">= {'{'}</span></p>
+                <p className="pl-4"><span className="text-[#f78c6c]">nom</span><span className="text-white/50">:</span> <span className="text-[#c3e88d]">'Mouhamed Amine Paré'</span><span className="text-white/50">,</span></p>
+                <p className="pl-4"><span className="text-[#f78c6c]">alias</span><span className="text-white/50">:</span> <span className="text-[#c3e88d]">'Amine.Dev'</span><span className="text-white/50">,</span></p>
+                <p className="pl-4"><span className="text-[#f78c6c]">mission</span><span className="text-white/50">:</span> <span className="text-[#c3e88d]">« Transformer le digital africain, un projet à la fois »</span><span className="text-white/50">,</span></p>
+                <p className="pl-4"><span className="text-[#f78c6c]">localisation</span><span className="text-white/50">:</span> <span className="text-[#c3e88d]">'Bobo-Dioulasso, Burkina Faso'</span><span className="text-white/50">,</span></p>
+                <p className="pl-4"><span className="text-[#f78c6c]">domaines</span><span className="text-white/50">:</span> <span className="text-white/70">[</span> <span className="text-[#c3e88d]">'Développement'</span><span className="text-white/50">,</span> <span className="text-[#c3e88d]">'Design'</span><span className="text-white/50">,</span> <span className="text-[#c3e88d]">'Marketing'</span><span className="text-white/50">,</span> <span className="text-[#c3e88d]">'Automatisation'</span> <span className="text-white/70">]</span></p>
+                <p><span className="text-white/70">{'}'}</span></p>
+                <p><span className="text-[#c792ea]">attendre</span> <span className="text-white/70">développeur</span><span className="text-white/50">.</span><span className="text-[#82aaff]">impactAfrique</span><span className="text-white/70">();</span></p>
+                <p className="text-[#c3e88d] mt-1">✓ Profil initialisé avec succès !</p>
+                <p className="mt-2"><span className="text-[#5fd3ff]">→</span> <span className="text-white/70">~ _</span></p>
+              </div>
+              <div className="mt-auto pt-3 text-center text-white/30 text-[10px] uppercase tracking-widest shrink-0">
+                Clique pour revenir ↻
               </div>
             </div>
           </div>
