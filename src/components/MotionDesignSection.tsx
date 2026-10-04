@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion'
 import { Film, Sparkles, MessageCircle } from 'lucide-react'
-import MotionDemo from '../components/MotionDemo'
-import Reveal from '../components/Reveal'
+import MotionDemo from './MotionDemo'
+import Reveal from './Reveal'
 import { useLanguage } from '../context/LanguageContext'
 
-export default function MotionDesignPage() {
+export default function MotionDesignSection() {
   const { t } = useLanguage()
 
   return (
-    <div className="pt-28 md:pt-36 pb-10">
+    <div id="motion-design" className="pt-10 sm:pt-16">
       {/* Bannière d'intro — sombre, animée */}
       <section className="px-4 sm:px-6 max-w-[1320px] mx-auto mb-14">
         <div className="relative w-full rounded-[28px] sm:rounded-[36px] overflow-hidden bg-[#0b1226] border border-white/5 px-6 sm:px-12 py-14 sm:py-20">
@@ -28,24 +28,27 @@ export default function MotionDesignPage() {
           <div className="relative z-10 text-center max-w-2xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/15 text-[11px] font-mono text-white/70 uppercase tracking-widest mb-6"
             >
               <Film size={13} className="text-[#60A5FA]" /> {t('Nouvelle compétence', 'New skill')}
             </motion.div>
 
-            <motion.h1
+            <motion.h2
               initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               className="font-display text-4xl sm:text-6xl text-white mb-4"
             >
               Motion Design<span className="text-[#60A5FA]">.</span>
-            </motion.h1>
+            </motion.h2>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ delay: 0.2 }}
               className="text-white/60 text-sm sm:text-base leading-relaxed"
             >
@@ -67,9 +70,9 @@ export default function MotionDesignPage() {
           <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
             <span className="w-6 h-px bg-clay" /> {t('Projets vidéo', 'Video projects')}
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl mb-8">
+          <h3 className="font-display text-3xl sm:text-4xl mb-8">
             {t('D\'autres créations arrivent', 'More creations coming')}<span className="text-[#3B82F6]">.</span>
-          </h2>
+          </h3>
         </Reveal>
 
         <Reveal delay={0.1}>

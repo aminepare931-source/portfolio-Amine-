@@ -19,14 +19,22 @@ export default function Navbar() {
 
   useEffect(() => {
     setOpen(false)
-    window.scrollTo(0, 0)
-  }, [location.pathname])
+    if (location.hash) {
+      // laisse la page cible se monter avant de scroller vers l'ancre
+      setTimeout(() => {
+        const el = document.getElementById(location.hash.slice(1))
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        else window.scrollTo(0, 0)
+      }, 60)
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [location.pathname, location.hash])
 
   const links = [
     { to: '/a-propos', label: t('Profil', 'Profile') },
     { to: '/competences', label: t('Compétences', 'Skills') },
     { to: '/projets', label: t('Projets', 'Projects') },
-    { to: '/motion-design', label: t('Motion Design', 'Motion Design') },
     { to: '/parcours', label: t('Parcours', 'Journey') },
     { to: '/galerie', label: t('Portraits', 'Portraits') },
   ]

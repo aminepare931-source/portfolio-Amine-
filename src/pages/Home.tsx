@@ -1,5 +1,6 @@
 import Hero from '../components/Hero'
 import Marquee from '../components/Marquee'
+import MotionDesignTeaser from '../components/MotionDesignTeaser'
 import Stats from '../components/Stats'
 import About from '../components/About'
 import PatternDivider from '../components/PatternDivider'
@@ -17,6 +18,7 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
+      <MotionDesignTeaser />
       <Stats />
       <About />
       <PatternDivider />
