@@ -26,6 +26,7 @@ export default function Navbar() {
     { to: '/a-propos', label: t('Profil', 'Profile') },
     { to: '/competences', label: t('Compétences', 'Skills') },
     { to: '/projets', label: t('Projets', 'Projects') },
+    { to: '/motion-design', label: t('Motion Design', 'Motion Design') },
     { to: '/parcours', label: t('Parcours', 'Journey') },
     { to: '/galerie', label: t('Portraits', 'Portraits') },
   ]

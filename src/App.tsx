@@ -11,6 +11,7 @@ import SkillsPage from './pages/SkillsPage'
 import ProjectsPage from './pages/ProjectsPage'
 import ProjectDetailPage from './pages/ProjectDetailPage'
 import ParcoursPage from './pages/ParcoursPage'
+import MotionDesignPage from './pages/MotionDesignPage'
 import GaleriePage from './pages/GaleriePage'
 import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -35,6 +36,7 @@ export default function App() {
             <Route path="/projets" element={<ProjectsPage />} />
             <Route path="/projets/:id" element={<ProjectDetailPage />} />
             <Route path="/parcours" element={<ParcoursPage />} />
+            <Route path="/motion-design" element={<MotionDesignPage />} />
             <Route path="/galerie" element={<GaleriePage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFoundPage />} />
