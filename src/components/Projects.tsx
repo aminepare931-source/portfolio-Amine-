@@ -26,8 +26,19 @@ export default function Projects({ limit, showViewAll }: { limit?: number; showV
       <ProjectsHeroCard />
 
       {loading ? (
-        <div className="px-4 sm:px-6 max-w-[1200px] mx-auto py-14">
-          <div className="aspect-[16/10] rounded-3xl bg-surface border border-stroke shimmer relative overflow-hidden" />
+        <div className="px-4 sm:px-6 max-w-[1200px] mx-auto py-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {Array.from({ length: limit || 3 }).map((_, i) => (
+              <div key={i} className="rounded-2xl border border-stroke overflow-hidden bg-surface/20">
+                <div className="aspect-video bg-surface shimmer relative overflow-hidden" />
+                <div className="p-5 space-y-2">
+                  <div className="h-4 w-2/3 rounded bg-surface shimmer relative overflow-hidden" />
+                  <div className="h-3 w-full rounded bg-surface shimmer relative overflow-hidden" />
+                  <div className="h-3 w-4/5 rounded bg-surface shimmer relative overflow-hidden" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       ) : projects.length === 0 ? (
         <div className="px-4 sm:px-6 max-w-[1200px] mx-auto py-16 text-center text-muted text-sm border border-dashed border-stroke rounded-3xl">

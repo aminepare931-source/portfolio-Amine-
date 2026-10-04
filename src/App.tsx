@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './context/LanguageContext'
+import { prefetchProjects } from './lib/supabase'
 import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -16,6 +17,10 @@ import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    prefetchProjects()
+  }, [])
 
   return (
     <LanguageProvider>

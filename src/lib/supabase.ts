@@ -23,7 +23,31 @@ export interface Project {
   status?: 'deployed' | 'in_progress' | 'paused' | 'done'
 }
 
-export async function fetchProjects(): Promise<Project[]> {
+// Cache mémoire + sessionStorage pour éviter de refaire l'appel réseau
+// à chaque navigation entre la home et /projets (c'était ça qui donnait
+// l'impression de lenteur : chaque visite relançait un fetch complet).
+let _projectsCache: Project[] | null = null
+let _projectsPromise: Promise<Project[]> | null = null
+const SESSION_CACHE_KEY = 'projects-cache-v1'
+
+function readSessionCache(): Project[] | null {
+  try {
+    const raw = sessionStorage.getItem(SESSION_CACHE_KEY)
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
+}
+
+function writeSessionCache(data: Project[]) {
+  try {
+    sessionStorage.setItem(SESSION_CACHE_KEY, JSON.stringify(data))
+  } catch {
+    /* quota / privacy mode — ignore */
+  }
+}
+
+async function loadProjects(): Promise<Project[]> {
   try {
     const res = await fetch(
       `${SB_URL}/rest/v1/projects?select=*&order=position.asc,created_at.asc`,
@@ -46,6 +70,36 @@ export async function fetchProjects(): Promise<Project[]> {
     console.warn('Supabase fetch fallback to local projects', e)
   }
   return FEATURED_PROJECTS
+}
+
+export async function fetchProjects(): Promise<Project[]> {
+  if (_projectsCache) return _projectsCache
+
+  const fromSession = readSessionCache()
+  if (fromSession) {
+    _projectsCache = fromSession
+    // Revalide en arrière-plan sans bloquer l'affichage
+    loadProjects().then((fresh) => {
+      _projectsCache = fresh
+      writeSessionCache(fresh)
+    })
+    return fromSession
+  }
+
+  if (!_projectsPromise) {
+    _projectsPromise = loadProjects().then((data) => {
+      _projectsCache = data
+      writeSessionCache(data)
+      return data
+    })
+  }
+  return _projectsPromise
+}
+
+// Démarre le fetch le plus tôt possible (dès le chargement de l'app),
+// pour que les sections Projets affichent des données déjà prêtes.
+export function prefetchProjects() {
+  fetchProjects()
 }
 
 /* ═══════════════════════════════════════
