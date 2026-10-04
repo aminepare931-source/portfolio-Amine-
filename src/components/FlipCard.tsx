@@ -19,7 +19,7 @@ export default function FlipCard() {
   return (
     <div className="relative w-full max-w-sm mx-auto flex flex-col items-center select-none" style={{ paddingTop: 58 }}>
       {/* Lanière + clip — fixes, le badge pend depuis ce point */}
-      <div className="absolute top-0 flex flex-col items-center z-0 pointer-events-none">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-0 pointer-events-none">
         <motion.div
           className="w-8 rounded-[3px]"
           style={{
@@ -52,7 +52,7 @@ export default function FlipCard() {
         onClick={() => { if (!didDrag.current) setFlipped((f) => !f) }}
         style={{ x, y, rotate, transformOrigin: 'top center', touchAction: 'none' }}
         whileTap={{ cursor: 'grabbing' }}
-        className="relative z-10 cursor-grab"
+        className="relative z-10 cursor-grab w-full"
       >
         <div className="relative w-full aspect-[4/5]" style={{ perspective: '1600px' }}>
           <div
