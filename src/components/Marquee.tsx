@@ -1,37 +1,78 @@
 import { motion } from 'framer-motion'
 import { Zap, ShieldCheck, Sparkles } from 'lucide-react'
 import { SiReact, SiTypescript, SiNodedotjs, SiSupabase, SiTailwindcss, SiCloudflare } from 'react-icons/si'
+import { useLanguage } from '../context/LanguageContext'
 
 const TECH_ITEMS = [
-  { name: 'React & Vite', icon: SiReact },
-  { name: 'TypeScript', icon: SiTypescript },
-  { name: 'Node.js & Express', icon: SiNodedotjs },
-  { name: 'Supabase', icon: SiSupabase },
-  { name: 'Mobile Money (CinetPay)', icon: Zap },
-  { name: 'WhatsApp API', icon: Sparkles },
-  { name: 'Tailwind CSS', icon: SiTailwindcss },
-  { name: 'Cloudflare', icon: SiCloudflare },
-  { name: 'REST APIs', icon: ShieldCheck },
+  { name: 'React & Vite', icon: SiReact, color: '#61DAFB' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'Node.js & Express', icon: SiNodedotjs, color: '#5FA04E' },
+  { name: 'Supabase', icon: SiSupabase, color: '#3ECF8E' },
+  { name: 'Mobile Money (CinetPay)', icon: Zap, color: '#F59E0B' },
+  { name: 'WhatsApp API', icon: Sparkles, color: '#25D366' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#38BDF8' },
+  { name: 'Cloudflare', icon: SiCloudflare, color: '#F38020' },
+  { name: 'REST APIs', icon: ShieldCheck, color: '#60A5FA' },
 ]
 
 export default function Marquee() {
+  const { t } = useLanguage()
+
   return (
-    <div className="relative border-y border-slate-900/10 bg-[#ffffff] py-5 z-20">
-      <div className="flex flex-wrap justify-center gap-3 px-4 max-w-[1320px] mx-auto">
-        {TECH_ITEMS.map((item, i) => {
-          const Icon = item.icon
-          return (
-            <div
-              key={i}
-              className="group flex items-center gap-2.5 px-6 py-2 rounded-full bg-slate-900/5 hover:bg-slate-900/10 border border-slate-900/10 hover:border-clay/40 transition-colors"
-            >
-              <Icon size={16} className="text-slate-900/50 group-hover:text-clay transition-colors" />
-              <span className="font-sans text-xs sm:text-sm font-medium text-slate-900/80 group-hover:text-slate-900 tracking-wide">
-                {item.name}
-              </span>
-            </div>
-          )
-        })}
+    <div className="relative bg-[#0b1226] py-10 sm:py-12 z-20 overflow-hidden">
+      {/* Fond — grille + halo */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,#000_60%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_50%,rgba(59,130,246,0.12)_0%,transparent_45%),radial-gradient(circle_at_85%_50%,rgba(59,130,246,0.12)_0%,transparent_45%)]" />
+
+      <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
+        {/* Portrait — bookend gauche */}
+        <div className="hidden sm:flex items-center gap-3 shrink-0">
+          <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden border-2 border-white/10 shadow-[0_8px_20px_rgba(0,0,0,0.4)] rotate-[-4deg]">
+            <img src="/assets/about1.jpg" alt="Mouhamed Amine Paré au travail" className="w-full h-full object-cover" />
+          </div>
+          <div className="hidden lg:block">
+            <p className="text-white/35 text-[9px] uppercase tracking-[0.25em] font-mono">{t('Stack', 'Stack')}</p>
+            <p className="text-white font-display text-sm font-bold">{t('Au quotidien', 'Daily driver')}</p>
+          </div>
+        </div>
+
+        {/* Badges */}
+        <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 flex-1">
+          {TECH_ITEMS.map((item, i) => {
+            const Icon = item.icon
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.04 }}
+                className="group flex items-center gap-2.5 pl-2 pr-4 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/25 transition-all"
+              >
+                <span
+                  className="flex items-center justify-center w-7 h-7 rounded-full shrink-0 transition-transform group-hover:scale-110"
+                  style={{ background: `${item.color}22`, boxShadow: `inset 0 0 0 1px ${item.color}40` }}
+                >
+                  <Icon size={14} style={{ color: item.color }} />
+                </span>
+                <span className="font-mono text-[11px] sm:text-xs font-medium text-white/80 group-hover:text-white tracking-wide whitespace-nowrap">
+                  {item.name}
+                </span>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        {/* Portrait — bookend droite */}
+        <div className="hidden sm:flex items-center gap-3 shrink-0">
+          <div className="hidden lg:block text-right">
+            <p className="text-white/35 text-[9px] uppercase tracking-[0.25em] font-mono">{t('Résultat', 'Result')}</p>
+            <p className="text-white font-display text-sm font-bold">{t('Prêt production', 'Production ready')}</p>
+          </div>
+          <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden border-2 border-white/10 shadow-[0_8px_20px_rgba(0,0,0,0.4)] rotate-[4deg]">
+            <img src="/assets/contact-avatar.jpg" alt="Mouhamed Amine Paré" className="w-full h-full object-cover" />
+          </div>
+        </div>
       </div>
     </div>
   )
