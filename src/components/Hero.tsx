@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Download, ArrowRight, Code, Globe, ShieldCheck, Zap } from 'lucide-react'
 import { SiReact, SiNodedotjs, SiPython, SiOwasp, SiCplusplus, SiPhp, SiGo, SiWhatsapp, SiSupabase } from 'react-icons/si'
 import FlipCard from './FlipCard'
-import FloatingTechBadges from './FloatingTechBadges'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -198,10 +197,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full max-w-[260px] sm:max-w-none mx-auto"
           >
-            <div className="relative w-full max-w-sm mx-auto">
-              <FlipCard />
-              <FloatingTechBadges />
-            </div>
+            <FlipCard />
           </motion.div>
         </div>
       </div>
