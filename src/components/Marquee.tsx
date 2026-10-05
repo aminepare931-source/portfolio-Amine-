@@ -33,15 +33,15 @@ export default function Marquee() {
       <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
         {/* Portrait — bookend gauche, casse le cadre vers le haut */}
         <div className="hidden sm:flex items-end gap-3 shrink-0">
-          <div className="relative w-16 h-24 sm:w-20 sm:h-28 -mt-16 sm:-mt-20 shrink-0">
+          <div className="relative w-28 h-40 sm:w-36 sm:h-48 -mt-24 sm:-mt-32 shrink-0">
             <img
               src="/assets/about1.jpg"
               alt="Mouhamed Amine Paré au travail"
-              className="absolute inset-0 w-full h-full object-cover rounded-2xl rotate-[-4deg]"
+              className="absolute inset-0 w-full h-full object-cover rounded-[1.75rem] rotate-[-4deg]"
               style={{
                 maskImage: TOP_FADE_MASK,
                 WebkitMaskImage: TOP_FADE_MASK,
-                filter: 'drop-shadow(0 14px 22px rgba(0,0,0,0.45))',
+                filter: 'drop-shadow(0 18px 28px rgba(0,0,0,0.5))',
               }}
             />
           </div>
@@ -84,15 +84,15 @@ export default function Marquee() {
             <p className="text-white/35 text-[9px] uppercase tracking-[0.25em] font-mono">{t('Résultat', 'Result')}</p>
             <p className="text-white font-display text-sm font-bold">{t('Prêt production', 'Production ready')}</p>
           </div>
-          <div className="relative w-16 h-24 sm:w-20 sm:h-28 -mt-16 sm:-mt-20 shrink-0">
+          <div className="relative w-28 h-40 sm:w-36 sm:h-48 -mt-24 sm:-mt-32 shrink-0">
             <img
               src="/assets/contact-avatar.jpg"
               alt="Mouhamed Amine Paré"
-              className="absolute inset-0 w-full h-full object-cover rounded-2xl rotate-[4deg]"
+              className="absolute inset-0 w-full h-full object-cover rounded-[1.75rem] rotate-[4deg]"
               style={{
                 maskImage: TOP_FADE_MASK,
                 WebkitMaskImage: TOP_FADE_MASK,
-                filter: 'drop-shadow(0 14px 22px rgba(0,0,0,0.45))',
+                filter: 'drop-shadow(0 18px 28px rgba(0,0,0,0.5))',
               }}
             />
           </div>
