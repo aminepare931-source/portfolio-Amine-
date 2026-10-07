@@ -30,7 +30,7 @@ export default function MotionDesignTeaser() {
   const { t } = useLanguage()
 
   return (
-    <section className="px-4 sm:px-6 max-w-[1400px] mx-auto py-8 sm:py-10">
+    <section className="hidden lg:block px-4 sm:px-6 max-w-[1400px] mx-auto py-8 sm:py-10">
       <Link
         to="/projets#motion-design"
         onClick={playClickSound}

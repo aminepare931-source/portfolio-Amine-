@@ -50,7 +50,7 @@ export default function Marquee() {
   const { t } = useLanguage()
 
   return (
-    <div className="relative bg-[#0b1226] py-14 sm:py-16 lg:py-20 z-20 overflow-hidden">
+    <div className="hidden lg:block relative bg-[#0b1226] py-14 sm:py-16 lg:py-20 z-20 overflow-hidden">
       {/* Fond — grille + halo */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_40%,#000_60%,transparent_100%)]" />
@@ -198,29 +198,6 @@ export default function Marquee() {
             <div style={{ gridColumn: 6, gridRow: 3 }}><HLine /></div>
             <div style={{ gridColumn: 3, gridRow: 2 }}><VLine /></div>
             <div style={{ gridColumn: 3, gridRow: 4 }}><VLine /></div>
-          </div>
-
-          {/* Fallback mobile/tablette — grille de badges simple */}
-          <div className="flex lg:hidden flex-wrap justify-center gap-2.5">
-            {TECH_ITEMS.map((item) => {
-              const Icon = item.icon
-              return (
-                <div
-                  key={item.name}
-                  className="flex items-center gap-2.5 pl-2 pr-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10"
-                >
-                  <span
-                    className="flex items-center justify-center w-7 h-7 rounded-full shrink-0"
-                    style={{ background: `${item.color}22`, boxShadow: `inset 0 0 0 1px ${item.color}40` }}
-                  >
-                    <Icon size={14} style={{ color: item.color }} />
-                  </span>
-                  <span className="font-mono text-[11px] font-medium text-white/80 tracking-wide whitespace-nowrap">
-                    {item.name}
-                  </span>
-                </div>
-              )
-            })}
           </div>
         </div>
       </div>
