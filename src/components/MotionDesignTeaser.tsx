@@ -4,9 +4,10 @@ import { Film, ArrowRight, Play } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { playClickSound } from '../lib/sound'
 
-// Fondu doux en bas de la photo pour qu'elle se fonde dans le fond clair
-// de la page là où elle dépasse du cadre.
-const BOTTOM_FADE_MASK = 'linear-gradient(to top, transparent 0%, black 30%, black 100%)'
+// Fondu doux en haut de la photo pour qu'elle se fonde dans le fond clair
+// de la page là où elle dépasse du cadre (même technique que le bandeau Marquee,
+// pour rester cohérent visuellement).
+const TOP_FADE_MASK = 'linear-gradient(to bottom, transparent 0%, black 30%, black 100%)'
 
 export default function MotionDesignTeaser() {
   const { t } = useLanguage()
@@ -16,7 +17,7 @@ export default function MotionDesignTeaser() {
       <Link
         to="/projets#motion-design"
         onClick={playClickSound}
-        className="group relative block w-full rounded-[28px] sm:rounded-[32px] bg-[#070b16] border border-white/5 px-6 sm:px-12 py-12 sm:py-16 hover:border-white/15 transition-colors"
+        className="group relative flex flex-col md:flex-row md:items-end gap-8 md:gap-10 w-full rounded-[28px] sm:rounded-[32px] bg-[#070b16] border border-white/5 px-6 sm:px-12 py-12 sm:py-16 hover:border-white/15 transition-colors"
       >
         {/* fond — contenu dans le cadre */}
         <div className="absolute inset-0 rounded-[28px] sm:rounded-[32px] overflow-hidden">
@@ -33,22 +34,8 @@ export default function MotionDesignTeaser() {
           />
         </div>
 
-        {/* Photo — fusionnée au cadre, déborde en bas à droite */}
-        <div className="hidden md:block absolute bottom-0 right-10 lg:right-16 w-44 lg:w-56 -mb-10 lg:-mb-14 z-10 pointer-events-none">
-          <img
-            src="/assets/hero.jpg"
-            alt="Mouhamed Amine Paré"
-            className="w-full h-auto rounded-t-[2rem] rotate-[2deg]"
-            style={{
-              maskImage: BOTTOM_FADE_MASK,
-              WebkitMaskImage: BOTTOM_FADE_MASK,
-              filter: 'drop-shadow(0 18px 28px rgba(0,0,0,0.5))',
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 flex flex-col gap-6">
-          <div className="text-left md:max-w-[62%]">
+        <div className="relative z-10 flex flex-col gap-6 flex-1">
+          <div className="text-left">
             <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/40 mb-3 flex items-center gap-2">
               <Film size={12} className="text-[#60A5FA]" /> {t('Nouvelle compétence', 'New skill')}
             </p>
@@ -74,6 +61,22 @@ export default function MotionDesignTeaser() {
             <Play size={14} /> {t('Voir mes créations', 'See my work')}
             <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </span>
+        </div>
+
+        {/* Photo — même colonne dédiée que le texte (pas d'absolute), centrée
+            et ancrée en bas du cadre, casse le cadre vers le haut comme les
+            portraits du bandeau Marquee. */}
+        <div className="relative z-10 hidden md:flex items-end justify-center w-40 lg:w-52 shrink-0 self-stretch pointer-events-none">
+          <img
+            src="/assets/about2.jpg"
+            alt="Mouhamed Amine Paré"
+            className="w-full aspect-square object-cover rounded-[1.75rem] rotate-[2deg] -mt-14 lg:-mt-20"
+            style={{
+              maskImage: TOP_FADE_MASK,
+              WebkitMaskImage: TOP_FADE_MASK,
+              filter: 'drop-shadow(0 18px 28px rgba(0,0,0,0.5))',
+            }}
+          />
         </div>
       </Link>
     </section>

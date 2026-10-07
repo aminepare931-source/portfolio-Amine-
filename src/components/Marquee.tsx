@@ -31,8 +31,12 @@ export default function Marquee() {
       </div>
 
       <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
-        {/* Portrait — bookend gauche, casse le cadre vers le haut */}
-        <div className="hidden sm:flex items-end gap-3 shrink-0">
+        {/* Portrait — bookend gauche, casse le cadre vers le haut.
+            Affiché seulement à partir de lg : c'est le seul breakpoint où
+            la rangée passe en flex-row, donc le seul où ce débordement vers
+            le haut reste bien positionné au-dessus de la bande (sinon, en
+            flex-col, la marge négative le fait chevaucher la section du dessus). */}
+        <div className="hidden lg:flex items-end gap-3 shrink-0">
           <div className="relative w-28 h-40 sm:w-36 sm:h-48 -mt-24 sm:-mt-32 shrink-0">
             <img
               src="/assets/about1.jpg"
@@ -78,8 +82,8 @@ export default function Marquee() {
           })}
         </div>
 
-        {/* Portrait — bookend droite, casse le cadre vers le haut */}
-        <div className="hidden sm:flex items-end gap-3 shrink-0">
+        {/* Portrait — bookend droite, casse le cadre vers le haut (même raison : lg uniquement) */}
+        <div className="hidden lg:flex items-end gap-3 shrink-0">
           <div className="hidden lg:block text-right pb-1">
             <p className="text-white/35 text-[9px] uppercase tracking-[0.25em] font-mono">{t('Résultat', 'Result')}</p>
             <p className="text-white font-display text-sm font-bold">{t('Prêt production', 'Production ready')}</p>
