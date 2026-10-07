@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Sparkles, Code2, Database, Palette, Bot, Terminal, ShieldCheck, Lock, Cpu, Globe } from 'lucide-react'
 import {
-  SiTypescript, SiPython, SiCplusplus, SiPhp, SiGo, SiGnubash, SiPostgresql,
+  Search, Sparkles, Code2, Monitor, Cloud, Bot, ShieldCheck,
+  ArrowRight, ArrowUpRight, Pencil, Zap,
+} from 'lucide-react'
+import {
+  SiJavascript, SiTypescript, SiPython, SiCplusplus, SiPhp, SiGo, SiGnubash, SiPostgresql,
   SiReact, SiTailwindcss, SiCloudflare, SiVercel, SiNodedotjs, SiSupabase,
   SiFirebase, SiWhatsapp, SiGooglegemini,
 } from 'react-icons/si'
@@ -11,20 +14,25 @@ import { useInView } from '../hooks/useInView'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
-const LEVEL_PCT: Record<string, number> = { Expert: 95, Avancé: 85, Confirmé: 70, Intermédiaire: 55 }
-const LEVEL_COLOR: Record<string, string> = { Expert: '#3B82F6', Avancé: '#3B82F6', Confirmé: '#3B82F6', Intermédiaire: '#3B82F6' }
+const LEVEL_COLOR: Record<string, string> = {
+  Expert: '#3B82F6',
+  Avancé: '#3B82F6',
+  Confirmé: '#64748B',
+  Intermédiaire: '#64748B',
+}
 
-function SkillBar({ lvl }: { lvl: string }) {
+function SkillBar({ pct, color }: { pct: number; color: string }) {
   const { ref, inView } = useInView<HTMLDivElement>(0.3)
-  const pct = LEVEL_PCT[lvl] ?? 65
-  const color = LEVEL_COLOR[lvl] ?? '#3B82F6'
 
   return (
-    <div ref={ref} className="h-2 rounded-full bg-slate-900/10 overflow-hidden p-0.5 border border-slate-900/5">
-      <div
-        className="h-full rounded-full transition-all duration-[1200ms] ease-out shadow-[0_0_12px_rgba(59, 130, 246,0.5)]"
-        style={{ width: inView ? `${pct}%` : '0%', background: color }}
-      />
+    <div className="flex items-center gap-2.5">
+      <div ref={ref} className="flex-1 h-2 rounded-full bg-slate-900/10 overflow-hidden p-0.5 border border-slate-900/5">
+        <div
+          className="h-full rounded-full transition-all duration-[1200ms] ease-out"
+          style={{ width: inView ? `${pct}%` : '0%', background: color, boxShadow: `0 0 10px ${color}80` }}
+        />
+      </div>
+      <span className="text-[10px] font-mono font-bold text-slate-900/50 w-8 text-right shrink-0">{pct}%</span>
     </div>
   )
 }
@@ -34,19 +42,32 @@ export default function Skills() {
   const [activeTab, setActiveTab] = useState('langs')
   const [search, setSearch] = useState('')
 
+  const TICKER_ITEMS = [
+    { n: 'JavaScript', logo: SiJavascript, color: '#F7DF1E' },
+    { n: 'TypeScript', logo: SiTypescript, color: '#3178C6' },
+    { n: 'React', logo: SiReact, color: '#61DAFB' },
+    { n: 'Node.js', logo: SiNodedotjs, color: '#5FA04E' },
+    { n: 'Python', logo: SiPython, color: '#3776AB' },
+    { n: 'C++', logo: SiCplusplus, color: '#00599C' },
+    { n: 'PHP', logo: SiPhp, color: '#777BB4' },
+    { n: 'Firebase', logo: SiFirebase, color: '#F5820D' },
+    { n: 'Cloudflare', logo: SiCloudflare, color: '#F38020' },
+    { n: 'Gemini', logo: SiGooglegemini, color: '#8E75FF' },
+  ]
+
   const CATEGORIES = [
     {
       id: 'langs',
-      label: t('Languages & Core Logic', 'Languages & Core Logic'),
-      icon: Terminal,
+      label: t('Langages & Core Logic', 'Languages & Core Logic'),
+      icon: Code2,
       skills: [
-        { n: 'TypeScript & JavaScript (ES6+)', logo: SiTypescript, lvl: 'Expert', d: t('Typage strict, architecture modulaire, async, React & Node.js.', 'Strict typing, modular architecture, async, React & Node.js.') },
-        { n: 'Python', logo: SiPython, lvl: 'Avancé', d: t('Scripts d\'automatisation, FastAPI, web scraping, scripts IA et analyse.', 'Automation scripts, FastAPI, web scraping, AI scripts & analysis.') },
-        { n: 'C / C++', logo: SiCplusplus, lvl: 'Confirmé', d: t('Algorithmique bas niveau, gestion mémoire, optimisation de performance.', 'Low-level algorithms, memory management, performance optimization.') },
-        { n: 'PHP (Modern)', logo: SiPhp, lvl: 'Confirmé', d: t('Développement web, intégration d\'APIs, scripts serveur legacy & modernes.', 'Web development, API integration, legacy & modern server scripts.') },
-        { n: 'Go (Golang)', logo: SiGo, lvl: 'Confirmé', d: t('Services concurrents, micro-outilsCLI ultra rapides, serveurs HTTP.', 'Concurrent services, fast CLI micro-tools, HTTP servers.') },
-        { n: 'Bash / Shell Scripting', logo: SiGnubash, lvl: 'Avancé', d: t('Automatisation Linux, scripts d\'administration, CI/CD, cron jobs.', 'Linux automation, admin scripts, CI/CD, cron jobs.') },
-        { n: 'SQL & NoSQL', logo: SiPostgresql, lvl: 'Expert', d: t('PostgreSQL, Supabase, MySQL, MongoDB, requêtes optimisées, RLS.', 'PostgreSQL, Supabase, MySQL, MongoDB, optimized queries, RLS.') },
+        { n: 'TypeScript', logo: SiTypescript, color: '#3178C6', lvl: t('Avancé', 'Advanced'), pct: 90, d: t('Code plus sûr et maintenable avec un typage statique puissant.', 'Safer, maintainable code with powerful static typing.'), tags: ['Type Safety', 'OOP', 'ES6+'] },
+        { n: 'Python', logo: SiPython, color: '#3776AB', lvl: t('Avancé', 'Advanced'), pct: 85, d: t('Langage polyvalent pour l\'IA, la data et l\'automatisation.', 'Versatile language for AI, data and automation.'), tags: ['Data Science', 'Automation', 'AI/ML'] },
+        { n: 'C / C++', logo: SiCplusplus, color: '#00599C', lvl: t('Intermédiaire', 'Intermediate'), pct: 70, d: t('Performance et contrôle pour les applications complexes.', 'Performance and control for complex applications.'), tags: ['STL', 'Algorithmie', 'Performance'] },
+        { n: 'PHP', logo: SiPhp, color: '#777BB4', lvl: t('Avancé', 'Advanced'), pct: 85, d: t('Développement web robuste et flexible pour des projets scalables.', 'Robust, flexible web development for scalable projects.'), tags: ['Laravel', 'Symfony', 'API'] },
+        { n: 'Go (Golang)', logo: SiGo, color: '#00ADD8', lvl: t('Intermédiaire', 'Intermediate'), pct: 65, d: t('Services concurrents, micro-outils CLI ultra rapides.', 'Concurrent services, ultra-fast CLI micro-tools.'), tags: ['Goroutines', 'CLI', 'HTTP'] },
+        { n: 'Bash / Shell', logo: SiGnubash, color: '#4EAA25', lvl: t('Avancé', 'Advanced'), pct: 80, d: t('Automatisation Linux, scripts d\'administration, CI/CD.', 'Linux automation, admin scripts, CI/CD.'), tags: ['Automatisation', 'Cron', 'CI/CD'] },
+        { n: 'SQL & NoSQL', logo: SiPostgresql, color: '#4169E1', lvl: t('Avancé', 'Advanced'), pct: 90, d: t('PostgreSQL, Supabase, MySQL, MongoDB, requêtes optimisées.', 'PostgreSQL, Supabase, MySQL, MongoDB, optimized queries.'), tags: ['PostgreSQL', 'RLS', 'Index'] },
       ],
     },
     {
@@ -54,42 +75,43 @@ export default function Skills() {
       label: t('Cyber-Sécurité & Protection', 'Cybersecurity & Auditing'),
       icon: ShieldCheck,
       skills: [
-        { n: 'Audit & PenTesting Web', lvl: 'Avancé', d: t('Détection de vulnérabilités OWASP Top 10, injections SQL, XSS, CSRF.', 'OWASP Top 10 vulnerability assessment, SQLi, XSS, CSRF checks.') },
-        { n: 'Sécurisation APIs & Tokens', lvl: 'Expert', d: t('Authentification JWT, OAuth2, Rate Limiting, CORS, hachage bcrypt/Argon2.', 'JWT auth, OAuth2, Rate Limiting, CORS, bcrypt/Argon2 hashing.') },
-        { n: 'Hardening & Sécurité Serveur', lvl: 'Avancé', d: t('Configuration UFW/Firewall, SSL/TLS, Cloudflare WAF, gestion des secrets.', 'UFW/Firewall setup, SSL/TLS, Cloudflare WAF, secret management.') },
-        { n: 'Chiffrement & Données Sensibles', lvl: 'Avancé', d: t('Protections des paiements Mobile Money, webhooks signés cryptographiquement.', 'Mobile Money payment protection, cryptographically signed webhooks.') },
+        { n: 'Audit & PenTesting Web', color: '#EF4444', lvl: t('Avancé', 'Advanced'), pct: 80, d: t('Détection de vulnérabilités OWASP Top 10, injections SQL, XSS, CSRF.', 'OWASP Top 10 vulnerability assessment, SQLi, XSS, CSRF checks.'), tags: ['OWASP', 'XSS', 'SQLi'] },
+        { n: 'Sécurisation APIs & Tokens', color: '#3B82F6', lvl: t('Avancé', 'Advanced'), pct: 90, d: t('Authentification JWT, OAuth2, Rate Limiting, hachage bcrypt/Argon2.', 'JWT auth, OAuth2, Rate Limiting, bcrypt/Argon2 hashing.'), tags: ['JWT', 'OAuth2', 'Bcrypt'] },
+        { n: 'Hardening Serveur', color: '#F59E0B', lvl: t('Avancé', 'Advanced'), pct: 80, d: t('Configuration UFW/Firewall, SSL/TLS, Cloudflare WAF.', 'UFW/Firewall setup, SSL/TLS, Cloudflare WAF.'), tags: ['Firewall', 'SSL/TLS', 'WAF'] },
+        { n: 'Chiffrement & Données', color: '#8B5CF6', lvl: t('Avancé', 'Advanced'), pct: 80, d: t('Protection des paiements Mobile Money, webhooks signés.', 'Mobile Money payment protection, signed webhooks.'), tags: ['Crypto', 'Webhooks', 'Mobile Money'] },
       ],
     },
     {
       id: 'frontend',
       label: t('Frontend & Création UI', 'Frontend & UI Creation'),
-      icon: Code2,
+      icon: Monitor,
       skills: [
-        { n: 'React 18 & Vite', logo: SiReact, lvl: 'Expert', d: t('Hooks sur mesure, state global, performance SPA, lazy loading.', 'Custom hooks, global state, SPA performance, lazy loading.') },
-        { n: 'Tailwind CSS & Motion', logo: SiTailwindcss, lvl: 'Expert', d: t('Design systems réactifs, Framer Motion, micro-interactions modernes.', 'Responsive design systems, Framer Motion, modern micro-interactions.') },
-        { n: 'Cloudflare Pages & Vercel', logo: SiVercel, lvl: 'Expert', d: t('Déploiement Edge, gestion DNS, Workers, architectures CDN.', 'Edge deployments, DNS management, Workers, CDN architectures.') },
-        { n: 'E-Commerce Custom UI', lvl: 'Expert', d: t('Boutiques sur-mesure, paniers dynamiques, checkout Mobile Money.', 'Tailored stores, dynamic carts, Mobile Money checkout.') },
+        { n: 'React 18 & Vite', logo: SiReact, color: '#61DAFB', lvl: t('Avancé', 'Advanced'), pct: 90, d: t('Interfaces modernes et performantes pour le web.', 'Modern, high-performance web interfaces.'), tags: ['Hooks', 'Redux', 'Next.js'] },
+        { n: 'Tailwind CSS & Motion', logo: SiTailwindcss, color: '#38BDF8', lvl: t('Avancé', 'Advanced'), pct: 90, d: t('Design systems réactifs, Framer Motion, micro-interactions.', 'Responsive design systems, Framer Motion, micro-interactions.'), tags: ['Design System', 'Framer Motion', 'Responsive'] },
+        { n: 'Cloudflare & Vercel', logo: SiVercel, color: '#000000', lvl: t('Avancé', 'Advanced'), pct: 80, d: t('Déploiement Edge, gestion DNS, Workers, architectures CDN.', 'Edge deployments, DNS management, Workers, CDN architectures.'), tags: ['CDN', 'DNS', 'Workers'] },
+        { n: 'E-Commerce Custom UI', color: '#F59E0B', lvl: t('Avancé', 'Advanced'), pct: 85, d: t('Boutiques sur-mesure, paniers dynamiques, checkout Mobile Money.', 'Tailored stores, dynamic carts, Mobile Money checkout.'), tags: ['Panier', 'Checkout', 'Mobile Money'] },
       ],
     },
     {
       id: 'backend',
       label: t('Backend & Cloud Africa', 'Backend & Africa Cloud'),
-      icon: Database,
+      icon: Cloud,
       skills: [
-        { n: 'Node.js & Express', logo: SiNodedotjs, lvl: 'Expert', d: t('APIs RESTful, middlewares, auth JWT, proxy de sécurité.', 'RESTful APIs, middlewares, JWT auth, security proxies.') },
-        { n: 'Supabase & PostgreSQL', logo: SiSupabase, lvl: 'Expert', d: t('RLS policies, Realtime DB, Storage, Edge Functions.', 'RLS policies, Realtime DB, Storage, Edge Functions.') },
-        { n: 'Passerelles Mobile Money', lvl: 'Expert', d: t('Intégration CinetPay, Orange Money, Moov Money, webhooks sécurisés.', 'CinetPay, Orange Money, Moov Money integration, secured webhooks.') },
-        { n: 'Firebase & NoSQL', logo: SiFirebase, lvl: 'Avancé', d: t('Firestore rules, Cloud Functions, Auth, Hosting.', 'Firestore rules, Cloud Functions, Auth, Hosting.') },
+        { n: 'Node.js & Express', logo: SiNodedotjs, color: '#5FA04E', lvl: t('Avancé', 'Advanced'), pct: 88, d: t('API rapides et scalables avec un écosystème puissant.', 'Fast, scalable APIs with a powerful ecosystem.'), tags: ['Express.js', 'MongoDB', 'JWT'] },
+        { n: 'REST APIs', color: '#60A5FA', lvl: t('Avancé', 'Advanced'), pct: 85, d: t('Intégrations et communication avec des services externes.', 'Integrations and communication with external services.'), tags: ['JSON', 'OAuth2', 'Swagger'] },
+        { n: 'Supabase & PostgreSQL', logo: SiSupabase, color: '#3ECF8E', lvl: t('Avancé', 'Advanced'), pct: 90, d: t('RLS policies, Realtime DB, Storage, Edge Functions.', 'RLS policies, Realtime DB, Storage, Edge Functions.'), tags: ['RLS', 'Realtime', 'Edge Functions'] },
+        { n: 'Passerelles Mobile Money', color: '#F59E0B', lvl: t('Avancé', 'Advanced'), pct: 85, d: t('Intégration CinetPay, Orange Money, Moov Money, webhooks sécurisés.', 'CinetPay, Orange Money, Moov Money integration, secured webhooks.'), tags: ['CinetPay', 'Orange Money', 'Webhooks'] },
+        { n: 'Firebase & NoSQL', logo: SiFirebase, color: '#F5820D', lvl: t('Intermédiaire', 'Intermediate'), pct: 75, d: t('Backend-as-a-Service pour des applications mobiles et web.', 'Backend-as-a-Service for mobile and web apps.'), tags: ['Auth', 'Firestore', 'Hosting'] },
       ],
     },
     {
       id: 'auto',
       label: t('IA, Automation & Digital', 'AI, Automation & Digital'),
-      icon: Bot,
+      icon: Sparkles,
       skills: [
-        { n: 'Chatbots WhatsApp Business API', logo: SiWhatsapp, lvl: 'Expert', d: t('Assistants virtuels H24, qualification de leads, relances automatiques.', '24/7 virtual assistants, lead qualification, automated follow-ups.') },
-        { n: 'Gemini AI SDK Integration', logo: SiGooglegemini, lvl: 'Avancé', d: t('Traitement du langage, génération automatique de contenus, workflows IA.', 'NLP, automated content generation, AI workflows.') },
-        { n: 'Création & Branding Digital', lvl: 'Avancé', d: t('Conception de supports visuels, identités de marque, présentations impactantes.', 'Visual assets design, brand identities, high-impact decks.') },
+        { n: 'WhatsApp Business API', logo: SiWhatsapp, color: '#25D366', lvl: t('Intermédiaire', 'Intermediate'), pct: 70, d: t('Notifications et messagerie pour une meilleure communication client.', 'Notifications and messaging for better client communication.'), tags: ['Webhooks', 'Messages', 'Automatisation'] },
+        { n: 'Gemini AI SDK', logo: SiGooglegemini, color: '#8E75FF', lvl: t('Intermédiaire', 'Intermediate'), pct: 65, d: t('Intégration de l\'IA multimodale pour des applications intelligentes.', 'Multimodal AI integration for smart applications.'), tags: ['LLM', 'Multimodal', 'API'] },
+        { n: 'Création & Branding', color: '#EC4899', lvl: t('Avancé', 'Advanced'), pct: 80, d: t('Conception de supports visuels, identités de marque.', 'Visual assets design, brand identities.'), tags: ['Identité', 'Visuels', 'Présentations'] },
       ],
     },
   ]
@@ -109,41 +131,51 @@ export default function Skills() {
     : currentCategory.skills
 
   return (
-    <section id="skills" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#f1f5f9]">
-      {/* Fond sombre uni avec lueur douce */}
+    <section id="skills" className="relative pt-4 sm:pt-6 pb-20 sm:pb-28 md:pb-36 overflow-hidden bg-[#f8fafc]">
+      {/* Fond — halo doux */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37,99,235,0.04) 0%, transparent 60%)' }}
+        style={{ background: 'radial-gradient(ellipse 50% 40% at 85% 5%, rgba(59,130,246,0.08) 0%, transparent 60%)' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#f1f5f9]/90 to-[#ffffff] pointer-events-none" />
 
-      <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
-        {/* Section Header */}
+      <div className="relative z-10 px-6 max-w-[1400px] mx-auto">
+        {/* Header */}
         <Reveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-slate-900/10 pb-8">
+          <div className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10">
             <div>
-              <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-2">
-                <span className="w-8 h-px bg-clay" /> {t('Arsenal Global & Polyvalent', 'Global & Polyvalent Arsenal')}
+              <div className="flex items-center gap-2 text-[11px] text-[#3B82F6] font-mono font-bold uppercase tracking-[0.3em] mb-3">
+                <Sparkles size={13} /> {t('Arsenal Global', 'Global Arsenal')} <span className="w-10 h-px bg-slate-900/20 ml-1" />
               </div>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-slate-900">
-                {t('Compétences & Maîtrise Multi-Secteurs', 'Skills & Multi-Domain Mastery')}<span className="text-[#3B82F6]">.</span>
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-slate-900 leading-[1.05]">
+                {t('Compétences & Maîtrise', 'Skills & Mastery')}
+                <br />
+                <span className="bg-gradient-to-r from-slate-900 to-[#3B82F6] bg-clip-text text-transparent">
+                  {t('Multi-Secteurs.', 'Multi-Domain.')}
+                </span>
               </h2>
+              <p className="text-slate-900/55 text-sm sm:text-base mt-4 max-w-lg">
+                {t(
+                  'Des technologies modernes et des outils puissants pour créer des solutions fiables, performantes et évolutives.',
+                  'Modern technologies and powerful tools to build solutions that are reliable, high-performing and scalable.'
+                )}
+              </p>
             </div>
 
-            {/* Search Input */}
-            <div className="relative w-full md:w-80">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-900/50" />
+            {/* Search */}
+            <div className="relative w-full lg:w-96 shrink-0">
+              <Pencil size={14} className="hidden lg:block absolute -top-7 right-10 text-slate-900/25 rotate-12" />
+              <Search size={16} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900/40" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('Rechercher une technologie...', 'Search a technology...')}
-                className="w-full bg-surface/80 border border-slate-900/15 rounded-full pl-11 pr-8 py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-900/40 outline-none focus:border-[#3B82F6] transition-all backdrop-blur-md"
+                className="w-full bg-white border border-slate-900/10 rounded-full pl-12 pr-10 py-4 text-sm text-slate-900 placeholder-slate-900/40 outline-none focus:border-[#3B82F6] transition-all shadow-sm"
               />
               {search && (
                 <button
                   onClick={() => setSearch('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-900/50 hover:text-slate-900"
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-xs text-slate-900/40 hover:text-slate-900"
                 >
                   ✕
                 </button>
@@ -152,25 +184,32 @@ export default function Skills() {
           </div>
         </Reveal>
 
-        {/* Auto-Scrolling Continuous Tech Ticker */}
-        <div className="relative overflow-hidden mb-10 py-3 rounded-2xl bg-slate-900/40 border border-slate-900/10 backdrop-blur-md">
-          <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
-            {[...CATEGORIES.flatMap(c => c.skills), ...CATEGORIES.flatMap(c => c.skills)].map((s, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-slate-900/10 mx-2 shrink-0 text-xs font-mono"
-              >
-                <span className="w-2 h-2 rounded-full" style={{ background: LEVEL_COLOR[s.lvl] || '#3B82F6' }} />
-                <span className="text-slate-900 font-bold">{s.n}</span>
-                <span className="text-[10px] text-slate-900/50">({s.lvl})</span>
-              </div>
-            ))}
+        {/* Ticker tech */}
+        <div className="relative mb-8 rounded-2xl bg-white border border-slate-900/10 shadow-sm">
+          <div className="flex items-center gap-5 overflow-x-auto scrollbar-none px-6 py-4 pr-14">
+            {TICKER_ITEMS.map((item, i) => {
+              const Icon = item.logo
+              return (
+                <div key={item.n} className="flex items-center gap-5 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <Icon size={18} style={{ color: item.color }} />
+                    <span className="text-sm font-medium text-slate-800 whitespace-nowrap">{item.n}</span>
+                  </div>
+                  {i < TICKER_ITEMS.length - 1 && <span className="text-slate-900/20">•</span>}
+                </div>
+              )
+            })}
+          </div>
+          <div className="absolute right-0 top-0 bottom-0 w-14 bg-gradient-to-l from-white to-transparent flex items-center justify-end pr-3 pointer-events-none">
+            <span className="w-7 h-7 rounded-full bg-slate-900/5 flex items-center justify-center">
+              <ArrowRight size={13} className="text-slate-900/40" />
+            </span>
           </div>
         </div>
 
-        {/* Category Tabs (Horizontal Scrollable on Mobile) */}
+        {/* Category Tabs */}
         {!isSearching && (
-          <div className="flex items-center overflow-x-auto scrollbar-none gap-2 pb-3 mb-8 sm:flex-wrap -mx-2 px-2">
+          <div className="flex items-center overflow-x-auto scrollbar-none gap-2.5 pb-3 mb-8 sm:flex-wrap">
             {CATEGORIES.map((c) => {
               const Icon = c.icon
               const isActive = activeTab === c.id
@@ -181,10 +220,10 @@ export default function Skills() {
                     playClickSound()
                     setActiveTab(c.id)
                   }}
-                  className={`flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl text-xs sm:text-sm font-mono font-bold shrink-0 transition-all duration-300 ${
+                  className={`flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold shrink-0 transition-all duration-300 ${
                     isActive
-                      ? 'bg-[#3B82F6] text-black shadow-[0_10px_25px_rgba(59, 130, 246,0.4)] scale-105'
-                      : 'bg-surface/60 border border-slate-900/10 text-slate-900/70 hover:text-slate-900 hover:bg-slate-900/10 backdrop-blur-md'
+                      ? 'bg-[#3B82F6] text-white shadow-[0_10px_25px_rgba(59,130,246,0.35)]'
+                      : 'bg-white border border-slate-900/10 text-slate-900/60 hover:text-slate-900 hover:border-slate-900/20'
                   }`}
                 >
                   <Icon size={15} />
@@ -195,7 +234,7 @@ export default function Skills() {
           </div>
         )}
 
-        {/* Skills Cards Grid - 2 Columns on Mobile */}
+        {/* Grille de cartes */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab + (isSearching ? search : '') + lang}
@@ -203,50 +242,81 @@ export default function Skills() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6"
+            className="grid grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5"
           >
-            {displayedSkills.map((s) => (
-              <div
-                key={s.n}
-                className="group relative bg-surface/60 border border-slate-900/10 hover:border-[#3B82F6]/50 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 transition-all duration-300 hover:scale-[1.02] backdrop-blur-xl flex flex-col justify-between shadow-xl"
-              >
-                <div>
-                  {'catLabel' in s && (
-                    <span className="text-[9px] sm:text-[10px] font-mono text-clay uppercase tracking-widest mb-1.5 block truncate">
-                      {(s as any).catLabel}
-                    </span>
-                  )}
-                  
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                    {'logo' in s && (s as any).logo ? (
-                      <span className="text-clay/80 group-hover:text-clay group-hover:scale-110 transition-all shrink-0" title={s.n}>
-                        {(() => { const Logo = (s as any).logo; return <Logo size={26} /> })()}
+            {displayedSkills.map((s) => {
+              const Logo = 'logo' in s ? (s as any).logo : null
+              const color = (s as any).color || '#3B82F6'
+              const levelColor = LEVEL_COLOR[s.lvl] || '#3B82F6'
+              return (
+                <div
+                  key={s.n}
+                  className="group relative bg-white border border-slate-900/10 hover:border-[#3B82F6]/40 rounded-2xl sm:rounded-3xl p-4 sm:p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <span
+                        className="flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl shrink-0"
+                        style={{ background: `${color}18` }}
+                      >
+                        {Logo ? <Logo size={22} style={{ color }} /> : <Code2 size={20} style={{ color }} />}
                       </span>
-                    ) : (
-                      <h3 className="font-display text-sm sm:text-lg text-slate-900 group-hover:text-[#3B82F6] transition-colors leading-tight">
-                        {s.n}
-                      </h3>
+                      <ArrowUpRight size={16} className="text-slate-900/20 group-hover:text-[#3B82F6] transition-colors mt-1" />
+                    </div>
+
+                    {'catLabel' in s && (
+                      <span className="text-[9px] font-mono text-[#3B82F6] uppercase tracking-widest mb-1 block truncate">
+                        {(s as any).catLabel}
+                      </span>
                     )}
-                    <span
-                      className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider self-start sm:self-auto shrink-0"
-                      style={{
-                        backgroundColor: `${LEVEL_COLOR[s.lvl]}20`,
-                        color: LEVEL_COLOR[s.lvl],
-                        border: `1px solid ${LEVEL_COLOR[s.lvl]}40`,
-                      }}
-                    >
-                      {s.lvl}
-                    </span>
+
+                    <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                      <h3 className="font-display text-base sm:text-lg text-slate-900 leading-tight">{s.n}</h3>
+                      <span
+                        className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider"
+                        style={{ backgroundColor: `${levelColor}15`, color: levelColor }}
+                      >
+                        {s.lvl}
+                      </span>
+                    </div>
+
+                    <p className="hidden sm:block text-xs text-slate-900/55 leading-relaxed mb-5 line-clamp-2">
+                      {s.d}
+                    </p>
                   </div>
 
-                  <p className="hidden sm:block text-xs text-slate-900/70 leading-relaxed mb-4 font-sans line-clamp-3">
-                    {s.d}
-                  </p>
+                  <div>
+                    <SkillBar pct={(s as any).pct ?? 70} color={color} />
+                    {'tags' in s && (
+                      <div className="hidden sm:flex flex-wrap gap-1.5 mt-4">
+                        {(s as any).tags.map((tag: string) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-full text-[10px] font-medium bg-slate-900/[0.04] text-slate-900/55 border border-slate-900/5"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
+              )
+            })}
 
-                <SkillBar lvl={s.lvl} />
+            {/* Carte "écosystème complet" — ferme la grille */}
+            <div className="relative bg-gradient-to-br from-[#3B82F6]/[0.06] to-transparent border border-dashed border-[#3B82F6]/25 rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex flex-col justify-between overflow-hidden min-h-[160px] sm:min-h-[220px]">
+              <div className="flex items-center gap-2 text-[10px] font-mono font-bold uppercase tracking-widest text-[#3B82F6]">
+                <Zap size={12} /> {t('Un écosystème complet', 'A complete ecosystem')}
               </div>
-            ))}
+              <p className="font-display text-base sm:text-xl text-slate-900 leading-snug mt-4 max-w-[70%]">
+                {t('Des outils modernes pour construire l\'avenir.', 'Modern tools to build the future.')}
+              </p>
+              <div className="absolute -bottom-5 -right-5 w-24 h-24 rounded-[1.5rem] bg-gradient-to-br from-[#3B82F6] to-[#60A5FA] rotate-12 shadow-xl shadow-[#3B82F6]/20 flex items-center justify-center">
+                <Code2 className="text-white -rotate-12" size={26} />
+              </div>
+              <span className="absolute top-5 right-6 w-2 h-2 rounded-full bg-[#3B82F6]" />
+            </div>
           </motion.div>
         </AnimatePresence>
 
