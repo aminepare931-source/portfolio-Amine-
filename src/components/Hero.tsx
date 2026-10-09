@@ -94,12 +94,18 @@ export default function Hero() {
           transition={{ delay: 0.5 }}
           className="flex items-center gap-2.5"
         >
-          {[SiReact, SiTypescript, SiJavascript, SiPython].map((Icon, i) => (
+          {[
+            { Icon: SiReact, bg: '#1d4ed8', iconColor: '#ffffff' },
+            { Icon: SiTypescript, bg: '#2563eb', iconColor: '#ffffff' },
+            { Icon: SiJavascript, bg: '#111827', iconColor: '#F7DF1E', border: 'border-[#F7DF1E]/25' },
+            { Icon: SiPython, bg: '#111827', iconColor: '#60A5FA', border: 'border-[#3776AB]/35' },
+          ].map(({ Icon, bg, iconColor, border }, i) => (
             <span
               key={i}
-              className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:border-[#3B82F6]/50 transition-colors"
+              className={`flex items-center justify-center w-10 h-10 rounded-xl border ${border ?? 'border-white/10'} shadow-lg hover:scale-105 transition-transform`}
+              style={{ backgroundColor: bg }}
             >
-              <Icon size={16} className="text-white/80" />
+              <Icon size={16} color={iconColor} />
             </span>
           ))}
           <Link
