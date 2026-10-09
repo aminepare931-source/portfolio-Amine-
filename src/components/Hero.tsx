@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Download, ArrowRight, Code, Globe, ShieldCheck, Zap } from 'lucide-react'
-import { SiReact, SiNodedotjs, SiPython, SiOwasp, SiCplusplus, SiPhp, SiGo, SiWhatsapp, SiSupabase } from 'react-icons/si'
-import FlipCard from './FlipCard'
+import { SiReact, SiNodedotjs, SiPython, SiOwasp, SiPhp, SiGo, SiWhatsapp, SiSupabase } from 'react-icons/si'
+import HeroPhotoRing from './HeroPhotoRing'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -71,31 +71,32 @@ export default function Hero() {
             <span className="text-clay">Bobo-Dioulasso 🇧🇫</span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline — display serif with layered 3D shadow */}
           <motion.h1
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-3xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-slate-900 mb-2 sm:mb-4"
+            className="font-serifHero font-black text-4xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-tight text-slate-900 mb-3 sm:mb-5"
+            style={{
+              textShadow:
+                '1px 1px 0 #cbd5e1, 2px 2px 0 #b6c2d1, 3px 3px 0 #a3b3c6, 4px 4px 0 #90a4bb, 5px 5px 10px rgba(15,23,42,0.25)',
+            }}
           >
-            Mouhamed <br className="hidden sm:block" />
-            <span className="bg-gradient-to-r from-slate-900 via-[#1e293b] to-[#3B82F6] bg-clip-text text-transparent">
-              Amine Paré
-            </span>
-            <span className="text-[#3B82F6] inline-block animate-bounce">.</span>
+            Mouhamed <br />
+            Amine Paré
           </motion.h1>
 
           {/* Dynamic Motion Role Switcher */}
-          <div className="h-8 sm:h-12 flex items-center mb-3 sm:mb-6 overflow-hidden">
+          <div className="min-h-[2.75rem] sm:h-12 flex items-center mb-3 sm:mb-6 overflow-hidden">
             <motion.div
               key={currentRoleIndex + lang}
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="flex items-center gap-2 text-base sm:text-xl font-mono text-[#3B82F6] font-semibold"
+              className="flex items-start gap-2 text-sm sm:text-xl font-mono text-[#3B82F6] font-semibold leading-snug"
             >
-              <Code size={20} className="shrink-0 text-clay" />
+              <Code size={18} className="shrink-0 text-clay mt-0.5" />
               <span>{ROLES[currentRoleIndex]}</span>
             </motion.div>
           </div>
@@ -108,8 +109,8 @@ export default function Hero() {
             className="text-sm sm:text-base text-muted max-w-xl mb-5 sm:mb-8 leading-relaxed font-sans"
           >
             {t(
-              "Développeur Fullstack & Créateur Digital. Applications web, e-commerce Mobile Money, cyber-sécurité et automatisation IA — du concept au déploiement.",
-              "Fullstack Developer & Digital Creator. Web apps, Mobile Money e-commerce, cybersecurity and AI automation — from concept to deployment."
+              "Développeur Fullstack, Architecte Systèmes & Visionnaire IA. E-commerce, Mobile Money et automatisations IA sécurisées — du concept stratégique au déploiement global.",
+              "Fullstack Developer, Systems Architect & AI Visionary. E-commerce, Mobile Money and secure AI automations — from strategic concept to global deployment."
             )}
           </motion.p>
 
@@ -152,52 +153,44 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          {/* Tech stack — grille statique */}
+          {/* Tech stack — badges pilules */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="mt-5 sm:mt-8 rounded-xl bg-slate-900/5 border border-slate-900/10 p-3 backdrop-blur-md hidden sm:block"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-5 sm:mt-7 flex flex-wrap gap-1.5 sm:gap-2"
           >
-            <div className="flex items-center gap-2 mb-2.5 text-[10px] font-mono text-clay uppercase font-bold tracking-wider px-1">
-              <span>{t('Domaines & Stack Technical :', 'Domains & Stack :')}</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { n: 'React 18', logo: SiReact },
-                { n: 'Node.js', logo: SiNodedotjs },
-                { n: 'Python', logo: SiPython },
-                { n: 'OWASP', logo: SiOwasp },
-                { n: 'C / C++', logo: SiCplusplus },
-                { n: 'PHP', logo: SiPhp },
-                { n: 'Go', logo: SiGo },
-                { n: 'Mobile Money', logo: Zap },
-                { n: 'WhatsApp API', logo: SiWhatsapp },
-                { n: 'Supabase', logo: SiSupabase },
-              ].map((tech, idx) => (
-                <span
-                  key={idx}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface/80 border border-slate-900/10 text-slate-900/90 text-xs font-mono font-semibold hover:border-[#3B82F6]/50 transition-colors"
-                >
-                  <tech.logo size={13} className="text-clay/70" />
-                  {tech.n}
-                </span>
-              ))}
-            </div>
+            {[
+              { n: 'React 18', logo: SiReact },
+              { n: 'Node.js', logo: SiNodedotjs },
+              { n: 'Python', logo: SiPython },
+              { n: 'OWASP', logo: SiOwasp },
+              { n: 'Go', logo: SiGo },
+              { n: 'PHP', logo: SiPhp },
+              { n: 'Supabase', logo: SiSupabase },
+              { n: 'Mobile Money', logo: Zap },
+              { n: 'WhatsApp API', logo: SiWhatsapp },
+            ].map((tech, idx) => (
+              <span
+                key={idx}
+                className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-white border border-slate-900/10 text-slate-900/90 text-[11px] sm:text-xs font-semibold shadow-sm hover:border-[#3B82F6]/50 hover:shadow-md transition-all"
+              >
+                <tech.logo size={13} className="text-clay/70 shrink-0" />
+                {tech.n}
+              </span>
+            ))}
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: PHOTO CARD */}
+        {/* RIGHT COLUMN: PHOTO WITH ICON RING */}
         <div className="lg:col-span-5 relative flex justify-center items-center">
-
-          {/* FlipCard Component */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full max-w-[260px] sm:max-w-none mx-auto"
           >
-            <FlipCard />
+            <HeroPhotoRing />
           </motion.div>
         </div>
       </div>

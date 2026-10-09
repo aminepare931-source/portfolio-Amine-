@@ -16,6 +16,7 @@ export default {
         display: ['"Space Grotesk"', 'sans-serif'],
         sans: ['"Inter"', 'system-ui', 'sans-serif'],
         mono: ['"DM Mono"', 'monospace'],
+        serifHero: ['"Fraunces"', 'serif'],
       },
       borderRadius: {
         '4xl': '2.5rem',
