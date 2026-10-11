@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export default function HeroPhotoDark() {
   return (
-    <div className="relative w-full h-full min-h-[46vh] sm:min-h-[56vh] lg:min-h-screen overflow-hidden">
+    <div className="relative w-full h-full min-h-[46vh] sm:min-h-[56vh] overflow-hidden">
       {/* Photo */}
       <motion.img
         initial={{ opacity: 0, scale: 1.05 }}

@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowDown, MoreHorizontal } from 'lucide-react'
-import { SiReact, SiTypescript, SiJavascript, SiPython } from 'react-icons/si'
+import { SiReact, SiTypescript, SiNodedotjs } from 'react-icons/si'
 import HeroPhotoDark from './HeroPhotoDark'
+import PythonLogo from './icons/PythonLogo'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -18,10 +19,11 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen overflow-hidden bg-[#05070d] text-white grid lg:grid-cols-2"
+      className="relative min-h-screen bg-[#02030a] text-white p-3 sm:p-5 lg:p-6"
     >
+    <div className="relative w-full min-h-[calc(100vh-1.5rem)] sm:min-h-[calc(100vh-2.5rem)] lg:min-h-[calc(100vh-3rem)] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.55)] bg-[#05070d] grid lg:grid-cols-2">
       {/* LEFT: TEXT CONTENT */}
-      <div className="relative z-10 flex flex-col justify-center order-2 lg:order-1 px-5 sm:px-10 lg:pl-20 lg:pr-10 pt-6 pb-12 lg:py-20">
+      <div className="relative z-10 flex flex-col justify-center order-2 lg:order-1 px-5 sm:px-10 lg:pl-16 lg:pr-10 pt-6 pb-10 lg:py-16">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -95,17 +97,17 @@ export default function Hero() {
           className="flex items-center gap-2.5"
         >
           {[
-            { Icon: SiReact, bg: '#1d4ed8', iconColor: '#ffffff' },
-            { Icon: SiTypescript, bg: '#2563eb', iconColor: '#ffffff' },
-            { Icon: SiJavascript, bg: '#111827', iconColor: '#F7DF1E', border: 'border-[#F7DF1E]/25' },
-            { Icon: SiPython, bg: '#111827', iconColor: '#60A5FA', border: 'border-[#3776AB]/35' },
+            { Icon: SiReact, bg: '#0b1324', iconColor: '#61DAFB', border: 'border-[#61DAFB]/30' },
+            { Icon: SiTypescript, bg: '#2563eb', iconColor: '#ffffff', border: 'border-white/10' },
+            { Icon: SiNodedotjs, bg: '#0b1324', iconColor: '#4ADE80', border: 'border-[#4ADE80]/30' },
+            { Icon: null, bg: '#0b1324', iconColor: undefined, border: 'border-white/10' },
           ].map(({ Icon, bg, iconColor, border }, i) => (
             <span
               key={i}
-              className={`flex items-center justify-center w-10 h-10 rounded-xl border ${border ?? 'border-white/10'} shadow-lg hover:scale-105 transition-transform`}
+              className={`flex items-center justify-center w-10 h-10 rounded-xl border ${border} shadow-lg hover:scale-105 transition-transform`}
               style={{ backgroundColor: bg }}
             >
-              <Icon size={16} color={iconColor} />
+              {Icon ? <Icon size={16} color={iconColor} /> : <PythonLogo size={18} />}
             </span>
           ))}
           <Link
@@ -123,6 +125,7 @@ export default function Hero() {
       <div className="relative order-1 lg:order-2 h-[50vh] sm:h-[58vh] lg:h-auto">
         <HeroPhotoDark />
       </div>
+    </div>
     </section>
   )
 }
