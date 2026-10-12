@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export default function HeroPhotoDark() {
   return (
-    <div className="relative w-full h-full min-h-[46vh] sm:min-h-[56vh] overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden">
       {/* Photo */}
       <motion.img
         initial={{ opacity: 0, scale: 1.05 }}
@@ -10,7 +10,8 @@ export default function HeroPhotoDark() {
         transition={{ duration: 1 }}
         src="/assets/hero.jpg"
         alt="Mouhamed Amine Paré"
-        className="absolute inset-0 w-full h-full object-cover object-top"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: '50% 18%' }}
       />
 
       {/* Dark tint so the photo sits in the navy palette */}

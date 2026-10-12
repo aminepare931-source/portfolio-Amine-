@@ -19,11 +19,11 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen bg-[#02030a] text-white p-3 sm:p-5 lg:p-6"
+      className="relative min-h-screen bg-[#02030a] text-white p-3 sm:p-5 lg:p-6 flex items-center justify-center"
     >
-    <div className="relative w-full min-h-[calc(100vh-1.5rem)] sm:min-h-[calc(100vh-2.5rem)] lg:min-h-[calc(100vh-3rem)] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.55)] bg-[#05070d] grid lg:grid-cols-2">
+    <div className="relative w-full lg:min-h-[560px] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.55)] bg-[#05070d] grid lg:grid-cols-2">
       {/* LEFT: TEXT CONTENT */}
-      <div className="relative z-10 flex flex-col justify-center order-2 lg:order-1 px-5 sm:px-10 lg:pl-16 lg:pr-10 pt-6 pb-10 lg:py-16">
+      <div className="relative z-10 flex flex-col justify-center order-2 lg:order-1 px-5 sm:px-10 lg:pl-16 lg:pr-10 pt-6 pb-10 lg:py-12">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -122,7 +122,7 @@ export default function Hero() {
       </div>
 
       {/* RIGHT: PHOTO */}
-      <div className="relative order-1 lg:order-2 h-[50vh] sm:h-[58vh] lg:h-auto">
+      <div className="relative order-1 lg:order-2 aspect-[4/5] sm:aspect-[16/11] lg:aspect-auto lg:h-full">
         <HeroPhotoDark />
       </div>
     </div>
