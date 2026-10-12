@@ -3,19 +3,14 @@ import { motion } from 'framer-motion'
 export default function HeroPhotoDark() {
   return (
     <div className="relative w-full h-full overflow-hidden">
-      {/* Photo */}
-      <motion.img
-        initial={{ opacity: 0, scale: 1.05 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
-        src="/assets/hero.jpg"
-        alt="Mouhamed Amine Paré"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: '50% 18%' }}
+      {/* Studio backdrop — radial red/navy gradient standing in for the old photo background */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(130% 110% at 65% 15%, #7a1016 0%, #3d0a10 32%, #1a0609 55%, #05070d 78%)',
+        }}
       />
-
-      {/* Dark tint so the photo sits in the navy palette */}
-      <div className="absolute inset-0 bg-[#05070d]/20" />
 
       {/* Neon light beams — red + blue diagonal streaks */}
       <div className="absolute inset-0 pointer-events-none mix-blend-screen">
@@ -36,6 +31,16 @@ export default function HeroPhotoDark() {
           style={{ background: 'linear-gradient(180deg, rgba(239,68,68,0.75), rgba(239,68,68,0) 60%)' }}
         />
       </div>
+
+      {/* Photo cutout — transparent PNG, anchored to the bottom like a studio portrait */}
+      <motion.img
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9 }}
+        src="/assets/hero-cutout.png"
+        alt="Mouhamed Amine Paré"
+        className="absolute inset-x-0 bottom-0 w-full h-full object-contain object-bottom"
+      />
 
       {/* Blend edges into the dark background */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#05070d] via-transparent to-transparent" />
