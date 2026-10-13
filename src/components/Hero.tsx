@@ -21,15 +21,15 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen bg-[#02030a] text-white p-3 sm:p-5 lg:p-6 flex items-center justify-center"
     >
-    <div className="relative w-full lg:min-h-[560px] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.55)] bg-[#05070d] grid lg:grid-cols-2">
+    <div className="relative w-full lg:min-h-[600px] rounded-[28px] sm:rounded-[32px] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.55)] bg-[#05070d] grid lg:block">
       {/* LEFT: TEXT CONTENT */}
-      <div className="relative z-10 flex flex-col justify-center order-2 lg:order-1 px-5 sm:px-10 lg:pl-16 lg:pr-10 pt-6 pb-10 lg:py-12">
+      <div className="relative z-10 flex flex-col justify-center order-2 lg:order-none px-5 sm:px-10 lg:pl-16 pt-6 pb-10 lg:py-12 lg:absolute lg:inset-y-0 lg:left-0 lg:w-[56%] lg:pr-6">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-2.5 text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-white/70 mb-4 sm:mb-6"
+          className="hidden lg:flex items-center gap-2.5 text-[11px] sm:text-xs font-mono uppercase tracking-[0.2em] text-white/70 mb-4 sm:mb-6"
         >
           <span className="w-2 h-2 rounded-full bg-[#3B82F6]" />
           {t('Développeur Fullstack', 'Fullstack Developer')}
@@ -121,8 +121,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* RIGHT: PHOTO */}
-      <div className="relative order-1 lg:order-2 aspect-[4/5] sm:aspect-[16/11] lg:aspect-auto lg:h-full">
+      {/* RIGHT: PHOTO — full-bleed behind the text on desktop, its own block on mobile/tablet */}
+      <div className="relative order-1 lg:order-none aspect-[4/5] sm:aspect-[16/11] lg:aspect-auto lg:absolute lg:inset-0 lg:w-full lg:h-full">
         <HeroPhotoDark />
       </div>
     </div>

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function HeroPhotoDark() {
+  const { t } = useLanguage()
   return (
     <div className="relative w-full h-full overflow-hidden">
       {/* Studio backdrop — radial red/navy gradient standing in for the old photo background */}
@@ -13,22 +15,22 @@ export default function HeroPhotoDark() {
       />
 
       {/* Neon light beams — red + blue diagonal streaks */}
-      <div className="absolute inset-0 pointer-events-none mix-blend-screen">
+      <div className="absolute inset-0 pointer-events-none mix-blend-screen z-[1]">
         <div
-          className="absolute -left-16 top-0 w-32 sm:w-40 h-[160%] -rotate-[14deg] blur-2xl opacity-90"
-          style={{ background: 'linear-gradient(180deg, rgba(239,68,68,0.9), rgba(239,68,68,0) 72%)' }}
+          className="absolute -left-14 top-0 w-36 sm:w-44 h-[165%] -rotate-[14deg] blur-2xl opacity-100"
+          style={{ background: 'linear-gradient(180deg, rgba(248,80,80,1), rgba(248,80,80,0) 74%)' }}
         />
         <div
-          className="absolute -left-2 -top-10 w-20 sm:w-24 h-[150%] -rotate-[12deg] blur-xl opacity-95"
-          style={{ background: 'linear-gradient(180deg, rgba(14,165,233,0.95), rgba(14,165,233,0) 65%)' }}
+          className="absolute left-4 -top-10 w-24 sm:w-28 h-[155%] -rotate-[12deg] blur-xl opacity-100"
+          style={{ background: 'linear-gradient(180deg, rgba(34,180,255,1), rgba(34,180,255,0) 66%)' }}
         />
         <div
-          className="absolute left-[42%] -top-10 w-12 sm:w-14 h-[150%] rotate-[9deg] blur-lg opacity-80"
-          style={{ background: 'linear-gradient(180deg, rgba(96,165,250,0.85), rgba(96,165,250,0) 58%)' }}
+          className="absolute left-[46%] -top-10 w-14 sm:w-16 h-[150%] rotate-[9deg] blur-lg opacity-90"
+          style={{ background: 'linear-gradient(180deg, rgba(110,180,255,0.95), rgba(110,180,255,0) 58%)' }}
         />
         <div
-          className="absolute right-4 top-0 w-24 sm:w-28 h-[150%] rotate-[9deg] blur-2xl opacity-80"
-          style={{ background: 'linear-gradient(180deg, rgba(239,68,68,0.75), rgba(239,68,68,0) 60%)' }}
+          className="absolute right-2 top-0 w-28 sm:w-32 h-[155%] rotate-[9deg] blur-2xl opacity-95"
+          style={{ background: 'linear-gradient(180deg, rgba(248,80,80,0.9), rgba(248,80,80,0) 62%)' }}
         />
       </div>
 
@@ -39,7 +41,7 @@ export default function HeroPhotoDark() {
         transition={{ duration: 0.9 }}
         src="/assets/hero-cutout.png"
         alt="Mouhamed Amine Paré"
-        className="absolute inset-x-0 bottom-0 w-full h-full object-contain object-bottom"
+        className="absolute inset-x-0 bottom-0 z-[2] w-full h-full object-contain object-bottom lg:object-[68%_100%] scale-[1.3] sm:scale-[1.35] lg:scale-[1.15] origin-bottom lg:origin-[68%_100%]"
       />
 
       {/* Blend edges into the dark background */}
@@ -78,6 +80,28 @@ export default function HeroPhotoDark() {
         <span className="text-[#3B82F6] font-bold text-sm">01</span>
         <span className="w-px h-6 bg-white/25 my-1" />
         <span className="text-white/35">/03</span>
+      </motion.div>
+
+      {/* MOBILE / TABLET ONLY — eyebrow + 01/03 overlaid directly on the photo,
+          so the text block below can start straight at the title (saves height) */}
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="lg:hidden absolute top-20 sm:top-4 left-4 z-[3] flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-white/85"
+      >
+        <span className="w-1.5 h-1.5 rounded-full bg-[#3B82F6]" />
+        {t('Développeur Fullstack', 'Fullstack Developer')}
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="lg:hidden flex absolute top-20 sm:top-4 right-4 z-[3] flex-col items-center font-mono text-[10px]"
+      >
+        <span className="text-[#3B82F6] font-bold text-xs">01</span>
+        <span className="w-px h-4 bg-white/25 my-0.5" />
+        <span className="text-white/40">/03</span>
       </motion.div>
     </div>
   )
