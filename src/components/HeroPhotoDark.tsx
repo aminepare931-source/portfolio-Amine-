@@ -5,32 +5,32 @@ export default function HeroPhotoDark() {
   const { t } = useLanguage()
   return (
     <div className="relative w-full h-full overflow-hidden">
-      {/* Studio backdrop — radial red/navy gradient standing in for the old photo background */}
+      {/* Studio backdrop — radial blue gradient matching the portfolio's brand color */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(130% 110% at 65% 15%, #7a1016 0%, #3d0a10 32%, #1a0609 55%, #05070d 78%)',
+            'radial-gradient(130% 110% at 65% 15%, #0c3d7a 0%, #0a2550 32%, #071530 55%, #05070d 78%)',
         }}
       />
 
-      {/* Neon light beams — red + blue diagonal streaks */}
+      {/* Neon light beams — blue diagonal streaks, on-brand with the site's #3B82F6 accent */}
       <div className="absolute inset-0 pointer-events-none mix-blend-screen z-[1]">
         <div
           className="absolute -left-14 top-0 w-36 sm:w-44 h-[165%] -rotate-[14deg] blur-2xl opacity-100"
-          style={{ background: 'linear-gradient(180deg, rgba(248,80,80,1), rgba(248,80,80,0) 74%)' }}
+          style={{ background: 'linear-gradient(180deg, rgba(59,130,246,1), rgba(59,130,246,0) 74%)' }}
         />
         <div
           className="absolute left-4 -top-10 w-24 sm:w-28 h-[155%] -rotate-[12deg] blur-xl opacity-100"
-          style={{ background: 'linear-gradient(180deg, rgba(34,180,255,1), rgba(34,180,255,0) 66%)' }}
+          style={{ background: 'linear-gradient(180deg, rgba(96,165,250,1), rgba(96,165,250,0) 66%)' }}
         />
         <div
           className="absolute left-[46%] -top-10 w-14 sm:w-16 h-[150%] rotate-[9deg] blur-lg opacity-90"
-          style={{ background: 'linear-gradient(180deg, rgba(110,180,255,0.95), rgba(110,180,255,0) 58%)' }}
+          style={{ background: 'linear-gradient(180deg, rgba(147,197,253,0.95), rgba(147,197,253,0) 58%)' }}
         />
         <div
           className="absolute right-2 top-0 w-28 sm:w-32 h-[155%] rotate-[9deg] blur-2xl opacity-95"
-          style={{ background: 'linear-gradient(180deg, rgba(248,80,80,0.9), rgba(248,80,80,0) 62%)' }}
+          style={{ background: 'linear-gradient(180deg, rgba(37,99,235,0.9), rgba(37,99,235,0) 62%)' }}
         />
       </div>
 
