@@ -146,17 +146,22 @@ export default function Explorations() {
   return (
     <section
       id="galerie"
-      className="relative w-full overflow-hidden transition-colors duration-700 bg-[#ffffff]"
-      style={{ backgroundColor: activeItem.bg }}
+      className="relative w-full bg-[#ffffff] p-3 sm:p-5 lg:p-6"
     >
       <div
-        className="relative w-full"
+        className="relative w-full rounded-[28px] sm:rounded-[32px] border border-[#3B82F6]/20 shadow-[0_30px_80px_rgba(37,99,235,0.14)] transition-colors duration-700"
         style={{
-          height: isMobile ? '64vh' : '88vh',
-          minHeight: isMobile ? 460 : 580,
+          backgroundColor: activeItem.bg,
+          height: isMobile ? '78vh' : '88vh',
+          minHeight: isMobile ? 560 : 580,
           overflow: 'hidden',
         }}
       >
+        {/* Halos bleus façon néon, comme sur le Hero */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(50% 65% at 50% 50%, rgba(59,130,246,0.20) 0%, transparent 70%), radial-gradient(35% 50% at 8% 8%, rgba(37,99,235,0.14) 0%, transparent 70%)', zIndex: 1 }}
+        />
         {/* Ghost Background Watermark */}
         <div
           className="absolute inset-x-0 flex items-center justify-center pointer-events-none select-none uppercase whitespace-nowrap text-slate-900/5 font-display"

@@ -161,11 +161,19 @@ export default function JourneyRoad() {
     <section id="experience" className="relative bg-[#ffffff] overflow-hidden py-16 sm:py-24">
       {/* Intro Video Background Banner (Compact Header) */}
       <div className="relative w-full rounded-3xl overflow-hidden max-w-[1320px] mx-auto px-6 mb-12">
-        <div className="relative rounded-3xl overflow-hidden border border-slate-900/10 bg-white/60 p-8 sm:p-12 backdrop-blur-xl">
+        <div className="relative rounded-[28px] sm:rounded-[32px] overflow-hidden border border-[#3B82F6]/25 bg-white p-8 sm:p-12 shadow-[0_30px_80px_rgba(37,99,235,0.14)]">
+          {/* Halos bleus façon néon, comme sur le Hero */}
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse 70% 60% at 20% 30%, rgba(37,99,235,0.05) 0%, transparent 65%)' }}
+            style={{ background: 'radial-gradient(ellipse 60% 70% at 12% 20%, rgba(59,130,246,0.18) 0%, transparent 65%), radial-gradient(ellipse 45% 60% at 92% 85%, rgba(37,99,235,0.16) 0%, transparent 70%)' }}
           />
+          <div className="hidden lg:block absolute right-10 top-8 w-28 h-40 rounded-2xl border border-[#3B82F6]/25 bg-[#3B82F6]/[0.06] backdrop-blur-sm rotate-[8deg] pointer-events-none" />
+          <div className="hidden lg:block absolute right-32 top-24 w-20 h-28 rounded-xl border border-[#3B82F6]/20 bg-[#3B82F6]/[0.05] backdrop-blur-sm -rotate-6 pointer-events-none" />
+          <div className="hidden lg:flex absolute right-12 bottom-10 flex-col items-center font-mono text-xs pointer-events-none">
+            <span className="text-[#3B82F6] font-bold text-sm">10</span>
+            <span className="w-px h-6 bg-slate-900/20 my-1" />
+            <span className="text-slate-900/40">{t('étapes', 'steps')}</span>
+          </div>
 
           <div className="relative z-10 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-[#3B82F6]/40 text-xs font-mono text-clay uppercase tracking-[0.25em] mb-4">
@@ -278,7 +286,7 @@ export default function JourneyRoad() {
                   onClick={() => { playClickSound(); setActiveIndex(activeIndex) }}
                   animate={hubOpen ? { scale: [1, 1.25, 1.12], rotate: [0, -8, 0] } : { scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 12 }}
-                  className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#3B82F6] text-black flex items-center justify-center text-3xl sm:text-4xl font-bold shadow-[0_0_60px_rgba(59,130,246,0.8)] border-4 border-white cursor-pointer"
+                  className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#3B82F6] text-white flex items-center justify-center text-3xl sm:text-4xl font-bold shadow-[0_0_60px_rgba(59,130,246,0.8)] border-4 border-white cursor-pointer"
                 >
                   <current.ic size={34} strokeWidth={1.75} />
                 </motion.button>
