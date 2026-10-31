@@ -90,7 +90,7 @@ export default function ProjectsHeroCard() {
               onClick={playClickSound}
               className="text-xs font-mono text-slate-900/70 hover:text-slate-900 px-4 py-3 rounded-full border border-slate-900/10 hover:border-slate-900/30 backdrop-blur-md transition-colors"
             >
-              WhatsApp Direct ↗
+              WhatsApp Direct
             </a>
           </div>
         </motion.div>

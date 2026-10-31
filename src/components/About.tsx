@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Download, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, Globe, Sparkles, Terminal } from 'lucide-react'
+import { Download, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, Globe, Sparkles, Terminal, User, Zap } from 'lucide-react'
+import { FlagBF } from './icons/Flags'
 import Reveal from './Reveal'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
@@ -16,7 +17,7 @@ export default function About() {
     t('Cyber-sécurité : audits OWASP, APIs & JWT', 'Cybersecurity: OWASP audits, APIs & JWT'),
     t('Mobile Money : CinetPay, Orange, Moov', 'Mobile Money: CinetPay, Orange, Moov'),
     t('Automatisation IA : bots WhatsApp, Gemini SDK', 'AI Automation: WhatsApp bots, Gemini SDK'),
-    t('Bobo-Dioulasso 🇧🇫 — Dispo remote international', 'Bobo-Dioulasso 🇧🇫 — Available worldwide remote'),
+    t('Bobo-Dioulasso — Dispo remote international', 'Bobo-Dioulasso — Available worldwide remote'),
   ]
 
   const PILLARS = [
@@ -90,7 +91,7 @@ export default function About() {
                 key={i}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-slate-900/10 mx-2 shrink-0 text-xs font-mono text-slate-900/90"
               >
-                <span className="text-[#3B82F6] font-bold">✦</span>
+                <Sparkles size={12} className="text-[#3B82F6] shrink-0" />
                 <span>{h}</span>
               </div>
             ))}
@@ -113,7 +114,7 @@ export default function About() {
                 
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-900/20 text-[11px] font-mono text-clay mb-2">
-                    <MapPin size={12} /> Bobo-Dioulasso, Burkina Faso 🇧🇫
+                    <MapPin size={12} /> Bobo-Dioulasso, Burkina Faso <FlagBF />
                   </div>
                   <h3 className="font-display text-2xl text-white">Mouhamed Amine Paré</h3>
                   <p className="text-xs text-white/80 font-mono">Fullstack Developer &amp; Digital Creator (Polyglot Tech)</p>
@@ -160,7 +161,7 @@ export default function About() {
                     : 'text-slate-900/60 hover:text-slate-900 hover:bg-slate-900/5'
                 }`}
               >
-                👨‍💻 {t('Mon Profil Global', 'My Global Profile')}
+                <User size={14} className="inline -mt-0.5 mr-1.5" />{t('Mon Profil Global', 'My Global Profile')}
               </button>
               <button
                 onClick={() => {
@@ -173,7 +174,7 @@ export default function About() {
                     : 'text-slate-900/60 hover:text-slate-900 hover:bg-slate-900/5'
                 }`}
               >
-                ⚡ {t('Piliers & Sécurité', 'Pillars & Security')}
+                <Zap size={14} className="inline -mt-0.5 mr-1.5" />{t('Piliers & Sécurité', 'Pillars & Security')}
               </button>
             </div>
 

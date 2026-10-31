@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, ExternalLink, CheckCircle, Cpu, BarChart3, Sparkles } from 'lucide-react'
+import { ArrowLeft, ExternalLink, CheckCircle, Cpu, BarChart3, Sparkles, Zap } from 'lucide-react'
 import { fetchProjects, Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
+import ProjectIcon from '../components/icons/ProjectIcon'
 
 function statusMeta(status: Project['status'] | undefined, t: (fr: string, en: string) => string) {
   switch (status) {
@@ -76,7 +77,7 @@ export default function ProjectDetailPage() {
             className="w-full aspect-[16/9] flex flex-col items-center justify-center p-6 text-center"
             style={{ background: `linear-gradient(135deg, #f8fafc 0%, ${project.color || '#3B82F6'}33 100%)` }}
           >
-            <span className="text-6xl mb-3">{project.emoji || '🚀'}</span>
+            <ProjectIcon project={project} size={60} className="mb-3 text-clay" />
             <span className="font-display text-3xl text-slate-900">{project.name}</span>
           </div>
         )}
@@ -156,7 +157,7 @@ export default function ProjectDetailPage() {
           <div className="flex flex-wrap gap-2">
             {project.architecture.map((arch, idx) => (
               <span key={idx} className="text-xs font-mono bg-surface border border-stroke px-3 py-1.5 rounded-lg text-slate-900/80">
-                ⚡ {arch}
+                <Zap size={14} className="inline mr-1.5 -mt-0.5 text-[#3B82F6]" />{arch}
               </span>
             ))}
           </div>

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ExternalLink, CheckCircle, Cpu, BarChart3, Layers, Sparkles } from 'lucide-react'
+import { X, ExternalLink, CheckCircle, Cpu, BarChart3, Layers, Sparkles, Zap } from 'lucide-react'
 import { Project } from '../lib/supabase'
+import ProjectIcon from './icons/ProjectIcon'
 
 interface ProjectModalProps {
   project: Project | null
@@ -39,7 +40,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 className="w-full h-full flex flex-col items-center justify-center p-6 text-center"
                 style={{ background: `linear-gradient(135deg, #f8fafc 0%, ${project.color || '#3B82F6'}33 100%)` }}
               >
-                <span className="text-5xl mb-2">{project.emoji || '🚀'}</span>
+                <ProjectIcon project={project} size={52} className="mb-2 text-clay" />
                 <span className="font-display text-3xl text-slate-900">{project.name}</span>
               </div>
             )}
@@ -125,7 +126,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="flex flex-wrap gap-2">
                 {project.architecture.map((arch, idx) => (
                   <span key={idx} className="text-xs font-mono bg-surface border border-stroke px-3 py-1.5 rounded-lg text-slate-900/80">
-                    ⚡ {arch}
+                    <Zap size={14} className="inline mr-1.5 -mt-0.5 text-[#3B82F6]" />{arch}
                   </span>
                 ))}
               </div>

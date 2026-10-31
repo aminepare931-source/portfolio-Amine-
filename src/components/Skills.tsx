@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search, Sparkles, Code2, Monitor, Cloud, Bot, ShieldCheck,
-  ArrowRight, ArrowUpRight, Pencil, Zap,
+  ArrowRight, ArrowUpRight, Pencil, Zap, X,
 } from 'lucide-react'
 import {
   SiJavascript, SiTypescript, SiPython, SiCplusplus, SiPhp, SiGo, SiGnubash, SiPostgresql,
@@ -177,7 +177,7 @@ export default function Skills() {
                   onClick={() => setSearch('')}
                   className="absolute right-5 top-1/2 -translate-y-1/2 text-xs text-slate-900/40 hover:text-slate-900"
                 >
-                  ✕
+                  <X size={14} />
                 </button>
               )}
             </div>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { playClickSound } from '../lib/sound'
 import { Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
+import ProjectIcon from './icons/ProjectIcon'
 
 function statusMeta(status: Project['status'], t: (fr: string, en: string) => string) {
   switch (status) {
@@ -205,7 +206,7 @@ export default function ProjectsCarousel({
                     className="w-full h-full flex items-center justify-center text-4xl font-display"
                     style={{ background: tint(p.color, '#f1f5f9') }}
                   >
-                    {p.emoji || '🧩'}
+                    <ProjectIcon project={p} size={48} />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-40 transition-opacity" />

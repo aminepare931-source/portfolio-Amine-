@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ArrowRight, Award, Calendar, CheckCircle2, ChevronRight, Sparkles, Terminal, ShieldCheck, Lock } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Award, Calendar, CheckCircle2, ChevronRight, Sparkles, Terminal, ShieldCheck, Lock, Palette, Monitor, Rocket, Target, Settings, Smartphone, Shuffle, Bot, Zap, GraduationCap, Sun, BarChart3 } from 'lucide-react'
 import Reveal from './Reveal'
 import { Link } from 'react-router-dom'
 import { playClickSound } from '../lib/sound'
@@ -16,7 +16,7 @@ export default function JourneyRoad() {
   const MILESTONES = [
     {
       id: 'm0',
-      ic: '🎨',
+      ic: Palette,
       date: t('Avant 2023', 'Before 2023'),
       role: t('Digital & Création', 'Digital & Creation'),
       co: t('Graphisme, e-commerce, contenu digital', 'Graphic design, e-commerce, digital content'),
@@ -28,7 +28,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm1',
-      ic: '🖥️',
+      ic: Monitor,
       date: '2023 — 2024',
       role: t('Informatique & Systèmes', 'Computing & Systems'),
       co: t('Maintenance & administration système', 'Maintenance & system administration'),
@@ -40,7 +40,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm2',
-      ic: '🚀',
+      ic: Rocket,
       date: '2024',
       role: t('Entrée dans le Développement', 'Entering Development'),
       co: t('Fondamentaux du développement web', 'Web development fundamentals'),
@@ -52,7 +52,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm3',
-      ic: '🎯',
+      ic: Target,
       date: '2024 — 2025',
       role: t('Spécialisation Frontend', 'Frontend Specialization'),
       co: t('Interfaces modernes & interactives', 'Modern & interactive interfaces'),
@@ -64,7 +64,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm4',
-      ic: '⚙️',
+      ic: Settings,
       date: '2025',
       role: t('Backend & Fullstack', 'Backend & Fullstack'),
       co: t('API, bases de données, architecture', 'APIs, databases, architecture'),
@@ -76,7 +76,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm5',
-      ic: '📱',
+      ic: Smartphone,
       date: '2025',
       role: t('Web & Mobile', 'Web & Mobile'),
       co: t('Produits multiplateformes', 'Cross-platform products'),
@@ -88,7 +88,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm6',
-      ic: '🔀',
+      ic: Shuffle,
       date: '2025 — 2026',
       role: t('Git & GitHub', 'Git & GitHub'),
       co: t('Gestion de projet & collaboration', 'Project management & collaboration'),
@@ -100,7 +100,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm7',
-      ic: '🛡️',
+      ic: ShieldCheck,
       date: '2026',
       role: t('Sécurité', 'Security'),
       co: t('Sécurisation des applications', 'Application security'),
@@ -112,7 +112,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm8',
-      ic: '🤖',
+      ic: Bot,
       date: '2026',
       role: t('Intelligence Artificielle', 'Artificial Intelligence'),
       co: t('Intégration IA dans les applications', 'AI integration in applications'),
@@ -124,7 +124,7 @@ export default function JourneyRoad() {
     },
     {
       id: 'm9',
-      ic: '⚡',
+      ic: Zap,
       date: t('2026 — Présent', '2026 — Present'),
       role: t('Automatisation', 'Automation'),
       co: t('Systèmes connectés & processus automatisés', 'Connected systems & automated processes'),
@@ -192,7 +192,7 @@ export default function JourneyRoad() {
                     : 'bg-slate-900/10 text-slate-900/70 hover:text-slate-900'
                 }`}
               >
-                ⚡ {t('Vue Interactive Horizon', 'Interactive Horizon View')}
+                <Zap size={14} className="inline -mt-0.5 mr-1.5" />{t('Vue Interactive Horizon', 'Interactive Horizon View')}
               </button>
 
               <button
@@ -206,7 +206,7 @@ export default function JourneyRoad() {
                     : 'bg-slate-900/10 text-slate-900/70 hover:text-slate-900'
                 }`}
               >
-                📊 {t('Vue Synthèse Grid', 'Grid Overview')}
+                <BarChart3 size={14} className="inline -mt-0.5 mr-1.5" />{t('Vue Synthèse Grid', 'Grid Overview')}
               </button>
             </div>
           </div>
@@ -280,7 +280,7 @@ export default function JourneyRoad() {
                   transition={{ type: 'spring', stiffness: 300, damping: 12 }}
                   className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#3B82F6] text-black flex items-center justify-center text-3xl sm:text-4xl font-bold shadow-[0_0_60px_rgba(59,130,246,0.8)] border-4 border-white cursor-pointer"
                 >
-                  {current.ic}
+                  <current.ic size={34} strokeWidth={1.75} />
                 </motion.button>
               </div>
 
@@ -333,7 +333,7 @@ export default function JourneyRoad() {
                                 idx === activeIndex ? 'scale-125' : 'opacity-60'
                               }`}
                             >
-                              {m.ic}
+                              <m.ic size={18} strokeWidth={1.9} />
                             </span>
                             <span
                               className={`text-[9px] font-mono hidden sm:block transition-colors ${
@@ -367,7 +367,7 @@ export default function JourneyRoad() {
                   <div className="md:col-span-8 space-y-4">
                     <div className="flex items-center gap-3">
                       <span className="text-3xl p-2.5 rounded-2xl bg-white/60 border border-slate-900/10">
-                        {current.ic}
+                        <current.ic size={26} strokeWidth={1.75} />
                       </span>
                       <div>
                         <span className="text-xs font-mono font-bold text-clay uppercase tracking-wider block">
@@ -432,7 +432,7 @@ export default function JourneyRoad() {
                 <div>
                   <div className="flex items-center justify-between mb-2 sm:mb-4">
                     <span className="text-xl sm:text-3xl p-1.5 sm:p-2 rounded-xl bg-white/50 border border-slate-900/10">
-                      {m.ic}
+                      <m.ic size={20} strokeWidth={1.75} />
                     </span>
                     <span className="text-[9px] sm:text-[10px] font-mono font-bold text-clay uppercase px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/30">
                       {m.date}
@@ -498,7 +498,7 @@ export default function JourneyRoad() {
                 className="relative z-20 w-full max-w-xs mx-auto bg-surface/80 border-2 border-sky-400/40 hover:border-sky-400 rounded-2xl p-5 sm:p-6 backdrop-blur-xl cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl">🎓</span>
+                  <GraduationCap size={28} className="text-sky-500" strokeWidth={1.75} />
                   <span className="text-[10px] font-mono font-bold text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/30">
                     {t('Premier Cycle', 'General Education')}
                   </span>
@@ -512,7 +512,7 @@ export default function JourneyRoad() {
                   )}
                 </p>
                 <div className="text-center mt-2 text-[10px] font-mono text-slate-900/40">
-                  {t('Survolez pour faire exploser la suite →', 'Hover to blast open what came next →')}
+                  {t('Survolez pour faire exploser la suite', 'Hover to blast open what came next')}
                 </div>
               </motion.div>
             </div>
@@ -537,7 +537,7 @@ export default function JourneyRoad() {
                       className="bg-surface/60 border border-slate-900/10 hover:border-slate-900/30 rounded-2xl p-5 sm:p-6 backdrop-blur-xl shadow-lg"
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-2xl">☀️</span>
+                        <Sun size={28} className="text-clay" strokeWidth={1.75} />
                         <span className="text-[10px] font-mono font-bold text-clay bg-clay/10 px-2.5 py-1 rounded-full border border-clay/30">
                           {t('Brevet d\'Études', 'Technical Certificate')}
                         </span>
@@ -562,7 +562,7 @@ export default function JourneyRoad() {
                     >
                       <div className="absolute top-0 right-0 w-24 h-24 bg-[#3B82F6]/10 rounded-full blur-xl pointer-events-none" />
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-2xl">⚡</span>
+                        <Zap size={28} className="text-[#3B82F6]" strokeWidth={1.75} />
                         <span className="text-[10px] font-mono font-bold text-[#3B82F6] bg-[#3B82F6]/10 px-2.5 py-1 rounded-full border border-[#3B82F6]/30">
                           {t('Diplôme d\'État', 'State Diploma')}
                         </span>

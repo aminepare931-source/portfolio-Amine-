@@ -4,6 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
 import { playClickSound } from '../lib/sound'
+import ProjectIcon from './icons/ProjectIcon'
 
 type StatusKey = 'all' | 'deployed' | 'in_progress' | 'paused' | 'done'
 
@@ -89,10 +90,10 @@ export default function ProjectsList({
                   </div>
                 ) : (
                   <div
-                    className="aspect-video flex items-center justify-center text-4xl"
+                    className="aspect-video flex items-center justify-center text-clay"
                     style={{ background: p.color ? `${p.color}15` : '#f1f5f9' }}
                   >
-                    {p.emoji || '🧩'}
+                    <ProjectIcon project={p} size={52} />
                   </div>
                 )}
 

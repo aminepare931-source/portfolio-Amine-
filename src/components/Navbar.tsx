@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Download, Globe, Briefcase } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { FlagFR, FlagGB, FlagBF } from './icons/Flags'
 
 const AMINE_DIGITAL_URL = 'https://amine-digital-services.vercel.app'
 
@@ -91,7 +92,7 @@ export default function Navbar() {
             className="flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 py-1.5 rounded-full bg-slate-900/5 border border-slate-900/10 text-clay hover:border-clay hover:bg-slate-900/10 transition-all"
           >
             <Globe size={13} className="text-[#3B82F6]" />
-            <span>{lang === 'fr' ? 'FR 🇫🇷' : 'EN 🇬🇧'}</span>
+            <span className="inline-flex items-center gap-1.5">{lang === 'fr' ? <>FR <FlagFR /></> : <>EN <FlagGB /></>}</span>
           </button>
 
           <Link
@@ -126,7 +127,7 @@ export default function Navbar() {
               onClick={toggleLang}
               className="text-xs font-mono font-bold px-2 py-1 rounded-full bg-slate-900/10 text-clay"
             >
-              {lang === 'fr' ? 'FR 🇫🇷' : 'EN 🇬🇧'}
+              <span className="inline-flex items-center gap-1.5">{lang === 'fr' ? <>FR <FlagFR /></> : <>EN <FlagGB /></>}</span>
             </button>
             <button
               onClick={() => setOpen(!open)}
@@ -172,7 +173,7 @@ export default function Navbar() {
             <img src="/assets/logo.png" alt="Amine.Dev" className="w-12 h-12 rounded-full border-2 border-clay" />
             <div>
               <div className="font-display text-2xl">AMINE<span className="text-clay">.</span>DEV</div>
-              <div className="text-[10px] text-muted font-mono uppercase">Bobo-Dioulasso 🇧🇫</div>
+              <div className="text-[10px] text-muted font-mono uppercase inline-flex items-center gap-1.5">Bobo-Dioulasso <FlagBF /></div>
             </div>
           </div>
 
@@ -182,7 +183,7 @@ export default function Navbar() {
               className="flex items-center gap-2 text-xs font-mono font-bold px-4 py-2 rounded-full bg-slate-900/10 border border-slate-900/20 text-clay"
             >
               <Globe size={14} className="text-[#3B82F6]" />
-              <span>{lang === 'fr' ? 'Langue: Français 🇫🇷' : 'Language: English 🇬🇧'}</span>
+              <span className="inline-flex items-center gap-2">{lang === 'fr' ? <>Langue : Français <FlagFR /></> : <>Language: English <FlagGB /></>}</span>
             </button>
           </div>
 

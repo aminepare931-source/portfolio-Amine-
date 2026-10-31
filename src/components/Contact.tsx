@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, MessageCircle, Copy, Check, Send, MapPin, Sparkles, Phone, ShieldCheck, Linkedin, Facebook, ShoppingBag } from 'lucide-react'
+import { FlagBF } from './icons/Flags'
 import Reveal from './Reveal'
 import { playClickSound } from '../lib/sound'
 import { fetchSettings, DEFAULT_SETTINGS, SiteSettings } from '../lib/supabase'
@@ -110,7 +111,7 @@ export default function Contact() {
                       </div>
                     </div>
                   </div>
-                  <span className="text-xs font-bold text-[#25D366] uppercase tracking-wider pr-2">Discuter ↗</span>
+                  <span className="text-xs font-bold text-[#25D366] uppercase tracking-wider pr-2">Discuter</span>
                 </a>
 
                 {/* Réseaux sociaux */}
@@ -152,7 +153,7 @@ export default function Contact() {
                         </div>
                       </div>
                     </div>
-                    <span className="text-xs font-bold text-clay uppercase tracking-wider pr-2">Découvrir ↗</span>
+                    <span className="text-xs font-bold text-clay uppercase tracking-wider pr-2">Découvrir</span>
                   </a>
                 )}
 
@@ -163,7 +164,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-[10px] font-mono text-muted uppercase">Localisation</div>
-                    <div className="text-xs sm:text-sm text-slate-900 font-medium">Bobo-Dioulasso, Burkina Faso 🇧🇫</div>
+                    <div className="text-xs sm:text-sm text-slate-900 font-medium">Bobo-Dioulasso, Burkina Faso <FlagBF /></div>
                   </div>
                 </div>
               </div>
