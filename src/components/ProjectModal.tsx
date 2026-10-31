@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ExternalLink, CheckCircle, Cpu, BarChart3, Layers, Sparkles } from 'lucide-react'
+import { X, ExternalLink, CheckCircle, Cpu, BarChart3, Layers, Sparkles, Zap } from 'lucide-react'
 import { Project } from '../lib/supabase'
+import ProjectIcon from './icons/ProjectIcon'
 
 interface ProjectModalProps {
   project: Project | null
@@ -19,7 +20,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-white/85 backdrop-blur-md"
+          className="fixed inset-0 bg-[#0a0f1e]/85 backdrop-blur-md"
         />
 
         {/* Modal Content */}
@@ -28,7 +29,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.94, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white border border-stroke rounded-3xl p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(15,23,42,0.18)] text-text"
+          className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#0a0f1e] border border-stroke rounded-3xl p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(15,23,42,0.18)] text-text"
         >
           {/* Top Banner Image / Graphic */}
           <div className="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden mb-6 border border-slate-900/10 bg-surface">
@@ -37,16 +38,16 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             ) : (
               <div
                 className="w-full h-full flex flex-col items-center justify-center p-6 text-center"
-                style={{ background: `linear-gradient(135deg, #f8fafc 0%, ${project.color || '#3B82F6'}33 100%)` }}
+                style={{ background: `linear-gradient(135deg, #0b1226 0%, ${project.color || '#3B82F6'}33 100%)` }}
               >
-                <span className="text-5xl mb-2">{project.emoji || '🚀'}</span>
+                <ProjectIcon project={project} size={52} className="mb-2 text-[#60A5FA]" />
                 <span className="font-display text-3xl text-slate-900">{project.name}</span>
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e] via-transparent to-white/40" />
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/60 backdrop-blur-md border border-slate-900/20 flex items-center justify-center text-slate-900 hover:bg-white transition-colors"
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#0a0f1e]/60 backdrop-blur-md border border-slate-900/20 flex items-center justify-center text-slate-900 hover:bg-[#0a0f1e] transition-colors"
             >
               <X size={20} />
             </button>
@@ -125,7 +126,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="flex flex-wrap gap-2">
                 {project.architecture.map((arch, idx) => (
                   <span key={idx} className="text-xs font-mono bg-surface border border-stroke px-3 py-1.5 rounded-lg text-slate-900/80">
-                    ⚡ {arch}
+                    <Zap size={14} className="inline mr-1.5 -mt-0.5 text-[#3B82F6]" />{arch}
                   </span>
                 ))}
               </div>
@@ -146,7 +147,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#3B82F6] text-black font-medium px-6 py-3 rounded-full hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center gap-2 bg-[#3B82F6] text-white font-medium px-6 py-3 rounded-full hover:scale-105 transition-transform text-sm"
               >
                 Visiter la plateforme live <ExternalLink size={16} />
               </a>
@@ -155,7 +156,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={`https://wa.me/22655300858?text=Bonjour%20Amine,%20je%20souhaite%20en%20savoir%20plus%20sur%20le%20projet%20${encodeURIComponent(project.name)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-clay text-black font-medium px-6 py-3 rounded-full hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center gap-2 bg-clay text-white font-medium px-6 py-3 rounded-full hover:scale-105 transition-transform text-sm"
               >
                 Demander une démo <ExternalLink size={16} />
               </a>

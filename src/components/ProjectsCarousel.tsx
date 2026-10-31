@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { playClickSound } from '../lib/sound'
 import { Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
+import ProjectIcon from './icons/ProjectIcon'
 
 function statusMeta(status: Project['status'], t: (fr: string, en: string) => string) {
   switch (status) {
@@ -140,7 +141,7 @@ export default function ProjectsCarousel({
     <section
       id="projects"
       className="relative w-full overflow-hidden transition-colors duration-700"
-      style={{ backgroundColor: tint(activeItem.color, '#ffffff') }}
+      style={{ backgroundColor: tint(activeItem.color, '#0a0f1e') }}
     >
       <div
         className="relative w-full"
@@ -159,7 +160,7 @@ export default function ProjectsCarousel({
         </div>
 
         {/* Top Brand Tag */}
-        <div className="absolute top-6 left-6 z-[60] flex items-center gap-2 text-xs font-mono uppercase text-slate-900/80 tracking-widest bg-white/70 px-3.5 py-1.5 rounded-full border border-slate-900/10 backdrop-blur-md">
+        <div className="absolute top-6 left-6 z-[60] flex items-center gap-2 text-xs font-mono uppercase text-slate-900/80 tracking-widest bg-[#0a0f1e]/70 px-3.5 py-1.5 rounded-full border border-slate-900/10 backdrop-blur-md">
           <MapPin size={13} className="text-[#3B82F6]" />
           <span>{t('Réalisations', 'Case studies')}</span>
         </div>
@@ -169,7 +170,7 @@ export default function ProjectsCarousel({
           className="absolute top-6 right-6 z-[60] flex items-center gap-2 text-white text-xs sm:text-sm font-bold px-4 py-2 rounded-full shadow-lg border-2 border-white/40"
           style={{ background: status.dot }}
         >
-          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#0a0f1e] animate-pulse" />
           {status.label}
         </div>
 
@@ -191,21 +192,21 @@ export default function ProjectsCarousel({
                     setActiveIndex(i)
                   }
                 }}
-                className="group overflow-hidden rounded-3xl shadow-2xl border border-slate-900/20 bg-white relative"
+                className="group overflow-hidden rounded-3xl shadow-2xl border border-slate-900/20 bg-[#0a0f1e] relative"
               >
                 {p.img ? (
                   <img
                     src={p.img}
                     alt={p.name}
                     draggable={false}
-                    className="w-full h-full object-contain bg-white group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-contain bg-[#0a0f1e] group-hover:scale-105 transition-transform duration-700"
                   />
                 ) : (
                   <div
                     className="w-full h-full flex items-center justify-center text-4xl font-display"
-                    style={{ background: tint(p.color, '#f1f5f9') }}
+                    style={{ background: tint(p.color, '#0f172a') }}
                   >
-                    {p.emoji || '🧩'}
+                    <ProjectIcon project={p} size={48} />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent group-hover:opacity-40 transition-opacity" />
@@ -217,7 +218,7 @@ export default function ProjectsCarousel({
                       playClickSound()
                       onOpen(p)
                     }}
-                    className="absolute top-4 right-4 bg-white/70 hover:bg-[#3B82F6] hover:text-black transition-colors text-slate-900 text-xs font-mono p-2.5 rounded-full border border-slate-900/20 backdrop-blur-md shadow-lg"
+                    className="absolute top-4 right-4 bg-[#0a0f1e]/70 hover:bg-[#3B82F6] hover:text-white transition-colors text-slate-900 text-xs font-mono p-2.5 rounded-full border border-slate-900/20 backdrop-blur-md shadow-lg"
                   >
                     <Maximize2 size={14} />
                   </button>
@@ -229,7 +230,7 @@ export default function ProjectsCarousel({
 
         {/* Bottom Left Info & Controls */}
         <div className="absolute bottom-6 left-6 sm:bottom-12 sm:left-12 z-[60] max-w-md">
-          <div className="inline-flex items-center gap-1.5 text-xs font-mono text-clay uppercase tracking-widest mb-2 bg-white/60 px-3 py-1 rounded-full border border-slate-900/10 backdrop-blur-md">
+          <div className="inline-flex items-center gap-1.5 text-xs font-mono text-clay uppercase tracking-widest mb-2 bg-[#0a0f1e]/60 px-3 py-1 rounded-full border border-slate-900/10 backdrop-blur-md">
             <Sparkles size={13} /> {t('Projet', 'Project')} {activeIndex + 1} / {n}
           </div>
 
@@ -244,13 +245,13 @@ export default function ProjectsCarousel({
           <div className="flex gap-3">
             <button
               onClick={() => navigate('prev')}
-              className="w-12 h-12 rounded-full border border-slate-900/30 bg-white/60 text-slate-900 flex items-center justify-center hover:scale-105 hover:border-slate-900 transition-all backdrop-blur-md shadow-lg"
+              className="w-12 h-12 rounded-full border border-slate-900/30 bg-[#0a0f1e]/60 text-slate-900 flex items-center justify-center hover:scale-105 hover:border-slate-900 transition-all backdrop-blur-md shadow-lg"
             >
               <ArrowLeft size={20} />
             </button>
             <button
               onClick={() => navigate('next')}
-              className="w-12 h-12 rounded-full border border-slate-900/30 bg-white/60 text-slate-900 flex items-center justify-center hover:scale-105 hover:border-slate-900 transition-all backdrop-blur-md shadow-lg"
+              className="w-12 h-12 rounded-full border border-slate-900/30 bg-[#0a0f1e]/60 text-slate-900 flex items-center justify-center hover:scale-105 hover:border-slate-900 transition-all backdrop-blur-md shadow-lg"
             >
               <ArrowRight size={20} />
             </button>

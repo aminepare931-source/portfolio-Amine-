@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, MessageCircle, Copy, Check, Send, MapPin, Sparkles, Phone, ShieldCheck, Linkedin, Facebook, ShoppingBag } from 'lucide-react'
+import { FlagBF } from './icons/Flags'
 import Reveal from './Reveal'
 import { playClickSound } from '../lib/sound'
 import { fetchSettings, DEFAULT_SETTINGS, SiteSettings } from '../lib/supabase'
@@ -13,6 +14,7 @@ function TikTokIcon({ size = 20 }: { size?: number }) {
     </svg>
   )
 }
+
 
 export default function Contact() {
   const [sent, setSent] = useState(false)
@@ -70,7 +72,7 @@ export default function Contact() {
 
               <div className="space-y-4 pt-2">
                 {/* Email Box */}
-                <div className="flex items-center justify-between bg-white/50 border border-slate-900/10 rounded-2xl p-4 hover:border-[#3B82F6]/50 transition-colors">
+                <div className="flex items-center justify-between bg-[#0a0f1e]/50 border border-slate-900/10 rounded-2xl p-4 hover:border-[#3B82F6]/50 transition-colors">
                   <div className="flex items-center gap-3.5">
                     <div className="w-11 h-11 rounded-xl bg-[#3B82F6]/20 text-[#3B82F6] flex items-center justify-center shrink-0">
                       <Mail size={20} />
@@ -100,7 +102,7 @@ export default function Contact() {
                   className="flex items-center justify-between bg-[#25D366]/10 border border-[#25D366]/30 rounded-2xl p-4 hover:bg-[#25D366]/20 transition-all group"
                 >
                   <div className="flex items-center gap-3.5">
-                    <div className="w-11 h-11 rounded-xl bg-[#25D366] text-black flex items-center justify-center shrink-0 font-bold">
+                    <div className="w-11 h-11 rounded-xl bg-[#25D366] text-white flex items-center justify-center shrink-0 font-bold">
                       <MessageCircle size={22} />
                     </div>
                     <div>
@@ -110,7 +112,7 @@ export default function Contact() {
                       </div>
                     </div>
                   </div>
-                  <span className="text-xs font-bold text-[#25D366] uppercase tracking-wider pr-2">Discuter ↗</span>
+                  <span className="text-xs font-bold text-[#25D366] uppercase tracking-wider pr-2">Discuter</span>
                 </a>
 
                 {/* Réseaux sociaux */}
@@ -152,18 +154,18 @@ export default function Contact() {
                         </div>
                       </div>
                     </div>
-                    <span className="text-xs font-bold text-clay uppercase tracking-wider pr-2">Découvrir ↗</span>
+                    <span className="text-xs font-bold text-clay uppercase tracking-wider pr-2">Découvrir</span>
                   </a>
                 )}
 
                 {/* Location */}
-                <div className="flex items-center gap-3.5 bg-white/50 border border-slate-900/10 rounded-2xl p-4">
+                <div className="flex items-center gap-3.5 bg-[#0a0f1e]/50 border border-slate-900/10 rounded-2xl p-4">
                   <div className="w-11 h-11 rounded-xl bg-slate-900/5 text-clay flex items-center justify-center shrink-0">
                     <MapPin size={20} />
                   </div>
                   <div>
                     <div className="text-[10px] font-mono text-muted uppercase">Localisation</div>
-                    <div className="text-xs sm:text-sm text-slate-900 font-medium">Bobo-Dioulasso, Burkina Faso 🇧🇫</div>
+                    <div className="text-xs sm:text-sm text-slate-900 font-medium">Bobo-Dioulasso, Burkina Faso <FlagBF /></div>
                   </div>
                 </div>
               </div>
@@ -188,7 +190,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="ex: Jean Dupont"
-                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
+                    className="w-full bg-[#0a0f1e]/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
 
@@ -200,7 +202,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="jean@exemple.com"
-                    className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
+                    className="w-full bg-[#0a0f1e]/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
                   />
                 </div>
               </div>
@@ -213,7 +215,7 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="ex: Création de site e-commerce / Opportunité de recrutement"
-                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
+                  className="w-full bg-[#0a0f1e]/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors"
                 />
               </div>
 
@@ -225,13 +227,13 @@ export default function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Expliquez brièvement votre besoin, vos délais et vos objectifs..."
-                  className="w-full bg-white/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors resize-none"
+                  className="w-full bg-[#0a0f1e]/60 border border-slate-900/15 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-900/35 outline-none focus:border-[#3B82F6] transition-colors resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-black font-bold py-4 text-sm hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(59, 130, 246,0.4)]"
+                className="w-full rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-white font-bold py-4 text-sm hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(59, 130, 246,0.4)]"
               >
                 {sent ? (
                   <>

@@ -11,7 +11,7 @@ export default function BottomMarquee() {
   return (
     <div
       onMouseEnter={playClickSound}
-      className="relative border-y border-slate-900/10 py-6 bg-[#ffffff] backdrop-blur-md"
+      className="relative border-y border-slate-900/10 py-6 bg-[#02030a] backdrop-blur-md"
     >
       <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 px-4 max-w-[1320px] mx-auto">
         {items.map((text, i) => (

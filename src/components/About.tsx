@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Download, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, Globe, Sparkles, Terminal } from 'lucide-react'
+import { Download, MessageCircle, MapPin, CheckCircle, Code, ShieldCheck, Globe, Sparkles, Terminal, User, Zap } from 'lucide-react'
+import { FlagBF } from './icons/Flags'
 import Reveal from './Reveal'
 import { playClickSound } from '../lib/sound'
 import { useLanguage } from '../context/LanguageContext'
@@ -16,7 +17,7 @@ export default function About() {
     t('Cyber-sécurité : audits OWASP, APIs & JWT', 'Cybersecurity: OWASP audits, APIs & JWT'),
     t('Mobile Money : CinetPay, Orange, Moov', 'Mobile Money: CinetPay, Orange, Moov'),
     t('Automatisation IA : bots WhatsApp, Gemini SDK', 'AI Automation: WhatsApp bots, Gemini SDK'),
-    t('Bobo-Dioulasso 🇧🇫 — Dispo remote international', 'Bobo-Dioulasso 🇧🇫 — Available worldwide remote'),
+    t('Bobo-Dioulasso — Dispo remote international', 'Bobo-Dioulasso — Available worldwide remote'),
   ]
 
   const PILLARS = [
@@ -41,13 +42,13 @@ export default function About() {
   ]
 
   return (
-    <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#ffffff]">
+    <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#02030a]">
       {/* Fond sombre uni avec lueur douce */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(37,99,235,0.04) 0%, transparent 60%)' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#ffffff]/95 to-[#ffffff] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#02030a] via-[#05070d] to-[#02030a] pointer-events-none" />
 
       <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
         {/* Section Header */}
@@ -65,7 +66,7 @@ export default function About() {
             <div className="flex items-center gap-3 shrink-0">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-[#3B82F6] text-black font-bold px-6 py-3 text-xs sm:text-sm hover:scale-105 transition-transform shadow-[0_10px_20px_rgba(59, 130, 246,0.3)]"
+                className="inline-flex items-center gap-2 rounded-full bg-[#3B82F6] text-white font-bold px-6 py-3 text-xs sm:text-sm hover:scale-105 transition-transform shadow-[0_10px_20px_rgba(59, 130, 246,0.3)]"
               >
                 <MessageCircle size={15} /> {t('Me contacter', 'Contact me')}
               </Link>
@@ -83,14 +84,14 @@ export default function About() {
         </Reveal>
 
         {/* Auto-Scrolling Highlight Marquee */}
-        <div className="relative overflow-hidden mb-10 py-3 rounded-2xl bg-slate-900/40 border border-slate-900/10 backdrop-blur-md">
+        <div className="relative overflow-hidden mb-10 py-3 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md">
           <div className="flex w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
             {[...HIGHLIGHTS, ...HIGHLIGHTS].map((h, i) => (
               <div
                 key={i}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface/80 border border-slate-900/10 mx-2 shrink-0 text-xs font-mono text-slate-900/90"
               >
-                <span className="text-[#3B82F6] font-bold">✦</span>
+                <Sparkles size={12} className="text-[#3B82F6] shrink-0" />
                 <span>{h}</span>
               </div>
             ))}
@@ -112,8 +113,8 @@ export default function About() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
                 
                 <div className="absolute bottom-6 left-6 right-6">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-900/20 text-[11px] font-mono text-clay mb-2">
-                    <MapPin size={12} /> Bobo-Dioulasso, Burkina Faso 🇧🇫
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0a0f1e]/80 backdrop-blur-md border border-slate-900/20 text-[11px] font-mono text-clay mb-2">
+                    <MapPin size={12} /> Bobo-Dioulasso, Burkina Faso <FlagBF />
                   </div>
                   <h3 className="font-display text-2xl text-white">Mouhamed Amine Paré</h3>
                   <p className="text-xs text-white/80 font-mono">Fullstack Developer &amp; Digital Creator (Polyglot Tech)</p>
@@ -123,7 +124,7 @@ export default function About() {
 
             {/* Citation + 2e photo en médaillon */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#eff4fb] to-surface2 shadow-xl">
+              <div className="relative rounded-2xl overflow-hidden border border-clay/20 bg-gradient-to-br from-[#0b1226] to-surface2 shadow-xl">
                 <div className="flex items-center gap-4 p-6 sm:p-8">
                   <img
                     src="/assets/about2.jpg"
@@ -156,11 +157,11 @@ export default function About() {
                 }}
                 className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-mono font-bold transition-all ${
                   activeTab === 'bio'
-                    ? 'bg-[#3B82F6] text-black shadow-md'
+                    ? 'bg-[#3B82F6] text-white shadow-md'
                     : 'text-slate-900/60 hover:text-slate-900 hover:bg-slate-900/5'
                 }`}
               >
-                👨‍💻 {t('Mon Profil Global', 'My Global Profile')}
+                <User size={14} className="inline -mt-0.5 mr-1.5" />{t('Mon Profil Global', 'My Global Profile')}
               </button>
               <button
                 onClick={() => {
@@ -169,11 +170,11 @@ export default function About() {
                 }}
                 className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-mono font-bold transition-all ${
                   activeTab === 'pillars'
-                    ? 'bg-[#3B82F6] text-black shadow-md'
+                    ? 'bg-[#3B82F6] text-white shadow-md'
                     : 'text-slate-900/60 hover:text-slate-900 hover:bg-slate-900/5'
                 }`}
               >
-                ⚡ {t('Piliers & Sécurité', 'Pillars & Security')}
+                <Zap size={14} className="inline -mt-0.5 mr-1.5" />{t('Piliers & Sécurité', 'Pillars & Security')}
               </button>
             </div>
 
@@ -248,7 +249,7 @@ export default function About() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={playClickSound}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-black font-bold px-6 py-3.5 text-xs shrink-0 hover:scale-105 transition-transform shadow-lg"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-white font-bold px-6 py-3.5 text-xs shrink-0 hover:scale-105 transition-transform shadow-lg"
               >
                 <MessageCircle size={18} /> {t('Discuter sur WhatsApp', 'Chat on WhatsApp')}
               </a>

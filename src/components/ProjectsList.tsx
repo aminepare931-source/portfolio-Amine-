@@ -4,6 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { Project } from '../lib/supabase'
 import { useLanguage } from '../context/LanguageContext'
 import { playClickSound } from '../lib/sound'
+import ProjectIcon from './icons/ProjectIcon'
 
 type StatusKey = 'all' | 'deployed' | 'in_progress' | 'paused' | 'done'
 
@@ -55,7 +56,7 @@ export default function ProjectsList({
               }}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono font-medium border transition-colors ${
                 active
-                  ? 'bg-slate-900 text-white border-slate-900'
+                  ? 'bg-[#3B82F6] text-white border-[#3B82F6]'
                   : 'bg-surface/50 text-slate-900/70 border-stroke hover:border-slate-900/30'
               }`}
             >
@@ -89,10 +90,10 @@ export default function ProjectsList({
                   </div>
                 ) : (
                   <div
-                    className="aspect-video flex items-center justify-center text-4xl"
-                    style={{ background: p.color ? `${p.color}15` : '#f1f5f9' }}
+                    className="aspect-video flex items-center justify-center text-[#60A5FA]"
+                    style={{ background: p.color ? `${p.color}22` : '#0f172a' }}
                   >
-                    {p.emoji || '🧩'}
+                    <ProjectIcon project={p} size={52} />
                   </div>
                 )}
 

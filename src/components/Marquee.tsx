@@ -167,7 +167,7 @@ export default function Marquee() {
 
             {/* Résultat */}
             <div style={{ gridColumn: 7, gridRow: 3 }} className="flex flex-col items-center gap-3">
-              <span className="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1">
+              <span className="inline-flex items-center gap-1.5 bg-[#0a0f1e]/5 border border-white/10 rounded-full px-3 py-1">
                 <CheckCircle2 size={11} className="text-[#34d399]" />
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">{t('Résultat', 'Result')}</span>
               </span>

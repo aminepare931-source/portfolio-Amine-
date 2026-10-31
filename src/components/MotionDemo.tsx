@@ -186,7 +186,7 @@ export default function MotionDemo() {
                     animate={{ scale: 1, rotate: 0, opacity: 1 }}
                     transition={{ type: 'spring', stiffness: 240, damping: 13, delay: i * 0.08 }}
                     whileInView={{}}
-                    className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-sm"
+                    className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-[#0a0f1e]/10 border border-white/20 flex items-center justify-center backdrop-blur-sm"
                   >
                     <motion.div
                       animate={{ opacity: [0.3, 0.7, 0.3] }}
@@ -245,7 +245,7 @@ export default function MotionDemo() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
                 whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-2 bg-white text-[#0a3d91] font-bold rounded-full px-6 py-3 text-sm mt-6 cursor-default"
+                className="flex items-center gap-2 bg-[#0a0f1e] text-[#0a3d91] font-bold rounded-full px-6 py-3 text-sm mt-6 cursor-default"
               >
                 AMINE DIGITAL <ArrowRight size={16} />
               </motion.div>
@@ -256,23 +256,23 @@ export default function MotionDemo() {
         <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 z-10">
           <button
             onClick={() => setPlaying((p) => !p)}
-            className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md flex items-center justify-center text-white transition-colors shrink-0"
+            className="w-8 h-8 rounded-full bg-[#0a0f1e]/15 hover:bg-[#0a0f1e]/25 backdrop-blur-md flex items-center justify-center text-white transition-colors shrink-0"
           >
             {playing ? <Pause size={13} /> : <Play size={13} />}
           </button>
           <div className="flex-1 flex gap-1.5">
             {[...Array(TOTAL_SCENES)].map((_, i) => (
-              <div key={i} className="h-1 flex-1 rounded-full bg-white/20 overflow-hidden">
+              <div key={i} className="h-1 flex-1 rounded-full bg-[#0a0f1e]/20 overflow-hidden">
                 {i === scene && playing && (
                   <motion.div
                     key={scene}
                     initial={{ width: '0%' }}
                     animate={{ width: '100%' }}
                     transition={{ duration: SCENE_DURATION / 1000, ease: 'linear' }}
-                    className="h-full bg-white"
+                    className="h-full bg-[#0a0f1e]"
                   />
                 )}
-                {i < scene && <div className="h-full w-full bg-white" />}
+                {i < scene && <div className="h-full w-full bg-[#0a0f1e]" />}
               </div>
             ))}
           </div>

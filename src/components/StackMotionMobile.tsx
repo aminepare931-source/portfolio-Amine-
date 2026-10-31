@@ -74,7 +74,7 @@ export default function StackMotionMobile() {
                 return (
                   <span
                     key={item.name}
-                    className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg bg-white/[0.04] border border-white/10"
+                    className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg bg-[#0a0f1e]/[0.04] border border-white/10"
                   >
                     <Icon size={12} style={{ color: item.color }} className="shrink-0" />
                     <span className="font-mono text-[10px] text-white/75 truncate">{item.name}</span>
@@ -105,7 +105,7 @@ export default function StackMotionMobile() {
             <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-[9px] font-mono uppercase tracking-[0.2em] text-white/70">
               <Film size={10} className="text-[#60A5FA]" /> {t('Nouvelle compétence', 'New skill')}
             </span>
-            <span className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center">
+            <span className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-[#0a0f1e]/10 backdrop-blur border border-white/20 flex items-center justify-center">
               <ArrowRight size={13} className="text-white" />
             </span>
             <h3 className="absolute bottom-2.5 left-3 font-display text-lg text-white leading-none">
