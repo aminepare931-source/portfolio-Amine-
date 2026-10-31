@@ -27,7 +27,7 @@ export default function NotFoundPage() {
 
         <Link
           to="/"
-          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-white font-bold py-3.5 px-7 text-sm hover:scale-[1.03] transition-transform shadow-[0_10px_25px_rgba(59,130,246,0.4)]"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-black font-bold py-3.5 px-7 text-sm hover:scale-[1.03] transition-transform shadow-[0_10px_25px_rgba(59,130,246,0.4)]"
         >
           <ArrowLeft size={16} />
           {t('Retour à l\'accueil', 'Back home')}

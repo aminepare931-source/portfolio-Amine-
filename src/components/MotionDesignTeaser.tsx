@@ -118,7 +118,7 @@ export default function MotionDesignTeaser() {
           {/* Pagination 01/03 */}
           <div className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 flex-col items-center gap-2 text-white/40">
             <span className="text-xs font-mono text-[#60A5FA]">01</span>
-            <span className="w-px h-6 bg-[#0a0f1e]/20" />
+            <span className="w-px h-6 bg-white/20" />
             <span className="text-[10px] font-mono">/ 03</span>
           </div>
         </div>

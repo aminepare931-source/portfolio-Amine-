@@ -48,7 +48,7 @@ export default function MotionDesignSection() {
               initial={{ opacity: 0, y: -10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0a0f1e]/5 border border-white/15 text-[11px] font-mono text-white/70 uppercase tracking-widest mb-8"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/15 text-[11px] font-mono text-white/70 uppercase tracking-widest mb-8"
             >
               <Film size={13} className="text-[#60A5FA]" /> {t('Nouvelle compétence', 'New skill')}
             </motion.div>
@@ -63,7 +63,7 @@ export default function MotionDesignSection() {
             >
               Motion
               <br />
-              <span className="bg-gradient-to-r from-[#60A5FA] via-[#93c5fd] to-[#0a0f1e] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#60A5FA] via-[#93c5fd] to-white bg-clip-text text-transparent">
                 Design.
               </span>
             </motion.h2>
@@ -136,7 +136,7 @@ export default function MotionDesignSection() {
               href="https://wa.me/22655300868?text=Bonjour%20Amine,%20je%20souhaite%20discuter%20d%27un%20projet%20motion%20design"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-clay text-white font-medium px-5 py-2.5 rounded-full hover:scale-105 transition-transform text-sm"
+              className="inline-flex items-center gap-2 bg-clay text-black font-medium px-5 py-2.5 rounded-full hover:scale-105 transition-transform text-sm"
             >
               <MessageCircle size={16} /> {t('Discuter d\'un projet', 'Discuss a project')}
             </a>

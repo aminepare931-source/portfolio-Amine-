@@ -50,7 +50,7 @@ export default function ProjectsHeroCard() {
             className="absolute inset-0"
             style={{ background: 'radial-gradient(ellipse 70% 60% at 50% 20%, rgba(37,99,235,0.05) 0%, transparent 65%)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#02030a] via-[#02030a]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#ffffff] via-[#ffffff]/60 to-transparent" />
         </div>
 
         {/* Content Box */}
@@ -60,13 +60,13 @@ export default function ProjectsHeroCard() {
           transition={{ duration: 0.8 }}
           className="relative z-20 px-6 sm:px-12 pt-10 sm:pt-14 flex flex-col items-start max-w-2xl"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0a0f1e]/60 border border-[#3B82F6]/40 text-xs font-mono text-clay mb-4 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/60 border border-[#3B82F6]/40 text-xs font-mono text-clay mb-4 backdrop-blur-md">
             <Sparkles size={13} className="text-[#3B82F6]" /> Portfolio &amp; Projets Clés
           </div>
 
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.02] text-slate-900 mb-4">
             Des idées,<br />
-            <span className="bg-gradient-to-r from-white via-[#bfdbfe] to-clay bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-slate-900 via-[#1e293b] to-clay bg-clip-text text-transparent">
               livrées en production.
             </span>
           </h2>
@@ -77,7 +77,7 @@ export default function ProjectsHeroCard() {
 
           <div className="flex items-center gap-3">
             <Link to="/contact" onClick={playClickSound}>
-              <button className="bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-white font-bold rounded-full px-7 py-3.5 text-xs sm:text-sm hover:scale-105 transition-all shadow-[0_10px_20px_rgba(59, 130, 246,0.4)] flex items-center gap-2">
+              <button className="bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-black font-bold rounded-full px-7 py-3.5 text-xs sm:text-sm hover:scale-105 transition-all shadow-[0_10px_20px_rgba(59, 130, 246,0.4)] flex items-center gap-2">
                 <span>Démarrer un projet</span>
                 <ChevronRight size={16} />
               </button>
@@ -90,15 +90,15 @@ export default function ProjectsHeroCard() {
               onClick={playClickSound}
               className="text-xs font-mono text-slate-900/70 hover:text-slate-900 px-4 py-3 rounded-full border border-slate-900/10 hover:border-slate-900/30 backdrop-blur-md transition-colors"
             >
-              WhatsApp Direct
+              WhatsApp Direct ↗
             </a>
           </div>
         </motion.div>
 
         {/* Floating Navigation Pill */}
         <div className="relative z-30 pb-6 px-6 flex justify-center">
-          <nav className="flex items-center justify-between sm:justify-start bg-[#0a0f1e]/80 backdrop-blur-2xl px-2 py-1.5 rounded-full border border-slate-900/15 shadow-2xl max-w-md w-full sm:w-auto gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#0a0f1e] border border-slate-900/20 overflow-hidden shrink-0">
+          <nav className="flex items-center justify-between sm:justify-start bg-white/80 backdrop-blur-2xl px-2 py-1.5 rounded-full border border-slate-900/15 shadow-2xl max-w-md w-full sm:w-auto gap-2">
+            <div className="w-8 h-8 rounded-full bg-white border border-slate-900/20 overflow-hidden shrink-0">
               <img src="/assets/logo.png" alt="Amine.Dev" className="w-full h-full object-cover scale-125" />
             </div>
 
@@ -121,7 +121,7 @@ export default function ProjectsHeroCard() {
             <Link
               to="/contact"
               onClick={playClickSound}
-              className="flex items-center gap-1.5 bg-[#0a0f1e] text-white font-bold px-4 py-2 rounded-full text-xs hover:scale-105 transition-all ml-auto sm:ml-2 shadow-md"
+              className="flex items-center gap-1.5 bg-white text-black font-bold px-4 py-2 rounded-full text-xs hover:scale-105 transition-all ml-auto sm:ml-2 shadow-md"
             >
               Me contacter <ChevronRight size={13} />
             </Link>

@@ -36,7 +36,7 @@ const STAT_ITEMS = [
 
 export default function Stats() {
   return (
-    <section className="relative py-20 sm:py-28 bg-[#02030a]">
+    <section className="relative py-20 sm:py-28 bg-[#ffffff]">
       <div className="px-6 max-w-[1320px] mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 border-b border-slate-900/10 pb-8">
           <div>

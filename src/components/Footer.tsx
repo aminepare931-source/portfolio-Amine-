@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Linkedin, Facebook, Mail, ArrowUp } from 'lucide-react'
+import { Linkedin, Facebook, Mail } from 'lucide-react'
 import { fetchSettings, DEFAULT_SETTINGS, SiteSettings } from '../lib/supabase'
 
 function TikTokIcon({ size = 16 }: { size?: number }) {
@@ -57,7 +57,7 @@ export default function Footer() {
         </a>
       </div>
 
-      <Link to="/" className="hover:text-clay transition-colors">Retour en haut <ArrowUp size={12} className="inline -mt-0.5" /></Link>
+      <Link to="/" className="hover:text-clay transition-colors">Retour en haut ↑</Link>
     </footer>
   )
 }

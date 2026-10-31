@@ -43,7 +43,7 @@ export default function ContactCTA() {
             <Link
               to="/contact"
               onClick={playClickSound}
-              className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-white font-bold py-4 px-8 text-sm hover:scale-[1.03] transition-transform shadow-[0_10px_25px_rgba(59,130,246,0.4)]"
+              className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] text-black font-bold py-4 px-8 text-sm hover:scale-[1.03] transition-transform shadow-[0_10px_25px_rgba(59,130,246,0.4)]"
             >
               <Send size={16} />
               {t('Envoyer un message', 'Send a message')}

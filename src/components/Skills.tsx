@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search, Sparkles, Code2, Monitor, Cloud, Bot, ShieldCheck,
-  ArrowRight, ArrowUpRight, Pencil, Zap, X,
+  ArrowRight, ArrowUpRight, Pencil, Zap,
 } from 'lucide-react'
 import {
   SiJavascript, SiTypescript, SiPython, SiCplusplus, SiPhp, SiGo, SiGnubash, SiPostgresql,
@@ -131,7 +131,7 @@ export default function Skills() {
     : currentCategory.skills
 
   return (
-    <section id="skills" className="relative pt-4 sm:pt-6 pb-20 sm:pb-28 md:pb-36 overflow-hidden bg-[#05070d]">
+    <section id="skills" className="relative pt-4 sm:pt-6 pb-20 sm:pb-28 md:pb-36 overflow-hidden bg-[#f8fafc]">
       {/* Fond — halo doux */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -149,7 +149,7 @@ export default function Skills() {
               <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-slate-900 leading-[1.05]">
                 {t('Compétences & Maîtrise', 'Skills & Mastery')}
                 <br />
-                <span className="bg-gradient-to-r from-white to-[#3B82F6] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-slate-900 to-[#3B82F6] bg-clip-text text-transparent">
                   {t('Multi-Secteurs.', 'Multi-Domain.')}
                 </span>
               </h2>
@@ -170,14 +170,14 @@ export default function Skills() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('Rechercher une technologie...', 'Search a technology...')}
-                className="w-full bg-[#0a0f1e] border border-slate-900/10 rounded-full pl-12 pr-10 py-4 text-sm text-slate-900 placeholder-slate-900/40 outline-none focus:border-[#3B82F6] transition-all shadow-sm"
+                className="w-full bg-white border border-slate-900/10 rounded-full pl-12 pr-10 py-4 text-sm text-slate-900 placeholder-slate-900/40 outline-none focus:border-[#3B82F6] transition-all shadow-sm"
               />
               {search && (
                 <button
                   onClick={() => setSearch('')}
                   className="absolute right-5 top-1/2 -translate-y-1/2 text-xs text-slate-900/40 hover:text-slate-900"
                 >
-                  <X size={14} />
+                  ✕
                 </button>
               )}
             </div>
@@ -185,7 +185,7 @@ export default function Skills() {
         </Reveal>
 
         {/* Ticker tech */}
-        <div className="relative mb-8 rounded-2xl bg-[#0a0f1e] border border-slate-900/10 shadow-sm">
+        <div className="relative mb-8 rounded-2xl bg-white border border-slate-900/10 shadow-sm">
           <div className="flex items-center gap-5 overflow-x-auto scrollbar-none px-6 py-4 pr-14">
             {TICKER_ITEMS.map((item, i) => {
               const Icon = item.logo
@@ -200,7 +200,7 @@ export default function Skills() {
               )
             })}
           </div>
-          <div className="absolute right-0 top-0 bottom-0 w-14 bg-gradient-to-l from-[#0a0f1e] to-transparent flex items-center justify-end pr-3 pointer-events-none">
+          <div className="absolute right-0 top-0 bottom-0 w-14 bg-gradient-to-l from-white to-transparent flex items-center justify-end pr-3 pointer-events-none">
             <span className="w-7 h-7 rounded-full bg-slate-900/5 flex items-center justify-center">
               <ArrowRight size={13} className="text-slate-900/40" />
             </span>
@@ -223,7 +223,7 @@ export default function Skills() {
                   className={`flex items-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl text-xs sm:text-sm font-semibold shrink-0 transition-all duration-300 ${
                     isActive
                       ? 'bg-[#3B82F6] text-white shadow-[0_10px_25px_rgba(59,130,246,0.35)]'
-                      : 'bg-[#0a0f1e] border border-slate-900/10 text-slate-900/60 hover:text-slate-900 hover:border-slate-900/20'
+                      : 'bg-white border border-slate-900/10 text-slate-900/60 hover:text-slate-900 hover:border-slate-900/20'
                   }`}
                 >
                   <Icon size={15} />
@@ -251,7 +251,7 @@ export default function Skills() {
               return (
                 <div
                   key={s.n}
-                  className="group relative bg-[#0a0f1e] border border-slate-900/10 hover:border-[#3B82F6]/40 rounded-2xl sm:rounded-3xl p-4 sm:p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg flex flex-col justify-between"
+                  className="group relative bg-white border border-slate-900/10 hover:border-[#3B82F6]/40 rounded-2xl sm:rounded-3xl p-4 sm:p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-3">
