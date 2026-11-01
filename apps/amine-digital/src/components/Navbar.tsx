@@ -6,6 +6,7 @@ const NAV = [
   { to: '/', label: 'Accueil' },
   { to: '/services', label: 'Services' },
   { to: '/a-propos', label: 'À propos' },
+  { to: '/journal', label: 'Publications' },
   { to: '/tarifs', label: 'Tarifs' },
 ]
 
@@ -14,7 +15,7 @@ const NAV_MOBILE = [
   { to: '/services', label: 'Services' },
   { to: '/processus', label: 'Processus' },
   { to: '/a-propos', label: 'À propos' },
-  { to: '/journal', label: 'Journal' },
+  { to: '/journal', label: 'Publications' },
   { to: '/tarifs', label: 'Tarifs' },
 ]
 

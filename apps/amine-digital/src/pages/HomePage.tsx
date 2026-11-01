@@ -3,6 +3,7 @@ import { Suspense, lazy } from 'react'
 import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck, Smartphone, Bot, MapPin, HeadphonesIcon } from 'lucide-react'
 import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
+import { PUBLICATIONS } from '../data/publications'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
 import Stats from '../components/Stats'
@@ -293,9 +294,18 @@ export default function HomePage() {
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 3.2rem)' }}
           >
-            Conseils & réflexions
+            Publications & conseils
           </h2>
           </Fade>
+
+          <div className="px-5 sm:px-8 lg:px-12 grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            {PUBLICATIONS.slice(0, 4).map((p) => (
+              <Link key={p.slug} to={`/journal/${p.slug}`} className="group block rounded-md overflow-hidden border border-stroke bg-white/60 hover:border-gov/50 transition-colors">
+                <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" className="w-full aspect-square object-contain bg-surface group-hover:scale-[1.03] transition-transform duration-500" />
+                <div className="p-3 text-xs font-medium leading-snug group-hover:text-clay transition-colors">{p.title}</div>
+              </Link>
+            ))}
+          </div>
 
           <div className="px-5 sm:px-8 lg:px-12 grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 mb-10">
             {ARTICLES[0] && (
@@ -330,7 +340,7 @@ export default function HomePage() {
           </div>
 
           <div className="px-5 sm:px-8 lg:px-12">
-            <TextRollButton to="/journal">Lire tous les articles</TextRollButton>
+            <TextRollButton to="/journal">Voir toutes les publications</TextRollButton>
           </div>
         </div>
       </section>
