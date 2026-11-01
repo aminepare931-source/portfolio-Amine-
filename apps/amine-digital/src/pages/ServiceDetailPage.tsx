@@ -1,5 +1,6 @@
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Check } from 'lucide-react'
+import { ServiceImage } from '../components/PillarIllustrations'
 import { SERVICES } from '../data/services'
 
 export default function ServiceDetailPage() {
@@ -17,9 +18,7 @@ export default function ServiceDetailPage() {
         <ArrowLeft size={15} /> Tous les services
       </Link>
 
-      <div className="w-14 h-14 rounded-md bg-clay/10 text-clay flex items-center justify-center mb-6">
-        <service.icon size={26} />
-      </div>
+      <ServiceImage slug={service.slug} className="w-60 sm:w-72 h-auto -ml-3 mb-4" />
 
       <h1 className="font-display text-4xl sm:text-5xl mb-5">{service.title}</h1>
       <p className="text-lg text-slate-900/70 mb-10 leading-relaxed">{service.longDesc}</p>

@@ -9,7 +9,7 @@ import Stats from '../components/Stats'
 import Marquee from '../components/Marquee'
 import Testimonials from '../components/Testimonials'
 import Magnetic from '../components/Magnetic'
-import { WebDevIllustration, DesignIllustration, MarketingIllustration, SecurityIllustration, MobileIllustration, AutomationIllustration } from '../components/PillarIllustrations'
+import { ServiceImage, WebDevIllustration, DesignIllustration, MarketingIllustration, SecurityIllustration, MobileIllustration, AutomationIllustration } from '../components/PillarIllustrations'
 import { EASE_OUT, EASE_SOFT, EASE_OUT_CSS } from '../lib/anim'
 
 function TextRollButton({ to, children, tone = 'dark' }: { to: string; children: string; tone?: 'dark' | 'orange' | 'light' }) {
@@ -60,15 +60,6 @@ const PILLARS = [
   { icon: Megaphone, illustration: MarketingIllustration, title: 'Marketing Digital', desc: 'Réseaux sociaux, contenu, campagnes qui font venir des clients.' },
   { icon: ShieldCheck, illustration: SecurityIllustration, title: 'Cybersécurité', desc: 'Sécurisation de vos données, de vos comptes, de votre présence en ligne.' },
 ]
-
-const SERVICE_ILLUSTRATIONS: Record<string, React.ComponentType> = {
-  'sites-web': WebDevIllustration,
-  'applications-mobiles': MobileIllustration,
-  design: DesignIllustration,
-  'marketing-digital': MarketingIllustration,
-  'automatisation-ia': AutomationIllustration,
-  cybersecurite: SecurityIllustration,
-}
 
 export default function HomePage() {
   return (
@@ -261,8 +252,7 @@ export default function HomePage() {
           <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-4 mb-10">
             {SERVICES.map((s, i) => {
               const featured = i === 0
-              const Illustration = SERVICE_ILLUSTRATIONS[s.slug]
-              return (
+                            return (
                 <Link
                   key={s.slug}
                   to={`/services/${s.slug}`}
@@ -271,7 +261,7 @@ export default function HomePage() {
                   }`}
                 >
                   <div className="flex items-start justify-between">
-                    {Illustration ? <Illustration /> : <s.icon size={featured ? 30 : 22} className="text-gov" />}
+                    <ServiceImage slug={s.slug} className={featured ? 'w-full max-w-[460px] h-auto' : 'w-40 h-auto'} />
                     <ArrowUpRight size={16} className="text-gov/30 group-hover:text-gov group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
                   </div>
                   <div className={featured ? 'mt-10' : 'mt-6'}>

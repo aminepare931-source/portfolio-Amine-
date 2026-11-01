@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ServiceImage } from '../components/PillarIllustrations'
 import { SERVICES } from '../data/services'
 import { Line } from '../components/Reveal'
 
@@ -21,10 +22,8 @@ export default function ServicesPage() {
             to={`/services/${s.slug}`}
             className="group border border-stroke rounded-md p-7 hover:border-clay/40 hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] bg-surface/30"
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-11 h-11 rounded-md bg-clay/10 text-clay flex items-center justify-center">
-                <s.icon size={20} />
-              </div>
+            <div className="flex items-start justify-between mb-4">
+              <ServiceImage slug={s.slug} className="w-44 h-auto -ml-2" />
               <ArrowUpRight size={18} className="text-slate-900/30 group-hover:text-clay group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
             </div>
             <h3 className="font-display text-2xl mb-2">{s.title}</h3>
