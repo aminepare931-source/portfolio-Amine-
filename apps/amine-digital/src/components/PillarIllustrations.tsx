@@ -1,9 +1,10 @@
 // Illustrations des services (images fournies par AMINE DIGITAL).
 // PNG à fond transparent : l'illustration se pose sur la couleur de la carte.
-export function ServiceImage({ slug, className = '' }: { slug: string; className?: string }) {
+// Accueil : série « services » — Page Services et pages de détail : série « services-page ».
+export function ServiceImage({ slug, className = '', set = 'services' }: { slug: string; className?: string; set?: 'services' | 'services-page' }) {
   return (
     <img
-      src={`/assets/services/${slug}.png`}
+      src={`/assets/${set}/${slug}.png`}
       alt=""
       loading="lazy"
       className={`select-none pointer-events-none ${className}`}

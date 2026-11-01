@@ -18,7 +18,7 @@ export default function ServiceDetailPage() {
         <ArrowLeft size={15} /> Tous les services
       </Link>
 
-      <ServiceImage slug={service.slug} className="w-60 sm:w-72 h-auto -ml-3 mb-4" />
+      <ServiceImage set="services-page" slug={service.slug} className="w-60 sm:w-72 h-auto -ml-3 mb-4" />
 
       <h1 className="font-display text-4xl sm:text-5xl mb-5">{service.title}</h1>
       <p className="text-lg text-slate-900/70 mb-10 leading-relaxed">{service.longDesc}</p>
