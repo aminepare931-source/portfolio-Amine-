@@ -36,8 +36,8 @@ const STAT_ITEMS = [
 
 export default function Stats() {
   return (
-    <section className="relative py-20 sm:py-28 bg-[#ffffff]">
-      <div className="px-6 max-w-[1320px] mx-auto">
+    <section className="relative py-8 sm:py-14 bg-[#ffffff]">
+      <div className="w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-[1320px] mx-auto hero-card p-6 sm:p-10 lg:p-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 border-b border-slate-900/10 pb-8">
           <div>
             <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-2">

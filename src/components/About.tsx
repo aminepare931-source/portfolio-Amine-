@@ -42,7 +42,7 @@ export default function About() {
   ]
 
   return (
-    <section id="about" className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#ffffff]">
+    <section id="about" className="relative py-8 sm:py-14 overflow-hidden bg-[#ffffff]">
       {/* Fond sombre uni avec lueur douce */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -50,7 +50,7 @@ export default function About() {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#ffffff]/95 to-[#ffffff] pointer-events-none" />
 
-      <div className="relative z-10 px-6 max-w-[1320px] mx-auto">
+      <div className="relative z-10 w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-[1320px] mx-auto hero-card p-5 sm:p-10 lg:p-12">
         {/* Section Header */}
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 border-b border-slate-900/10 pb-8">

@@ -50,7 +50,7 @@ export default function Marquee() {
   const { t } = useLanguage()
 
   return (
-    <div className="hidden lg:block relative bg-[#0b1226] py-14 sm:py-16 lg:py-20 z-20 overflow-hidden">
+    <div className="hidden lg:block relative bg-[#0b1226] py-14 sm:py-16 lg:py-20 z-20 overflow-hidden [contain:paint]">
       {/* Fond — grille + halo */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_70%_at_50%_40%,#000_60%,transparent_100%)]" />
@@ -100,7 +100,7 @@ export default function Marquee() {
                 <br />
                 <span
                   className="bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] bg-clip-text text-transparent"
-                  style={{ filter: 'drop-shadow(0 0 18px rgba(59,130,246,0.45))' }}
+                  style={{ textShadow: '0 0 18px rgba(59,130,246,0.35)' }}
                 >
                   {t('technique', 'environment')}
                 </span>

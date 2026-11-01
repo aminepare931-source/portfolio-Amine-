@@ -17,7 +17,7 @@ export default function HeroDesktop() {
   const { t } = useLanguage()
 
   return (
-    <div className="hidden lg:block relative w-full min-h-[600px] h-full">
+    <div className="hidden lg:block relative w-full min-h-[600px] h-full [contain:paint]">
       {/* Full-card backdrop — blue glow concentrated behind the centered photo,
           fading to the card's base dark color on both sides for symmetry */}
       <div
@@ -27,9 +27,9 @@ export default function HeroDesktop() {
             'radial-gradient(55% 80% at 50% 38%, #0c3d7a 0%, #0a2550 30%, #071530 55%, #05070d 80%)',
         }}
       />
-      <div className="absolute inset-0 pointer-events-none mix-blend-screen z-[1]">
+      <div className="absolute inset-0 pointer-events-none z-[1]">
         <div
-          className="absolute left-[31%] top-0 w-40 h-full -rotate-[9deg] blur-2xl opacity-90"
+          className="absolute left-[31%] top-0 w-40 h-full -rotate-[9deg] blur-xl opacity-90"
           style={{ background: 'linear-gradient(180deg, rgba(59,130,246,0.9), rgba(59,130,246,0) 70%)' }}
         />
         <div
@@ -37,7 +37,7 @@ export default function HeroDesktop() {
           style={{ background: 'linear-gradient(180deg, rgba(147,197,253,0.9), rgba(147,197,253,0) 60%)' }}
         />
         <div
-          className="absolute right-[31%] top-0 w-36 h-full rotate-[9deg] blur-2xl opacity-85"
+          className="absolute right-[31%] top-0 w-36 h-full rotate-[9deg] blur-xl opacity-85"
           style={{ background: 'linear-gradient(180deg, rgba(37,99,235,0.85), rgba(37,99,235,0) 68%)' }}
         />
       </div>
@@ -153,8 +153,8 @@ export default function HeroDesktop() {
           </motion.div>
 
           {/* Decorative floating glass panels */}
-          <div className="absolute -left-4 top-[30%] w-14 h-20 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm rotate-[8deg]" />
-          <div className="absolute -right-6 top-[48%] w-11 h-14 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm -rotate-6" />
+          <div className="absolute -left-4 top-[30%] w-14 h-20 rounded-xl border border-white/10 bg-white/5 rotate-[8deg]" />
+          <div className="absolute -right-6 top-[48%] w-11 h-14 rounded-lg border border-white/10 bg-white/5 -rotate-6" />
 
           <motion.img
             initial={{ opacity: 0, y: 20 }}
@@ -183,7 +183,7 @@ export default function HeroDesktop() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
-            className="mt-2 bg-[#0a0f1e]/80 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3.5 shadow-xl"
+            className="mt-2 bg-[#0a0f1e]/80 border border-white/10 rounded-xl px-4 py-3.5 shadow-xl"
           >
             <ul className="space-y-1.5 text-xs font-mono text-white/80">
               {['React', 'Node.js', 'TypeScript', 'Python'].map((tech) => (

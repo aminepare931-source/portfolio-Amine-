@@ -47,7 +47,7 @@ export default function GithubActivity() {
   if (error) return null // pas de faux contenu si l'API échoue, on masque juste la section
 
   return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto">
+    <section className="my-8 sm:my-14 w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-[1200px] mx-auto hero-card p-6 sm:p-10 lg:p-12">
       <Reveal>
         <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
           <span className="w-6 h-px bg-clay" /> {t('Activité en direct', 'Live Activity')}

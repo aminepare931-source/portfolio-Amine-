@@ -6,7 +6,7 @@ export default function Testimonials() {
   const { t } = useLanguage()
 
   return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 max-w-[1200px] mx-auto">
+    <section className="my-8 sm:my-14 w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-[1200px] mx-auto hero-card p-6 sm:p-10 lg:p-12">
       <Reveal>
         <div className="flex items-center gap-3 text-xs text-clay uppercase tracking-[0.3em] mb-4">
           <span className="w-6 h-px bg-clay" /> {t('Avis clients', 'Client feedback')}
@@ -17,7 +17,7 @@ export default function Testimonials() {
       </Reveal>
 
       <Reveal delay={0.1}>
-        <div className="text-center py-14 px-8 border-2 border-dashed border-slate-900/15 rounded-3xl bg-surface/30">
+        <div className="text-center py-14 px-8 border border-dashed border-[#3B82F6]/30 rounded-3xl bg-[#3B82F6]/[0.04]">
           <Quote size={26} className="text-clay/40 mx-auto mb-4" />
           <p className="text-sm font-medium text-slate-900/60 max-w-sm mx-auto">
             {t(

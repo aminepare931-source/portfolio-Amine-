@@ -51,6 +51,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative py-20 sm:py-28 md:py-36 px-6 max-w-[1320px] mx-auto z-10">
+      <div className="absolute inset-x-0 top-10 h-[70%] pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 60% at 10% 30%, rgba(59,130,246,0.12), transparent 65%), radial-gradient(ellipse 40% 50% at 92% 80%, rgba(37,99,235,0.10), transparent 70%)' }} />
       <Reveal>
         <div className="flex items-center gap-3 text-xs text-clay font-mono uppercase tracking-[0.3em] mb-3">
           <span className="w-8 h-px bg-clay" /> Démarrer une collaboration

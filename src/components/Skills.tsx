@@ -131,14 +131,14 @@ export default function Skills() {
     : currentCategory.skills
 
   return (
-    <section id="skills" className="relative pt-4 sm:pt-6 pb-20 sm:pb-28 md:pb-36 overflow-hidden bg-[#f8fafc]">
+    <section id="skills" className="relative pt-4 sm:pt-6 pb-10 sm:pb-14 overflow-hidden bg-[#ffffff]">
       {/* Fond — halo doux */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 50% 40% at 85% 5%, rgba(59,130,246,0.08) 0%, transparent 60%)' }}
       />
 
-      <div className="relative z-10 px-6 max-w-[1400px] mx-auto">
+      <div className="relative z-10 w-[calc(100%-1.5rem)] sm:w-[calc(100%-3rem)] max-w-[1400px] mx-auto hero-card p-5 sm:p-10 lg:p-12">
         {/* Header */}
         <Reveal>
           <div className="relative flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10">

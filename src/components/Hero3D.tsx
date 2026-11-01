@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, MeshDistortMaterial } from '@react-three/drei'
 import type { Mesh } from 'three'
@@ -22,7 +22,7 @@ function GlowCore() {
     <Float speed={1.6} rotationIntensity={0.5} floatIntensity={1.3}>
       {/* Distorted glowing core */}
       <mesh ref={core}>
-        <icosahedronGeometry args={[1.15, 5]} />
+        <icosahedronGeometry args={[1.15, 3]} />
         <MeshDistortMaterial
           color="#3B82F6"
           emissive="#1d4ed8"
@@ -43,12 +43,26 @@ function GlowCore() {
 }
 
 export default function Hero3D() {
+  // Ne rend la scène que lorsqu'elle est visible : hors écran, plus aucun
+  // calcul GPU/CPU, ce qui évite les saccades au scroll vers les sections suivantes.
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
-    <div className="w-full h-full min-h-[240px]">
+    <div ref={wrapRef} className="w-full h-full min-h-[240px]">
       <Canvas
-        dpr={[1, 1.5]}
+        frameloop={visible ? 'always' : 'never'}
+        dpr={[1, 1.25]}
         camera={{ position: [0, 0, 4.4], fov: 42 }}
-        gl={{ alpha: true, antialias: true }}
+        gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
       >
         <ambientLight intensity={0.55} />
         <pointLight position={[3, 3, 3]} intensity={1.5} color="#60A5FA" />

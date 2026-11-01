@@ -10,7 +10,7 @@ export default function ContactCTA() {
   return (
     <section id="contact" className="relative py-20 sm:py-28 px-6 max-w-[1320px] mx-auto z-10">
       <Reveal>
-        <div className="relative overflow-hidden rounded-[2rem] border border-slate-900/10 bg-surface/70 backdrop-blur-xl shadow-2xl px-6 sm:px-14 py-14 sm:py-20 text-center">
+        <div className="hero-card px-6 sm:px-14 py-14 sm:py-20 text-center">
           <div
             className="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none select-none uppercase whitespace-nowrap text-slate-900/5 font-display"
             style={{ fontSize: 'clamp(60px, 16vw, 220px)', lineHeight: 1 }}
