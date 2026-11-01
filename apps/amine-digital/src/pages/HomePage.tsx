@@ -143,12 +143,15 @@ export default function HomePage() {
             {/* Photo de projet réel */}
             <Fade delay={0.2} className="relative">
               <div className="relative aspect-[4/5] sm:aspect-[4/4.5] rounded-sm overflow-hidden border-2 border-gov shadow-[0_20px_50px_rgba(10,61,145,0.18)] bg-bg">
-                <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-gov/10 to-gov/5 text-center p-6">
-                  <Code2 size={28} className="text-gov" />
-                  <p className="text-xs text-gray-500 font-mono">Photo réelle à venir</p>
-                </div>
+                <img
+                  src="/assets/hero-accueil.jpg"
+                  alt="Équipe de professionnels devant une ville moderne — AMINE DIGITAL"
+                  width={736}
+                  height={1104}
+                  className="w-full h-full object-cover object-bottom"
+                />
                 <div className="absolute inset-x-0 bottom-0 bg-govDark text-white text-xs font-mono px-4 py-3 flex items-center justify-between">
-                  <span>Projet en cours</span>
+                  <span>Votre projet, notre équipe</span>
                   <ArrowUpRight size={14} />
                 </div>
               </div>
