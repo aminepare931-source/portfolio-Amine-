@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Suspense, lazy } from 'react'
 import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck, Smartphone, Bot, MapPin, HeadphonesIcon } from 'lucide-react'
 import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
@@ -13,11 +12,9 @@ import Magnetic from '../components/Magnetic'
 import { WebDevIllustration, DesignIllustration, MarketingIllustration, SecurityIllustration, MobileIllustration, AutomationIllustration } from '../components/PillarIllustrations'
 import { EASE_OUT, EASE_SOFT, EASE_OUT_CSS } from '../lib/anim'
 
-const HeroShader = lazy(() => import('../components/HeroShader'))
-
-function TextRollButton({ to, children, tone = 'dark' }: { to: string; children: string; tone?: 'dark' | 'orange' }) {
-  const bg = tone === 'dark' ? 'bg-gray-900' : 'bg-clay hover:bg-blue-700'
-  const arrowText = tone === 'dark' ? 'text-gray-900' : 'text-clay'
+function TextRollButton({ to, children, tone = 'dark' }: { to: string; children: string; tone?: 'dark' | 'orange' | 'light' }) {
+  const bg = tone === 'dark' ? 'bg-gray-900' : tone === 'light' ? 'bg-blue-600 hover:bg-blue-500 shadow-[0_8px_24px_rgba(37,99,235,0.45)]' : 'bg-clay hover:bg-blue-700'
+  const arrowText = tone === 'dark' ? 'text-gray-900' : tone === 'light' ? 'text-blue-600' : 'text-clay'
   return (
     <Magnetic strength={0.25}>
       <Link
@@ -77,26 +74,30 @@ export default function HomePage() {
   return (
     <>
       {/* 1 — HERO */}
-      <section className="relative bg-[#dbe6f7] overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20">
-        <Suspense
-          fallback={
-            <div
-              className="absolute inset-0 z-10 pointer-events-none"
-              style={{ background: 'radial-gradient(circle at 30% 20%, #ffffff 0%, #efefef 60%, #e8e8e8 100%)' }}
-            />
-          }
-        >
-          <HeroShader />
-        </Suspense>
+      <section className="relative bg-[#061a3d] text-white overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20">
+        {/* Fond : photo globe/réseau, teintée bleu nuit pour garder le texte lisible */}
+        <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+          <img
+            src="/assets/hero-bg.jpg"
+            alt=""
+            width={736}
+            height={1308}
+            fetchPriority="high"
+            className="hero-kenburns absolute inset-0 w-full h-full object-cover object-[70%_40%]"
+          />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(4,14,40,0.92) 0%, rgba(5,22,60,0.72) 48%, rgba(8,40,100,0.28) 100%)' }} />
+          <div className="absolute inset-x-0 bottom-0 h-32" style={{ background: 'linear-gradient(180deg, rgba(4,14,40,0), rgba(4,14,40,0.55))' }} />
+          <div className="hero-glow absolute -right-24 top-1/4 w-[34rem] h-[34rem] rounded-full" style={{ background: 'radial-gradient(circle, rgba(56,152,255,0.35), rgba(56,152,255,0) 65%)' }} />
+        </div>
 
         <div className="relative z-20 max-w-[1200px] mx-auto w-full px-5 sm:px-8 lg:px-12">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-14 items-center">
             <div>
-              <div className="flex items-center gap-2 text-[13px] sm:text-sm text-gray-900 tracking-wide mb-5 sm:mb-6">
-                <span className="w-2 h-2 rounded-sm bg-gov" /> AMINE DIGITAL
+              <div className="flex items-center gap-2 text-[13px] sm:text-sm text-white/90 tracking-wide mb-5 sm:mb-6">
+                <span className="w-2 h-2 rounded-sm bg-sky-400" /> AMINE DIGITAL
               </div>
 
-              <h1 className="font-medium text-gray-900 leading-[1.08] tracking-[-0.03em]" style={{ fontSize: 'clamp(1.9rem, 6.5vw, 4rem)' }}>
+              <h1 className="font-medium text-white leading-[1.08] tracking-[-0.03em] [text-shadow:0_2px_24px_rgba(2,10,30,0.55)]" style={{ fontSize: 'clamp(1.9rem, 6.5vw, 3.4rem)' }}>
                 <Line>Votre présence digitale,</Line>
                 <Line delay={0.08}>construite pour vendre,</Line>
                 <Line delay={0.16}>pas juste pour exister.</Line>
@@ -112,20 +113,20 @@ export default function HomePage() {
                   { icon: Bot, label: 'IA' },
                   { icon: ShieldCheck, label: 'Sécurité' },
                 ].map((c) => (
-                  <span key={c.label} className="flex items-center gap-1.5 bg-bg border border-stroke rounded-sm px-3 py-1.5 text-xs font-medium text-gray-700">
-                    <c.icon size={13} className="text-gov" /> {c.label}
+                  <span key={c.label} className="flex items-center gap-1.5 bg-white/10 border border-white/25 rounded-sm px-3 py-1.5 text-xs font-medium text-white">
+                    <c.icon size={13} className="text-sky-300" /> {c.label}
                   </span>
                 ))}
               </Fade>
 
               <Fade delay={0.5} className="flex flex-col sm:flex-row gap-4 sm:gap-5 mt-8">
-                <TextRollButton to="/tarifs" tone="orange">Voir les tarifs</TextRollButton>
+                <TextRollButton to="/tarifs" tone="light">Voir les tarifs</TextRollButton>
                 <Magnetic strength={0.25}>
                   <a
                     href="https://wa.me/22654412618"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-bg text-gray-900 text-[13px] sm:text-sm font-medium rounded-sm px-6 py-3 border border-gray-200 hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-white/10 text-white text-[13px] sm:text-sm font-medium rounded-sm px-6 py-3 border border-white/40 hover:bg-white/20 transition-colors"
                   >
                     Discuter sur WhatsApp
                   </a>
@@ -133,16 +134,16 @@ export default function HomePage() {
               </Fade>
 
               {/* Ligne de repères */}
-              <Fade delay={0.65} className="flex flex-wrap gap-x-6 gap-y-2 mt-8 pt-6 border-t border-stroke/70 text-xs text-gray-600">
-                <span className="flex items-center gap-1.5"><MapPin size={13} className="text-gov" /> Basé à Bobo-Dioulasso</span>
-                <span className="flex items-center gap-1.5"><Code2 size={13} className="text-gov" /> 6 domaines de service</span>
-                <span className="flex items-center gap-1.5"><HeadphonesIcon size={13} className="text-gov" /> Suivi après livraison</span>
+              <Fade delay={0.65} className="flex flex-wrap gap-x-6 gap-y-2 mt-8 pt-6 border-t border-white/25 text-xs text-white/85">
+                <span className="flex items-center gap-1.5"><MapPin size={13} className="text-sky-300" /> Basé à Bobo-Dioulasso</span>
+                <span className="flex items-center gap-1.5"><Code2 size={13} className="text-sky-300" /> 6 domaines de service</span>
+                <span className="flex items-center gap-1.5"><HeadphonesIcon size={13} className="text-sky-300" /> Suivi après livraison</span>
               </Fade>
             </div>
 
             {/* Photo de projet réel */}
             <Fade delay={0.2} className="relative">
-              <div className="relative aspect-[4/5] sm:aspect-[4/4.5] rounded-sm overflow-hidden border-2 border-gov shadow-[0_20px_50px_rgba(10,61,145,0.18)] bg-bg">
+              <div className="relative aspect-[4/5] sm:aspect-[4/4.5] rounded-sm overflow-hidden border-2 border-white/40 shadow-[0_20px_60px_rgba(0,0,0,0.45)] bg-bg">
                 <img
                   src="/assets/hero-accueil.jpg"
                   alt="Équipe de professionnels devant une ville moderne — AMINE DIGITAL"
