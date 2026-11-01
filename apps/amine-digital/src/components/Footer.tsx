@@ -30,7 +30,7 @@ export default function Footer() {
           <div className="font-mono uppercase text-xs tracking-widest text-clay mb-3">Me contacter</div>
           <ul className="space-y-2 text-slate-900/70">
             <li className="flex items-center gap-2"><MessageCircle size={14} /> WhatsApp</li>
-            <li className="flex items-center gap-2"><Mail size={14} /> amine.dg.dev@gmail.com</li>
+            <li className="flex items-center gap-2"><Mail size={14} /> digitalamine3@gmail.com</li>
             <li className="flex items-center gap-2"><MapPin size={14} /> Bobo-Dioulasso, Burkina Faso</li>
           </ul>
         </div>

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { MessageCircle } from 'lucide-react'
 import { EASE_OUT } from '../lib/anim'
 
-const WHATSAPP = 'https://wa.me/22655300868'
+const WHATSAPP = 'https://wa.me/22654412618'
 
 export default function FloatingCta() {
   const [show, setShow] = useState(false)

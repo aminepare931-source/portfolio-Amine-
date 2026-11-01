@@ -8,7 +8,7 @@ import Seo from '../components/Seo'
 function PublicationPage({ slug }: { slug: string }) {
   const p = PUBLICATIONS.find((x) => x.slug === slug)!
   const others = PUBLICATIONS.filter((x) => x.slug !== slug && x.category === p.category).concat(PUBLICATIONS.filter((x) => x.slug !== slug && x.category !== p.category)).slice(0, 3)
-  const wa = `https://wa.me/22655300868?text=${encodeURIComponent(`Bonjour AMINE DIGITAL, je suis intéressé(e) par : ${p.title}`)}`
+  const wa = `https://wa.me/22654412618?text=${encodeURIComponent(`Bonjour AMINE DIGITAL, je suis intéressé(e) par : ${p.title}`)}`
 
   return (
     <div className="px-5 sm:px-8 pt-36 pb-24 max-w-[1100px] mx-auto">
@@ -55,7 +55,7 @@ function PublicationPage({ slug }: { slug: string }) {
               </Link>
             )}
           </div>
-          <p className="text-xs text-muted mt-5">+226 55 30 08 68 / +226 54 41 26 18 — Bobo-Dioulasso, Burkina Faso</p>
+          <p className="text-xs text-muted mt-5">+226 54 41 26 18 — Bobo-Dioulasso, Burkina Faso</p>
         </div>
       </div>
 

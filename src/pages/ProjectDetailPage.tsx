@@ -184,7 +184,7 @@ export default function ProjectDetailPage() {
           </a>
         ) : (
           <a
-            href={`https://wa.me/22655300868?text=Bonjour%20Amine,%20je%20souhaite%20en%20savoir%20plus%20sur%20le%20projet%20${encodeURIComponent(project.name)}`}
+            href={`https://wa.me/22654412618?text=Bonjour%20Amine,%20je%20souhaite%20en%20savoir%20plus%20sur%20le%20projet%20${encodeURIComponent(project.name)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-clay text-black font-medium px-6 py-3 rounded-full hover:scale-105 transition-transform text-sm"

@@ -120,8 +120,8 @@ export interface SiteSettings {
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   email: 'aminepare931@gmail.com',
-  phone: '+226 55 30 08 68',
-  whatsapp: '22655300868',
+  phone: '+226 54 41 26 18',
+  whatsapp: '22654412618',
   linkedin: null,
   tiktok: null,
   facebook: null,

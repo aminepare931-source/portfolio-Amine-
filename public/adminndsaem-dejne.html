@@ -349,12 +349,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff-head);min-heigh
     </div>
     <div class="fg">
       <label class="fl">Téléphone (affiché)</label>
-      <input class="fi" id="set-phone" type="text" placeholder="+226 55 30 08 68"/>
+      <input class="fi" id="set-phone" type="text" placeholder="+226 54 41 26 18"/>
     </div>
     <div class="fg">
       <label class="fl">WhatsApp (chiffres seulement, avec indicatif)</label>
-      <input class="fi" id="set-whatsapp" type="text" placeholder="22655300868"/>
-      <div class="fhint">Sans le + ni espaces. Ex: 22655300868</div>
+      <input class="fi" id="set-whatsapp" type="text" placeholder="22654412618"/>
+      <div class="fhint">Sans le + ni espaces. Ex: 22654412618</div>
     </div>
     <div class="fg">
       <label class="fl">LinkedIn (lien complet)</label>
@@ -725,8 +725,8 @@ async function loadSettings() {
     const data = await r.json();
     const s = (Array.isArray(data) && data[0]) || {};
     document.getElementById('set-email').value = s.email || 'aminepare931@gmail.com';
-    document.getElementById('set-phone').value = s.phone || '+226 55 30 08 68';
-    document.getElementById('set-whatsapp').value = s.whatsapp || '22655300868';
+    document.getElementById('set-phone').value = s.phone || '+226 54 41 26 18';
+    document.getElementById('set-whatsapp').value = s.whatsapp || '22654412618';
     document.getElementById('set-linkedin').value = s.linkedin || '';
     document.getElementById('set-tiktok').value = s.tiktok || '';
     document.getElementById('set-facebook').value = s.facebook || '';

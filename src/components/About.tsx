@@ -245,7 +245,7 @@ export default function About() {
                 <p className="text-xs text-slate-900/70">{t('Discutons de vos besoins techniques & de sécurité dès aujourd\'hui.', 'Let\'s discuss your technical & security requirements today.')}</p>
               </div>
               <a
-                href="https://wa.me/22655300868?text=Bonjour%20Amine,%20j'ai%20consulté%20votre%20portfolio..."
+                href="https://wa.me/22654412618?text=Bonjour%20Amine,%20j'ai%20consulté%20votre%20portfolio..."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={playClickSound}

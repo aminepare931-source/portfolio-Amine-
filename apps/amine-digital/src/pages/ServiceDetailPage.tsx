@@ -37,7 +37,7 @@ export default function ServiceDetailPage() {
 
       <div className="flex flex-wrap gap-3 mb-16">
         <a
-          href="https://wa.me/22655300868"
+          href="https://wa.me/22654412618"
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-sm hover:opacity-90 transition-opacity"

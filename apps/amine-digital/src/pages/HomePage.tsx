@@ -122,7 +122,7 @@ export default function HomePage() {
                 <TextRollButton to="/tarifs" tone="orange">Voir les tarifs</TextRollButton>
                 <Magnetic strength={0.25}>
                   <a
-                    href="https://wa.me/22655300868"
+                    href="https://wa.me/22654412618"
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-bg text-gray-900 text-[13px] sm:text-sm font-medium rounded-sm px-6 py-3 border border-gray-200 hover:bg-gray-50 transition-colors"

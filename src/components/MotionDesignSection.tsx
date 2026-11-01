@@ -133,7 +133,7 @@ export default function MotionDesignSection() {
               )}
             </p>
             <a
-              href="https://wa.me/22655300868?text=Bonjour%20Amine,%20je%20souhaite%20discuter%20d%27un%20projet%20motion%20design"
+              href="https://wa.me/22654412618?text=Bonjour%20Amine,%20je%20souhaite%20discuter%20d%27un%20projet%20motion%20design"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-clay text-black font-medium px-5 py-2.5 rounded-full hover:scale-105 transition-transform text-sm"
