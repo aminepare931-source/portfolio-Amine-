@@ -6,6 +6,7 @@ import { PUBLICATIONS } from '../data/publications'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
 import Stats from '../components/Stats'
+import HeroGlobe from '../components/HeroGlobe'
 import Marquee from '../components/Marquee'
 import Testimonials from '../components/Testimonials'
 import Magnetic from '../components/Magnetic'
@@ -76,8 +77,9 @@ export default function HomePage() {
             fetchPriority="high"
             className="hero-kenburns absolute inset-0 w-full h-full object-cover object-[70%_40%]"
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(4,14,40,0.92) 0%, rgba(5,22,60,0.72) 48%, rgba(8,40,100,0.28) 100%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(4,14,40,0.92) 0%, rgba(5,22,60,0.72) 48%, rgba(8,40,100,0.5) 100%)' }} />
           <div className="absolute inset-x-0 bottom-0 h-32" style={{ background: 'linear-gradient(180deg, rgba(4,14,40,0), rgba(4,14,40,0.55))' }} />
+          <HeroGlobe className="lg:hidden absolute -right-[38%] top-[6%] w-[520px] h-[520px] opacity-70" />
           <div className="hero-glow absolute -right-24 top-1/4 w-[34rem] h-[34rem] rounded-full" style={{ background: 'radial-gradient(circle, rgba(56,152,255,0.35), rgba(56,152,255,0) 65%)' }} />
         </div>
 
@@ -133,8 +135,9 @@ export default function HomePage() {
             </div>
 
             {/* Photo de projet réel */}
-            <Fade delay={0.2} className="relative">
-              <div className="relative aspect-[4/5] sm:aspect-[4/4.5] rounded-sm overflow-hidden border-2 border-white/40 shadow-[0_20px_60px_rgba(0,0,0,0.45)] bg-bg">
+            <Fade delay={0.2} className="relative lg:min-h-[560px]">
+              <HeroGlobe className="hidden lg:block absolute lg:-top-24 lg:-right-28 lg:w-[760px] lg:h-[760px] pointer-events-none" />
+              <div className="relative aspect-[4/5] sm:aspect-[4/4.5] lg:aspect-[4/5] lg:w-[46%] lg:absolute lg:left-0 lg:bottom-0 rounded-sm overflow-hidden border-2 border-white/40 shadow-[0_20px_60px_rgba(0,0,0,0.45)] bg-bg">
                 <img
                   src="/assets/hero-accueil.jpg"
                   alt="Équipe de professionnels devant une ville moderne — AMINE DIGITAL"
