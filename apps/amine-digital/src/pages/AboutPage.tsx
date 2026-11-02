@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, MapPin, Code2, Shield, Sparkles } from 'lucide-react'
 import { Line, Fade } from '../components/Reveal'
+import Team from '../components/Team'
 
 export default function AboutPage() {
   return (
-    <div className="px-6 pt-36 pb-24 max-w-[800px] mx-auto">
+    <div className="px-6 pt-36 pb-24 max-w-[960px] mx-auto">
       <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">À propos</div>
       <h1 className="font-display text-4xl sm:text-5xl mb-8"><Line>L'histoire derrière AMINE DIGITAL</Line></h1>
 
@@ -38,6 +39,8 @@ export default function AboutPage() {
           suivi après livraison.
         </p>
       </Fade>
+
+      <Team />
 
       <div className="flex flex-col sm:flex-row sm:divide-x divide-stroke border-y border-stroke mb-16">
         <div className="flex items-start gap-3 py-5 sm:py-2 sm:px-6 flex-1 first:sm:pl-0">
