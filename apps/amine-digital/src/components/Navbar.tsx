@@ -1,3 +1,4 @@
+import { useSettings, waUrl } from '../lib/settings'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Menu, X, Clock, MapPin, Mail } from 'lucide-react'
@@ -19,7 +20,6 @@ const NAV_MOBILE = [
   { to: '/tarifs', label: 'Tarifs' },
 ]
 
-const WHATSAPP_URL = 'https://wa.me/22654412618'
 
 function useLocalTime() {
   const [time, setTime] = useState('')
@@ -42,6 +42,8 @@ function useLocalTime() {
 }
 
 export default function Navbar() {
+  const cfg = useSettings()
+  const WHATSAPP_URL = waUrl(cfg)
   const [open, setOpen] = useState(false)
   const location = useLocation()
   const time = useLocalTime()
@@ -56,7 +58,7 @@ export default function Navbar() {
           <div className="max-w-[1200px] mx-auto px-5 lg:px-8 py-1.5 flex items-center justify-between">
             <div className="flex items-center gap-5">
               <span className="flex items-center gap-1.5"><MapPin size={11} /> Bobo-Dioulasso, Burkina Faso</span>
-              <span className="flex items-center gap-1.5"><Mail size={11} /> digitalamine3@gmail.com</span>
+              <span className="flex items-center gap-1.5"><Mail size={11} /> {cfg.email}</span>
             </div>
             <span className="flex items-center gap-1.5"><Clock size={11} /> {time} (GMT)</span>
           </div>

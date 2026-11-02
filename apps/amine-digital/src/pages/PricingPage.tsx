@@ -1,3 +1,4 @@
+import { useSettings, waUrl } from '../lib/settings'
 import { Link } from 'react-router-dom'
 import { Check, ArrowRight } from 'lucide-react'
 
@@ -26,6 +27,7 @@ const PLANS = [
 ]
 
 export default function PricingPage() {
+  const cfg = useSettings()
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1100px] mx-auto">
       <div className="text-center mb-6">
@@ -60,7 +62,7 @@ export default function PricingPage() {
               ))}
             </ul>
             <a
-              href="https://wa.me/22654412618"
+              href={waUrl(cfg)}
               target="_blank"
               rel="noreferrer"
               className={`inline-flex items-center justify-center gap-2 font-semibold px-5 py-3 rounded-sm transition-opacity hover:opacity-90 ${

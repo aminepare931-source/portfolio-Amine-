@@ -1,3 +1,4 @@
+import { useSettings, waUrl } from '../lib/settings'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Check } from 'lucide-react'
 import { ServiceImage } from '../components/PillarIllustrations'
@@ -17,6 +18,7 @@ function Photo({ p }: { p: ServicePhoto }) {
 
 export default function ServiceDetailPage() {
   const { slug } = useParams()
+  const cfg = useSettings()
   const service = SERVICES.find((s) => s.slug === slug)
 
   if (!service) return <Navigate to="/services" replace />
@@ -72,7 +74,7 @@ export default function ServiceDetailPage() {
 
       <div className="flex flex-wrap gap-3 mb-16">
         <a
-          href="https://wa.me/22654412618"
+          href={waUrl(cfg, `Bonjour AMINE DIGITAL, je souhaite discuter du service : ${service.title}`)}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-sm hover:opacity-90 transition-opacity"

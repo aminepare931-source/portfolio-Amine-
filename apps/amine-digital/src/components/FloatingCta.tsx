@@ -1,11 +1,12 @@
+import { useSettings, waUrl } from '../lib/settings'
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MessageCircle } from 'lucide-react'
 import { EASE_OUT } from '../lib/anim'
 
-const WHATSAPP = 'https://wa.me/22654412618'
 
 export default function FloatingCta() {
+  const WHATSAPP = waUrl(useSettings())
   const [show, setShow] = useState(false)
 
   useEffect(() => {

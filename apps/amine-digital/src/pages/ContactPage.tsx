@@ -1,14 +1,28 @@
 import { useState } from 'react'
-import { MessageCircle, Mail, MapPin, Send } from 'lucide-react'
-
-const CONTACTS = [
-  { icon: MessageCircle, label: 'WhatsApp', value: 'Écrire directement', href: 'https://wa.me/22654412618' },
-  { icon: Mail, label: 'Email', value: 'digitalamine3@gmail.com', href: 'mailto:digitalamine3@gmail.com' },
-  { icon: MapPin, label: 'Localisation', value: 'Bobo-Dioulasso, Burkina Faso', href: null },
-]
+import { MessageCircle, Mail, MapPin, Send, CheckCircle2 } from 'lucide-react'
+import { submitLead } from '../lib/supabase'
+import { useSettings, waUrl } from '../lib/settings'
 
 export default function ContactPage() {
+  const cfg = useSettings()
+  const CONTACTS = [
+    { icon: MessageCircle, label: 'WhatsApp', value: cfg.phone, href: waUrl(cfg) },
+    { icon: Mail, label: 'Email', value: cfg.email, href: `mailto:${cfg.email}` },
+    { icon: MapPin, label: 'Localisation', value: cfg.address, href: null as string | null },
+  ]
   const [sent, setSent] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const f = new FormData(e.currentTarget)
+    setBusy(true); setError('')
+    const r = await submitLead({ name: String(f.get('name')), email: String(f.get('email')), phone: String(f.get('phone')), message: String(f.get('message')) })
+    setBusy(false)
+    if (r.ok) setSent(true)
+    else setError("Le message n'a pas pu être envoyé. Écrivez-nous directement sur WhatsApp.")
+  }
 
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1000px] mx-auto">
@@ -40,24 +54,22 @@ export default function ContactPage() {
       <div className="border border-stroke rounded-md p-7 sm:p-10 bg-surface/40">
         {sent ? (
           <div className="text-center py-10">
-            <div className="text-3xl mb-3">✅</div>
+            <CheckCircle2 size={36} className="text-clay mx-auto mb-3" />
             <h3 className="font-display text-2xl mb-2">Message envoyé</h3>
-            <p className="text-muted text-sm">Je reviens vers vous rapidement.</p>
+            <p className="text-muted text-sm">Nous revenons vers vous rapidement.</p>
           </div>
         ) : (
           <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              setSent(true)
-            }}
+            onSubmit={onSubmit}
             className="grid sm:grid-cols-2 gap-4"
           >
-            <input required placeholder="Nom" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
-            <input required type="email" placeholder="Email" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
-            <input placeholder="Téléphone / WhatsApp" className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
-            <textarea required placeholder="Décrivez votre projet..." rows={5} className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay resize-none" />
-            <button type="submit" className="sm:col-span-2 inline-flex items-center justify-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-sm hover:opacity-90 transition-opacity">
-              <Send size={16} /> Envoyer le message
+            <input required name="name" maxLength={80} placeholder="Nom" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
+            <input required type="email" name="email" placeholder="Email" className="border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
+            <input name="phone" placeholder="Téléphone / WhatsApp" className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay" />
+            <textarea required name="message" minLength={5} maxLength={2000} placeholder="Décrivez votre projet..." rows={5} className="sm:col-span-2 border border-stroke rounded-sm px-4 py-3 text-sm bg-bg focus:outline-none focus:border-clay resize-none" />
+            {error && <p role="alert" className="sm:col-span-2 text-sm text-red-700 bg-red-50 border border-red-200 rounded-sm px-4 py-3">{error}</p>}
+            <button type="submit" disabled={busy} className="sm:col-span-2 disabled:opacity-50 inline-flex items-center justify-center gap-2 bg-clay text-white font-semibold px-6 py-3.5 rounded-sm hover:opacity-90 transition-opacity">
+              <Send size={16} /> {busy ? 'Envoi…' : 'Envoyer le message'}
             </button>
           </form>
         )}

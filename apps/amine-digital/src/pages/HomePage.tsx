@@ -1,3 +1,4 @@
+import { useSettings, waUrl } from '../lib/settings'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck, Smartphone, Bot, MapPin, HeadphonesIcon } from 'lucide-react'
 import { SERVICES } from '../data/services'
@@ -63,6 +64,7 @@ const PILLARS = [
 ]
 
 export default function HomePage() {
+  const cfg = useSettings()
   return (
     <>
       {/* 1 — HERO */}
@@ -116,7 +118,7 @@ export default function HomePage() {
                 <TextRollButton to="/tarifs" tone="light">Voir les tarifs</TextRollButton>
                 <Magnetic strength={0.25}>
                   <a
-                    href="https://wa.me/22654412618"
+                    href={waUrl(cfg)}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center justify-center gap-2 bg-white/10 text-white text-[13px] sm:text-sm font-medium rounded-sm px-6 py-3 border border-white/40 hover:bg-white/20 transition-colors"

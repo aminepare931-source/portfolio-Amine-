@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { Fade } from './Reveal'
 import { Quote, MessageCircle, Image as ImageIcon, X } from 'lucide-react'
-import { REVIEWS } from '../data/reviews'
+import { useEffect } from 'react'
+import { fetchReviews } from '../lib/supabase'
+import { useSettings, waUrl } from '../lib/settings'
+import { REVIEWS as STATIC_REVIEWS, type Review } from '../data/reviews'
 
-const REVIEW_URL = `https://wa.me/22654412618?text=${encodeURIComponent(
-  "Bonjour AMINE DIGITAL, je souhaite laisser un avis sur votre travail.\n\nMon nom :\nLe service reçu :\nMon avis :\n\nJ'autorise la publication de cet avis sur le site : oui / non"
-)}`
+const REVIEW_TEXT = "Bonjour AMINE DIGITAL, je souhaite laisser un avis sur votre travail.\n\nMon nom :\nLe service reçu :\nMon avis :\n\nJ'autorise la publication de cet avis sur le site : oui / non"
 
 export function ReviewButton({ className = '' }: { className?: string }) {
+  const REVIEW_URL = waUrl(useSettings(), REVIEW_TEXT)
   return (
     <a
       href={REVIEW_URL}
@@ -22,6 +24,11 @@ export function ReviewButton({ className = '' }: { className?: string }) {
 
 export default function Testimonials() {
   const [shot, setShot] = useState<string | null>(null)
+  const [remote, setRemote] = useState<Review[]>([])
+  useEffect(() => {
+    fetchReviews().then((rows) => setRemote(rows.map((r) => ({ name: r.name, role: r.role ?? undefined, service: r.service ?? undefined, date: r.date_label ?? undefined, text: r.text }))))
+  }, [])
+  const REVIEWS = [...remote, ...STATIC_REVIEWS]
 
   return (
     <section className="bg-bg py-16 sm:py-20 lg:pb-28">

@@ -37,7 +37,7 @@ export interface TeamRow {
 
 export async function fetchTeam(): Promise<TeamRow[]> {
   try {
-    const res = await fetch(`${SB_URL}/rest/v1/team_members?select=name,role,grp,bio,photo&visible=eq.true&order=created_at.asc`, {
+    const res = await fetch(`${SB_URL}/rest/v1/team_members?select=name,role,grp,bio,photo&order=created_at.asc`, {
       headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
     })
     return res.ok ? await res.json() : []
@@ -60,5 +60,48 @@ export async function submitTeamMember(m: { code: string; name: string; role: st
     return { ok: false, error: "L'envoi a échoué. Vérifie les champs et réessaie." }
   } catch {
     return { ok: false, error: 'Connexion impossible. Vérifie ta connexion Internet et réessaie.' }
+  }
+}
+
+/** Appel d'une fonction Supabase (RPC). Renvoie les données ou lève une erreur lisible. */
+export async function rpc<T = unknown>(name: string, args: Record<string, unknown> = {}): Promise<T> {
+  const res = await fetch(`${SB_URL}/rest/v1/rpc/${name}`, {
+    method: 'POST',
+    headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(args),
+  })
+  const txt = await res.text()
+  if (!res.ok) {
+    if (txt.includes('acces refuse')) throw new Error('Mot de passe incorrect.')
+    if (txt.includes('does not exist') || txt.includes('Could not find')) throw new Error("La base n'est pas encore configurée (script SQL à exécuter).")
+    throw new Error('Erreur : ' + (txt.slice(0, 160) || res.status))
+  }
+  return (txt ? JSON.parse(txt) : null) as T
+}
+
+export interface ReviewRow { id: string; name: string; role: string | null; service: string | null; date_label: string | null; text: string; visible: boolean }
+
+export async function fetchReviews(): Promise<ReviewRow[]> {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/reviews?select=*&order=created_at.desc`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } })
+    return res.ok ? await res.json() : []
+  } catch { return [] }
+}
+
+export async function fetchSettings(): Promise<Record<string, string | null> | null> {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/ad_settings?select=*&limit=1`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } })
+    if (!res.ok) return null
+    const rows = await res.json()
+    return rows[0] ?? null
+  } catch { return null }
+}
+
+export async function submitLead(l: { name: string; email: string; phone: string; message: string }): Promise<{ ok: boolean; error?: string }> {
+  try {
+    await rpc('submit_lead', { p_name: l.name, p_email: l.email, p_phone: l.phone, p_message: l.message })
+    return { ok: true }
+  } catch (e) {
+    return { ok: false, error: (e as Error).message }
   }
 }

@@ -16,6 +16,7 @@ import PricingPage from './pages/PricingPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import TeamJoinPage from './pages/TeamJoinPage'
+import AdminPage from './pages/AdminPage'
 import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -26,6 +27,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
         <Route path="/equipe/rejoindre" element={<PageTransition><TeamJoinPage /></PageTransition>} />
+        <Route path="/administration" element={<PageTransition><AdminPage /></PageTransition>} />
         <Route path="/a-propos" element={<PageTransition><AboutPage /></PageTransition>} />
         <Route path="/processus" element={<PageTransition><ProcessPage /></PageTransition>} />
         <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />

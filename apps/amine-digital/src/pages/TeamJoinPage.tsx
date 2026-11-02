@@ -61,8 +61,8 @@ export default function TeamJoinPage() {
       <div className="px-6 pt-40 pb-24 max-w-[520px] mx-auto text-center">
         <span className="w-14 h-14 rounded-full bg-clay/10 text-clay flex items-center justify-center mx-auto mb-5"><Check size={26} /></span>
         <h1 className="font-display text-3xl mb-3">Merci {name.trim().split(' ')[0]} !</h1>
-        <p className="text-muted mb-6">Ta fiche est maintenant visible sur la page « À propos » du site AMINE DIGITAL.</p>
-        <a href="/a-propos" className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-6 py-3 rounded-sm">Voir la page équipe</a>
+        <p className="text-muted mb-6">Ta fiche a bien été envoyée. Elle apparaîtra sur la page « À propos » dès qu'AMINE DIGITAL l'aura validée.</p>
+        
       </div>
     )
   }
@@ -71,7 +71,7 @@ export default function TeamJoinPage() {
     <div className="px-5 sm:px-6 pt-36 pb-24 max-w-[960px] mx-auto">
       <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Équipe</div>
       <h1 className="font-display text-3xl sm:text-4xl mb-3">Rejoins la page équipe d'AMINE DIGITAL</h1>
-      <p className="text-muted mb-10 max-w-xl">Remplis ces quelques lignes. Dès que tu valides, ta fiche apparaît sur le site.</p>
+      <p className="text-muted mb-10 max-w-xl">Remplis ces quelques lignes. Une fois envoyée, ta fiche sera relue puis publiée sur le site par AMINE DIGITAL.</p>
 
       <div className="grid md:grid-cols-[1fr_300px] gap-10 items-start">
         <form onSubmit={onSubmit} className="space-y-5">
