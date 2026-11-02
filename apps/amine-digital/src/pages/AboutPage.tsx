@@ -29,9 +29,10 @@ export default function AboutPage() {
           cohérence de l'ensemble.
         </p>
         <p>
-          Développeur autodidacte basé à Bobo-Dioulasso, j'ai appris en construisant de vrais produits plutôt
-          qu'en suivant un parcours classique. Cette approche pratique se retrouve dans chaque projet : on part
-          de votre besoin réel, pas d'un modèle générique appliqué sans réflexion.
+          Fondée par Mouhamed Amine Paré, développeur autodidacte basé à Bobo-Dioulasso, AMINE DIGITAL s'appuie
+          aujourd'hui sur une équipe d'associés et de collaborateurs. Nous avons appris en construisant de vrais
+          produits plutôt qu'en suivant un parcours classique. Cette approche pratique se retrouve dans chaque
+          projet : nous partons de votre besoin réel, pas d'un modèle générique appliqué sans réflexion.
         </p>
         <p>
           AMINE DIGITAL rassemble ce qu'il faut pour construire une présence digitale complète — développement,
@@ -47,14 +48,14 @@ export default function AboutPage() {
           <MapPin size={18} className="text-clay mt-0.5 shrink-0" />
           <div>
             <div className="font-display text-base mb-0.5">Basé à Bobo-Dioulasso</div>
-            <p className="text-xs text-muted">Je connais le marché local et ses contraintes concrètes.</p>
+            <p className="text-xs text-muted">Nous connaissons le marché local et ses contraintes concrètes.</p>
           </div>
         </div>
         <div className="flex items-start gap-3 py-5 sm:py-2 sm:px-6 flex-1">
           <Code2 size={18} className="text-clay mt-0.5 shrink-0" />
           <div>
             <div className="font-display text-base mb-0.5">Approche pratique</div>
-            <p className="text-xs text-muted">Autodidacte, formé en construisant de vrais produits.</p>
+            <p className="text-xs text-muted">Une équipe formée en construisant de vrais produits.</p>
           </div>
         </div>
         <div className="flex items-start gap-3 py-5 sm:py-2 sm:px-6 flex-1">
@@ -73,7 +74,7 @@ export default function AboutPage() {
           to="/contact"
           className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-7 py-3.5 rounded-sm hover:opacity-90 transition-opacity"
         >
-          Me contacter <ArrowRight size={16} />
+          Nous contacter <ArrowRight size={16} />
         </Link>
       </div>
     </div>

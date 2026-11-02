@@ -1,16 +1,24 @@
+import { useEffect, useState } from 'react'
 import { User } from 'lucide-react'
+import { fetchTeam } from '../lib/supabase'
 import { Fade } from './Reveal'
-import { TEAM, type TeamGroup } from '../data/team'
+import { TEAM, type Member, type TeamGroup } from '../data/team'
 
 const GROUPS: TeamGroup[] = ['Fondateur', 'Associés', 'Collaborateurs']
 
 export default function Team() {
+  const [remote, setRemote] = useState<Member[]>([])
+  useEffect(() => {
+    fetchTeam().then((rows) => setRemote(rows.map((r) => ({ name: r.name, role: r.role, group: r.grp, photo: r.photo ?? undefined, bio: r.bio ?? undefined }))))
+  }, [])
+  const all = [...TEAM, ...remote.filter((r) => !TEAM.some((t) => t.name.toLowerCase() === r.name.toLowerCase()))]
+
   return (
     <section className="mb-16">
       <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Équipe</div>
       <h2 className="font-display text-3xl mb-8">Les personnes derrière AMINE DIGITAL</h2>
       {GROUPS.map((g) => {
-        const members = TEAM.filter((m) => m.group === g)
+        const members = all.filter((m) => m.group === g)
         if (!members.length) return null
         return (
           <div key={g} className="mb-10">
