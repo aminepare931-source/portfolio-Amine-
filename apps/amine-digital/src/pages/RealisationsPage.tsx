@@ -11,10 +11,10 @@ export default function RealisationsPage() {
       <Seo path="/realisations" title="Réalisations — AMINE DIGITAL" description="Projets livrés par AMINE DIGITAL à Bobo-Dioulasso : sites web, applications, design et marketing digital." />
       <div className="text-center mb-12">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Réalisations</div>
-        <h1 className="font-display text-4xl sm:text-5xl mb-4">Ils nous ont fait confiance</h1>
-        <p className="text-slate-900/70 max-w-xl mx-auto">Quelques projets réalisés pour des entreprises et des porteurs de projet.</p>
+        <h1 className="font-display text-4xl sm:text-5xl mb-4">Nos projets</h1>
+        <p className="text-slate-900/70 max-w-xl mx-auto">Sites, applications et outils que nous avons conçus.</p>
       </div>
-      {!loading && list.length === 0 && <p className="text-center text-muted">Les réalisations arrivent bientôt.</p>}
+      {!loading && list.length === 0 && <p className="text-center text-muted">Les projets arrivent bientôt.</p>}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {list.map((r) => <RealisationCard key={r.id} r={r} />)}
       </div>

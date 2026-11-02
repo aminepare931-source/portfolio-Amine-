@@ -13,7 +13,7 @@ export default function RealisationsSection() {
         <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
           <div>
             <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Réalisations</div>
-            <h2 className="font-display text-3xl sm:text-4xl">Nos projets livrés</h2>
+            <h2 className="font-display text-3xl sm:text-4xl">Nos projets</h2>
           </div>
           <Link to="/realisations" className="inline-flex items-center gap-2 text-sm font-medium text-gov hover:text-clay transition-colors">Toutes les réalisations <ArrowRight size={15} /></Link>
         </div>

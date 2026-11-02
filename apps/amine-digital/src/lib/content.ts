@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { restSelect } from './supabase'
+import { restSelect, fetchProjects } from './supabase'
 import { PUBLICATIONS, type Publication, type PubCategory } from '../data/publications'
 
 /* ───────── Contenus gérés depuis l'administration (avec repli sur des valeurs par défaut) ───────── */
 
-export interface Realisation { id: string; title: string; client: string | null; sector: string | null; description: string; result: string | null; link: string | null; tags: string[]; image: string | null }
+export interface Realisation { id: string; title: string; client: string | null; sector: string | null; description: string; result: string | null; link: string | null; tags: string[]; image: string | null; fit?: 'cover' | 'contain' }
 export interface Faq { id: string; question: string; answer: string }
 export interface Plan { id: string; name: string; price: string; tagline: string | null; features: string[]; highlight: boolean }
 
@@ -58,8 +58,14 @@ export function usePublications(): { list: Publication[]; loading: boolean } {
 
 export function useRealisations(): { list: Realisation[]; loading: boolean } {
   const { data, loading } = useRemote<Realisation[]>('realisations', async () => {
-    const rows = await restSelect<Realisation>('realisations', 'select=*&order=position.asc,created_at.desc')
-    return (rows ?? []).map((r) => ({ ...r, tags: Array.isArray(r.tags) ? r.tags : [] }))
+    const [rows, projects] = await Promise.all([restSelect<Realisation>('realisations', 'select=*&order=position.asc,created_at.desc'), fetchProjects()])
+    const own = (rows ?? []).map((r) => ({ ...r, tags: Array.isArray(r.tags) ? r.tags : [] }))
+    // Projets du portfolio (même base) : affichés aussi ici, après ceux ajoutés dans l'administration
+    const fromPortfolio: Realisation[] = projects.map((p) => ({
+      id: `pf-${p.id}`, title: p.name, client: null, sector: null, description: p.description, result: null, link: null,
+      tags: Array.isArray(p.tags) ? p.tags : [], image: p.img, fit: 'contain',
+    }))
+    return [...own, ...fromPortfolio]
   }, [])
   return { list: data, loading }
 }

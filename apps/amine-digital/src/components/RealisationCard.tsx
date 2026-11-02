@@ -6,11 +6,11 @@ export default function RealisationCard({ r }: { r: Realisation }) {
     <>
       {r.image && (
         <div className="overflow-hidden bg-surface aspect-[16/10]">
-          <img src={r.image} alt={r.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+          <img src={r.image} alt={r.title} loading="lazy" className={`w-full h-full ${r.fit === 'contain' ? 'object-contain' : 'object-cover'} group-hover:scale-[1.04] transition-transform duration-500`} />
         </div>
       )}
       <div className="p-5">
-        <div className="text-[10px] font-mono uppercase tracking-widest text-gov mb-2">{[r.sector, r.client].filter(Boolean).join(' · ') || 'Réalisation'}</div>
+        <div className="text-[10px] font-mono uppercase tracking-widest text-gov mb-2">{[r.sector, r.client].filter(Boolean).join(' · ') || 'Projet'}</div>
         <h3 className="font-display text-lg leading-snug mb-2 group-hover:text-clay transition-colors">{r.title}</h3>
         <p className="text-sm text-muted leading-relaxed">{r.description}</p>
         {r.result && <p className="mt-3 text-sm font-medium text-gov">{r.result}</p>}
