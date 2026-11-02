@@ -17,6 +17,9 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import TeamJoinPage from './pages/TeamJoinPage'
 import AdminPage from './pages/AdminPage'
+import RealisationsPage from './pages/RealisationsPage'
+import QuotePage from './pages/QuotePage'
+import Tracker from './components/Tracker'
 import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -35,6 +38,8 @@ function AnimatedRoutes() {
         <Route path="/tarifs" element={<PageTransition><PricingPage /></PageTransition>} />
         <Route path="/journal" element={<PageTransition><BlogPage /></PageTransition>} />
         <Route path="/journal/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
+        <Route path="/realisations" element={<PageTransition><RealisationsPage /></PageTransition>} />
+        <Route path="/devis" element={<PageTransition><QuotePage /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
       </Routes>
@@ -47,6 +52,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <Tracker />
       <Preloader />
       <Cursor />
       <Navbar />

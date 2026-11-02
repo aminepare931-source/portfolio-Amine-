@@ -1,35 +1,16 @@
 import { useSettings, waUrl } from '../lib/settings'
 import { Link } from 'react-router-dom'
 import { Check, ArrowRight } from 'lucide-react'
-
-const PLANS = [
-  {
-    name: 'Starter',
-    price: '20 000 FCFA',
-    tagline: 'Pour démarrer en ligne',
-    features: ['Site vitrine (jusqu\'à 5 pages)', 'Design responsive mobile', 'Nom de domaine (1 an)', 'Livraison en 5-7 jours'],
-    highlight: false,
-  },
-  {
-    name: 'Pro',
-    price: '50 000 FCFA',
-    tagline: 'Pour vendre en ligne',
-    features: ['Tout Starter, plus :', 'Boutique en ligne + Mobile Money', 'Réseaux sociaux configurés', 'Support 1 mois inclus'],
-    highlight: true,
-  },
-  {
-    name: 'Sur-mesure',
-    price: 'À partir de 100 000 FCFA',
-    tagline: 'Application, automatisation, projet spécifique',
-    features: ['Application mobile ou web métier', 'Automatisation / IA', 'Accompagnement complet', 'Devis personnalisé'],
-    highlight: false,
-  },
-]
+import { usePlans } from '../lib/content'
+import Faq from '../components/Faq'
+import Seo from '../components/Seo'
 
 export default function PricingPage() {
   const cfg = useSettings()
+  const PLANS = usePlans()
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1100px] mx-auto">
+      <Seo path="/tarifs" title="Tarifs — AMINE DIGITAL" description="Formules claires pour votre site web, boutique en ligne ou application à Bobo-Dioulasso : Starter, Pro et sur-mesure, avec paiement Mobile Money." />
       <div className="text-center mb-6">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Tarifs</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4">Des offres claires</h1>
@@ -52,10 +33,10 @@ export default function PricingPage() {
               </span>
             )}
             <h3 className="font-display text-2xl mb-1">{plan.name}</h3>
-            <p className={`text-xs mb-5 ${plan.highlight ? 'text-white/70' : 'text-muted'}`}>{plan.tagline}</p>
+            <p className={`text-xs mb-5 ${plan.highlight ? 'text-white/70' : 'text-muted'}`}>{plan.tagline ?? ''}</p>
             <div className="font-display text-3xl mb-6">{plan.price}</div>
             <ul className="space-y-2.5 mb-8 flex-1">
-              {plan.features.map((f) => (
+              {plan.features.map((f: string) => (
                 <li key={f} className="flex items-start gap-2 text-sm">
                   <Check size={15} className={`shrink-0 mt-0.5 ${plan.highlight ? 'text-white' : 'text-clay'}`} /> {f}
                 </li>
@@ -77,10 +58,13 @@ export default function PricingPage() {
 
       <div className="text-center mt-16">
         <p className="text-sm text-muted mb-4">Un besoin spécifique qui ne rentre pas dans ces cases ?</p>
-        <Link to="/contact" className="text-clay font-semibold hover:underline">
-          Discutons de votre projet →
-        </Link>
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+          <Link to="/devis" className="text-clay font-semibold hover:underline">Demander un devis →</Link>
+          <Link to="/contact" className="text-clay font-semibold hover:underline">Discutons de votre projet →</Link>
+        </div>
       </div>
+
+      <Faq />
     </div>
   )
 }

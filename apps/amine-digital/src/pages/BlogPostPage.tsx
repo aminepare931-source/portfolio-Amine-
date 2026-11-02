@@ -2,13 +2,14 @@ import { useSettings, waUrl } from '../lib/settings'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Check, MessageCircle } from 'lucide-react'
 import { ARTICLES } from '../data/articles'
-import { PUBLICATIONS } from '../data/publications'
+import { usePublications } from '../lib/content'
+import type { Publication } from '../data/publications'
 import PublicationCard from '../components/PublicationCard'
 import Seo from '../components/Seo'
 
-function PublicationPage({ slug }: { slug: string }) {
+function PublicationPage({ p, PUBLICATIONS }: { p: Publication; PUBLICATIONS: Publication[] }) {
   const cfg = useSettings()
-  const p = PUBLICATIONS.find((x) => x.slug === slug)!
+  const slug = p.slug
   const others = PUBLICATIONS.filter((x) => x.slug !== slug && x.category === p.category).concat(PUBLICATIONS.filter((x) => x.slug !== slug && x.category !== p.category)).slice(0, 3)
   const wa = waUrl(cfg, `Bonjour AMINE DIGITAL, je suis intéressé(e) par : ${p.title}`)
 
@@ -24,7 +25,7 @@ function PublicationPage({ slug }: { slug: string }) {
           '@type': p.price ? 'Service' : 'Article',
           name: p.title,
           description: p.excerpt,
-          image: `https://amine-digital-services.vercel.app${p.image}`,
+          image: p.image.startsWith('/') ? `https://amine-digital-services.vercel.app${p.image}` : undefined,
           provider: { '@type': 'Organization', name: 'AMINE DIGITAL', areaServed: 'Burkina Faso', address: { '@type': 'PostalAddress', addressLocality: 'Bobo-Dioulasso', addressCountry: 'BF' } },
         }}
       />
@@ -73,10 +74,12 @@ function PublicationPage({ slug }: { slug: string }) {
 
 export default function BlogPostPage() {
   const { slug } = useParams()
-  if (slug && PUBLICATIONS.some((p) => p.slug === slug)) return <PublicationPage slug={slug} />
+  const { list: PUBLICATIONS, loading } = usePublications()
+  const pub = PUBLICATIONS.find((p) => p.slug === slug)
+  if (pub) return <PublicationPage p={pub} PUBLICATIONS={PUBLICATIONS} />
 
   const article = ARTICLES.find((a) => a.slug === slug)
-  if (!article) return <Navigate to="/journal" replace />
+  if (!article) return loading ? <div className="min-h-[60vh]" /> : <Navigate to="/journal" replace />
 
   return (
     <div className="px-6 pt-36 pb-24 max-w-[700px] mx-auto">

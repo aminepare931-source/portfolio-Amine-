@@ -8,7 +8,7 @@ export default function ServicesPage() {
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1000px] mx-auto">
       <div className="text-center mb-14">
-        <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Ce que je fais</div>
+        <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Ce que nous faisons</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4"><Line>Nos services</Line></h1>
         <p className="text-slate-900/70 max-w-lg mx-auto">
           De l'idée au lancement, un accompagnement complet pour exister en ligne. Cliquez sur un service pour voir le détail.

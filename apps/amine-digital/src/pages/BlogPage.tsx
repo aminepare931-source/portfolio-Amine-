@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import { ARTICLES } from '../data/articles'
-import { PUBLICATIONS, type PubCategory } from '../data/publications'
+import type { PubCategory } from '../data/publications'
+import { usePublications } from '../lib/content'
 import PublicationCard from '../components/PublicationCard'
 import Seo from '../components/Seo'
 
@@ -11,6 +12,7 @@ const FILTERS: ('Tout' | PubCategory)[] = ['Tout', 'Service', 'Formation', 'Actu
 const LABELS: Record<PubCategory, string> = { Service: 'Services', Formation: 'Formations', 'Actualité': 'Actualités' }
 
 export default function BlogPage() {
+  const { list: PUBLICATIONS } = usePublications()
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>('Tout')
   const list = filter === 'Tout' ? PUBLICATIONS : PUBLICATIONS.filter((p) => p.category === filter)
 
@@ -24,7 +26,7 @@ export default function BlogPage() {
           '@context': 'https://schema.org',
           '@type': 'CollectionPage',
           name: 'Publications AMINE DIGITAL',
-          hasPart: PUBLICATIONS.map((p) => ({ '@type': 'ImageObject', name: p.title, description: p.excerpt, contentUrl: `https://amine-digital-services.vercel.app${p.image}` })),
+          hasPart: PUBLICATIONS.map((p) => ({ '@type': 'ImageObject', name: p.title, description: p.excerpt, contentUrl: p.image.startsWith('/') ? `https://amine-digital-services.vercel.app${p.image}` : undefined })),
         }}
       />
 

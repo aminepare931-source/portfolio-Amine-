@@ -234,3 +234,304 @@ grant execute on function public.admin_login(text), public.admin_change_password
 -- Tout le reste passe par les fonctions ci-dessus.
 revoke all on public.team_members, public.reviews, public.ad_settings, public.leads, public.team_invite, public.ad_admin from anon, authenticated;
 grant select on public.team_members, public.reviews, public.ad_settings to anon;
+
+
+-- ═══════════════════════════════════════════════════════════════════
+-- MODULE 2 — publications, réalisations, FAQ, tarifs, statistiques, devis
+-- ═══════════════════════════════════════════════════════════════════
+
+-- ───────────────────────── PUBLICATIONS (affiches ajoutées depuis l'admin) ─────────────────────────
+create table if not exists public.publications (
+  id uuid primary key default gen_random_uuid(),
+  slug text not null unique check (slug ~ '^[a-z0-9-]{2,80}$'),
+  title text not null check (char_length(title) between 3 and 140),
+  category text not null check (category in ('Formation', 'Service', 'Actualité')),
+  excerpt text not null check (char_length(excerpt) between 5 and 300),
+  price text check (char_length(price) <= 80),
+  intro text not null default '' check (char_length(intro) <= 1200),
+  points jsonb not null default '[]'::jsonb,
+  service_slug text,
+  image text not null check (image ~ '^(data:image/(jpeg|png|webp);base64,|/assets/)' and char_length(image) <= 700000),
+  alt text,
+  w int not null default 1000 check (w between 100 and 4000),
+  h int not null default 1000 check (h between 100 and 4000),
+  visible boolean not null default true,
+  created_at timestamptz not null default now()
+);
+alter table public.publications enable row level security;
+drop policy if exists "publications_lecture_publique" on public.publications;
+create policy "publications_lecture_publique" on public.publications for select using (visible);
+
+-- ───────────────────────── RÉALISATIONS ─────────────────────────
+create table if not exists public.realisations (
+  id uuid primary key default gen_random_uuid(),
+  title text not null check (char_length(title) between 3 and 120),
+  client text check (char_length(client) <= 100),
+  sector text check (char_length(sector) <= 80),
+  description text not null check (char_length(description) between 5 and 800),
+  result text check (char_length(result) <= 300),
+  link text check (link is null or link ~ '^https?://'),
+  tags jsonb not null default '[]'::jsonb,
+  image text check (image is null or (image ~ '^(data:image/(jpeg|png|webp);base64,|/assets/)' and char_length(image) <= 700000)),
+  visible boolean not null default true,
+  position int not null default 0,
+  created_at timestamptz not null default now()
+);
+alter table public.realisations enable row level security;
+drop policy if exists "realisations_lecture_publique" on public.realisations;
+create policy "realisations_lecture_publique" on public.realisations for select using (visible);
+
+-- ───────────────────────── FAQ ─────────────────────────
+create table if not exists public.faqs (
+  id uuid primary key default gen_random_uuid(),
+  question text not null check (char_length(question) between 5 and 200),
+  answer text not null check (char_length(answer) between 5 and 1200),
+  position int not null default 0,
+  visible boolean not null default true,
+  created_at timestamptz not null default now()
+);
+alter table public.faqs enable row level security;
+drop policy if exists "faq_lecture_publique" on public.faqs;
+create policy "faq_lecture_publique" on public.faqs for select using (visible);
+
+insert into public.faqs (question, answer, position)
+select q, a, p from (values
+  ('Combien de temps faut-il pour avoir son site ?', 'Un site vitrine de la formule Starter est livré en 5 à 7 jours.', 1),
+  ('Le nom de domaine est-il inclus ?', 'Oui : la formule Starter comprend un nom de domaine pour 1 an.', 2),
+  ('Puis-je vendre en ligne avec Mobile Money ?', 'Oui. La formule Pro inclut une boutique en ligne avec paiement Mobile Money.', 3),
+  ('Pourrai-je gérer mon site moi-même ?', 'Oui. Nos sites sont pensés pour rester faciles à gérer une fois livrés, et nous restons disponibles en cas de besoin.', 4),
+  ('Y a-t-il un suivi après la livraison ?', 'La formule Pro inclut 1 mois de support. Pour les applications mobiles, nous proposons aussi la maintenance et les mises à jour.', 5),
+  ('Comment obtenir un devis ?', 'Remplissez la page Devis ou écrivez-nous sur WhatsApp : nous revenons vers vous avec une proposition adaptée à votre projet et à votre budget.', 6)
+) as t(q, a, p)
+where not exists (select 1 from public.faqs);
+
+-- ───────────────────────── TARIFS ─────────────────────────
+create table if not exists public.plans (
+  id uuid primary key default gen_random_uuid(),
+  name text not null check (char_length(name) between 2 and 60),
+  price text not null check (char_length(price) between 1 and 80),
+  tagline text check (char_length(tagline) <= 120),
+  features jsonb not null default '[]'::jsonb,
+  highlight boolean not null default false,
+  position int not null default 0,
+  visible boolean not null default true,
+  created_at timestamptz not null default now()
+);
+alter table public.plans enable row level security;
+drop policy if exists "tarifs_lecture_publique" on public.plans;
+create policy "tarifs_lecture_publique" on public.plans for select using (visible);
+
+insert into public.plans (name, price, tagline, features, highlight, position)
+select * from (values
+  ('Starter', '20 000 FCFA', 'Pour démarrer en ligne',
+   '["Site vitrine (jusqu''à 5 pages)", "Design responsive mobile", "Nom de domaine (1 an)", "Livraison en 5-7 jours"]'::jsonb, false, 1),
+  ('Pro', '50 000 FCFA', 'Pour vendre en ligne',
+   '["Tout Starter, plus :", "Boutique en ligne + Mobile Money", "Réseaux sociaux configurés", "Support 1 mois inclus"]'::jsonb, true, 2),
+  ('Sur-mesure', 'À partir de 100 000 FCFA', 'Application, automatisation, projet spécifique',
+   '["Application mobile ou web métier", "Automatisation / IA", "Accompagnement complet", "Devis personnalisé"]'::jsonb, false, 3)
+) as t(name, price, tagline, features, highlight, position)
+where not exists (select 1 from public.plans);
+
+-- ───────────────────────── DEMANDES : type + détails (devis) ─────────────────────────
+alter table public.leads add column if not exists kind text not null default 'contact';
+alter table public.leads add column if not exists details jsonb;
+
+-- ───────────────────────── STATISTIQUES ─────────────────────────
+create table if not exists public.events (
+  id bigint generated always as identity primary key,
+  type text not null check (type in ('page_view', 'whatsapp')),
+  label text not null check (char_length(label) <= 120),
+  created_at timestamptz not null default now()
+);
+create index if not exists events_created_idx on public.events (created_at);
+alter table public.events enable row level security;  -- aucune policy : illisible depuis le site
+
+create or replace function public.track_event(p_type text, p_label text) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  if p_type not in ('page_view', 'whatsapp') then return; end if;
+  if (select count(*) from public.events where created_at > now() - interval '1 minute') >= 600 then return; end if;
+  insert into public.events (type, label) values (p_type, left(coalesce(p_label, '/'), 120));
+end $$;
+
+create or replace function public.admin_stats(p_pass text, p_days int) returns jsonb
+language plpgsql security definer set search_path = public, extensions as $$
+declare since timestamptz := now() - make_interval(days => greatest(1, least(coalesce(p_days, 30), 365)));
+begin
+  perform public.ad_auth(p_pass);
+  return jsonb_build_object(
+    'views', (select count(*) from public.events where type = 'page_view' and created_at >= since),
+    'whatsapp', (select count(*) from public.events where type = 'whatsapp' and created_at >= since),
+    'contacts', (select count(*) from public.leads where kind = 'contact' and created_at >= since),
+    'quotes', (select count(*) from public.leads where kind = 'devis' and created_at >= since),
+    'top_pages', (select coalesce(jsonb_agg(x), '[]'::jsonb) from (
+      select label, count(*) as n from public.events where type = 'page_view' and created_at >= since group by label order by n desc limit 8) x),
+    'wa_pages', (select coalesce(jsonb_agg(x), '[]'::jsonb) from (
+      select label, count(*) as n from public.events where type = 'whatsapp' and created_at >= since group by label order by n desc limit 8) x),
+    'daily', (select coalesce(jsonb_agg(x order by x.d), '[]'::jsonb) from (
+      select created_at::date as d, count(*) filter (where type = 'page_view') as v, count(*) filter (where type = 'whatsapp') as w
+      from public.events where created_at >= since group by 1) x)
+  );
+end $$;
+
+-- ───────────────────────── DEVIS (envoi public, limité) ─────────────────────────
+create or replace function public.submit_quote(
+  p_name text, p_phone text, p_email text, p_type text, p_budget text, p_deadline text, p_message text
+) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+declare msg text;
+begin
+  if char_length(trim(coalesce(p_name, ''))) < 2 or char_length(p_name) > 80
+     or char_length(coalesce(p_message, '')) > 2000
+     or char_length(trim(coalesce(p_phone, ''))) + char_length(trim(coalesce(p_email, ''))) < 5 then
+    raise exception 'donnees invalides';
+  end if;
+  if (select count(*) from public.leads where created_at > now() - interval '10 minutes') >= 30 then
+    raise exception 'trop de demandes';
+  end if;
+  msg := 'Demande de devis : ' || left(coalesce(nullif(trim(p_type), ''), 'Non précisé'), 80)
+      || E'\nBudget : ' || left(coalesce(nullif(trim(p_budget), ''), 'Non précisé'), 60)
+      || E'\nDélai : ' || left(coalesce(nullif(trim(p_deadline), ''), 'Non précisé'), 60)
+      || case when char_length(trim(coalesce(p_message, ''))) > 0 then E'\n\n' || trim(p_message) else '' end;
+  insert into public.leads (name, email, phone, message, kind, details)
+  values (trim(p_name), nullif(trim(coalesce(p_email, '')), ''), nullif(trim(coalesce(p_phone, '')), ''), msg, 'devis',
+          jsonb_build_object('type', left(p_type, 80), 'budget', left(p_budget, 60), 'deadline', left(p_deadline, 60)));
+end $$;
+
+-- ───────────────────────── Fonctions d'administration (listes, enregistrement, suppression) ─────────────────────────
+create or replace function public.admin_publication_list(p_pass text) returns setof public.publications
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); return query select * from public.publications order by created_at desc; end $$;
+
+create or replace function public.admin_publication_save(p_pass text, p_id uuid, p_data jsonb) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+declare s text;
+begin
+  perform public.ad_auth(p_pass);
+  if p_id is null then
+    s := left(trim(both '-' from regexp_replace(lower(translate(coalesce(p_data->>'title', ''), 'àâäéèêëîïôöùûüçÀÂÉÈÊÎÔÙÛÇ', 'aaaeeeeiioouuucaaeeeiouuc')), '[^a-z0-9]+', '-', 'g')), 60);
+    if s = '' then s := 'publication'; end if;
+    if exists (select 1 from public.publications where slug = s) then s := s || '-' || substr(encode(gen_random_bytes(3), 'hex'), 1, 5); end if;
+    insert into public.publications (slug, title, category, excerpt, price, intro, points, service_slug, image, alt, w, h, visible)
+    values (s, trim(p_data->>'title'), p_data->>'category', trim(p_data->>'excerpt'), nullif(trim(coalesce(p_data->>'price', '')), ''),
+            trim(coalesce(p_data->>'intro', '')),
+            case when jsonb_typeof(p_data->'points') = 'array' then p_data->'points' else '[]'::jsonb end,
+            nullif(trim(coalesce(p_data->>'service_slug', '')), ''), p_data->>'image',
+            coalesce(nullif(trim(coalesce(p_data->>'alt', '')), ''), 'Affiche AMINE DIGITAL : ' || trim(p_data->>'title')),
+            coalesce((p_data->>'w')::int, 1000), coalesce((p_data->>'h')::int, 1000), coalesce((p_data->>'visible')::boolean, true));
+  else
+    update public.publications set
+      title = trim(p_data->>'title'), category = p_data->>'category', excerpt = trim(p_data->>'excerpt'),
+      price = nullif(trim(coalesce(p_data->>'price', '')), ''), intro = trim(coalesce(p_data->>'intro', '')),
+      points = case when jsonb_typeof(p_data->'points') = 'array' then p_data->'points' else '[]'::jsonb end,
+      service_slug = nullif(trim(coalesce(p_data->>'service_slug', '')), ''),
+      image = coalesce(nullif(p_data->>'image', ''), image),
+      w = case when nullif(p_data->>'image', '') is null then w else coalesce((p_data->>'w')::int, w) end,
+      h = case when nullif(p_data->>'image', '') is null then h else coalesce((p_data->>'h')::int, h) end,
+      alt = coalesce(nullif(trim(coalesce(p_data->>'alt', '')), ''), alt),
+      visible = coalesce((p_data->>'visible')::boolean, visible)
+    where id = p_id;
+  end if;
+end $$;
+
+create or replace function public.admin_publication_delete(p_pass text, p_id uuid) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); delete from public.publications where id = p_id; end $$;
+
+create or replace function public.admin_realisation_list(p_pass text) returns setof public.realisations
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); return query select * from public.realisations order by position, created_at desc; end $$;
+
+create or replace function public.admin_realisation_save(p_pass text, p_id uuid, p_data jsonb) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  perform public.ad_auth(p_pass);
+  if p_id is null then
+    insert into public.realisations (title, client, sector, description, result, link, tags, image, visible, position)
+    values (trim(p_data->>'title'), nullif(trim(coalesce(p_data->>'client', '')), ''), nullif(trim(coalesce(p_data->>'sector', '')), ''),
+            trim(p_data->>'description'), nullif(trim(coalesce(p_data->>'result', '')), ''), nullif(trim(coalesce(p_data->>'link', '')), ''),
+            case when jsonb_typeof(p_data->'tags') = 'array' then p_data->'tags' else '[]'::jsonb end,
+            nullif(p_data->>'image', ''), coalesce((p_data->>'visible')::boolean, true), coalesce((p_data->>'position')::int, 0));
+  else
+    update public.realisations set
+      title = trim(p_data->>'title'), client = nullif(trim(coalesce(p_data->>'client', '')), ''), sector = nullif(trim(coalesce(p_data->>'sector', '')), ''),
+      description = trim(p_data->>'description'), result = nullif(trim(coalesce(p_data->>'result', '')), ''), link = nullif(trim(coalesce(p_data->>'link', '')), ''),
+      tags = case when jsonb_typeof(p_data->'tags') = 'array' then p_data->'tags' else '[]'::jsonb end,
+      image = case when p_data ? 'image' then coalesce(nullif(p_data->>'image', ''), image) else image end,
+      visible = coalesce((p_data->>'visible')::boolean, visible), position = coalesce((p_data->>'position')::int, position)
+    where id = p_id;
+  end if;
+end $$;
+
+create or replace function public.admin_realisation_delete(p_pass text, p_id uuid) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); delete from public.realisations where id = p_id; end $$;
+
+create or replace function public.admin_faq_list(p_pass text) returns setof public.faqs
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); return query select * from public.faqs order by position, created_at; end $$;
+
+create or replace function public.admin_faq_save(p_pass text, p_id uuid, p_data jsonb) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  perform public.ad_auth(p_pass);
+  if p_id is null then
+    insert into public.faqs (question, answer, position, visible)
+    values (trim(p_data->>'question'), trim(p_data->>'answer'),
+            coalesce((p_data->>'position')::int, (select coalesce(max(position), 0) + 1 from public.faqs)), coalesce((p_data->>'visible')::boolean, true));
+  else
+    update public.faqs set question = trim(p_data->>'question'), answer = trim(p_data->>'answer'),
+      position = coalesce((p_data->>'position')::int, position), visible = coalesce((p_data->>'visible')::boolean, visible) where id = p_id;
+  end if;
+end $$;
+
+create or replace function public.admin_faq_delete(p_pass text, p_id uuid) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); delete from public.faqs where id = p_id; end $$;
+
+create or replace function public.admin_plan_list(p_pass text) returns setof public.plans
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); return query select * from public.plans order by position, created_at; end $$;
+
+create or replace function public.admin_plan_save(p_pass text, p_id uuid, p_data jsonb) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  perform public.ad_auth(p_pass);
+  if p_id is null then
+    insert into public.plans (name, price, tagline, features, highlight, position, visible)
+    values (trim(p_data->>'name'), trim(p_data->>'price'), nullif(trim(coalesce(p_data->>'tagline', '')), ''),
+            case when jsonb_typeof(p_data->'features') = 'array' then p_data->'features' else '[]'::jsonb end,
+            coalesce((p_data->>'highlight')::boolean, false),
+            coalesce((p_data->>'position')::int, (select coalesce(max(position), 0) + 1 from public.plans)), coalesce((p_data->>'visible')::boolean, true));
+  else
+    update public.plans set name = trim(p_data->>'name'), price = trim(p_data->>'price'), tagline = nullif(trim(coalesce(p_data->>'tagline', '')), ''),
+      features = case when jsonb_typeof(p_data->'features') = 'array' then p_data->'features' else '[]'::jsonb end,
+      highlight = coalesce((p_data->>'highlight')::boolean, highlight), position = coalesce((p_data->>'position')::int, position),
+      visible = coalesce((p_data->>'visible')::boolean, visible) where id = p_id;
+  end if;
+end $$;
+
+create or replace function public.admin_plan_delete(p_pass text, p_id uuid) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); delete from public.plans where id = p_id; end $$;
+
+-- Droits du module 2
+revoke all on function
+  public.track_event(text, text), public.admin_stats(text, int),
+  public.submit_quote(text, text, text, text, text, text, text),
+  public.admin_publication_list(text), public.admin_publication_save(text, uuid, jsonb), public.admin_publication_delete(text, uuid),
+  public.admin_realisation_list(text), public.admin_realisation_save(text, uuid, jsonb), public.admin_realisation_delete(text, uuid),
+  public.admin_faq_list(text), public.admin_faq_save(text, uuid, jsonb), public.admin_faq_delete(text, uuid),
+  public.admin_plan_list(text), public.admin_plan_save(text, uuid, jsonb), public.admin_plan_delete(text, uuid)
+from public;
+grant execute on function
+  public.track_event(text, text), public.admin_stats(text, int),
+  public.submit_quote(text, text, text, text, text, text, text),
+  public.admin_publication_list(text), public.admin_publication_save(text, uuid, jsonb), public.admin_publication_delete(text, uuid),
+  public.admin_realisation_list(text), public.admin_realisation_save(text, uuid, jsonb), public.admin_realisation_delete(text, uuid),
+  public.admin_faq_list(text), public.admin_faq_save(text, uuid, jsonb), public.admin_faq_delete(text, uuid),
+  public.admin_plan_list(text), public.admin_plan_save(text, uuid, jsonb), public.admin_plan_delete(text, uuid)
+to anon;
+
+revoke all on public.publications, public.realisations, public.faqs, public.plans, public.events from anon, authenticated;
+grant select on public.publications, public.realisations, public.faqs, public.plans to anon;

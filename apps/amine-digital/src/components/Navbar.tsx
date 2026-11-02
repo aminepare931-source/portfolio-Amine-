@@ -2,8 +2,9 @@ import { useSettings, waUrl } from '../lib/settings'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Menu, X, Clock, MapPin, Mail } from 'lucide-react'
+import { useRealisations } from '../lib/content'
 
-const NAV = [
+const NAV_BASE = [
   { to: '/', label: 'Accueil' },
   { to: '/services', label: 'Services' },
   { to: '/a-propos', label: 'À propos' },
@@ -11,7 +12,7 @@ const NAV = [
   { to: '/tarifs', label: 'Tarifs' },
 ]
 
-const NAV_MOBILE = [
+const NAV_MOBILE_BASE = [
   { to: '/', label: 'Accueil' },
   { to: '/services', label: 'Services' },
   { to: '/processus', label: 'Processus' },
@@ -43,6 +44,9 @@ function useLocalTime() {
 
 export default function Navbar() {
   const cfg = useSettings()
+  const { list: reals } = useRealisations()
+  const NAV = reals.length ? [...NAV_BASE.slice(0, 3), { to: '/realisations', label: 'Réalisations' }, ...NAV_BASE.slice(3)] : NAV_BASE
+  const NAV_MOBILE = reals.length ? [...NAV_MOBILE_BASE.slice(0, 4), { to: '/realisations', label: 'Réalisations' }, ...NAV_MOBILE_BASE.slice(4), { to: '/devis', label: 'Demander un devis' }] : [...NAV_MOBILE_BASE, { to: '/devis', label: 'Demander un devis' }]
   const WHATSAPP_URL = waUrl(cfg)
   const [open, setOpen] = useState(false)
   const location = useLocation()
@@ -69,7 +73,7 @@ export default function Navbar() {
           <div className="max-w-[1200px] mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
               <img src="/assets/logo-icon.png" alt="AMINE DIGITAL" className="w-10 h-10 object-contain shrink-0" />
-              <span className="hidden sm:block leading-tight">
+              <span className="hidden lg:block leading-tight">
                 <span className="block font-display text-sm text-gray-900 tracking-wide">AMINE DIGITAL</span>
                 <span className="block text-[10px] font-mono text-gov uppercase tracking-widest">Services numériques</span>
               </span>
@@ -81,7 +85,7 @@ export default function Navbar() {
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `px-4 py-2 font-medium transition-colors ${i !== 0 ? 'border-l border-stroke' : ''} ${
+                    `px-3 lg:px-4 py-2 font-medium whitespace-nowrap transition-colors ${i !== 0 ? 'border-l border-stroke' : ''} ${
                       isActive ? 'bg-gov text-white' : 'text-gray-700 hover:bg-surface'
                     }`
                   }
@@ -96,7 +100,7 @@ export default function Navbar() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="hidden md:inline-flex items-center bg-gov text-white text-sm font-semibold rounded-sm px-5 py-2.5 hover:bg-govDark transition-colors"
+                className="hidden lg:inline-flex items-center bg-gov text-white text-sm font-semibold rounded-sm px-5 py-2.5 hover:bg-govDark transition-colors"
               >
                 Nous contacter
               </a>

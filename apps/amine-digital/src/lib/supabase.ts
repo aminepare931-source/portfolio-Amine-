@@ -105,3 +105,31 @@ export async function submitLead(l: { name: string; email: string; phone: string
     return { ok: false, error: (e as Error).message }
   }
 }
+
+/** Lecture publique d'une table (null si la base est injoignable ou pas encore configurée). */
+export async function restSelect<T>(table: string, query = 'select=*'): Promise<T[] | null> {
+  try {
+    const res = await fetch(`${SB_URL}/rest/v1/${table}?${query}`, { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } })
+    return res.ok ? await res.json() : null
+  } catch { return null }
+}
+
+export async function submitQuote(q: { name: string; phone: string; email: string; type: string; budget: string; deadline: string; message: string }): Promise<{ ok: boolean; error?: string }> {
+  try {
+    await rpc('submit_quote', { p_name: q.name, p_phone: q.phone, p_email: q.email, p_type: q.type, p_budget: q.budget, p_deadline: q.deadline, p_message: q.message })
+    return { ok: true }
+  } catch (e) {
+    return { ok: false, error: (e as Error).message }
+  }
+}
+
+/** Statistiques anonymes (aucune donnée personnelle) : page vue ou clic WhatsApp. */
+export function trackEvent(type: 'page_view' | 'whatsapp', label: string) {
+  try {
+    fetch(`${SB_URL}/rest/v1/rpc/track_event`, {
+      method: 'POST', keepalive: true,
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_type: type, p_label: label }),
+    }).catch(() => { /* */ })
+  } catch { /* */ }
+}

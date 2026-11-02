@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Users, Inbox, Star, Settings as Cog, Lock, Check, X, Trash2, Pencil, Copy, RefreshCw, LogOut, EyeOff, User, Plus } from 'lucide-react'
+import { Users, Inbox, Star, Settings as Cog, Lock, Check, X, Trash2, Pencil, Copy, RefreshCw, LogOut, EyeOff, User, Plus, Image as ImageIcon, Briefcase, HelpCircle, Tag, BarChart3 } from 'lucide-react'
 import { rpc } from '../lib/supabase'
+import { input, btn, type Call, type TabProps } from './adminUi'
+import { PublicationsTab, RealisationsTab, FaqTab, PlansTab, StatsTab } from './AdminContent'
 
 const KEY = 'ad_admin_pw'
-type Tab = 'team' | 'leads' | 'reviews' | 'settings' | 'security'
+type Tab = 'team' | 'leads' | 'publications' | 'realisations' | 'faq' | 'plans' | 'stats' | 'reviews' | 'settings' | 'security'
 
 interface TeamRow { id: string; name: string; role: string; grp: 'Associés' | 'Collaborateurs'; bio: string | null; photo: string | null; status: 'pending' | 'approved' | 'hidden' }
-interface Lead { id: string; name: string; email: string | null; phone: string | null; message: string; handled: boolean; created_at: string }
+interface Lead { id: string; kind?: string; name: string; email: string | null; phone: string | null; message: string; handled: boolean; created_at: string }
 interface Review { id: string; name: string; role: string | null; service: string | null; date_label: string | null; text: string; visible: boolean }
 
-const input = 'w-full border border-stroke rounded-sm px-3 py-2.5 text-sm bg-white focus:outline-none focus:border-clay'
-const btn = 'inline-flex items-center gap-1.5 rounded-sm px-3 py-2 text-xs font-semibold border transition-colors'
 const fmt = (d: string) => new Date(d).toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' })
 
 export default function AdminPage() {
@@ -45,7 +45,12 @@ export default function AdminPage() {
   const tabs: { id: Tab; label: string; icon: typeof Users; n?: number }[] = [
     { id: 'team', label: 'Équipe', icon: Users, n: counts.pending },
     { id: 'leads', label: 'Demandes', icon: Inbox, n: counts.leads },
+    { id: 'publications', label: 'Publications', icon: ImageIcon },
+    { id: 'realisations', label: 'Réalisations', icon: Briefcase },
+    { id: 'faq', label: 'FAQ', icon: HelpCircle },
+    { id: 'plans', label: 'Tarifs', icon: Tag },
     { id: 'reviews', label: 'Avis clients', icon: Star },
+    { id: 'stats', label: 'Statistiques', icon: BarChart3 },
     { id: 'settings', label: 'Coordonnées', icon: Cog },
     { id: 'security', label: 'Sécurité', icon: Lock },
   ]
@@ -71,6 +76,11 @@ export default function AdminPage() {
 
       {tab === 'team' && <TeamTab call={call} notify={notify} onChange={refreshCounts} />}
       {tab === 'leads' && <LeadsTab call={call} notify={notify} onChange={refreshCounts} />}
+      {tab === 'publications' && <PublicationsTab call={call} notify={notify} />}
+      {tab === 'realisations' && <RealisationsTab call={call} notify={notify} />}
+      {tab === 'faq' && <FaqTab call={call} notify={notify} />}
+      {tab === 'plans' && <PlansTab call={call} notify={notify} />}
+      {tab === 'stats' && <StatsTab call={call} notify={notify} />}
       {tab === 'reviews' && <ReviewsTab call={call} notify={notify} />}
       {tab === 'settings' && <SettingsTab call={call} notify={notify} />}
       {tab === 'security' && <SecurityTab call={call} notify={notify} onNewPw={(p) => { try { sessionStorage.setItem(KEY, p) } catch { /* */ } setPw(p) }} />}
@@ -80,8 +90,6 @@ export default function AdminPage() {
   )
 }
 
-type Call = <T>(fn: string, args?: Record<string, unknown>) => Promise<T>
-interface TabProps { call: Call; notify: (t: string) => void; onChange?: () => void }
 
 function Login({ onOk }: { onOk: (p: string) => void }) {
   const [p, setP] = useState(''); const [err, setErr] = useState(''); const [busy, setBusy] = useState(false)
@@ -179,12 +187,12 @@ function LeadsTab({ call, notify, onChange }: TabProps) {
   const del = async (l: Lead) => { if (!confirm('Supprimer cette demande ?')) return; try { await call('admin_lead_delete', { p_id: l.id }); await load(); onChange?.() } catch (e) { notify((e as Error).message) } }
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted">Messages envoyés depuis le formulaire de la page Contact.</p>
+      <p className="text-xs text-muted">Messages du formulaire Contact et demandes de devis (page Devis).</p>
       {rows.length === 0 && <p className="text-muted text-sm">Aucune demande pour le moment.</p>}
       {rows.map((l) => (
         <div key={l.id} className={`border rounded-md p-4 ${l.handled ? 'border-stroke bg-white/40 opacity-70' : 'border-gov/40 bg-white/80'}`}>
           <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <div><span className="font-display text-base">{l.name}</span> <span className="text-xs text-muted ml-2">{fmt(l.created_at)}</span></div>
+            <div><span className="font-display text-base">{l.name}</span> {l.kind === 'devis' && <span className="text-[10px] bg-gov/10 text-gov rounded-full px-2 py-0.5 ml-1 font-semibold">Devis</span>} <span className="text-xs text-muted ml-2">{fmt(l.created_at)}</span></div>
             <div className="flex gap-2">
               {l.phone && <a className={`${btn} border-stroke`} href={`https://wa.me/${l.phone.replace(/\D/g, '')}`} target="_blank" rel="noreferrer">WhatsApp</a>}
               {l.email && <a className={`${btn} border-stroke`} href={`mailto:${l.email}`}>E-mail</a>}

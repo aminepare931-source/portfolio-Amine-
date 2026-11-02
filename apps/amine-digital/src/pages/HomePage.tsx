@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck, Smartphone, Bot, MapPin, HeadphonesIcon } from 'lucide-react'
 import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
-import { PUBLICATIONS } from '../data/publications'
+import { usePublications } from '../lib/content'
+import RealisationsSection from '../components/RealisationsSection'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
 import Stats from '../components/Stats'
@@ -65,6 +66,7 @@ const PILLARS = [
 
 export default function HomePage() {
   const cfg = useSettings()
+  const { list: pubs } = usePublications()
   return (
     <>
       {/* 1 — HERO */}
@@ -245,7 +247,7 @@ export default function HomePage() {
       <section className="bg-bg pt-16 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
         <div className="max-w-[1200px] mx-auto">
           <Fade>
-            <SectionBadge n={3} label="Ce que je fais" />
+            <SectionBadge n={3} label="Ce que nous faisons" />
           <h2
             className="px-5 sm:px-8 lg:px-12 font-medium text-gray-900 leading-[1.08] tracking-[-0.03em] mb-10 sm:mb-14"
             style={{ fontSize: 'clamp(1.5rem, 4vw, 3.2rem)' }}
@@ -298,7 +300,7 @@ export default function HomePage() {
           </Fade>
 
           <div className="px-5 sm:px-8 lg:px-12 grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-            {PUBLICATIONS.slice(0, 4).map((p) => (
+            {pubs.slice(0, 4).map((p) => (
               <Link key={p.slug} to={`/journal/${p.slug}`} className="group block rounded-md overflow-hidden border border-stroke bg-white/60 hover:border-gov/50 transition-colors">
                 <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" className="w-full aspect-square object-contain bg-surface group-hover:scale-[1.03] transition-transform duration-500" />
                 <div className="p-3 text-xs font-medium leading-snug group-hover:text-clay transition-colors">{p.title}</div>
@@ -344,6 +346,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <RealisationsSection />
+
       <Testimonials />
 
       {/* 7 — CTA FINAL */}
@@ -351,7 +355,7 @@ export default function HomePage() {
         <div className="max-w-[900px] mx-auto text-center bg-bg border border-stroke rounded-md px-8 py-14">
           <h2 className="font-display text-3xl sm:text-4xl mb-4">Un projet en tête ?</h2>
           <p className="text-slate-900/70 mb-8 max-w-md mx-auto">
-            Décrivez-moi votre besoin, je vous réponds avec une proposition claire et un tarif adapté.
+            Décrivez-nous votre besoin, nous vous répondons avec une proposition claire et un tarif adapté.
           </p>
           <TextRollButton to="/contact">Démarrer une discussion</TextRollButton>
         </div>

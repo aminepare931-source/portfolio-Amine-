@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { MessageCircle, Mail, MapPin, Send, CheckCircle2 } from 'lucide-react'
 import { submitLead } from '../lib/supabase'
+import { Link } from 'react-router-dom'
 import { useSettings, waUrl } from '../lib/settings'
+import Faq from '../components/Faq'
 
 export default function ContactPage() {
   const cfg = useSettings()
@@ -32,6 +34,7 @@ export default function ContactPage() {
         <p className="text-slate-900/70 max-w-lg mx-auto">
           Le plus rapide reste WhatsApp. Sinon, laissez un message ci-dessous.
         </p>
+        <Link to="/devis" className="inline-block mt-4 text-clay font-semibold hover:underline">Vous voulez un prix ? Demandez un devis →</Link>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4 mb-14">
@@ -74,6 +77,8 @@ export default function ContactPage() {
           </form>
         )}
       </div>
+
+      <Faq />
     </div>
   )
 }
