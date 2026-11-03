@@ -1,10 +1,25 @@
 import { useEffect, useState } from 'react'
-import { restSelect, fetchProjects } from './supabase'
+import { restSelect } from './supabase'
 import { PUBLICATIONS, type Publication, type PubCategory } from '../data/publications'
 
 /* ───────── Contenus gérés depuis l'administration (avec repli sur des valeurs par défaut) ───────── */
 
-export interface Realisation { id: string; title: string; client: string | null; sector: string | null; description: string; result: string | null; link: string | null; tags: string[]; image: string | null; fit?: 'cover' | 'contain' }
+export type Kind = 'client' | 'saas' | 'interne' | 'personnel'
+export type Status = 'en_ligne' | 'en_developpement' | 'prototype'
+export const KIND_LABEL: Record<Kind, string> = { client: 'Projet client', saas: 'SaaS AMINE DIGITAL', interne: 'Application interne', personnel: 'Projet personnel' }
+export const KIND_NOTE: Record<Kind, string> = {
+  client: 'Réalisé pour un client.',
+  saas: 'Produit SaaS conçu et exploité par AMINE DIGITAL.',
+  interne: "Application développée pour les besoins internes d'AMINE DIGITAL.",
+  personnel: "Projet personnel d'AMINE DIGITAL.",
+}
+export const STATUS_LABEL: Record<Status, string> = { en_ligne: 'En ligne', en_developpement: 'En développement', prototype: 'Prototype' }
+
+export interface Realisation {
+  id: string; title: string; client: string | null; sector: string | null; description: string; result: string | null; link: string | null
+  tags: string[]; image: string | null; kind: Kind | null; status: Status | null
+  long_desc?: string | null; features?: string[]; stack?: string[]; gallery?: string[]
+}
 export interface Faq { id: string; question: string; answer: string }
 export interface Plan { id: string; name: string; price: string; tagline: string | null; features: string[]; highlight: boolean }
 
@@ -56,18 +71,25 @@ export function usePublications(): { list: Publication[]; loading: boolean } {
   return { list: [...data, ...PUBLICATIONS.filter((p) => !slugs.has(p.slug))], loading }
 }
 
+const arr = (v: unknown): string[] => (Array.isArray(v) ? (v as string[]) : [])
+const LIGHT = 'id,title,client,sector,description,result,link,tags,image,kind,status,position'
+
 export function useRealisations(): { list: Realisation[]; loading: boolean } {
   const { data, loading } = useRemote<Realisation[]>('realisations', async () => {
-    const [rows, projects] = await Promise.all([restSelect<Realisation>('realisations', 'select=*&order=position.asc,created_at.desc'), fetchProjects()])
-    const own = (rows ?? []).map((r) => ({ ...r, tags: Array.isArray(r.tags) ? r.tags : [] }))
-    // Projets du portfolio (même base) : affichés aussi ici, après ceux ajoutés dans l'administration
-    const fromPortfolio: Realisation[] = projects.map((p) => ({
-      id: `pf-${p.id}`, title: p.name, client: null, sector: null, description: p.description, result: null, link: null,
-      tags: Array.isArray(p.tags) ? p.tags : [], image: p.img, fit: 'contain',
-    }))
-    return [...own, ...fromPortfolio]
+    const rows = await restSelect<Realisation>('realisations', `select=${LIGHT}&order=position.asc,created_at.desc`)
+    return (rows ?? []).map((r) => ({ ...r, tags: arr(r.tags) }))
   }, [])
   return { list: data, loading }
+}
+
+/** Fiche détaillée d'un projet (avec galerie) : chargée seulement à l'ouverture de la page. */
+export function useRealisation(id: string | undefined): { item: Realisation | null; loading: boolean } {
+  const { data, loading } = useRemote<Realisation | null>(`realisation:${id}`, async () => {
+    const rows = await restSelect<Realisation>('realisations', `select=*&id=eq.${encodeURIComponent(id ?? '')}`)
+    const r = rows?.[0]
+    return r ? { ...r, tags: arr(r.tags), features: arr(r.features), stack: arr(r.stack), gallery: arr(r.gallery) } : null
+  }, null)
+  return { item: data, loading }
 }
 
 export function useFaqs(): Faq[] {

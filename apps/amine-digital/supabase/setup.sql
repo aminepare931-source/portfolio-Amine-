@@ -277,6 +277,15 @@ create table if not exists public.realisations (
   position int not null default 0,
   created_at timestamptz not null default now()
 );
+alter table public.realisations add column if not exists kind text check (kind in ('client', 'saas', 'interne', 'personnel'));
+alter table public.realisations add column if not exists status text check (status in ('en_ligne', 'en_developpement', 'prototype'));
+alter table public.realisations add column if not exists long_desc text check (char_length(long_desc) <= 4000);
+alter table public.realisations add column if not exists features jsonb not null default '[]'::jsonb;
+alter table public.realisations add column if not exists stack jsonb not null default '[]'::jsonb;
+alter table public.realisations add column if not exists gallery jsonb not null default '[]'::jsonb;
+alter table public.realisations drop constraint if exists realisations_image_check;
+alter table public.realisations add constraint realisations_image_check
+  check (image is null or (image ~ '^(data:image/(jpeg|png|webp);base64,|/assets/|https://)' and char_length(image) <= 700000));
 alter table public.realisations enable row level security;
 drop policy if exists "realisations_lecture_publique" on public.realisations;
 create policy "realisations_lecture_publique" on public.realisations for select using (visible);
@@ -444,20 +453,34 @@ begin perform public.ad_auth(p_pass); return query select * from public.realisat
 
 create or replace function public.admin_realisation_save(p_pass text, p_id uuid, p_data jsonb) returns void
 language plpgsql security definer set search_path = public, extensions as $$
+declare g jsonb := case when jsonb_typeof(p_data->'gallery') = 'array' then p_data->'gallery' else null end;
 begin
   perform public.ad_auth(p_pass);
+  if g is not null and (jsonb_array_length(g) > 4 or exists (
+       select 1 from jsonb_array_elements_text(g) x where x !~ '^(data:image/(jpeg|png|webp);base64,|https://)' or char_length(x) > 700000)) then
+    raise exception 'galerie invalide';
+  end if;
   if p_id is null then
-    insert into public.realisations (title, client, sector, description, result, link, tags, image, visible, position)
+    insert into public.realisations (title, client, sector, description, long_desc, result, link, tags, features, stack, gallery, image, kind, status, visible, position)
     values (trim(p_data->>'title'), nullif(trim(coalesce(p_data->>'client', '')), ''), nullif(trim(coalesce(p_data->>'sector', '')), ''),
-            trim(p_data->>'description'), nullif(trim(coalesce(p_data->>'result', '')), ''), nullif(trim(coalesce(p_data->>'link', '')), ''),
+            trim(p_data->>'description'), nullif(trim(coalesce(p_data->>'long_desc', '')), ''),
+            nullif(trim(coalesce(p_data->>'result', '')), ''), nullif(trim(coalesce(p_data->>'link', '')), ''),
             case when jsonb_typeof(p_data->'tags') = 'array' then p_data->'tags' else '[]'::jsonb end,
-            nullif(p_data->>'image', ''), coalesce((p_data->>'visible')::boolean, true), coalesce((p_data->>'position')::int, 0));
+            case when jsonb_typeof(p_data->'features') = 'array' then p_data->'features' else '[]'::jsonb end,
+            case when jsonb_typeof(p_data->'stack') = 'array' then p_data->'stack' else '[]'::jsonb end,
+            coalesce(g, '[]'::jsonb), nullif(p_data->>'image', ''), nullif(p_data->>'kind', ''), nullif(p_data->>'status', ''),
+            coalesce((p_data->>'visible')::boolean, true), coalesce((p_data->>'position')::int, 0));
   else
     update public.realisations set
       title = trim(p_data->>'title'), client = nullif(trim(coalesce(p_data->>'client', '')), ''), sector = nullif(trim(coalesce(p_data->>'sector', '')), ''),
-      description = trim(p_data->>'description'), result = nullif(trim(coalesce(p_data->>'result', '')), ''), link = nullif(trim(coalesce(p_data->>'link', '')), ''),
+      description = trim(p_data->>'description'), long_desc = nullif(trim(coalesce(p_data->>'long_desc', '')), ''),
+      result = nullif(trim(coalesce(p_data->>'result', '')), ''), link = nullif(trim(coalesce(p_data->>'link', '')), ''),
       tags = case when jsonb_typeof(p_data->'tags') = 'array' then p_data->'tags' else '[]'::jsonb end,
+      features = case when jsonb_typeof(p_data->'features') = 'array' then p_data->'features' else '[]'::jsonb end,
+      stack = case when jsonb_typeof(p_data->'stack') = 'array' then p_data->'stack' else '[]'::jsonb end,
+      gallery = coalesce(g, gallery),
       image = case when p_data ? 'image' then coalesce(nullif(p_data->>'image', ''), image) else image end,
+      kind = nullif(p_data->>'kind', ''), status = nullif(p_data->>'status', ''),
       visible = coalesce((p_data->>'visible')::boolean, visible), position = coalesce((p_data->>'position')::int, position)
     where id = p_id;
   end if;

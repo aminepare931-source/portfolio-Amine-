@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2, Eye, EyeOff, ImagePlus, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Eye, EyeOff, ImagePlus, Loader2, Download } from 'lucide-react'
+import { fetchProjects } from '../lib/supabase'
 import { SERVICES } from '../data/services'
 import { resizeImage } from '../lib/image'
 import { input, btn, type TabProps } from './adminUi'
@@ -19,7 +20,7 @@ function useCrud<T extends { id: string }>(name: string, { call, notify }: TabPr
     if (!confirm(ask)) return
     try { await call(`admin_${name}_delete`, { p_id: id }); notify('Supprimé'); await load(); onChange?.() } catch (e) { notify((e as Error).message) }
   }
-  return { rows, loading, save, del }
+  return { rows, loading, save, del, load }
 }
 
 const lines = (s: string) => s.split('\n').map((x) => x.trim()).filter(Boolean)
@@ -107,46 +108,120 @@ export function PublicationsTab(p: TabProps) {
 }
 
 /* ───────── Réalisations ───────── */
-interface Real { id: string; title: string; client: string | null; sector: string | null; description: string; result: string | null; link: string | null; tags: string[]; image: string | null; visible: boolean; position: number }
-const emptyReal = { id: '', title: '', client: '', sector: '', description: '', result: '', link: '', tags: '', image: '', visible: true, position: 0, changed: false }
+interface Real { id: string; title: string; client: string | null; sector: string | null; description: string; long_desc: string | null; result: string | null; link: string | null; tags: string[]; features: string[]; stack: string[]; gallery: string[]; image: string | null; kind: string | null; status: string | null; visible: boolean; position: number }
+const emptyReal = { id: '', title: '', client: '', sector: '', description: '', long_desc: '', result: '', link: '', tags: '', features: '', stack: '', gallery: [] as string[], image: '', kind: '', status: '', visible: true, position: 0, changed: false }
+const KINDS: [string, string][] = [['client', 'Projet client (réalisé pour un client)'], ['saas', 'SaaS AMINE DIGITAL (produit vendu en abonnement)'], ['interne', 'Application interne AMINE DIGITAL'], ['personnel', 'Projet personnel']]
+const KIND_SHORT: Record<string, string> = { client: 'Client', saas: 'SaaS', interne: 'Interne', personnel: 'Personnel' }
+const PLACEHOLDER = 'À compléter'
+
+function GalleryPicker({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
+  const [busy, setBusy] = useState(false); const [err, setErr] = useState('')
+  async function add(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []).slice(0, 4 - value.length); if (!files.length) return
+    setBusy(true); setErr('')
+    try {
+      const out: string[] = []
+      for (const f of files) {
+        let q = 0.78, r = await resizeImage(f, 1000, q)
+        while (r.dataUrl.length > 520000 && q > 0.4) { q -= 0.12; r = await resizeImage(f, 1000, q) }
+        out.push(r.dataUrl)
+      }
+      onChange([...value, ...out])
+    } catch { setErr('Une image est illisible ou trop lourde.') } finally { setBusy(false); e.target.value = '' }
+  }
+  return (
+    <div className="sm:col-span-2">
+      <div className="text-xs text-muted mb-2">Captures d'écran supplémentaires (4 maximum)</div>
+      <div className="flex flex-wrap gap-3 items-center">
+        {value.map((g, i) => (
+          <div key={i} className="relative">
+            <img src={g} alt="" className="h-20 rounded-sm border border-stroke" />
+            <button type="button" onClick={() => onChange(value.filter((_, k) => k !== i))} aria-label="Retirer l'image" className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 text-xs leading-5">×</button>
+          </div>
+        ))}
+        {value.length < 4 && (
+          <label className={`${btn} border-stroke hover:bg-slate-900/5 cursor-pointer`}>
+            {busy ? <Loader2 size={14} className="animate-spin" /> : <ImagePlus size={14} />} Ajouter
+            <input type="file" accept="image/*" multiple className="hidden" onChange={add} />
+          </label>
+        )}
+      </div>
+      {err && <p className="text-xs text-red-700 mt-2">{err}</p>}
+    </div>
+  )
+}
 
 export function RealisationsTab(p: TabProps) {
-  const { rows, loading, save, del } = useCrud<Real>('realisation', p)
+  const { rows, loading, save, del, load } = useCrud<Real>('realisation', p)
   const [f, setF] = useState<typeof emptyReal | null>(null)
-  const ok = f && f.title.trim().length >= 3 && f.description.trim().length >= 5 && (!f.link.trim() || /^https?:\/\//.test(f.link.trim()))
-  const payload = (r: typeof emptyReal) => ({ title: r.title, client: r.client, sector: r.sector, description: r.description, result: r.result, link: r.link, tags: r.tags.split(',').map((t) => t.trim()).filter(Boolean), visible: r.visible, position: Number(r.position) || 0, ...(r.changed ? { image: r.image } : {}) })
-  const toForm = (r: Real) => ({ id: r.id, title: r.title, client: r.client ?? '', sector: r.sector ?? '', description: r.description, result: r.result ?? '', link: r.link ?? '', tags: r.tags.join(', '), image: r.image ?? '', visible: r.visible, position: r.position, changed: false })
+  const [importing, setImporting] = useState(false)
+  const draft = f && f.description.trim() === PLACEHOLDER
+  const ok = f && f.title.trim().length >= 3 && f.description.trim().length >= 5 && (!f.link.trim() || /^https?:\/\//.test(f.link.trim())) && (!f.visible || (!!f.kind && !draft))
+  const split = (v: string, sep: RegExp) => v.split(sep).map((t) => t.trim()).filter(Boolean)
+  const payload = (r: typeof emptyReal) => ({ title: r.title, client: r.client, sector: r.sector, description: r.description, long_desc: r.long_desc, result: r.result, link: r.link, tags: split(r.tags, /,/), features: split(r.features, /\n/), stack: split(r.stack, /,/), gallery: r.gallery, kind: r.kind, status: r.status, visible: r.visible, position: Number(r.position) || 0, ...(r.changed ? { image: r.image } : {}) })
+  const toForm = (r: Real) => ({ id: r.id, title: r.title, client: r.client ?? '', sector: r.sector ?? '', description: r.description, long_desc: r.long_desc ?? '', result: r.result ?? '', link: r.link ?? '', tags: r.tags.join(', '), features: r.features.join('\n'), stack: r.stack.join(', '), gallery: r.gallery, image: r.image ?? '', kind: r.kind ?? '', status: r.status ?? '', visible: r.visible, position: r.position, changed: false })
+
+  async function importPortfolio() {
+    setImporting(true)
+    try {
+      const projects = await fetchProjects()
+      const have = new Set(rows.map((r) => r.title.trim().toLowerCase()))
+      let n = 0
+      for (const pr of projects) {
+        if (have.has(pr.name.trim().toLowerCase())) continue
+        const img = pr.img && /^https:\/\//.test(pr.img) ? pr.img : ''
+        await p.call('admin_realisation_save', { p_id: null, p_data: { title: pr.name, description: pr.description?.trim().length >= 5 ? pr.description.trim() : PLACEHOLDER, tags: pr.tags ?? [], image: img, kind: '', visible: false, position: pr.position ?? 0 } })
+        n++
+      }
+      p.notify(n ? `${n} projet(s) importé(s) en brouillon : complétez-les puis publiez-les` : 'Rien de nouveau à importer')
+      await load()
+    } catch (e) { p.notify((e as Error).message) } finally { setImporting(false) }
+  }
+
   return (
     <div>
-      <p className="text-xs text-muted mb-4">Ajoutez uniquement des projets réellement livrés, avec l'accord du client. La section apparaît sur l'accueil et le menu « Réalisations » dès qu'un projet est visible.</p>
-      {!f && <button onClick={() => setF({ ...emptyReal })} className={`${btn} bg-gov text-white border-gov mb-5`}><Plus size={14} /> Nouvelle réalisation</button>}
+      <p className="text-xs text-muted mb-4">Chaque projet doit avoir un type clair (client, SaaS, application interne ou personnel) : il est affiché sur sa carte et sur sa page détaillée. Un projet masqué ou « à compléter » n'apparaît pas sur le site.</p>
+      {!f && (
+        <div className="flex flex-wrap gap-2 mb-5">
+          <button onClick={() => setF({ ...emptyReal })} className={`${btn} bg-gov text-white border-gov`}><Plus size={14} /> Nouveau projet</button>
+          <button onClick={importPortfolio} disabled={importing} className={`${btn} border-stroke hover:bg-slate-900/5 disabled:opacity-50`}>{importing ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />} Importer depuis le portfolio</button>
+        </div>
+      )}
       {f && (
         <div className="border border-stroke rounded-md p-4 bg-surface/40 mb-5 grid sm:grid-cols-2 gap-3">
           <input className={`${input} sm:col-span-2`} placeholder="Nom du projet" maxLength={120} value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
-          <input className={input} placeholder="Client (facultatif)" value={f.client} onChange={(e) => setF({ ...f, client: e.target.value })} />
-          <input className={input} placeholder="Secteur, ex. Commerce (facultatif)" value={f.sector} onChange={(e) => setF({ ...f, sector: e.target.value })} />
-          <textarea className={`${input} sm:col-span-2`} rows={3} maxLength={800} placeholder="Ce que nous avons réalisé" value={f.description} onChange={(e) => setF({ ...f, description: e.target.value })} />
+          <select className={`${input} ${!f.kind ? 'border-amber-400' : ''}`} value={f.kind} onChange={(e) => setF({ ...f, kind: e.target.value })}><option value="">Type de projet (obligatoire pour publier)…</option>{KINDS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select>
+          <select className={input} value={f.status} onChange={(e) => setF({ ...f, status: e.target.value })}><option value="">Statut (facultatif)</option><option value="en_ligne">En ligne</option><option value="en_developpement">En développement</option><option value="prototype">Prototype</option></select>
+          <input className={input} placeholder={f.kind === 'client' ? 'Nom du client (avec son accord)' : 'Client (facultatif)'} value={f.client} onChange={(e) => setF({ ...f, client: e.target.value })} />
+          <input className={input} placeholder="Secteur, ex. Restauration (facultatif)" value={f.sector} onChange={(e) => setF({ ...f, sector: e.target.value })} />
+          <textarea className={`${input} sm:col-span-2`} rows={2} maxLength={800} placeholder="Résumé en 1 ou 2 phrases (affiché sur la carte)" value={f.description} onChange={(e) => setF({ ...f, description: e.target.value })} />
+          {draft && <p className="sm:col-span-2 text-xs text-amber-700">Ce projet vient du portfolio : remplacez « {PLACEHOLDER} » par un vrai résumé avant de le publier.</p>}
+          <textarea className={`${input} sm:col-span-2`} rows={6} maxLength={4000} placeholder={'Description détaillée : à quoi sert le projet, pour qui, quel problème il résout, comment il a été fait. (Une ligne vide sépare les paragraphes.)'} value={f.long_desc} onChange={(e) => setF({ ...f, long_desc: e.target.value })} />
+          <textarea className={`${input} sm:col-span-2`} rows={4} placeholder="Fonctionnalités, une par ligne" value={f.features} onChange={(e) => setF({ ...f, features: e.target.value })} />
+          <input className={input} placeholder="Technologies, séparées par des virgules (React, Supabase…)" value={f.stack} onChange={(e) => setF({ ...f, stack: e.target.value })} />
+          <input className={input} placeholder="Étiquettes, séparées par des virgules" value={f.tags} onChange={(e) => setF({ ...f, tags: e.target.value })} />
           <input className={`${input} sm:col-span-2`} placeholder="Résultat obtenu (facultatif, uniquement s'il est réel)" maxLength={300} value={f.result} onChange={(e) => setF({ ...f, result: e.target.value })} />
-          <input className={input} placeholder="Lien du projet https://… (facultatif)" value={f.link} onChange={(e) => setF({ ...f, link: e.target.value })} />
-          <input className={input} placeholder="Étiquettes séparées par des virgules" value={f.tags} onChange={(e) => setF({ ...f, tags: e.target.value })} />
-          <ImagePicker value={f.image || null} label="Ajouter une image (capture, photo)" onPick={(d) => setF({ ...f, image: d, changed: true })} />
+          <input className={`${input} sm:col-span-2`} placeholder="Lien du projet https://… (facultatif)" value={f.link} onChange={(e) => setF({ ...f, link: e.target.value })} />
+          <ImagePicker value={f.image || null} label="Image principale (capture, photo)" onPick={(d) => setF({ ...f, image: d, changed: true })} />
+          <GalleryPicker value={f.gallery} onChange={(g) => setF({ ...f, gallery: g })} />
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={f.visible} onChange={(e) => setF({ ...f, visible: e.target.checked })} /> Visible sur le site</label>
           <label className="flex items-center gap-2 text-sm">Ordre <input type="number" className={`${input} w-24`} value={f.position} onChange={(e) => setF({ ...f, position: Number(e.target.value) })} /></label>
-          <div className="sm:col-span-2 flex gap-2"><button disabled={!ok} onClick={async () => { if (await save(f.id || null, payload(f), 'Réalisation enregistrée')) setF(null) }} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}>Enregistrer</button><button onClick={() => setF(null)} className={`${btn} border-stroke`}>Annuler</button></div>
+          <div className="sm:col-span-2 flex gap-2"><button disabled={!ok} onClick={async () => { if (await save(f.id || null, payload(f), 'Projet enregistré')) setF(null) }} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}>Enregistrer</button><button onClick={() => setF(null)} className={`${btn} border-stroke`}>Annuler</button></div>
+          {!ok && f.visible && <p className="sm:col-span-2 text-xs text-amber-700">Pour publier : choisissez le type du projet et rédigez le résumé. Sinon décochez « Visible sur le site » pour garder un brouillon.</p>}
         </div>
       )}
-      {!loading && rows.length === 0 && <p className="text-muted text-sm">Aucune réalisation pour le moment.</p>}
+      {!loading && rows.length === 0 && <p className="text-muted text-sm">Aucun projet pour le moment. Importez ceux de votre portfolio ou ajoutez-en un.</p>}
       <div className="space-y-3">
         {rows.map((r) => (
           <div key={r.id} className="border border-stroke rounded-md p-3 bg-white/70 flex flex-wrap gap-4 items-center">
             {r.image ? <img src={r.image} alt="" className="w-20 h-14 object-cover rounded-sm border border-stroke" /> : <span className="w-20 h-14 rounded-sm bg-surface border border-stroke" />}
             <div className="flex-1 min-w-[200px]">
-              <div className="font-display text-base">{r.title}{!r.visible && <Hidden />}</div>
-              <div className="text-xs text-muted">{[r.sector, r.client].filter(Boolean).join(' · ')}</div>
+              <div className="font-display text-base">{r.title}{!r.visible && <Hidden />}{r.description.trim() === PLACEHOLDER && <span className="text-[10px] bg-amber-100 text-amber-800 rounded-full px-2 py-0.5 ml-1.5 font-semibold">À compléter</span>}</div>
+              <div className="text-xs text-muted">{r.kind ? <b className="text-gov">{KIND_SHORT[r.kind]}</b> : <b className="text-amber-700">Type à choisir</b>}{[r.sector, r.client].filter(Boolean).map((x) => ` · ${x}`)}</div>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => save(r.id, { ...payload(toForm(r)), visible: !r.visible }, r.visible ? 'Réalisation masquée' : 'Réalisation visible')} className={`${btn} border-stroke`}>{r.visible ? <><EyeOff size={14} /> Masquer</> : <><Eye size={14} /> Afficher</>}</button>
-              <button onClick={() => setF(toForm(r))} className={`${btn} border-stroke`}><Pencil size={14} /> Modifier</button>
+              <button onClick={() => save(r.id, { ...payload(toForm(r)), visible: !r.visible }, r.visible ? 'Projet masqué' : 'Projet visible')} disabled={!r.visible && (!r.kind || r.description.trim() === PLACEHOLDER)} className={`${btn} border-stroke disabled:opacity-40`}>{r.visible ? <><EyeOff size={14} /> Masquer</> : <><Eye size={14} /> Afficher</>}</button>
+              <button onClick={() => setF(toForm(r))} className={`${btn} border-stroke`}><Pencil size={14} /> {r.description.trim() === PLACEHOLDER || !r.kind ? 'Compléter' : 'Modifier'}</button>
               <button onClick={() => del(r.id, `Supprimer « ${r.title} » ?`)} className={`${btn} border-red-200 text-red-700`}><Trash2 size={14} /></button>
             </div>
           </div>

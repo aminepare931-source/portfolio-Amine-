@@ -19,6 +19,7 @@ import TeamJoinPage from './pages/TeamJoinPage'
 import AdminPage from './pages/AdminPage'
 import RealisationsPage from './pages/RealisationsPage'
 import QuotePage from './pages/QuotePage'
+import RealisationDetailPage from './pages/RealisationDetailPage'
 import Tracker from './components/Tracker'
 import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -39,6 +40,7 @@ function AnimatedRoutes() {
         <Route path="/journal" element={<PageTransition><BlogPage /></PageTransition>} />
         <Route path="/journal/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
         <Route path="/realisations" element={<PageTransition><RealisationsPage /></PageTransition>} />
+        <Route path="/realisations/:id" element={<PageTransition><RealisationDetailPage /></PageTransition>} />
         <Route path="/devis" element={<PageTransition><QuotePage /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
