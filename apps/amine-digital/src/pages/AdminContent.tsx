@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Plus, Pencil, Trash2, Eye, EyeOff, ImagePlus, Loader2, Download } from 'lucide-react'
 import { fetchProjects } from '../lib/supabase'
+import { PROJECT_DRAFTS } from '../data/projectDrafts'
 import { SERVICES } from '../data/services'
 import { resizeImage } from '../lib/image'
 import { input, btn, type TabProps } from './adminUi'
@@ -178,6 +179,21 @@ export function RealisationsTab(p: TabProps) {
     } catch (e) { p.notify((e as Error).message) } finally { setImporting(false) }
   }
 
+  async function importPrepared() {
+    setImporting(true)
+    try {
+      const have = new Set(rows.map((r) => r.title.trim().toLowerCase()))
+      let n = 0
+      for (const d of PROJECT_DRAFTS) {
+        if (have.has(d.title.trim().toLowerCase())) continue
+        await p.call('admin_realisation_save', { p_id: null, p_data: { title: d.title, kind: d.kind, status: d.status, sector: d.sector, description: d.description, long_desc: d.long_desc, features: d.features, stack: d.stack, tags: d.tags, image: d.image ?? '', link: '', visible: false, position: n } })
+        n++
+      }
+      p.notify(n ? `${n} présentation(s) préparée(s) ajoutée(s) en brouillon : vérifiez le type puis affichez-les` : 'Toutes les présentations préparées sont déjà là')
+      await load()
+    } catch (e) { p.notify((e as Error).message) } finally { setImporting(false) }
+  }
+
   return (
     <div>
       <p className="text-xs text-muted mb-4">Chaque projet doit avoir un type clair (client, SaaS, application interne ou personnel) : il est affiché sur sa carte et sur sa page détaillée. Un projet masqué ou « à compléter » n'apparaît pas sur le site.</p>
@@ -185,6 +201,7 @@ export function RealisationsTab(p: TabProps) {
         <div className="flex flex-wrap gap-2 mb-5">
           <button onClick={() => setF({ ...emptyReal })} className={`${btn} bg-gov text-white border-gov`}><Plus size={14} /> Nouveau projet</button>
           <button onClick={importPortfolio} disabled={importing} className={`${btn} border-stroke hover:bg-slate-900/5 disabled:opacity-50`}>{importing ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />} Importer depuis le portfolio</button>
+          <button onClick={importPrepared} disabled={importing} className={`${btn} border-stroke hover:bg-slate-900/5 disabled:opacity-50`}><Download size={14} /> Importer mes présentations préparées</button>
         </div>
       )}
       {f && (
