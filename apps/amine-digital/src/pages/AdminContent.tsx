@@ -186,7 +186,7 @@ export function RealisationsTab(p: TabProps) {
       let n = 0
       for (const d of PROJECT_DRAFTS) {
         if (have.has(d.title.trim().toLowerCase())) continue
-        await p.call('admin_realisation_save', { p_id: null, p_data: { title: d.title, kind: d.kind, status: d.status, sector: d.sector, description: d.description, long_desc: d.long_desc, features: d.features, stack: d.stack, tags: d.tags, image: d.image ?? '', link: '', visible: false, position: n } })
+        await p.call('admin_realisation_save', { p_id: null, p_data: { title: d.title, kind: d.kind, status: d.status, sector: d.sector, description: d.description, long_desc: d.long_desc, features: d.features, stack: d.stack, tags: d.tags, image: d.image ?? '', client: d.client ?? '', link: d.link ?? '', visible: false, position: n } })
         n++
       }
       p.notify(n ? `${n} présentation(s) préparée(s) ajoutée(s) en brouillon : vérifiez le type puis affichez-les` : 'Toutes les présentations préparées sont déjà là')

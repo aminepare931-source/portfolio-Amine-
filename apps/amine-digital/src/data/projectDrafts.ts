@@ -16,11 +16,57 @@ export interface ProjectDraft {
   stack: string[]
   tags: string[]
   image?: string
+  client?: string
+  link?: string
 }
 
 const RAW = 'https://raw.githubusercontent.com/aminepare931-source'
 
 export const PROJECT_DRAFTS: ProjectDraft[] = [
+  {
+    title: 'Finagnon Vision',
+    kind: 'client',
+    status: 'en_ligne',
+    client: 'Finagnon Vision',
+    link: 'https://finagnon-vision.vercel.app',
+    sector: 'Optique',
+    description: "Site vitrine et de prise de rendez-vous d'une boutique d'optique à Ouagadougou : catalogue de montures, demande de devis avec ordonnance, rendez-vous en ligne et contact WhatsApp.",
+    long_desc:
+      "Finagnon Vision est une boutique et un atelier de montage d'optique situés à Gounghin, à Ouagadougou. Le site présente la boutique, ses horaires et son adresse, et permet aux clients de passer à l'action depuis leur téléphone.\n\nLe catalogue de montures se filtre par forme (rondes, pantos, rectangulaires, aviateur, papillon, carrées) et par catégorie (hommes, femmes, optiques, solaires, lumière bleue, créateurs). Un guide de morphologie du visage aide à choisir. Chaque fiche produit affiche le prix en FCFA, un bouton de partage et un bouton de commande.\n\nUne page présente les verres et traitements (anti-lumière bleue, photochromiques, progressifs, solaires polarisés). Le client peut réserver un rendez-vous en choisissant le motif, le jour et le créneau, ou demander un devis express en envoyant son ordonnance (image ou PDF). Des liens directs WhatsApp et appel, ainsi que les informations sur la prise en charge par les mutuelles, complètent le parcours.",
+    features: [
+      "Catalogue de montures filtrable par forme et par catégorie",
+      "Guide de morphologie du visage",
+      "Prise de rendez-vous en ligne (motif, jour, créneau)",
+      "Demande de devis express avec envoi d'ordonnance",
+      "Page verres et traitements",
+      "Informations sur mutuelles et tiers-payant",
+      "Boutons WhatsApp et appel direct",
+      "Adaptation au téléphone et partage sur les réseaux",
+    ],
+    stack: ['Site web responsive', 'Vercel'],
+    tags: ['Client', 'Optique', 'Rendez-vous', 'Catalogue'],
+  },
+  {
+    title: 'Popcake Factory',
+    kind: 'client',
+    status: 'en_ligne',
+    client: 'Popcake Factory',
+    link: 'https://popcake.vercel.app',
+    sector: 'Pâtisserie',
+    description: "Site de présentation et de commande d'une pâtisserie gourmande : créations (pop cakes, brochettes, cups, box chocolat), panier et commande par WhatsApp.",
+    long_desc:
+      "Popcake Factory propose des bouchées gourmandes pour anniversaires, mariages, pauses café et événements privés. Le site met en valeur les créations avec photos et permet de les ajouter à un panier.\n\nLa commande suit un parcours simple en trois étapes : choisir ses créations et la date, envoyer la commande sur WhatsApp la veille, puis profiter. Le site contient aussi des sections recettes, conseils, TikTok et un blog d'actualités et d'astuces, avec un lien vers une boutique de recettes.",
+    features: [
+      "Catalogue de créations avec photos",
+      "Panier et commande envoyée par WhatsApp",
+      "Parcours de commande en trois étapes",
+      "Recettes, conseils et blog",
+      "Lien vers le compte TikTok",
+      "Adaptation au téléphone",
+    ],
+    stack: ['Site web responsive', 'Vercel'],
+    tags: ['Client', 'Pâtisserie', 'WhatsApp', 'E-commerce'],
+  },
   {
     title: 'Resto BF',
     kind: 'saas',
