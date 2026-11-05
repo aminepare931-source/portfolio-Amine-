@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Play } from 'lucide-react'
 import type { Publication } from '../data/publications'
 
 export default function PublicationCard({ p, priority = false }: { p: Publication; priority?: boolean }) {
@@ -8,7 +8,8 @@ export default function PublicationCard({ p, priority = false }: { p: Publicatio
       to={`/journal/${p.slug}`}
       className="group block break-inside-avoid mb-5 rounded-md overflow-hidden border border-stroke bg-white/60 hover:border-gov/50 hover:shadow-[0_18px_40px_rgba(10,61,145,0.14)] transition-all"
     >
-      <div className="overflow-hidden bg-surface">
+      <div className="relative overflow-hidden bg-surface">
+        {p.media?.some((m) => m.type !== 'image') && <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 bg-black/70 text-white text-[11px] font-medium rounded-full px-2.5 py-1"><Play size={11} fill="currentColor" /> Vidéo</span>}
         <img
           src={p.image}
           alt={p.alt}

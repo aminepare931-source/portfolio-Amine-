@@ -55,7 +55,7 @@ function useRemote<T>(key: string, fetcher: () => Promise<T>, initial: T): { dat
   return { data, loading }
 }
 
-interface PubRow { slug: string; title: string; category: PubCategory; excerpt: string; price: string | null; intro: string; points: string[]; service_slug: string | null; image: string; alt: string | null; w: number; h: number }
+interface PubRow { slug: string; title: string; category: PubCategory; excerpt: string; price: string | null; intro: string; points: string[]; service_slug: string | null; image: string; alt: string | null; w: number; h: number; media: { type: 'image' | 'video' | 'embed'; url: string }[] | null; created_at: string }
 
 /** Publications : celles ajoutées depuis l'administration en premier, puis celles du site. */
 export function usePublications(): { list: Publication[]; loading: boolean } {
@@ -65,6 +65,7 @@ export function usePublications(): { list: Publication[]; loading: boolean } {
       slug: r.slug, title: r.title, category: r.category, excerpt: r.excerpt, price: r.price ?? undefined,
       intro: r.intro, points: Array.isArray(r.points) ? r.points : [], serviceSlug: r.service_slug ?? undefined,
       image: r.image, alt: r.alt ?? r.title, w: r.w, h: r.h,
+      media: Array.isArray(r.media) ? r.media : [], createdAt: r.created_at,
     }))
   }, [])
   const slugs = new Set(data.map((p) => p.slug))

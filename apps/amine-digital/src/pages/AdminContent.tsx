@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2, Eye, EyeOff, ImagePlus, Loader2, Download } from 'lucide-react'
-import { fetchProjects } from '../lib/supabase'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Plus, Pencil, Trash2, Eye, EyeOff, ImagePlus, Loader2, Download, Film, X } from 'lucide-react'
+import { fetchProjects, uploadToBucket, MAX_UPLOAD } from '../lib/supabase'
 import { PROJECT_DRAFTS } from '../data/projectDrafts'
 import { SERVICES } from '../data/services'
-import { resizeImage } from '../lib/image'
+import { resizeImage, resizeToBlob, videoPoster } from '../lib/image'
 import { input, btn, type TabProps } from './adminUi'
 
 /** Charge une liste via une fonction d'administration et fournit enregistrer / supprimer. */
@@ -52,8 +52,84 @@ function ImagePicker({ value, onPick, label }: { value: string | null; onPick: (
 }
 
 /* ───────── Publications ───────── */
-interface Pub { id: string; slug: string; title: string; category: string; excerpt: string; price: string | null; intro: string; points: string[]; service_slug: string | null; image: string; alt: string | null; w: number; h: number; visible: boolean }
-const emptyPub = { id: '', title: '', category: 'Service', excerpt: '', price: '', intro: '', points: '', service_slug: '', image: '', w: 1000, h: 1000, alt: '', visible: true, changed: false }
+interface Pub { id: string; slug: string; title: string; category: string; excerpt: string; price: string | null; intro: string; points: string[]; service_slug: string | null; image: string; alt: string | null; w: number; h: number; visible: boolean; media: Media[] | null }
+interface Media { type: 'image' | 'video' | 'embed'; url: string }
+const emptyPub = { id: '', title: '', category: 'Service', excerpt: '', price: '', intro: '', points: '', service_slug: '', image: '', w: 1000, h: 1000, alt: '', visible: true, changed: false, media: [] as Media[] }
+
+/** Photos et vidéos d'une publication : envoyées dans le stockage, la première photo sert de couverture. */
+function PubMedia({ media, cover, onChange, onCover, call, notify }: { media: Media[]; cover: string; onChange: (m: Media[]) => void; onCover: (url: string, w: number, h: number) => void; call: TabProps['call']; notify: (m: string) => void }) {
+  const [busy, setBusy] = useState<{ name: string; pct: number }[]>([])
+  const [err, setErr] = useState('')
+  const [link, setLink] = useState('')
+  const tok = useRef<{ t: string; at: number } | null>(null)
+  const token = async () => {
+    if (tok.current && Date.now() - tok.current.at < 2 * 3600_000) return tok.current.t
+    const t = await call<string>('admin_upload_token'); tok.current = { t, at: Date.now() }; return t
+  }
+  async function add(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []); e.target.value = ''
+    if (!files.length) return
+    setErr('')
+    let next = [...media]; let hasCover = !!cover
+    for (const f of files) {
+      if (next.length >= 12) { setErr('12 médias maximum par publication.'); break }
+      const isVideo = f.type.startsWith('video/'), isImage = f.type.startsWith('image/')
+      if (!isVideo && !isImage) { setErr(`« ${f.name} » : seules les photos et les vidéos sont acceptées.`); continue }
+      if (isVideo && f.size > MAX_UPLOAD) { setErr(`« ${f.name} » dépasse 50 Mo. Mets la vidéo sur YouTube et colle le lien ci-dessous.`); continue }
+      setBusy((b) => [...b, { name: f.name, pct: 0 }])
+      const prog = (pct: number) => setBusy((b) => b.map((x) => (x.name === f.name ? { ...x, pct } : x)))
+      try {
+        const t = await token()
+        if (isImage) {
+          const r = await resizeToBlob(f, 1600, 0.84)
+          const up = await uploadToBucket('publications', t, r.blob, f.name.replace(/\.\w+$/, '') + '.jpg', prog)
+          next = [...next, { type: 'image', url: up.url }]
+          if (!hasCover) { onCover(up.url, r.w, r.h); hasCover = true }
+        } else {
+          const up = await uploadToBucket('publications', t, f, f.name, prog)
+          next = [...next, { type: 'video', url: up.url }]
+          if (!hasCover) {
+            const po = await videoPoster(f)
+            if (po) { const pu = await uploadToBucket('publications', t, po.blob, 'couverture.jpg', () => {}); onCover(pu.url, po.w, po.h); hasCover = true }
+            else setErr('Vidéo envoyée, mais sa couverture n\'a pas pu être créée : ajoute aussi une photo, elle servira de couverture.')
+          }
+        }
+        onChange(next)
+      } catch (x) { setErr((x as Error).message) }
+      setBusy((b) => b.filter((y) => y.name !== f.name))
+    }
+  }
+  function addLink() {
+    const u = link.trim()
+    if (!/^https:\/\//i.test(u)) { setErr('Le lien doit commencer par https://'); return }
+    setErr(''); onChange([...media, { type: 'embed', url: u }]); setLink('')
+  }
+  return (
+    <div className="sm:col-span-2 border border-dashed border-stroke rounded-md p-3">
+      <div className="text-xs text-muted mb-2">Photos et vidéos (12 maximum, vidéos jusqu'à 50 Mo). La première photo devient la couverture de la publication.</div>
+      <div className="flex flex-wrap gap-3 items-start">
+        {media.map((m, i) => (
+          <div key={m.url} className="relative">
+            {m.type === 'image' ? <img src={m.url} alt="" className={`h-24 rounded-sm border ${m.url === cover ? 'border-clay' : 'border-stroke'}`} />
+              : <div className="h-24 w-32 rounded-sm border border-stroke bg-surface flex flex-col items-center justify-center text-xs text-muted gap-1"><Film size={20} className="text-clay" />{m.type === 'video' ? 'Vidéo' : 'Lien vidéo'}</div>}
+            <button type="button" onClick={() => onChange(media.filter((_, k) => k !== i))} aria-label="Retirer" className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center"><X size={12} /></button>
+            {m.url === cover && <span className="absolute bottom-1 left-1 text-[10px] bg-clay text-white rounded px-1">Couverture</span>}
+          </div>
+        ))}
+        {busy.map((b) => <div key={b.name} className="h-24 w-32 rounded-sm border border-stroke text-xs p-2 flex flex-col justify-between"><span className="truncate">{b.name}</span><span className="text-muted">{b.pct}%</span></div>)}
+        <label className={`${btn} border-stroke hover:bg-slate-900/5 cursor-pointer`}>
+          {busy.length ? <Loader2 size={14} className="animate-spin" /> : <ImagePlus size={14} />} Ajouter photos / vidéos
+          <input type="file" accept="image/*,video/*" multiple className="hidden" onChange={add} />
+        </label>
+      </div>
+      <div className="flex gap-2 mt-3">
+        <input className={`${input} flex-1`} placeholder="Ou colle un lien YouTube (vidéo plus lourde que 50 Mo)" value={link} onChange={(e) => setLink(e.target.value)} />
+        <button type="button" onClick={addLink} className={`${btn} border-stroke`}>Ajouter</button>
+      </div>
+      {err && <p role="alert" className="text-xs text-red-700 mt-2">{err}</p>}
+    </div>
+  )
+}
 
 export function PublicationsTab(p: TabProps) {
   const { rows, loading, save, del } = useCrud<Pub>('publication', p)
@@ -61,15 +137,15 @@ export function PublicationsTab(p: TabProps) {
   const ok = f && f.title.trim().length >= 3 && f.excerpt.trim().length >= 5 && (f.id || f.image)
   const submit = async () => {
     if (!f) return
-    const data: Record<string, unknown> = { title: f.title, category: f.category, excerpt: f.excerpt, price: f.price, intro: f.intro, points: lines(f.points), service_slug: f.service_slug, alt: f.alt, visible: f.visible }
+    const data: Record<string, unknown> = { title: f.title, category: f.category, excerpt: f.excerpt, price: f.price, intro: f.intro, points: lines(f.points), service_slug: f.service_slug, alt: f.alt, visible: f.visible, media: f.media }
     if (f.changed) Object.assign(data, { image: f.image, w: f.w, h: f.h })
     if (await save(f.id || null, data, f.id ? 'Publication mise à jour' : 'Publication ajoutée — visible sur le site')) setF(null)
   }
-  const edit = (r: Pub) => setF({ id: r.id, title: r.title, category: r.category, excerpt: r.excerpt, price: r.price ?? '', intro: r.intro, points: r.points.join('\n'), service_slug: r.service_slug ?? '', image: r.image, w: r.w, h: r.h, alt: r.alt ?? '', visible: r.visible, changed: false })
-  const toggle = (r: Pub) => save(r.id, { title: r.title, category: r.category, excerpt: r.excerpt, price: r.price, intro: r.intro, points: r.points, service_slug: r.service_slug, alt: r.alt, visible: !r.visible }, r.visible ? 'Publication masquée' : 'Publication visible')
+  const edit = (r: Pub) => setF({ id: r.id, title: r.title, category: r.category, excerpt: r.excerpt, price: r.price ?? '', intro: r.intro, points: r.points.join('\n'), service_slug: r.service_slug ?? '', image: r.image, w: r.w, h: r.h, alt: r.alt ?? '', visible: r.visible, changed: false, media: r.media ?? [] })
+  const toggle = (r: Pub) => save(r.id, { title: r.title, category: r.category, excerpt: r.excerpt, price: r.price, intro: r.intro, points: r.points, service_slug: r.service_slug, alt: r.alt, visible: !r.visible, media: r.media ?? [] }, r.visible ? 'Publication masquée' : 'Publication visible')
   return (
     <div>
-      <p className="text-xs text-muted mb-4">Ajoutez ici une nouvelle affiche : elle apparaît tout de suite dans la page Publications et sur l'accueil, avec sa propre page (utile pour Google). Les 11 premières affiches du site restent gérées par le code.</p>
+      <p className="text-xs text-muted mb-4">Publiez ici une affiche, des photos ou des vidéos : elle apparaît tout de suite dans la page Publications et sur l'accueil, avec sa propre page (utile pour Google). Les 11 premières affiches du site restent gérées par le code.</p>
       {!f && <button onClick={() => setF({ ...emptyPub })} className={`${btn} bg-gov text-white border-gov mb-5`}><Plus size={14} /> Nouvelle publication</button>}
       {f && (
         <div className="border border-stroke rounded-md p-4 bg-surface/40 mb-5 grid sm:grid-cols-2 gap-3">
@@ -81,7 +157,9 @@ export function PublicationsTab(p: TabProps) {
           <textarea className={`${input} sm:col-span-2`} rows={4} placeholder={'Points clés, un par ligne (recopiez le texte de l\'affiche : Google le lira)'} value={f.points} onChange={(e) => setF({ ...f, points: e.target.value })} />
           <select className={input} value={f.service_slug} onChange={(e) => setF({ ...f, service_slug: e.target.value })}><option value="">Aucun service lié</option>{SERVICES.map((s) => <option key={s.slug} value={s.slug}>{s.title}</option>)}</select>
           <input className={input} placeholder="Description de l'image (facultatif)" value={f.alt} onChange={(e) => setF({ ...f, alt: e.target.value })} />
-          <ImagePicker value={f.image || null} label="Choisir l'affiche" onPick={(d, w, h) => setF({ ...f, image: d, w, h, changed: true })} />
+          <PubMedia media={f.media} cover={f.image} call={p.call} notify={p.notify} onChange={(m) => setF((x) => (x ? { ...x, media: m } : x))} onCover={(url, w, h) => setF((x) => (x ? { ...x, image: url, w, h, changed: true } : x))} />
+          <ImagePicker value={f.media.length ? null : f.image || null} label="Ou choisir une seule affiche" onPick={(d, w, h) => setF({ ...f, image: d, w, h, changed: true })} />
+          {f.image && f.media.length > 0 && <img src={f.image} alt="" className="sm:col-span-2 max-h-44 rounded-sm border border-stroke" />}
           <label className="sm:col-span-2 flex items-center gap-2 text-sm"><input type="checkbox" checked={f.visible} onChange={(e) => setF({ ...f, visible: e.target.checked })} /> Visible sur le site</label>
           <div className="sm:col-span-2 flex gap-2"><button disabled={!ok} onClick={submit} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}>Enregistrer</button><button onClick={() => setF(null)} className={`${btn} border-stroke`}>Annuler</button></div>
         </div>

@@ -16,6 +16,9 @@ export interface Publication {
   serviceSlug?: string
   image: string
   alt: string
+  /** Photos et vidéos supplémentaires (publications ajoutées depuis l'administration) */
+  media?: { type: 'image' | 'video' | 'embed'; url: string }[]
+  createdAt?: string
   /** Largeur / hauteur de l'image, pour éviter le saut de mise en page */
   w: number
   h: number
@@ -26,6 +29,16 @@ const img = (n: string) => `/assets/publications/${n}.jpg`
 // Pour publier une nouvelle affiche : déposer l'image dans public/assets/publications/
 // puis ajouter un bloc ici, en tête de liste (les plus récentes d'abord).
 export const PUBLICATIONS: Publication[] = [
+  {
+    slug: 'creation-solutions-web-modernes',
+    title: 'Création de solutions web modernes pour marques et startups',
+    category: 'Service',
+    excerpt: "Sites d'investissement, e-commerce, vitrine, dépôt-vente, business, réservation ou portfolio : AMINE DIGITAL crée des sites web qui aident les marques et les startups à croître numériquement.",
+    points: ["Sites d'investissement", 'E-commerce et logistique', 'Sites vitrine célébrités', 'Sites e-commerce', 'Sites de dépôt-vente', 'Sites business', 'Sites de réservation', 'Sites portfolio'],
+    intro: "Nous créons des sites web qui aident les marques et les startups à croître numériquement. Voici notre expertise : du site vitrine à la plateforme e-commerce, chaque site est conçu sur mesure pour votre activité.",
+    serviceSlug: 'sites-web',
+    image: img('creation-solutions-web-modernes'), alt: 'Affiche AMINE DIGITAL : création de solutions web modernes, notre expertise en sites web', w: 1080, h: 1347,
+  },
   {
     slug: 'bon-debut-novembre',
     title: 'Bon début de mois de novembre',

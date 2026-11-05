@@ -156,28 +156,32 @@ export async function submitTeamApplication(code: string, data: Record<string, u
 export interface UploadedFile { name: string; url: string; type: string; size: number }
 export const MAX_UPLOAD = 50 * 1024 * 1024
 export const STORAGE_PUBLIC = `${SB_URL}/storage/v1/object/public/candidatures/`
+export const PUBLICATIONS_PUBLIC = `${SB_URL}/storage/v1/object/public/publications/`
 
-/** Envoie un fichier de preuve (photo, vidéo, PDF…) dans le stockage privé des candidatures. */
-export function uploadCandidateFile(code: string, file: File, onProgress: (pct: number) => void): Promise<UploadedFile> {
+/** Envoie un fichier dans un espace de stockage Supabase. `folder` est le code d'invitation ou le jeton d'envoi. */
+export function uploadToBucket(bucket: string, folder: string, file: Blob, fileName: string, onProgress: (pct: number) => void): Promise<UploadedFile> {
   return new Promise((resolve, reject) => {
-    const safe = file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9._-]+/g, '_').slice(-80) || 'fichier'
+    const safe = fileName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9._-]+/g, '_').slice(-80) || 'fichier'
     const rand = Array.from(crypto.getRandomValues(new Uint8Array(12)), (b) => b.toString(16).padStart(2, '0')).join('')
-    const path = `${encodeURIComponent(code)}/${rand}/${safe}`
+    const path = `${encodeURIComponent(folder)}/${rand}/${safe}`
     const xhr = new XMLHttpRequest()
-    xhr.open('POST', `${SB_URL}/storage/v1/object/candidatures/${path}`)
+    xhr.open('POST', `${SB_URL}/storage/v1/object/${bucket}/${path}`)
     xhr.setRequestHeader('apikey', SB_KEY)
     xhr.setRequestHeader('Authorization', `Bearer ${SB_KEY}`)
     xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream')
     xhr.setRequestHeader('x-upsert', 'false')
     xhr.upload.onprogress = (e) => { if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100)) }
     xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 300) resolve({ name: file.name.slice(0, 120), url: `${STORAGE_PUBLIC}${path}`, type: file.type, size: file.size })
+      if (xhr.status >= 200 && xhr.status < 300) resolve({ name: fileName.slice(0, 120), url: `${SB_URL}/storage/v1/object/public/${bucket}/${path}`, type: file.type, size: file.size })
       else if (xhr.status === 413) reject(new Error('Fichier trop lourd (50 Mo maximum).'))
       else if (xhr.status === 415) reject(new Error("Ce type de fichier n'est pas accepté."))
-      else if (xhr.status === 400 || xhr.status === 401 || xhr.status === 403) reject(new Error("Envoi refusé : lien d'invitation invalide ou envoi de fichiers pas encore activé."))
+      else if (xhr.status === 400 || xhr.status === 401 || xhr.status === 403) reject(new Error("Envoi refusé : lien ou session expirés, ou stockage pas encore activé (script SQL à exécuter)."))
       else reject(new Error("L'envoi a échoué. Réessaie."))
     }
     xhr.onerror = () => reject(new Error('Connexion interrompue. Réessaie.'))
     xhr.send(file)
   })
 }
+
+/** Envoie un fichier de preuve (photo, vidéo, PDF…) d'un candidat. */
+export const uploadCandidateFile = (code: string, file: File, onProgress: (pct: number) => void) => uploadToBucket('candidatures', code, file, file.name, onProgress)

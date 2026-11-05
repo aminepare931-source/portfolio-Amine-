@@ -641,3 +641,92 @@ begin
       with check (bucket_id = 'candidatures' and public.is_invite((storage.foldername(name))[1]));
   end if;
 end $$;
+
+-- ───────────────────────── Module 4 : photos et vidéos dans les publications ─────────────────────────
+alter table public.publications add column if not exists media jsonb not null default '[]'::jsonb;
+alter table public.publications drop constraint if exists publications_media_check;
+alter table public.publications add constraint publications_media_check check (jsonb_typeof(media) = 'array' and jsonb_array_length(media) <= 12 and pg_column_size(media) <= 12000);
+do $$
+declare c text;
+begin
+  for c in select conname from pg_constraint where conrelid = 'public.publications'::regclass and contype = 'c' and pg_get_constraintdef(oid) like '%data:image%' loop
+    execute format('alter table public.publications drop constraint %I', c);
+  end loop;
+end $$;
+alter table public.publications add constraint publications_image_check
+  check (image ~ '^(data:image/(jpeg|png|webp);base64,|/assets/|https://)' and char_length(image) <= 700000);
+
+-- Jeton d'envoi : l'admin en demande un (mot de passe requis), valable 3 heures. Il autorise l'envoi de fichiers vers le stockage.
+create table if not exists public.upload_tokens (token text primary key, expires_at timestamptz not null);
+alter table public.upload_tokens enable row level security;
+revoke all on public.upload_tokens from anon, authenticated;
+
+create or replace function public.admin_upload_token(p_pass text) returns text
+language plpgsql security definer set search_path = public, extensions as $$
+declare t text := encode(gen_random_bytes(12), 'hex');
+begin
+  perform public.ad_auth(p_pass);
+  delete from public.upload_tokens where expires_at < now();
+  insert into public.upload_tokens values (t, now() + interval '3 hours');
+  return t;
+end $$;
+
+create or replace function public.is_upload_token(p text) returns boolean
+language sql security definer stable set search_path = public as $$
+  select exists (select 1 from public.upload_tokens where token = p and expires_at > now())
+$$;
+revoke all on function public.admin_upload_token(text), public.is_upload_token(text) from public;
+grant execute on function public.admin_upload_token(text), public.is_upload_token(text) to anon;
+
+do $$
+begin
+  if to_regclass('storage.buckets') is not null then
+    insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+    values ('publications', 'publications', true, 52428800, array['image/*', 'video/*'])
+    on conflict (id) do update set public = true, file_size_limit = 52428800, allowed_mime_types = excluded.allowed_mime_types;
+    drop policy if exists "publications_depot" on storage.objects;
+    create policy "publications_depot" on storage.objects for insert to anon
+      with check (bucket_id = 'publications' and public.is_upload_token((storage.foldername(name))[1]));
+  end if;
+end $$;
+
+-- Sauvegarde d'une publication avec médias (remplace la version précédente)
+create or replace function public.admin_publication_save(p_pass text, p_id uuid, p_data jsonb) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+declare s text; m jsonb := '[]'::jsonb; it jsonb;
+begin
+  perform public.ad_auth(p_pass);
+  if jsonb_typeof(p_data->'media') = 'array' then
+    for it in select * from jsonb_array_elements(p_data->'media') loop
+      if (it->>'type') not in ('image', 'video', 'embed') or coalesce(it->>'url', '') !~ '^https://' or char_length(it->>'url') > 500 then
+        raise exception 'media invalide';
+      end if;
+      m := m || jsonb_build_array(jsonb_build_object('type', it->>'type', 'url', it->>'url'));
+    end loop;
+  end if;
+  if p_id is null then
+    s := left(trim(both '-' from regexp_replace(lower(translate(coalesce(p_data->>'title', ''), 'àâäéèêëîïôöùûüçÀÂÉÈÊÎÔÙÛÇ', 'aaaeeeeiioouuucaaeeeiouuc')), '[^a-z0-9]+', '-', 'g')), 60);
+    if s = '' then s := 'publication'; end if;
+    if exists (select 1 from public.publications where slug = s) then s := s || '-' || substr(encode(gen_random_bytes(3), 'hex'), 1, 5); end if;
+    insert into public.publications (slug, title, category, excerpt, price, intro, points, service_slug, image, alt, w, h, visible, media)
+    values (s, trim(p_data->>'title'), p_data->>'category', trim(p_data->>'excerpt'), nullif(trim(coalesce(p_data->>'price', '')), ''),
+            trim(coalesce(p_data->>'intro', '')),
+            case when jsonb_typeof(p_data->'points') = 'array' then p_data->'points' else '[]'::jsonb end,
+            nullif(trim(coalesce(p_data->>'service_slug', '')), ''), p_data->>'image',
+            coalesce(nullif(trim(coalesce(p_data->>'alt', '')), ''), 'Publication AMINE DIGITAL : ' || trim(p_data->>'title')),
+            coalesce((p_data->>'w')::int, 1000), coalesce((p_data->>'h')::int, 1000), coalesce((p_data->>'visible')::boolean, true), m);
+  else
+    update public.publications set
+      title = trim(p_data->>'title'), category = p_data->>'category', excerpt = trim(p_data->>'excerpt'),
+      price = nullif(trim(coalesce(p_data->>'price', '')), ''), intro = trim(coalesce(p_data->>'intro', '')),
+      points = case when jsonb_typeof(p_data->'points') = 'array' then p_data->'points' else '[]'::jsonb end,
+      service_slug = nullif(trim(coalesce(p_data->>'service_slug', '')), ''),
+      image = coalesce(nullif(p_data->>'image', ''), image),
+      w = case when nullif(p_data->>'image', '') is null then w else coalesce((p_data->>'w')::int, w) end,
+      h = case when nullif(p_data->>'image', '') is null then h else coalesce((p_data->>'h')::int, h) end,
+      alt = coalesce(nullif(trim(coalesce(p_data->>'alt', '')), ''), alt),
+      visible = coalesce((p_data->>'visible')::boolean, visible),
+      media = case when p_data ? 'media' then m else media end
+    where id = p_id;
+  end if;
+end $$;

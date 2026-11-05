@@ -7,11 +7,27 @@ import type { Publication } from '../data/publications'
 import PublicationCard from '../components/PublicationCard'
 import Seo from '../components/Seo'
 
+function ytId(u: string): string | null {
+  const m = u.match(/^https:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/)
+  return m ? m[1] : null
+}
+
+function MediaItem({ m, poster, title }: { m: { type: string; url: string }; poster: string; title: string }) {
+  if (m.type === 'image') return <img src={m.url} alt={title} loading="lazy" className="block max-w-full h-auto mx-auto rounded-md border border-stroke" />
+  if (m.type === 'video') return <video src={m.url} poster={poster} controls playsInline preload="metadata" className="block w-full max-h-[80vh] rounded-md border border-stroke bg-black" />
+  const id = ytId(m.url)
+  if (id) return <div className="aspect-video rounded-md overflow-hidden border border-stroke"><iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={title} loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowFullScreen className="w-full h-full" /></div>
+  return <a href={m.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-stroke px-5 py-3 rounded-sm text-gov hover:border-gov/50">Voir la vidéo <ArrowRight size={15} /></a>
+}
+
 function PublicationPage({ p, PUBLICATIONS }: { p: Publication; PUBLICATIONS: Publication[] }) {
   const cfg = useSettings()
   const slug = p.slug
   const others = PUBLICATIONS.filter((x) => x.slug !== slug && x.category === p.category).concat(PUBLICATIONS.filter((x) => x.slug !== slug && x.category !== p.category)).slice(0, 3)
   const wa = waUrl(cfg, `Bonjour AMINE DIGITAL, je suis intéressé(e) par : ${p.title}`)
+  const extra = (p.media ?? []).filter((m) => !(m.type === 'image' && m.url === p.image))
+  const abs = (u: string) => (u.startsWith('/') ? `https://amine-digital-services.vercel.app${u}` : u)
+  const videos = extra.filter((m) => m.type === 'video')
 
   return (
     <div className="px-5 sm:px-8 pt-36 pb-24 max-w-[1100px] mx-auto">
@@ -25,7 +41,8 @@ function PublicationPage({ p, PUBLICATIONS }: { p: Publication; PUBLICATIONS: Pu
           '@type': p.price ? 'Service' : 'Article',
           name: p.title,
           description: p.excerpt,
-          image: p.image.startsWith('/') ? `https://amine-digital-services.vercel.app${p.image}` : undefined,
+          image: abs(p.image),
+          ...(videos.length ? { hasPart: videos.map((v) => ({ '@type': 'VideoObject', name: p.title, description: p.excerpt, thumbnailUrl: abs(p.image), contentUrl: v.url, ...(p.createdAt ? { uploadDate: p.createdAt } : {}) })) } : {}),
           provider: { '@type': 'Organization', name: 'AMINE DIGITAL', areaServed: 'Burkina Faso', address: { '@type': 'PostalAddress', addressLocality: 'Bobo-Dioulasso', addressCountry: 'BF' } },
         }}
       />
@@ -34,7 +51,10 @@ function PublicationPage({ p, PUBLICATIONS }: { p: Publication; PUBLICATIONS: Pu
       </Link>
 
       <div className="grid md:grid-cols-[1fr_1fr] gap-8 lg:gap-14 items-start">
-        <img src={p.image} alt={p.alt} width={p.w} height={p.h} className="w-full h-auto rounded-md border border-stroke shadow-[0_20px_50px_rgba(10,61,145,0.15)] md:sticky md:top-28" />
+        <div className={`space-y-4 ${extra.length ? '' : 'md:sticky md:top-28'}`}>
+          <img src={p.image} alt={p.alt} width={p.w} height={p.h} className="w-full h-auto rounded-md border border-stroke shadow-[0_20px_50px_rgba(10,61,145,0.15)]" />
+          {extra.map((m) => <MediaItem key={m.url} m={m} poster={p.image} title={p.title} />)}
+        </div>
         <div>
           <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">{p.category}</div>
           <h1 className="font-display text-3xl sm:text-4xl leading-tight mb-5">{p.title}</h1>
