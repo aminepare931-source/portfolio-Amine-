@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Seo from '../components/Seo'
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ExternalLink, CheckCircle, Cpu, BarChart3, Sparkles, Zap } from 'lucide-react'
@@ -57,6 +58,7 @@ export default function ProjectDetailPage() {
       transition={{ duration: 0.4 }}
       className="pt-28 md:pt-36 pb-20 px-4 sm:px-6 max-w-[1100px] mx-auto"
     >
+      <Seo path={`/projets/${project.id}`} title={`${project.name} — projet de Mouhamed Amine Paré`} description={(project.tagline ? project.tagline + ' ' : '') + project.description} />
       <Link
         to="/projets"
         className="inline-flex items-center gap-2 text-xs sm:text-sm text-muted hover:text-slate-900 transition-colors mb-6"

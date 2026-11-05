@@ -1,4 +1,6 @@
 import Hero from '../components/Hero'
+import Seo from '../components/Seo'
+import { PAGE_SEO, PERSON_JSONLD } from '../seoRoutes'
 import Marquee from '../components/Marquee'
 import MotionDesignTeaser from '../components/MotionDesignTeaser'
 import StackMotionMobile from '../components/StackMotionMobile'
@@ -17,6 +19,7 @@ import Contact from '../components/ContactCTA'
 export default function Home() {
   return (
     <>
+      <Seo path="/" {...PAGE_SEO['/']} jsonLd={PERSON_JSONLD} />
       <Hero />
       <Marquee />
       <StackMotionMobile />
