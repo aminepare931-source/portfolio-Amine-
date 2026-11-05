@@ -4,6 +4,8 @@ import { submitLead } from '../lib/supabase'
 import { Link } from 'react-router-dom'
 import { useSettings, waUrl } from '../lib/settings'
 import Faq from '../components/Faq'
+import Seo from '../components/Seo'
+import { PAGE_SEO } from '../data/seoRoutes'
 
 export default function ContactPage() {
   const cfg = useSettings()
@@ -28,6 +30,7 @@ export default function ContactPage() {
 
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1000px] mx-auto">
+      <Seo path="/contact" {...PAGE_SEO['/contact']} />
       <div className="text-center mb-14">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Contact</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4">Parlons de votre projet</h1>

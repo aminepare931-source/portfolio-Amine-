@@ -1,4 +1,5 @@
 import { useSettings, waUrl } from '../lib/settings'
+import { PAGE_SEO } from '../data/seoRoutes'
 import { Link } from 'react-router-dom'
 import { Check, ArrowRight } from 'lucide-react'
 import { usePlans } from '../lib/content'
@@ -10,7 +11,7 @@ export default function PricingPage() {
   const PLANS = usePlans()
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1100px] mx-auto">
-      <Seo path="/tarifs" title="Tarifs — AMINE DIGITAL" description="Formules claires pour votre site web, boutique en ligne ou application à Bobo-Dioulasso : Starter, Pro et sur-mesure, avec paiement Mobile Money." />
+      <Seo path="/tarifs" {...PAGE_SEO['/tarifs']} />
       <div className="text-center mb-6">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Tarifs</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4">Des offres claires</h1>

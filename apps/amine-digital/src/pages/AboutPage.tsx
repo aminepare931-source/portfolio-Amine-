@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
+import { PAGE_SEO } from '../data/seoRoutes'
 import { ArrowRight, MapPin, Code2, Shield, Sparkles } from 'lucide-react'
 import { Line, Fade } from '../components/Reveal'
 import Team from '../components/Team'
@@ -6,6 +8,7 @@ import Team from '../components/Team'
 export default function AboutPage() {
   return (
     <div className="px-6 pt-36 pb-24 max-w-[960px] mx-auto">
+      <Seo path="/a-propos" {...PAGE_SEO['/a-propos']} />
       <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">À propos</div>
       <h1 className="font-display text-4xl sm:text-5xl mb-8"><Line>L'histoire derrière AMINE DIGITAL</Line></h1>
 

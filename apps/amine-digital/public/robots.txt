@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /administration
+Disallow: /equipe/
 
 Sitemap: https://amine-digital-services.vercel.app/sitemap.xml

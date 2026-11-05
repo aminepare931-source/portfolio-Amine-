@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PAGE_SEO } from '../data/seoRoutes'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { useRealisations, KIND_LABEL, type Kind } from '../lib/content'
@@ -14,7 +15,7 @@ export default function RealisationsPage() {
   const shown = filter === 'all' ? list : list.filter((r) => r.kind === filter)
   return (
     <div className="px-5 sm:px-8 pt-36 pb-24 max-w-[1200px] mx-auto">
-      <Seo path="/realisations" title="Réalisations — AMINE DIGITAL" description="Projets d'AMINE DIGITAL à Bobo-Dioulasso : projets clients, produits SaaS et applications internes (sites web, applications, outils métier)." />
+      <Seo path="/realisations" {...PAGE_SEO['/realisations']} />
       <div className="text-center mb-10">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Réalisations</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4">Nos projets</h1>

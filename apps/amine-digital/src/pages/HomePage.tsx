@@ -1,4 +1,6 @@
 import { useSettings, waUrl } from '../lib/settings'
+import Seo from '../components/Seo'
+import { PAGE_SEO, ORG_JSONLD } from '../data/seoRoutes'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck, Smartphone, Bot, MapPin, HeadphonesIcon } from 'lucide-react'
 import { SERVICES } from '../data/services'
@@ -69,6 +71,7 @@ export default function HomePage() {
   const { list: pubs } = usePublications()
   return (
     <>
+      <Seo path="/" {...PAGE_SEO['/']} jsonLd={ORG_JSONLD} />
       {/* 1 — HERO */}
       <section className="relative bg-[#061a3d] text-white overflow-hidden pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20">
         {/* Fond : photo globe/réseau, teintée bleu nuit pour garder le texte lisible */}

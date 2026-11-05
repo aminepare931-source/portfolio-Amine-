@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
+import { PAGE_SEO } from '../data/seoRoutes'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { ServiceImage } from '../components/PillarIllustrations'
 import { SERVICES } from '../data/services'
@@ -7,6 +9,7 @@ import { Line } from '../components/Reveal'
 export default function ServicesPage() {
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1000px] mx-auto">
+      <Seo path="/services" {...PAGE_SEO['/services']} />
       <div className="text-center mb-14">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Ce que nous faisons</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4"><Line>Nos services</Line></h1>

@@ -16,7 +16,10 @@ export default function Seo({
     set('meta[name="description"]', 'name', description)
     set('meta[property="og:title"]', 'property', title)
     set('meta[property="og:description"]', 'property', description)
-    if (image && image.startsWith('/')) set('meta[property="og:image"]', 'property', SITE + image)
+    set('meta[property="og:url"]', 'property', SITE + path)
+    set('meta[name="twitter:title"]', 'name', title)
+    set('meta[name="twitter:description"]', 'name', description)
+    if (image && image.startsWith('/')) { set('meta[property="og:image"]', 'property', SITE + image); set('meta[name="twitter:image"]', 'name', SITE + image) }
     let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
     if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.appendChild(link) }
     link.href = SITE + path

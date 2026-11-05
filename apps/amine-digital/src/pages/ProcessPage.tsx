@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
+import { PAGE_SEO } from '../data/seoRoutes'
 import { ArrowRight } from 'lucide-react'
 import { PROCESS } from '../data/process'
 import { Line } from '../components/Reveal'
@@ -6,6 +8,7 @@ import { Line } from '../components/Reveal'
 export default function ProcessPage() {
   return (
     <div className="px-6 pt-36 pb-24 max-w-[800px] mx-auto">
+      <Seo path="/processus" {...PAGE_SEO['/processus']} />
       <div className="text-center mb-16">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Comment on travaille</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4"><Line>Notre processus</Line></h1>

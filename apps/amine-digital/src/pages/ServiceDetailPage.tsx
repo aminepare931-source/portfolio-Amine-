@@ -1,4 +1,6 @@
 import { useSettings, waUrl } from '../lib/settings'
+import Seo from '../components/Seo'
+import { serviceSeo } from '../data/seoRoutes'
 import { Link, useParams, Navigate } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Check } from 'lucide-react'
 import { ServiceImage } from '../components/PillarIllustrations'
@@ -29,6 +31,7 @@ export default function ServiceDetailPage() {
 
   return (
     <div className="px-6 pt-36 pb-24 max-w-[1000px] mx-auto">
+      <Seo {...serviceSeo(service)} />
       <Link to="/services" className="inline-flex items-center gap-2 text-sm text-muted hover:text-clay transition-colors mb-8">
         <ArrowLeft size={15} /> Tous les services
       </Link>

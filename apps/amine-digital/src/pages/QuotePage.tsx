@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PAGE_SEO } from '../data/seoRoutes'
 import { MessageCircle, Send, CheckCircle2 } from 'lucide-react'
 import { submitQuote } from '../lib/supabase'
 import { useSettings, waUrl } from '../lib/settings'
@@ -29,7 +30,7 @@ export default function QuotePage() {
 
   return (
     <div className="px-5 sm:px-8 pt-36 pb-24 max-w-[800px] mx-auto">
-      <Seo path="/devis" title="Demander un devis — AMINE DIGITAL" description="Décrivez votre projet (site web, application, design, marketing digital) et recevez une proposition adaptée à votre budget. AMINE DIGITAL, Bobo-Dioulasso." />
+      <Seo path="/devis" {...PAGE_SEO['/devis']} />
       <div className="text-center mb-10">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Devis</div>
         <h1 className="font-display text-4xl sm:text-5xl mb-4">Demander un devis</h1>
