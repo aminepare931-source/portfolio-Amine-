@@ -70,7 +70,8 @@ export const PROJECT_DRAFTS: ProjectDraft[] = [
   {
     title: 'Resto BF',
     kind: 'saas',
-    status: '',
+    status: 'en_ligne',
+    link: 'https://resto-bf.vercel.app',
     sector: 'Restauration',
     description: "Plateforme SaaS pour restaurants, maquis et fast-foods du Burkina : site avec menu digital, commandes par WhatsApp, réservations, espace cuisine en temps réel, stocks et facturation.",
     long_desc:
