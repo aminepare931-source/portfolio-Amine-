@@ -617,3 +617,27 @@ revoke all on function public.submit_team_application(text, jsonb), public.admin
   public.admin_application_update(text, uuid, text, text), public.admin_application_delete(text, uuid) from public;
 grant execute on function public.submit_team_application(text, jsonb), public.admin_application_list(text),
   public.admin_application_update(text, uuid, text, text), public.admin_application_delete(text, uuid) to anon;
+
+-- Fichiers de preuve (photos, vidéos, PDF…) : dépôt réservé aux porteurs du lien d'invitation, 50 Mo maximum par fichier.
+create or replace function public.is_invite(p_code text) returns boolean
+language sql security definer stable set search_path = public as $$
+  select exists (select 1 from public.team_invite where code = p_code)
+$$;
+revoke all on function public.is_invite(text) from public;
+grant execute on function public.is_invite(text) to anon;
+
+do $$
+begin
+  if to_regclass('storage.buckets') is not null then
+    insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+    values ('candidatures', 'candidatures', true, 52428800, array[
+      'image/*', 'video/*', 'audio/*', 'application/pdf', 'application/zip', 'text/plain',
+      'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])
+    on conflict (id) do update set public = true, file_size_limit = 52428800, allowed_mime_types = excluded.allowed_mime_types;
+    drop policy if exists "candidatures_depot" on storage.objects;
+    create policy "candidatures_depot" on storage.objects for insert to anon
+      with check (bucket_id = 'candidatures' and public.is_invite((storage.foldername(name))[1]));
+  end if;
+end $$;

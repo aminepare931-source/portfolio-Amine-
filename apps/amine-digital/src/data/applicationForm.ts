@@ -52,11 +52,20 @@ export const APPLICATION_SECTIONS: Section[] = [
     ],
   },
   {
-    id: 'preuves', title: 'Les preuves de ton travail',
-    intro: "Montre-nous des choses réelles que tu as faites. Sans exemple vérifiable, le dossier est très difficile à retenir.",
+    id: 'ia', title: "Ta maîtrise de l'intelligence artificielle",
+    intro: "Chez AMINE DIGITAL, l'IA fait partie du travail quotidien, quel que soit le poste. Réponds franchement : si tu n'en utilises pas encore, dis-le.",
     fields: [
-      { key: 'link1', label: 'Lien vers un de tes meilleurs travaux', type: 'url', required: true, placeholder: 'https://… (portfolio, GitHub, Behance, site, page, vidéo)' },
-      { key: 'link1_desc', label: 'Ce que tu as fait précisément dans ce travail', type: 'textarea', required: true, min: 30, rows: 3, hint: 'Seul(e) ou en équipe ? Quelle était ta part ? Quels outils ?' },
+      { key: 'ai_level', label: "Ton niveau avec les outils d'IA", type: 'select', required: true, options: ["Je n'en utilise pas encore", 'Débutant(e) : je les essaie de temps en temps', "Intermédiaire : je m'en sers régulièrement", 'Avancé(e) : elles font partie de mon travail de tous les jours', 'Expert(e) : je crée des automatisations, des agents ou des produits avec'] },
+      { key: 'ai_tools', label: "Quelles IA utilises-tu ? Cite-les toutes", type: 'text', required: true, min: 2, placeholder: 'Ex. ChatGPT, Claude, Gemini, Midjourney, Copilot, Cursor, ElevenLabs… (ou « Aucune »)' },
+      { key: 'ai_how', label: "Comment t'en sers-tu concrètement dans ton travail ? Donne un exemple précis", type: 'textarea', required: true, min: 10, rows: 3, hint: "Pour quelle tâche, avec quelle IA, et quel résultat. Si tu n'en utilises pas, explique pourquoi." },
+    ],
+  },
+  {
+    id: 'preuves', title: 'Les preuves de ton travail',
+    intro: "Montre-nous des choses réelles que tu as faites : envoie des liens et/ou des fichiers (photos, vidéos, PDF…). Au moins une preuve est obligatoire, sans exemple vérifiable le dossier est très difficile à retenir.",
+    fields: [
+      { key: 'link1', label: 'Lien vers un de tes meilleurs travaux (si tu n\'envoies pas de fichier)', type: 'url', placeholder: 'https://… (portfolio, GitHub, Behance, site, page, vidéo)' },
+      { key: 'link1_desc', label: 'Ce que tu as fait précisément dans ces travaux', type: 'textarea', required: true, min: 30, rows: 3, hint: 'Seul(e) ou en équipe ? Quelle était ta part ? Quels outils ?' },
       { key: 'link2', label: 'Un deuxième travail (facultatif)', type: 'url', placeholder: 'https://…' },
       { key: 'link3', label: 'Un troisième travail (facultatif)', type: 'url', placeholder: 'https://…' },
       { key: 'cv', label: 'Lien vers ton CV (facultatif)', type: 'url', placeholder: 'Google Drive, Dropbox…' },
@@ -70,16 +79,6 @@ export const APPLICATION_SECTIONS: Section[] = [
       { key: 'start', label: 'Quand peux-tu commencer ?', type: 'select', required: true, options: ['Immédiatement', 'Sous 2 semaines', 'Sous 1 mois', 'Plus tard'] },
       { key: 'equipment', label: 'Ton matériel', type: 'select', required: true, options: ['Ordinateur personnel et internet stable', 'Ordinateur, mais internet instable', 'Téléphone seulement', 'Je dois utiliser un cybercafé'] },
       { key: 'situation', label: 'Ta situation actuelle (emploi, études, autre)', type: 'text', required: true, min: 3, placeholder: 'Et comment elle influence ta disponibilité' },
-    ],
-  },
-  {
-    id: 'references', title: 'Personnes qui peuvent confirmer ton travail',
-    intro: "Ancien client, enseignant, responsable ou collègue. Préviens-les : nous pourrons les contacter.",
-    fields: [
-      { key: 'ref1_name', label: 'Référence 1 : nom et lien avec toi', type: 'text', placeholder: 'Ex. Moussa Ouédraogo, ancien client' },
-      { key: 'ref1_contact', label: 'Référence 1 : téléphone ou e-mail', type: 'text' },
-      { key: 'ref2_name', label: 'Référence 2 : nom et lien avec toi', type: 'text' },
-      { key: 'ref2_contact', label: 'Référence 2 : téléphone ou e-mail', type: 'text' },
     ],
   },
   {
@@ -126,9 +125,11 @@ export function checkField(f: Field, v: unknown): string {
 export function flags(d: Record<string, unknown>): { warn: string[]; good: string[] } {
   const s = (k: string) => (typeof d[k] === 'string' ? (d[k] as string).trim() : '')
   const warn: string[] = [], good: string[] = []
-  const links = ['link1', 'link2', 'link3'].filter((k) => s(k)).length
-  if (links >= 2) good.push(`${links} travaux à vérifier`); else warn.push(links ? 'Un seul travail présenté' : 'Aucun travail présenté')
-  if (s('ref1_name') && s('ref1_contact')) good.push('Au moins une référence'); else warn.push('Aucune référence contactable')
+  const nFiles = Array.isArray(d.files) ? d.files.length : 0
+  const proofs = ['link1', 'link2', 'link3'].filter((k) => s(k)).length + nFiles
+  if (proofs >= 2) good.push(`${proofs} preuves à vérifier`); else warn.push(proofs ? 'Une seule preuve de travail' : 'Aucune preuve de travail')
+  if (/^Je n'en utilise pas/.test(s('ai_level'))) warn.push("N'utilise pas l'IA")
+  else if (/^(Avancé|Expert)/.test(s('ai_level'))) good.push("Maîtrise l'IA")
   if (/^Moins/.test(s('years'))) warn.push("Moins d'un an de pratique")
   if (/^Débutant/.test(s('level'))) warn.push('Niveau débutant')
   if (s('clients') === 'Non') warn.push('Jamais travaillé pour un client')

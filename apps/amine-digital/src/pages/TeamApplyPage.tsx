@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Check, Loader2 } from 'lucide-react'
-import { submitTeamApplication } from '../lib/supabase'
+import { Check, Loader2, Upload, X, FileText } from 'lucide-react'
+import { submitTeamApplication, uploadCandidateFile, MAX_UPLOAD, type UploadedFile } from '../lib/supabase'
 import { APPLICATION_SECTIONS, ALL_FIELDS, checkField, type Field } from '../data/applicationForm'
 
-type Values = Record<string, string | boolean>
+type Values = Record<string, string | boolean | UploadedFile[]>
 const DRAFT = 'ad_application_draft'
 
 function loadDraft(): Values {
@@ -19,6 +19,9 @@ export default function TeamApplyPage() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [done, setDone] = useState(false)
+  const [uploading, setUploading] = useState<{ name: string; pct: number }[]>([])
+  const [upErr, setUpErr] = useState('')
+  const files = (Array.isArray(v.files) ? v.files : []) as UploadedFile[]
   const trap = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -35,18 +38,38 @@ export default function TeamApplyPage() {
 
   const set = (k: string, val: string | boolean) => { setV((x) => ({ ...x, [k]: val })); if (errors[k]) setErrors((e) => ({ ...e, [k]: '' })) }
 
+  async function addFiles(list: FileList | null) {
+    if (!list) return
+    setUpErr('')
+    const picked = Array.from(list).slice(0, Math.max(0, 6 - files.length))
+    if (list.length + files.length > 6) setUpErr('6 fichiers maximum : les premiers seulement ont été gardés.')
+    for (const f of picked) {
+      if (f.size > MAX_UPLOAD) { setUpErr(`« ${f.name} » dépasse 50 Mo. Pour une vidéo plus lourde, mets-la sur YouTube ou Google Drive et colle le lien.`); continue }
+      setUploading((u) => [...u, { name: f.name, pct: 0 }])
+      try {
+        const up = await uploadCandidateFile(code, f, (pct) => setUploading((u) => u.map((x) => (x.name === f.name ? { ...x, pct } : x))))
+        setV((x) => ({ ...x, files: [...((Array.isArray(x.files) ? x.files : []) as UploadedFile[]), up] }))
+      } catch (e) { setUpErr((e as Error).message) }
+      setUploading((u) => u.filter((x) => x.name !== f.name))
+    }
+  }
+  const removeFile = (url: string) => setV((x) => ({ ...x, files: files.filter((f) => f.url !== url) }))
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (busy) return
     if (trap.current?.value) { setDone(true); return } // champ piège : un robot l'a rempli
     const errs: Record<string, string> = {}
     for (const f of ALL_FIELDS) { const m = checkField(f, v[f.key]); if (m) errs[f.key] = m }
+    if (!String(v.link1 ?? '').trim() && files.length === 0) errs.link1 = 'Ajoute au moins une preuve : un lien ou un fichier.'
+    if (uploading.length) { setError('Attends la fin de l\'envoi des fichiers.'); return }
     setErrors(errs)
     const first = Object.keys(errs)[0]
     if (first) { document.getElementById(`f-${first}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); setError(`Il reste ${Object.keys(errs).length} champ(s) à corriger.`); return }
     setBusy(true); setError('')
     const data: Record<string, unknown> = {}
     for (const f of ALL_FIELDS) { const x = v[f.key]; if (f.type === 'check') data[f.key] = x === true; else if (typeof x === 'string' && x.trim()) data[f.key] = x.trim() }
+    if (files.length) data.files = files
     const r = await submitTeamApplication(code, data)
     setBusy(false)
     if (r.ok) { try { localStorage.removeItem(DRAFT) } catch { /* */ } setDone(true) } else setError(r.error ?? 'Erreur.')
@@ -57,7 +80,7 @@ export default function TeamApplyPage() {
   const renderField = (f: Field) => {
     const err = errors[f.key]
     const cls = `${base} ${err ? 'border-red-400' : 'border-stroke'}`
-    const val = (v[f.key] as string) ?? ''
+    const val = typeof v[f.key] === 'string' ? (v[f.key] as string) : ''
     if (f.type === 'check') {
       return (
         <label id={`f-${f.key}`} className="flex items-start gap-3 text-sm">
@@ -126,6 +149,33 @@ export default function TeamApplyPage() {
             <h2 className="font-display text-2xl mb-2">{s.title}</h2>
             {s.intro && <p className="text-sm text-muted mb-5">{s.intro}</p>}
             <div className="space-y-5">{s.fields.map((f) => <div key={f.key}>{renderField(f)}</div>)}</div>
+        {s.id === 'preuves' && (
+          <div id="f-files" className="mt-5 border border-dashed border-stroke rounded-md p-4">
+            <div className="text-sm font-medium">Tes fichiers <span className="text-muted font-normal">(photos, vidéos, PDF, maquettes…)</span></div>
+            <p className="text-xs text-muted mt-1 mb-3">6 fichiers maximum, 50 Mo chacun. Envoie ce qui montre le mieux ton travail : captures d'écran, vidéo de démonstration, designs, document.</p>
+            <label className="inline-flex items-center gap-2 border border-stroke rounded-sm px-4 py-2.5 text-sm cursor-pointer hover:border-gov/50">
+              <Upload size={16} /> Choisir des fichiers
+              <input type="file" multiple accept="image/*,video/*,audio/*,.pdf,.zip,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt" className="hidden" onChange={(e) => { addFiles(e.target.files); e.target.value = '' }} />
+            </label>
+            <ul className="mt-3 space-y-2">
+              {files.map((f) => (
+                <li key={f.url} className="flex items-center gap-3 text-sm border border-stroke rounded-sm px-3 py-2">
+                  {f.type.startsWith('image/') ? <img src={f.url} alt="" className="w-10 h-10 object-cover rounded-sm" /> : <FileText size={18} className="text-clay shrink-0" />}
+                  <span className="flex-1 truncate">{f.name}</span>
+                  <span className="text-xs text-muted">{(f.size / 1048576).toFixed(1)} Mo</span>
+                  <button type="button" onClick={() => removeFile(f.url)} aria-label="Retirer le fichier" className="text-red-700"><X size={16} /></button>
+                </li>
+              ))}
+              {uploading.map((u) => (
+                <li key={u.name} className="text-sm border border-stroke rounded-sm px-3 py-2">
+                  <div className="flex justify-between gap-3"><span className="truncate">{u.name}</span><span className="text-xs text-muted">{u.pct}%</span></div>
+                  <div className="h-1 mt-2 bg-stroke rounded-full overflow-hidden"><div className="h-full bg-clay transition-all" style={{ width: `${u.pct}%` }} /></div>
+                </li>
+              ))}
+            </ul>
+            {upErr && <p role="alert" className="text-xs text-red-700 mt-2">{upErr}</p>}
+          </div>
+        )}
           </section>
         ))}
         {error && <p role="alert" className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-sm px-4 py-3">{error}</p>}

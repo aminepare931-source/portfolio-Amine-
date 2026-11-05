@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { ChevronDown, ChevronUp, Copy, Trash2, MessageCircle, Mail, ExternalLink } from 'lucide-react'
 import { input, btn, type TabProps } from './adminUi'
 import { APPLICATION_SECTIONS, flags } from '../data/applicationForm'
+import { STORAGE_PUBLIC, type UploadedFile } from '../lib/supabase'
 
 export interface Application { id: string; name: string; phone: string | null; email: string | null; role: string | null; status: string; note: string | null; data: Record<string, unknown>; created_at: string }
 
@@ -12,6 +13,7 @@ const STATUS: [string, string, string][] = [
   ['accepte', 'Acceptée', 'bg-green-100 text-green-800'],
   ['refuse', 'Refusée', 'bg-slate-200 text-slate-700'],
 ]
+const safeUrl = (u: string) => /^https?:\/\//i.test(u)
 const fmt = (d: string) => new Date(d).toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' })
 
 export function ApplicationsTab({ call, notify, onChange }: TabProps) {
@@ -102,7 +104,7 @@ export function ApplicationsTab({ call, notify, onChange }: TabProps) {
                               <div key={f.key}>
                                 <dt className="text-xs text-muted">{f.label}</dt>
                                 <dd className="text-sm whitespace-pre-wrap break-words">
-                                  {f.type === 'url' ? <a href={val} target="_blank" rel="noreferrer noopener" className="text-gov underline inline-flex items-center gap-1">{val}<ExternalLink size={12} /></a> : val}
+                                  {f.type === 'url' && safeUrl(val) ? <a href={val} target="_blank" rel="noreferrer noopener" className="text-gov underline inline-flex items-center gap-1">{val}<ExternalLink size={12} /></a> : val}
                                 </dd>
                               </div>
                             )
@@ -111,6 +113,22 @@ export function ApplicationsTab({ call, notify, onChange }: TabProps) {
                       </div>
                     )
                   })}
+
+                  {Array.isArray(a.data.files) && a.data.files.length > 0 && (
+                    <div>
+                      <div className="text-xs font-mono uppercase tracking-widest text-clay mb-2">Fichiers envoyés</div>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {(a.data.files as UploadedFile[]).filter((f) => typeof f.url === 'string' && f.url.startsWith(STORAGE_PUBLIC)).map((f) => (
+                          <div key={f.url} className="border border-stroke rounded-sm p-2 bg-white">
+                            {f.type?.startsWith('image/') ? <a href={f.url} target="_blank" rel="noreferrer noopener"><img src={f.url} alt={f.name} className="block max-w-full h-auto max-h-64 mx-auto" /></a>
+                              : f.type?.startsWith('video/') ? <video src={f.url} controls preload="metadata" className="block max-w-full max-h-64 mx-auto" />
+                              : f.type?.startsWith('audio/') ? <audio src={f.url} controls className="w-full" /> : null}
+                            <a href={f.url} target="_blank" rel="noreferrer noopener" className="text-xs text-gov underline inline-flex items-center gap-1 mt-1.5 break-all">{f.name}<ExternalLink size={12} /></a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <div>
                     <div className="text-xs font-mono uppercase tracking-widest text-clay mb-2">Ta décision</div>

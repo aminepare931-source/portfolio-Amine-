@@ -1,4 +1,4 @@
-const SB_URL = 'https://ytpghkntnuuppmreeboo.supabase.co'
+export const SB_URL = 'https://ytpghkntnuuppmreeboo.supabase.co'
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0cGdoa250bnV1cHBtcmVlYm9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMTY5NzEsImV4cCI6MjA5Nzc5Mjk3MX0.D4i-P18kRs0_nsMX5Kk8EYdnTV-ZIxDVfI_OvoAmE4E'
 
 export interface Project {
@@ -151,4 +151,33 @@ export async function submitTeamApplication(code: string, data: Record<string, u
     if (m.includes('donnees invalides')) return { ok: false, error: 'Certains champs obligatoires sont incomplets.' }
     return { ok: false, error: m }
   }
+}
+
+export interface UploadedFile { name: string; url: string; type: string; size: number }
+export const MAX_UPLOAD = 50 * 1024 * 1024
+export const STORAGE_PUBLIC = `${SB_URL}/storage/v1/object/public/candidatures/`
+
+/** Envoie un fichier de preuve (photo, vidéo, PDF…) dans le stockage privé des candidatures. */
+export function uploadCandidateFile(code: string, file: File, onProgress: (pct: number) => void): Promise<UploadedFile> {
+  return new Promise((resolve, reject) => {
+    const safe = file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9._-]+/g, '_').slice(-80) || 'fichier'
+    const rand = Array.from(crypto.getRandomValues(new Uint8Array(12)), (b) => b.toString(16).padStart(2, '0')).join('')
+    const path = `${encodeURIComponent(code)}/${rand}/${safe}`
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', `${SB_URL}/storage/v1/object/candidatures/${path}`)
+    xhr.setRequestHeader('apikey', SB_KEY)
+    xhr.setRequestHeader('Authorization', `Bearer ${SB_KEY}`)
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream')
+    xhr.setRequestHeader('x-upsert', 'false')
+    xhr.upload.onprogress = (e) => { if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100)) }
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) resolve({ name: file.name.slice(0, 120), url: `${STORAGE_PUBLIC}${path}`, type: file.type, size: file.size })
+      else if (xhr.status === 413) reject(new Error('Fichier trop lourd (50 Mo maximum).'))
+      else if (xhr.status === 415) reject(new Error("Ce type de fichier n'est pas accepté."))
+      else if (xhr.status === 400 || xhr.status === 401 || xhr.status === 403) reject(new Error("Envoi refusé : lien d'invitation invalide ou envoi de fichiers pas encore activé."))
+      else reject(new Error("L'envoi a échoué. Réessaie."))
+    }
+    xhr.onerror = () => reject(new Error('Connexion interrompue. Réessaie.'))
+    xhr.send(file)
+  })
 }
