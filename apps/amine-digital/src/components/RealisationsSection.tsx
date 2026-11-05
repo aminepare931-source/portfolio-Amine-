@@ -17,8 +17,8 @@ export default function RealisationsSection() {
           </div>
           <Link to="/realisations" className="inline-flex items-center gap-2 text-sm font-medium text-gov hover:text-clay transition-colors">Toutes les réalisations <ArrowRight size={15} /></Link>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {list.slice(0, 3).map((r) => <RealisationCard key={r.id} r={r} />)}
+        <div className="-mx-5 px-5 sm:mx-0 sm:px-0 flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 overflow-x-auto sm:overflow-visible snap-x snap-mandatory scroll-pl-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {list.slice(0, 3).map((r) => <div key={r.id} className="snap-start shrink-0 w-[82vw] max-w-[360px] sm:w-auto sm:max-w-none flex"><div className="w-full flex"><RealisationCard r={r} /></div></div>)}
         </div>
       </div>
     </section>

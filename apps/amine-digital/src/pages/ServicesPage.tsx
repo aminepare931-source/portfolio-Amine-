@@ -8,7 +8,7 @@ import { Line } from '../components/Reveal'
 
 export default function ServicesPage() {
   return (
-    <div className="px-6 pt-36 pb-24 max-w-[1000px] mx-auto">
+    <div className="px-4 sm:px-6 pt-36 pb-24 max-w-[1100px] mx-auto">
       <Seo path="/services" {...PAGE_SEO['/services']} />
       <div className="text-center mb-14">
         <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Ce que nous faisons</div>
@@ -18,19 +18,19 @@ export default function ServicesPage() {
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
         {SERVICES.map((s) => (
           <Link
             key={s.slug}
             to={`/services/${s.slug}`}
-            className="group border border-stroke rounded-md p-7 hover:border-clay/40 hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] bg-surface/30"
+            className="group flex flex-col border border-stroke rounded-md p-4 sm:p-6 hover:border-clay/40 hover:-translate-y-0.5 transition-all duration-300 bg-surface/30"
           >
-            <div className="flex items-start justify-between mb-4">
-              <ServiceImage set="services-page" slug={s.slug} className="w-44 h-auto -ml-2" />
-              <ArrowUpRight size={18} className="text-slate-900/30 group-hover:text-clay group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
+            <div className="flex items-start justify-between mb-3">
+              <ServiceImage set="services-page" slug={s.slug} className="w-16 sm:w-28 h-auto" />
+              <ArrowUpRight size={16} className="text-slate-900/30 group-hover:text-clay transition-colors" />
             </div>
-            <h3 className="font-display text-2xl mb-2">{s.title}</h3>
-            <p className="text-sm text-muted leading-relaxed">{s.teaser}</p>
+            <h3 className="font-display text-base sm:text-xl leading-snug mb-1.5">{s.title}</h3>
+            <p className="text-xs sm:text-sm text-muted leading-relaxed line-clamp-3">{s.teaser}</p>
           </Link>
         ))}
       </div>

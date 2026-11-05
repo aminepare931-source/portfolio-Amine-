@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, Code2, Palette, Megaphone, ShieldCheck, Smart
 import { SERVICES } from '../data/services'
 import { PROCESS } from '../data/process'
 import { usePublications } from '../lib/content'
+import ServicesShowcase from '../components/ServicesShowcase'
 import RealisationsSection from '../components/RealisationsSection'
 import { ARTICLES } from '../data/articles'
 import { Line, Fade } from '../components/Reveal'
@@ -259,30 +260,9 @@ export default function HomePage() {
           </h2>
           </Fade>
 
-          <div className="px-5 sm:px-8 lg:px-12 grid sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-4 mb-10">
-            {SERVICES.map((s, i) => {
-              const featured = i === 0
-                            return (
-                <Link
-                  key={s.slug}
-                  to={`/services/${s.slug}`}
-                  className={`group relative border border-stroke rounded-md overflow-hidden hover:border-clay/40 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)] bg-bg flex flex-col justify-between ${
-                    featured ? 'lg:col-span-2 lg:row-span-2 p-8' : 'p-6'
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <ServiceImage slug={s.slug} className={featured ? 'w-full max-w-[460px] h-auto' : 'w-40 h-auto'} />
-                    <ArrowUpRight size={16} className="text-gov/30 group-hover:text-gov group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" />
-                  </div>
-                  <div className={featured ? 'mt-10' : 'mt-6'}>
-                    <h3 className={`font-display mb-1.5 ${featured ? 'text-2xl' : 'text-base'}`}>{s.title}</h3>
-                    <p className={`text-muted leading-relaxed ${featured ? 'text-sm max-w-xs' : 'text-xs'}`}>{s.teaser}</p>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
-
+        </div>
+        <div className="mb-10"><ServicesShowcase /></div>
+        <div className="max-w-[1200px] mx-auto">
           <div className="px-5 sm:px-8 lg:px-12">
             <TextRollButton to="/services">Voir tous les services</TextRollButton>
           </div>

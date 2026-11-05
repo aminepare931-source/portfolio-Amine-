@@ -35,7 +35,7 @@ export default function RealisationDetailPage() {
         </p>
       )}
 
-      {r.image && <img src={r.image} alt={r.title} onError={(e) => { e.currentTarget.style.display = 'none' }} className="block max-w-full h-auto max-h-[80vh] w-auto mx-auto rounded-md border border-stroke shadow-[0_20px_50px_rgba(10,61,145,0.12)] mb-10" />}
+      {r.image && <img src={r.image} alt={r.title} onError={(e) => { e.currentTarget.style.display = 'none' }} className="block max-w-full h-auto max-h-[55vh] sm:max-h-[75vh] w-auto mx-auto rounded-md border border-stroke shadow-[0_20px_50px_rgba(10,61,145,0.12)] mb-10" />}
 
       {paragraphs.length > 0 && (
         <section className="mb-10">
@@ -70,7 +70,7 @@ export default function RealisationDetailPage() {
       {r.gallery && r.gallery.length > 0 && (
         <section className="mb-10">
           <h2 className="font-display text-2xl mb-4">Aperçus</h2>
-          <div className="flex flex-wrap justify-center items-start gap-4">{r.gallery.map((g, i) => <img key={i} src={g} alt={`${r.title} — aperçu ${i + 1}`} loading="lazy" className="block max-w-full h-auto max-h-[70vh] w-auto rounded-md border border-stroke" />)}</div>
+          <div className="-mx-5 px-5 sm:mx-0 sm:px-0 flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-pl-5 sm:flex-wrap sm:justify-center sm:overflow-visible items-start pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{r.gallery.map((g, i) => <img key={i} src={g} alt={`${r.title} — aperçu ${i + 1}`} loading="lazy" decoding="async" className="block snap-center shrink-0 sm:shrink h-60 w-auto max-w-none sm:h-auto sm:max-w-full sm:max-h-[60vh] rounded-md border border-stroke" />)}</div>
         </section>
       )}
 

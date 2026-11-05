@@ -24,20 +24,29 @@ function useCrud<T extends { id: string }>(name: string, { call, notify }: TabPr
   return { rows, loading, save, del, load }
 }
 
+/** Jeton d'envoi (valable 3 h) pour déposer des images dans le stockage. */
+function useUploadToken(call: TabProps['call']) {
+  const tok = useRef<{ t: string; at: number } | null>(null)
+  return async () => {
+    if (tok.current && Date.now() - tok.current.at < 2 * 3600_000) return tok.current.t
+    const t = await call<string>('admin_upload_token'); tok.current = { t, at: Date.now() }; return t
+  }
+}
+
 const lines = (s: string) => s.split('\n').map((x) => x.trim()).filter(Boolean)
 const Hidden = () => <span className="text-[10px] bg-slate-200 text-slate-700 rounded-full px-2 py-0.5 ml-1.5 font-semibold">Masqué</span>
 
-function ImagePicker({ value, onPick, label }: { value: string | null; onPick: (dataUrl: string, w: number, h: number) => void; label: string }) {
+function ImagePicker({ value, onPick, label, call }: { value: string | null; onPick: (url: string, w: number, h: number) => void; label: string; call: TabProps['call'] }) {
   const [busy, setBusy] = useState(false); const [err, setErr] = useState('')
+  const token = useUploadToken(call)
   async function change(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0]; if (!f) return
     setBusy(true); setErr('')
     try {
-      let q = 0.78, r = await resizeImage(f, 900, q)
-      while (r.dataUrl.length > 260000 && q > 0.4) { q -= 0.1; r = await resizeImage(f, 900, q) }
-      if (r.dataUrl.length > 400000) throw new Error('trop lourde')
-      onPick(r.dataUrl, r.w, r.h)
-    } catch { setErr("Image illisible ou trop lourde. Essayez une autre image.") } finally { setBusy(false); e.target.value = '' }
+      const r = await resizeToBlob(f, 1600, 0.86)
+      const up = await uploadToBucket('publications', await token(), r.blob, f.name.replace(/\.\w+$/, '') + '.jpg', () => {})
+      onPick(up.url, r.w, r.h)
+    } catch (x) { setErr((x as Error).message || 'Image illisible. Essayez une autre image.') } finally { setBusy(false); e.target.value = '' }
   }
   return (
     <div className="sm:col-span-2">
@@ -61,11 +70,7 @@ function PubMedia({ media, cover, onChange, onCover, call, notify }: { media: Me
   const [busy, setBusy] = useState<{ name: string; pct: number }[]>([])
   const [err, setErr] = useState('')
   const [link, setLink] = useState('')
-  const tok = useRef<{ t: string; at: number } | null>(null)
-  const token = async () => {
-    if (tok.current && Date.now() - tok.current.at < 2 * 3600_000) return tok.current.t
-    const t = await call<string>('admin_upload_token'); tok.current = { t, at: Date.now() }; return t
-  }
+  const token = useUploadToken(call)
   async function add(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? []); e.target.value = ''
     if (!files.length) return
@@ -158,7 +163,7 @@ export function PublicationsTab(p: TabProps) {
           <select className={input} value={f.service_slug} onChange={(e) => setF({ ...f, service_slug: e.target.value })}><option value="">Aucun service lié</option>{SERVICES.map((s) => <option key={s.slug} value={s.slug}>{s.title}</option>)}</select>
           <input className={input} placeholder="Description de l'image (facultatif)" value={f.alt} onChange={(e) => setF({ ...f, alt: e.target.value })} />
           <PubMedia media={f.media} cover={f.image} call={p.call} notify={p.notify} onChange={(m) => setF((x) => (x ? { ...x, media: m } : x))} onCover={(url, w, h) => setF((x) => (x ? { ...x, image: url, w, h, changed: true } : x))} />
-          <ImagePicker value={f.media.length ? null : f.image || null} label="Ou choisir une seule affiche" onPick={(d, w, h) => setF({ ...f, image: d, w, h, changed: true })} />
+          <ImagePicker call={p.call} value={f.media.length ? null : f.image || null} label="Ou choisir une seule affiche" onPick={(d, w, h) => setF({ ...f, image: d, w, h, changed: true })} />
           {f.image && f.media.length > 0 && <img src={f.image} alt="" className="sm:col-span-2 max-h-44 rounded-sm border border-stroke" />}
           <label className="sm:col-span-2 flex items-center gap-2 text-sm"><input type="checkbox" checked={f.visible} onChange={(e) => setF({ ...f, visible: e.target.checked })} /> Visible sur le site</label>
           <div className="sm:col-span-2 flex gap-2"><button disabled={!ok} onClick={submit} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}>Enregistrer</button><button onClick={() => setF(null)} className={`${btn} border-stroke`}>Annuler</button></div>
@@ -193,20 +198,21 @@ const KINDS: [string, string][] = [['client', 'Projet client (réalisé pour un 
 const KIND_SHORT: Record<string, string> = { client: 'Client', saas: 'SaaS', interne: 'Interne', personnel: 'Personnel' }
 const PLACEHOLDER = 'À compléter'
 
-function GalleryPicker({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
+function GalleryPicker({ value, onChange, call }: { value: string[]; onChange: (v: string[]) => void; call: TabProps['call'] }) {
   const [busy, setBusy] = useState(false); const [err, setErr] = useState('')
+  const token = useUploadToken(call)
   async function add(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = Array.from(e.target.files ?? []).slice(0, 4 - value.length); if (!files.length) return
+    const files = Array.from(e.target.files ?? []).slice(0, 4 - value.length); e.target.value = ''
+    if (!files.length) return
     setBusy(true); setErr('')
     try {
       const out: string[] = []
       for (const f of files) {
-        let q = 0.74, r = await resizeImage(f, 900, q)
-        while (r.dataUrl.length > 220000 && q > 0.4) { q -= 0.1; r = await resizeImage(f, 900, q) }
-        out.push(r.dataUrl)
+        const r = await resizeToBlob(f, 1600, 0.86)
+        out.push((await uploadToBucket('publications', await token(), r.blob, f.name.replace(/\.\w+$/, '') + '.jpg', () => {})).url)
       }
       onChange([...value, ...out])
-    } catch { setErr('Une image est illisible ou trop lourde.') } finally { setBusy(false); e.target.value = '' }
+    } catch (x) { setErr((x as Error).message || 'Une image est illisible.') } finally { setBusy(false) }
   }
   return (
     <div className="sm:col-span-2">
@@ -315,8 +321,8 @@ export function RealisationsTab(p: TabProps) {
           <input className={input} placeholder="Étiquettes, séparées par des virgules" value={f.tags} onChange={(e) => setF({ ...f, tags: e.target.value })} />
           <input className={`${input} sm:col-span-2`} placeholder="Résultat obtenu (facultatif, uniquement s'il est réel)" maxLength={300} value={f.result} onChange={(e) => setF({ ...f, result: e.target.value })} />
           <input className={`${input} sm:col-span-2`} placeholder="Lien du projet https://… (facultatif)" value={f.link} onChange={(e) => setF({ ...f, link: e.target.value })} />
-          <ImagePicker value={f.image || null} label="Image principale (capture, photo)" onPick={(d) => setF({ ...f, image: d, changed: true })} />
-          <GalleryPicker value={f.gallery} onChange={(g) => setF({ ...f, gallery: g, gchanged: true })} />
+          <ImagePicker call={p.call} value={f.image || null} label="Image principale (capture, photo)" onPick={(d) => setF({ ...f, image: d, changed: true })} />
+          <GalleryPicker call={p.call} value={f.gallery} onChange={(g) => setF({ ...f, gallery: g, gchanged: true })} />
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={f.visible} onChange={(e) => setF({ ...f, visible: e.target.checked })} /> Visible sur le site</label>
           <label className="flex items-center gap-2 text-sm">Ordre <input type="number" className={`${input} w-24`} value={f.position} onChange={(e) => setF({ ...f, position: Number(e.target.value) })} /></label>
           <div className="sm:col-span-2 flex gap-2"><button disabled={!ok} onClick={async () => { if (await save(f.id || null, payload(f), 'Projet enregistré')) setF(null) }} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}>Enregistrer</button><button onClick={() => setF(null)} className={`${btn} border-stroke`}>Annuler</button></div>

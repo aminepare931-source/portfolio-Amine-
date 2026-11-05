@@ -20,8 +20,8 @@ export default function RealisationCard({ r }: { r: Realisation }) {
       to={`/realisations/${r.id}`}
       className="group flex flex-col rounded-md overflow-hidden border border-stroke bg-white/60 hover:border-gov/50 hover:shadow-[0_18px_40px_rgba(10,61,145,0.14)] transition-all"
     >
-      <div className={`relative overflow-hidden bg-surface ${r.image ? '' : 'aspect-[16/7]'}`}>
-        {r.image && <img src={r.image} alt={r.title} loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none' }} className="block w-full h-auto" />}
+      <div className="relative overflow-hidden bg-surface h-44 sm:h-52 flex items-center justify-center">
+        {r.image && <img src={r.image} alt={r.title} loading="lazy" decoding="async" onError={(e) => { e.currentTarget.style.display = 'none' }} className="block max-w-full max-h-full w-auto h-auto object-contain" />}
         <div className="absolute top-3 left-3"><KindBadge kind={r.kind} /></div>
       </div>
       <div className="p-5 flex-1 flex flex-col">
