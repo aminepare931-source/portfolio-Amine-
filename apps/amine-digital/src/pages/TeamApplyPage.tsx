@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Check, Loader2, Upload, X, FileText } from 'lucide-react'
 import { submitTeamApplication, uploadCandidateFile, MAX_UPLOAD, type UploadedFile } from '../lib/supabase'
-import { APPLICATION_SECTIONS, ALL_FIELDS, checkField, type Field } from '../data/applicationForm'
+import { ALL_FIELDS, checkField, sectionsFor, inMode, isRequired, type Field, type Mode } from '../data/applicationForm'
 
 type Values = Record<string, string | boolean | UploadedFile[]>
 const DRAFT = 'ad_application_draft'
@@ -14,6 +14,9 @@ function loadDraft(): Values {
 export default function TeamApplyPage() {
   const [params] = useSearchParams()
   const code = params.get('code') ?? ''
+  const mode: Mode = params.get('type') === 'connu' ? 'court' : 'complet'
+  const sections = useMemo(() => sectionsFor(mode), [mode])
+  const fieldsNow = useMemo(() => ALL_FIELDS.filter((f) => inMode(f, mode)), [mode])
   const [v, setV] = useState<Values>(loadDraft)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
@@ -32,8 +35,8 @@ export default function TeamApplyPage() {
   }, [])
   useEffect(() => { try { localStorage.setItem(DRAFT, JSON.stringify(v)) } catch { /* */ } }, [v])
 
-  const required = useMemo(() => ALL_FIELDS.filter((f) => f.required), [])
-  const filled = required.filter((f) => !checkField(f, v[f.key])).length
+  const required = useMemo(() => fieldsNow.filter((f) => isRequired(f, mode)), [fieldsNow, mode])
+  const filled = required.filter((f) => !checkField(f, v[f.key], mode)).length
   const pct = Math.round((filled / required.length) * 100)
 
   const set = (k: string, val: string | boolean) => { setV((x) => ({ ...x, [k]: val })); if (errors[k]) setErrors((e) => ({ ...e, [k]: '' })) }
@@ -60,15 +63,15 @@ export default function TeamApplyPage() {
     if (busy) return
     if (trap.current?.value) { setDone(true); return } // champ piège : un robot l'a rempli
     const errs: Record<string, string> = {}
-    for (const f of ALL_FIELDS) { const m = checkField(f, v[f.key]); if (m) errs[f.key] = m }
-    if (!String(v.link1 ?? '').trim() && files.length === 0) errs.link1 = 'Ajoute au moins une preuve : un lien ou un fichier.'
+    for (const f of fieldsNow) { const m = checkField(f, v[f.key], mode); if (m) errs[f.key] = m }
+    if (mode === 'complet' && !String(v.link1 ?? '').trim() && files.length === 0) errs.link1 = 'Ajoute au moins une preuve : un lien ou un fichier.'
     if (uploading.length) { setError('Attends la fin de l\'envoi des fichiers.'); return }
     setErrors(errs)
     const first = Object.keys(errs)[0]
     if (first) { document.getElementById(`f-${first}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); setError(`Il reste ${Object.keys(errs).length} champ(s) à corriger.`); return }
     setBusy(true); setError('')
-    const data: Record<string, unknown> = {}
-    for (const f of ALL_FIELDS) { const x = v[f.key]; if (f.type === 'check') data[f.key] = x === true; else if (typeof x === 'string' && x.trim()) data[f.key] = x.trim() }
+    const data: Record<string, unknown> = { mode }
+    for (const f of fieldsNow) { const x = v[f.key]; if (f.type === 'check') data[f.key] = x === true; else if (typeof x === 'string' && x.trim()) data[f.key] = x.trim() }
     if (files.length) data.files = files
     const r = await submitTeamApplication(code, data)
     setBusy(false)
@@ -91,7 +94,7 @@ export default function TeamApplyPage() {
     }
     return (
       <div id={`f-${f.key}`}>
-        <label className="block text-sm font-medium" htmlFor={`i-${f.key}`}>{f.label}{!f.required && <span className="text-muted font-normal"> (facultatif)</span>}</label>
+        <label className="block text-sm font-medium" htmlFor={`i-${f.key}`}>{f.label}{!isRequired(f, mode) && <span className="text-muted font-normal"> (facultatif)</span>}</label>
         {f.hint && <p className="text-xs text-muted mt-1">{f.hint}</p>}
         <div className="mt-1.5">
           {f.type === 'textarea' ? (
@@ -124,8 +127,8 @@ export default function TeamApplyPage() {
     return (
       <div className="px-6 pt-40 pb-24 max-w-[560px] mx-auto text-center">
         <span className="w-14 h-14 rounded-full bg-clay/10 text-clay flex items-center justify-center mx-auto mb-5"><Check size={26} /></span>
-        <h1 className="font-display text-3xl mb-3">Candidature envoyée</h1>
-        <p className="text-muted">Merci. AMINE DIGITAL étudie chaque dossier avec attention. Si ton profil correspond, tu seras contacté(e) sur WhatsApp ou par e-mail pour un entretien et un test pratique.</p>
+        <h1 className="font-display text-3xl mb-3">{mode === 'court' ? 'Dossier envoyé' : 'Candidature envoyée'}</h1>
+        <p className="text-muted">{mode === 'court' ? 'Merci, ton dossier est bien enregistré. AMINE DIGITAL revient vers toi très vite.' : 'Merci. AMINE DIGITAL étudie chaque dossier avec attention. Si ton profil correspond, tu seras contacté(e) sur WhatsApp ou par e-mail pour un entretien et un test pratique.'}</p>
       </div>
     )
   }
@@ -133,8 +136,12 @@ export default function TeamApplyPage() {
   return (
     <div className="px-5 sm:px-6 pt-36 pb-24 max-w-[760px] mx-auto">
       <div className="text-xs font-mono uppercase tracking-widest text-clay mb-3">Recrutement</div>
-      <h1 className="font-display text-3xl sm:text-4xl mb-3">Candidature à l'équipe AMINE DIGITAL</h1>
+      <h1 className="font-display text-3xl sm:text-4xl mb-3">{mode === 'court' ? "Ton dossier d'équipe AMINE DIGITAL" : "Candidature à l'équipe AMINE DIGITAL"}</h1>
+      {mode === 'court' ? (
+        <p className="text-muted mb-4">Pas besoin de tout remplir : on se connaît déjà. AMINE DIGITAL a simplement besoin de quelques informations pour ton dossier d'équipe. Compte environ 5 minutes.</p>
+      ) : (
       <p className="text-muted mb-4">AMINE DIGITAL travaille pour de vrais clients : chaque personne qui rejoint l'équipe doit pouvoir prouver son niveau. Prends le temps de répondre avec précision, comptes environ 15 minutes. Ton brouillon est gardé sur cet appareil si tu dois t'arrêter.</p>
+      )}
 
       <div className="sticky top-20 z-10 bg-bg/95 backdrop-blur border border-stroke rounded-sm px-4 py-2.5 mb-8 flex items-center gap-3">
         <div className="flex-1 h-1.5 rounded-full bg-stroke overflow-hidden"><div className="h-full bg-clay transition-all" style={{ width: `${pct}%` }} /></div>
@@ -143,11 +150,12 @@ export default function TeamApplyPage() {
 
       <form onSubmit={onSubmit} noValidate className="space-y-12">
         <input ref={trap} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 opacity-0" />
-        {APPLICATION_SECTIONS.map((s, i) => (
+        {sections.map((s, i) => (
           <section key={s.id}>
-            <div className="text-xs font-mono uppercase tracking-widest text-clay mb-1">Étape {i + 1} sur {APPLICATION_SECTIONS.length}</div>
+            <div className="text-xs font-mono uppercase tracking-widest text-clay mb-1">Étape {i + 1} sur {sections.length}</div>
             <h2 className="font-display text-2xl mb-2">{s.title}</h2>
-            {s.intro && <p className="text-sm text-muted mb-5">{s.intro}</p>}
+            {mode === 'complet' && s.intro && <p className="text-sm text-muted mb-5">{s.intro}</p>}
+            {mode === 'court' && s.id === 'preuves' && <p className="text-sm text-muted mb-5">Facultatif : si tu as des exemples de ton travail (liens, photos, vidéos), ajoute-les. Sinon, passe à la suite.</p>}
             <div className="space-y-5">{s.fields.map((f) => <div key={f.key}>{renderField(f)}</div>)}</div>
         {s.id === 'preuves' && (
           <div id="f-files" className="mt-5 border border-dashed border-stroke rounded-md p-4">
@@ -180,7 +188,7 @@ export default function TeamApplyPage() {
         ))}
         {error && <p role="alert" className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-sm px-4 py-3">{error}</p>}
         <button disabled={busy} className="inline-flex items-center gap-2 bg-clay text-white font-semibold px-8 py-3.5 rounded-sm disabled:opacity-40 hover:opacity-90 transition-opacity">
-          {busy && <Loader2 size={16} className="animate-spin" />} Envoyer ma candidature
+          {busy && <Loader2 size={16} className="animate-spin" />} {mode === 'court' ? 'Envoyer mon dossier' : 'Envoyer ma candidature'}
         </button>
       </form>
     </div>

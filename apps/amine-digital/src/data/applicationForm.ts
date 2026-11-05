@@ -83,13 +83,13 @@ export const APPLICATION_SECTIONS: Section[] = [
   },
   {
     id: 'situations', title: 'Mises en situation',
-    intro: "Il n'y a pas de bonne réponse toute faite : réponds avec tes propres mots, comme tu agirais vraiment.",
+    intro: "Facultatif, mais ces réponses aident beaucoup à départager les dossiers. Réponds avec tes propres mots, comme tu agirais vraiment.",
     fields: [
-      { key: 'hard', label: 'Raconte un problème difficile que tu as résolu dans ton travail et comment tu t\'y es pris(e)', type: 'textarea', required: true, min: 60, rows: 5 },
-      { key: 'sc1', label: 'Un client te demande de refaire entièrement un travail déjà validé, sans payer en plus. Que fais-tu ?', type: 'textarea', required: true, min: 40, rows: 3 },
-      { key: 'sc2', label: "Tu es bloqué(e) sur une tâche à deux jours de la livraison. Comment réagis-tu ?", type: 'textarea', required: true, min: 40, rows: 3 },
-      { key: 'sc3', label: 'Le client découvre une erreur dans un travail que tu as livré. Que fais-tu ?', type: 'textarea', required: true, min: 40, rows: 3 },
-      { key: 'why', label: 'Pourquoi veux-tu travailler avec AMINE DIGITAL, et que peux-tu nous apporter ?', type: 'textarea', required: true, min: 60, rows: 4 },
+      { key: 'hard', label: 'Raconte un problème difficile que tu as résolu dans ton travail et comment tu t\'y es pris(e)', type: 'textarea', min: 60, rows: 5 },
+      { key: 'sc1', label: 'Un client te demande de refaire entièrement un travail déjà validé, sans payer en plus. Que fais-tu ?', type: 'textarea', min: 40, rows: 3 },
+      { key: 'sc2', label: "Tu es bloqué(e) sur une tâche à deux jours de la livraison. Comment réagis-tu ?", type: 'textarea', min: 40, rows: 3 },
+      { key: 'sc3', label: 'Le client découvre une erreur dans un travail que tu as livré. Que fais-tu ?', type: 'textarea', min: 40, rows: 3 },
+      { key: 'why', label: 'Pourquoi veux-tu travailler avec AMINE DIGITAL, et que peux-tu nous apporter ?', type: 'textarea', min: 60, rows: 4 },
       { key: 'goal', label: 'Où veux-tu en être professionnellement dans un an ? (facultatif)', type: 'textarea', rows: 2 },
     ],
   },
@@ -104,6 +104,18 @@ export const APPLICATION_SECTIONS: Section[] = [
   },
 ]
 
+export type Mode = 'complet' | 'court'
+
+/** Dossier court (personne que tu connais déjà) : seulement ces champs. */
+const SHORT = new Set(['name', 'phone', 'email', 'city', 'adult', 'role', 'role_other', 'collab', 'ai_level', 'ai_tools', 'ai_how', 'link1', 'link1_desc', 'link2', 'link3', 'cv', 'c_true', 'c_conf', 'c_data'])
+const SHORT_OPTIONAL = new Set(['link1_desc'])
+
+export const inMode = (f: Field, mode: Mode) => mode === 'complet' || SHORT.has(f.key)
+export const isRequired = (f: Field, mode: Mode) => !!f.required && (mode === 'complet' || !SHORT_OPTIONAL.has(f.key))
+export function sectionsFor(mode: Mode): Section[] {
+  return APPLICATION_SECTIONS.map((sec) => ({ ...sec, fields: sec.fields.filter((f) => inMode(f, mode)) })).filter((sec) => sec.fields.length)
+}
+
 export const ALL_FIELDS: Field[] = APPLICATION_SECTIONS.flatMap((s) => s.fields)
 export const FIELD_LABEL: Record<string, string> = Object.fromEntries(ALL_FIELDS.map((f) => [f.key, f.label]))
 
@@ -111,10 +123,11 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i
 
 /** Renvoie le message d'erreur d'un champ, ou '' s'il est correct. */
-export function checkField(f: Field, v: unknown): string {
+export function checkField(f: Field, v: unknown, mode: Mode = 'complet'): string {
   const s = typeof v === 'string' ? v.trim() : ''
-  if (f.type === 'check') return f.required && v !== true ? 'À cocher pour continuer.' : ''
-  if (!s) return f.required ? 'Ce champ est obligatoire.' : ''
+  const req = isRequired(f, mode)
+  if (f.type === 'check') return req && v !== true ? 'À cocher pour continuer.' : ''
+  if (!s) return req ? 'Ce champ est obligatoire.' : ''
   if (f.min && s.length < f.min) return `Réponds avec un peu plus de détails (au moins ${f.min} caractères).`
   if (f.type === 'email' && !EMAIL.test(s)) return 'Adresse e-mail invalide.'
   if (f.type === 'url' && !URL_RE.test(s)) return 'Lien invalide : il doit commencer par https://'
@@ -125,6 +138,11 @@ export function checkField(f: Field, v: unknown): string {
 export function flags(d: Record<string, unknown>): { warn: string[]; good: string[] } {
   const s = (k: string) => (typeof d[k] === 'string' ? (d[k] as string).trim() : '')
   const warn: string[] = [], good: string[] = []
+  if (d.mode === 'court') {
+    const g: string[] = [], w: string[] = []
+    if (/^Je n'en utilise pas/.test(s('ai_level'))) w.push("N'utilise pas l'IA"); else if (/^(Avancé|Expert)/.test(s('ai_level'))) g.push("Maîtrise l'IA")
+    return { warn: w, good: g }
+  }
   const nFiles = Array.isArray(d.files) ? d.files.length : 0
   const proofs = ['link1', 'link2', 'link3'].filter((k) => s(k)).length + nFiles
   if (proofs >= 2) good.push(`${proofs} preuves à vérifier`); else warn.push(proofs ? 'Une seule preuve de travail' : 'Aucune preuve de travail')

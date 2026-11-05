@@ -46,13 +46,21 @@ export function ApplicationsTab({ call, notify, onChange }: TabProps) {
 
   return (
     <div>
-      <div className="border border-stroke rounded-md p-4 bg-surface/40 mb-6">
-        <div className="text-xs font-mono uppercase tracking-widest text-clay mb-2">Lien du formulaire de candidature</div>
-        <p className="text-xs text-muted mb-3">Envoie ce lien à chaque candidat. Les réponses sont privées : elles n'apparaissent jamais sur le site. Si le lien circule trop, change-le dans l'onglet Équipe (« nouveau lien »).</p>
-        <div className="flex flex-wrap gap-2">
-          <input readOnly value={code ? link : '…'} className={`${input} flex-1 min-w-[240px] font-mono text-xs`} onFocus={(e) => e.target.select()} />
-          <button disabled={!code} onClick={() => { navigator.clipboard?.writeText(link); notify('Lien copié') }} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}><Copy size={14} /> Copier</button>
-        </div>
+      <div className="border border-stroke rounded-md p-4 bg-surface/40 mb-6 space-y-4">
+        <p className="text-xs text-muted">Choisis le bon lien selon la personne. Les réponses sont privées : elles n'apparaissent jamais sur le site. Si un lien circule trop, change le code dans l'onglet Équipe (« nouveau lien »).</p>
+        {[
+          ['Candidat que tu ne connais pas : dossier complet', link, 'Toutes les questions : expérience, preuves, IA, mises en situation (facultatives).'],
+          ['Personne que tu connais déjà : dossier court', `${link}&type=connu`, 'Environ 5 minutes : contact, poste, niveau en IA et engagements. Sans questionnaire pesant.'],
+        ].map(([t, l, d]) => (
+          <div key={t}>
+            <div className="text-xs font-mono uppercase tracking-widest text-clay mb-1">{t}</div>
+            <p className="text-xs text-muted mb-2">{d}</p>
+            <div className="flex flex-wrap gap-2">
+              <input readOnly value={code ? l : '…'} className={`${input} flex-1 min-w-[240px] font-mono text-xs`} onFocus={(e) => e.target.select()} />
+              <button disabled={!code} onClick={() => { navigator.clipboard?.writeText(l); notify('Lien copié') }} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}><Copy size={14} /> Copier</button>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="flex flex-wrap gap-2 mb-5">
@@ -73,7 +81,7 @@ export function ApplicationsTab({ call, notify, onChange }: TabProps) {
             <div key={a.id} className="border border-stroke rounded-md bg-white/70">
               <button onClick={() => setOpen(isOpen ? null : a.id)} className="w-full text-left p-4 flex flex-wrap gap-3 items-center">
                 <div className="flex-1 min-w-[200px]">
-                  <div className="font-display text-base">{a.name}<span className={`text-[10px] rounded-full px-2 py-0.5 ml-2 font-semibold ${st[2]}`}>{st[1]}</span></div>
+                  <div className="font-display text-base">{a.name}<span className={`text-[10px] rounded-full px-2 py-0.5 ml-2 font-semibold ${st[2]}`}>{st[1]}</span>{a.data.mode === 'court' && <span className="text-[10px] rounded-full px-2 py-0.5 ml-1.5 font-semibold bg-teal-100 text-teal-800">Dossier court</span>}</div>
                   <div className="text-xs text-clay font-mono uppercase">{a.role}{a.data.level ? ` · ${String(a.data.level).split(' (')[0]}` : ''}{a.data.years ? ` · ${a.data.years}` : ''}</div>
                   <div className="text-xs text-muted mt-0.5">{fmt(a.created_at)}</div>
                 </div>
