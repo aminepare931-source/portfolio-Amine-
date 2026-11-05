@@ -138,7 +138,8 @@ function TeamTab({ call, notify, onChange }: TabProps) {
   return (
     <div>
       <div className="border border-stroke rounded-md p-4 bg-surface/40 mb-6">
-        <div className="text-xs font-mono uppercase tracking-widest text-muted mb-2">Lien d'invitation à envoyer au personnel</div>
+        <div className="text-xs font-mono uppercase tracking-widest text-muted mb-2">Fiche publique : lien pour les membres déjà acceptés (nom, rôle, photo sur le site)</div>
+        <p className="text-xs text-amber-700 mb-3">Pour recruter un nouveau candidat, n'utilise pas ce lien : va dans l'onglet « Candidatures » et copie le lien du formulaire détaillé.</p>
         <div className="flex flex-wrap gap-2 items-center">
           <input readOnly value={code ? link : '…'} onFocus={(e) => e.currentTarget.select()} className={`${input} flex-1 min-w-[240px] font-mono text-xs`} />
           <button onClick={() => { navigator.clipboard?.writeText(link); notify('Lien copié') }} className={`${btn} border-stroke hover:bg-slate-900/5`}><Copy size={14} /> Copier</button>
