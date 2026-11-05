@@ -558,3 +558,62 @@ to anon;
 
 revoke all on public.publications, public.realisations, public.faqs, public.plans, public.events from anon, authenticated;
 grant select on public.publications, public.realisations, public.faqs, public.plans to anon;
+
+-- ───────────────────────── Module 3 : candidatures détaillées (privées) ─────────────────────────
+-- Aucune lecture publique : seules les fonctions admin_application_* (mot de passe requis) lisent ces données.
+create table if not exists public.team_applications (
+  id uuid primary key default gen_random_uuid(),
+  name text not null check (char_length(name) between 2 and 100),
+  phone text check (char_length(phone) <= 40),
+  email text check (char_length(email) <= 120),
+  role text check (char_length(role) <= 120),
+  status text not null default 'nouvelle' check (status in ('nouvelle', 'a_contacter', 'entretien', 'accepte', 'refuse')),
+  note text check (char_length(note) <= 2000),
+  data jsonb not null default '{}'::jsonb check (pg_column_size(data) <= 40000),
+  created_at timestamptz not null default now()
+);
+alter table public.team_applications enable row level security;
+revoke all on public.team_applications from anon, authenticated;
+
+create or replace function public.submit_team_application(p_code text, p_data jsonb) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  if not exists (select 1 from public.team_invite where code = p_code) then raise exception 'invitation invalide'; end if;
+  if jsonb_typeof(p_data) <> 'object'
+     or char_length(trim(coalesce(p_data->>'name', ''))) < 2
+     or char_length(trim(coalesce(p_data->>'phone', ''))) < 6
+     or char_length(trim(coalesce(p_data->>'role', ''))) < 2
+     or pg_column_size(p_data) > 40000 then
+    raise exception 'donnees invalides';
+  end if;
+  if (select count(*) from public.team_applications where created_at > now() - interval '10 minutes') >= 30 then
+    raise exception 'trop de demandes';
+  end if;
+  insert into public.team_applications (name, phone, email, role, data)
+  values (left(trim(p_data->>'name'), 100), left(trim(p_data->>'phone'), 40), nullif(left(trim(coalesce(p_data->>'email', '')), 120), ''),
+          left(trim(p_data->>'role'), 120), p_data);
+end $$;
+
+create or replace function public.admin_application_list(p_pass text) returns setof public.team_applications
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  perform public.ad_auth(p_pass);
+  return query select * from public.team_applications
+    order by case status when 'nouvelle' then 0 when 'a_contacter' then 1 when 'entretien' then 2 else 3 end, created_at desc;
+end $$;
+
+create or replace function public.admin_application_update(p_pass text, p_id uuid, p_status text, p_note text) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin
+  perform public.ad_auth(p_pass);
+  update public.team_applications set status = p_status, note = nullif(trim(coalesce(p_note, '')), '') where id = p_id;
+end $$;
+
+create or replace function public.admin_application_delete(p_pass text, p_id uuid) returns void
+language plpgsql security definer set search_path = public, extensions as $$
+begin perform public.ad_auth(p_pass); delete from public.team_applications where id = p_id; end $$;
+
+revoke all on function public.submit_team_application(text, jsonb), public.admin_application_list(text),
+  public.admin_application_update(text, uuid, text, text), public.admin_application_delete(text, uuid) from public;
+grant execute on function public.submit_team_application(text, jsonb), public.admin_application_list(text),
+  public.admin_application_update(text, uuid, text, text), public.admin_application_delete(text, uuid) to anon;

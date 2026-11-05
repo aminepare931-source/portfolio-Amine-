@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Users, Inbox, Star, Settings as Cog, Lock, Check, X, Trash2, Pencil, Copy, RefreshCw, LogOut, EyeOff, User, Plus, Image as ImageIcon, Briefcase, HelpCircle, Tag, BarChart3 } from 'lucide-react'
+import { Users, Inbox, Star, Settings as Cog, Lock, Check, X, Trash2, Pencil, Copy, RefreshCw, LogOut, EyeOff, User, Plus, Image as ImageIcon, Briefcase, ClipboardList, HelpCircle, Tag, BarChart3 } from 'lucide-react'
 import { rpc } from '../lib/supabase'
 import { input, btn, type Call, type TabProps } from './adminUi'
+import { ApplicationsTab } from './AdminApplications'
 import { PublicationsTab, RealisationsTab, FaqTab, PlansTab, StatsTab } from './AdminContent'
 
 const KEY = 'ad_admin_pw'
-type Tab = 'team' | 'leads' | 'publications' | 'realisations' | 'faq' | 'plans' | 'stats' | 'reviews' | 'settings' | 'security'
+type Tab = 'team' | 'apps' | 'leads' | 'publications' | 'realisations' | 'faq' | 'plans' | 'stats' | 'reviews' | 'settings' | 'security'
 
 interface TeamRow { id: string; name: string; role: string; grp: 'Associés' | 'Collaborateurs'; bio: string | null; photo: string | null; status: 'pending' | 'approved' | 'hidden' }
 interface Lead { id: string; kind?: string; name: string; email: string | null; phone: string | null; message: string; handled: boolean; created_at: string }
@@ -17,7 +18,7 @@ export default function AdminPage() {
   const [pw, setPw] = useState(() => { try { return sessionStorage.getItem(KEY) ?? '' } catch { return '' } })
   const [authed, setAuthed] = useState(false)
   const [tab, setTab] = useState<Tab>('team')
-  const [counts, setCounts] = useState({ pending: 0, leads: 0 })
+  const [counts, setCounts] = useState({ pending: 0, leads: 0, apps: 0 })
   const [toast, setToast] = useState('')
 
   useEffect(() => {
@@ -35,7 +36,9 @@ export default function AdminPage() {
   const refreshCounts = useCallback(async () => {
     try {
       const [t, l] = await Promise.all([call<TeamRow[]>('admin_team_list'), call<Lead[]>('admin_leads_list')])
-      setCounts({ pending: t.filter((x) => x.status === 'pending').length, leads: l.filter((x) => !x.handled).length })
+      let apps = 0
+      try { apps = (await call<{ status: string }[]>('admin_application_list')).filter((x) => x.status === 'nouvelle').length } catch { /* script SQL pas encore exécuté */ }
+      setCounts({ pending: t.filter((x) => x.status === 'pending').length, leads: l.filter((x) => !x.handled).length, apps })
     } catch { /* */ }
   }, [call])
   useEffect(() => { if (authed) refreshCounts() }, [authed, refreshCounts, tab])
@@ -44,6 +47,7 @@ export default function AdminPage() {
 
   const tabs: { id: Tab; label: string; icon: typeof Users; n?: number }[] = [
     { id: 'team', label: 'Équipe', icon: Users, n: counts.pending },
+    { id: 'apps', label: 'Candidatures', icon: ClipboardList, n: counts.apps },
     { id: 'leads', label: 'Demandes', icon: Inbox, n: counts.leads },
     { id: 'publications', label: 'Publications', icon: ImageIcon },
     { id: 'realisations', label: 'Réalisations', icon: Briefcase },
@@ -75,6 +79,7 @@ export default function AdminPage() {
       </div>
 
       {tab === 'team' && <TeamTab call={call} notify={notify} onChange={refreshCounts} />}
+      {tab === 'apps' && <ApplicationsTab call={call} notify={notify} onChange={refreshCounts} />}
       {tab === 'leads' && <LeadsTab call={call} notify={notify} onChange={refreshCounts} />}
       {tab === 'publications' && <PublicationsTab call={call} notify={notify} />}
       {tab === 'realisations' && <RealisationsTab call={call} notify={notify} />}

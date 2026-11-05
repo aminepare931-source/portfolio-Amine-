@@ -139,3 +139,16 @@ export function trackEvent(type: 'page_view' | 'whatsapp', label: string) {
     }).catch(() => { /* */ })
   } catch { /* */ }
 }
+
+export async function submitTeamApplication(code: string, data: Record<string, unknown>): Promise<{ ok: boolean; error?: string }> {
+  try {
+    await rpc('submit_team_application', { p_code: code, p_data: data })
+    return { ok: true }
+  } catch (e) {
+    const m = (e as Error).message
+    if (m.includes('invitation invalide')) return { ok: false, error: "Ce lien d'invitation n'est plus valide. Demande un nouveau lien à AMINE DIGITAL." }
+    if (m.includes('trop de demandes')) return { ok: false, error: 'Trop de candidatures en même temps. Réessaie dans quelques minutes.' }
+    if (m.includes('donnees invalides')) return { ok: false, error: 'Certains champs obligatoires sont incomplets.' }
+    return { ok: false, error: m }
+  }
+}

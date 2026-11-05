@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { trackEvent } from '../lib/supabase'
 
-const SKIP = ['/administration', '/equipe/rejoindre']
+const SKIP = ['/administration', '/equipe/rejoindre', '/equipe/candidature']
 
 /** Statistiques anonymes : pages vues et clics sur WhatsApp (visibles dans l'administration). */
 export default function Tracker() {
