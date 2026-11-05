@@ -33,9 +33,9 @@ function ImagePicker({ value, onPick, label }: { value: string | null; onPick: (
     const f = e.target.files?.[0]; if (!f) return
     setBusy(true); setErr('')
     try {
-      let q = 0.82, r = await resizeImage(f, 1000, q)
-      while (r.dataUrl.length > 560000 && q > 0.45) { q -= 0.12; r = await resizeImage(f, 1000, q) }
-      if (r.dataUrl.length > 600000) throw new Error('trop lourde')
+      let q = 0.78, r = await resizeImage(f, 900, q)
+      while (r.dataUrl.length > 260000 && q > 0.4) { q -= 0.1; r = await resizeImage(f, 900, q) }
+      if (r.dataUrl.length > 400000) throw new Error('trop lourde')
       onPick(r.dataUrl, r.w, r.h)
     } catch { setErr("Image illisible ou trop lourde. Essayez une autre image.") } finally { setBusy(false); e.target.value = '' }
   }
@@ -110,7 +110,7 @@ export function PublicationsTab(p: TabProps) {
 
 /* ───────── Réalisations ───────── */
 interface Real { id: string; title: string; client: string | null; sector: string | null; description: string; long_desc: string | null; result: string | null; link: string | null; tags: string[]; features: string[]; stack: string[]; gallery: string[]; image: string | null; kind: string | null; status: string | null; visible: boolean; position: number }
-const emptyReal = { id: '', title: '', client: '', sector: '', description: '', long_desc: '', result: '', link: '', tags: '', features: '', stack: '', gallery: [] as string[], image: '', kind: '', status: '', visible: true, position: 0, changed: false }
+const emptyReal = { id: '', title: '', client: '', sector: '', description: '', long_desc: '', result: '', link: '', tags: '', features: '', stack: '', gallery: [] as string[], image: '', kind: '', status: '', visible: true, position: 0, changed: false, gchanged: false }
 const KINDS: [string, string][] = [['client', 'Projet client (réalisé pour un client)'], ['saas', 'SaaS AMINE DIGITAL (produit vendu en abonnement)'], ['interne', 'Application interne AMINE DIGITAL'], ['personnel', 'Projet personnel']]
 const KIND_SHORT: Record<string, string> = { client: 'Client', saas: 'SaaS', interne: 'Interne', personnel: 'Personnel' }
 const PLACEHOLDER = 'À compléter'
@@ -123,8 +123,8 @@ function GalleryPicker({ value, onChange }: { value: string[]; onChange: (v: str
     try {
       const out: string[] = []
       for (const f of files) {
-        let q = 0.78, r = await resizeImage(f, 1000, q)
-        while (r.dataUrl.length > 520000 && q > 0.4) { q -= 0.12; r = await resizeImage(f, 1000, q) }
+        let q = 0.74, r = await resizeImage(f, 900, q)
+        while (r.dataUrl.length > 220000 && q > 0.4) { q -= 0.1; r = await resizeImage(f, 900, q) }
         out.push(r.dataUrl)
       }
       onChange([...value, ...out])
@@ -159,8 +159,8 @@ export function RealisationsTab(p: TabProps) {
   const draft = f && f.description.trim() === PLACEHOLDER
   const ok = f && f.title.trim().length >= 3 && f.description.trim().length >= 5 && (!f.link.trim() || /^https?:\/\//.test(f.link.trim())) && (!f.visible || (!!f.kind && !draft))
   const split = (v: string, sep: RegExp) => v.split(sep).map((t) => t.trim()).filter(Boolean)
-  const payload = (r: typeof emptyReal) => ({ title: r.title, client: r.client, sector: r.sector, description: r.description, long_desc: r.long_desc, result: r.result, link: r.link, tags: split(r.tags, /,/), features: split(r.features, /\n/), stack: split(r.stack, /,/), gallery: r.gallery, kind: r.kind, status: r.status, visible: r.visible, position: Number(r.position) || 0, ...(r.changed ? { image: r.image } : {}) })
-  const toForm = (r: Real) => ({ id: r.id, title: r.title, client: r.client ?? '', sector: r.sector ?? '', description: r.description, long_desc: r.long_desc ?? '', result: r.result ?? '', link: r.link ?? '', tags: r.tags.join(', '), features: r.features.join('\n'), stack: r.stack.join(', '), gallery: r.gallery, image: r.image ?? '', kind: r.kind ?? '', status: r.status ?? '', visible: r.visible, position: r.position, changed: false })
+  const payload = (r: typeof emptyReal) => ({ title: r.title, client: r.client, sector: r.sector, description: r.description, long_desc: r.long_desc, result: r.result, link: r.link, tags: split(r.tags, /,/), features: split(r.features, /\n/), stack: split(r.stack, /,/), ...(r.gchanged ? { gallery: r.gallery } : {}), kind: r.kind, status: r.status, visible: r.visible, position: Number(r.position) || 0, ...(r.changed ? { image: r.image } : {}) })
+  const toForm = (r: Real) => ({ id: r.id, title: r.title, client: r.client ?? '', sector: r.sector ?? '', description: r.description, long_desc: r.long_desc ?? '', result: r.result ?? '', link: r.link ?? '', tags: r.tags.join(', '), features: r.features.join('\n'), stack: r.stack.join(', '), gallery: r.gallery, image: r.image ?? '', kind: r.kind ?? '', status: r.status ?? '', visible: r.visible, position: r.position, changed: false, gchanged: false })
 
   async function importPortfolio() {
     setImporting(true)
@@ -220,7 +220,7 @@ export function RealisationsTab(p: TabProps) {
           <input className={`${input} sm:col-span-2`} placeholder="Résultat obtenu (facultatif, uniquement s'il est réel)" maxLength={300} value={f.result} onChange={(e) => setF({ ...f, result: e.target.value })} />
           <input className={`${input} sm:col-span-2`} placeholder="Lien du projet https://… (facultatif)" value={f.link} onChange={(e) => setF({ ...f, link: e.target.value })} />
           <ImagePicker value={f.image || null} label="Image principale (capture, photo)" onPick={(d) => setF({ ...f, image: d, changed: true })} />
-          <GalleryPicker value={f.gallery} onChange={(g) => setF({ ...f, gallery: g })} />
+          <GalleryPicker value={f.gallery} onChange={(g) => setF({ ...f, gallery: g, gchanged: true })} />
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={f.visible} onChange={(e) => setF({ ...f, visible: e.target.checked })} /> Visible sur le site</label>
           <label className="flex items-center gap-2 text-sm">Ordre <input type="number" className={`${input} w-24`} value={f.position} onChange={(e) => setF({ ...f, position: Number(e.target.value) })} /></label>
           <div className="sm:col-span-2 flex gap-2"><button disabled={!ok} onClick={async () => { if (await save(f.id || null, payload(f), 'Projet enregistré')) setF(null) }} className={`${btn} bg-gov text-white border-gov disabled:opacity-40`}>Enregistrer</button><button onClick={() => setF(null)} className={`${btn} border-stroke`}>Annuler</button></div>

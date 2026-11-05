@@ -65,11 +65,17 @@ export async function submitTeamMember(m: { code: string; name: string; role: st
 
 /** Appel d'une fonction Supabase (RPC). Renvoie les données ou lève une erreur lisible. */
 export async function rpc<T = unknown>(name: string, args: Record<string, unknown> = {}): Promise<T> {
-  const res = await fetch(`${SB_URL}/rest/v1/rpc/${name}`, {
+  const send = () => fetch(`${SB_URL}/rest/v1/rpc/${name}`, {
     method: 'POST',
     headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(args),
   })
+  let res: Response
+  try {
+    try { res = await send() } catch { res = await send() } // une nouvelle tentative si le réseau coupe
+  } catch {
+    throw new Error("Connexion interrompue (réseau ou image trop lourde). Vérifiez Internet, réessayez, ou choisissez une image plus légère.")
+  }
   const txt = await res.text()
   if (!res.ok) {
     if (txt.includes('acces refuse')) throw new Error('Mot de passe incorrect.')
