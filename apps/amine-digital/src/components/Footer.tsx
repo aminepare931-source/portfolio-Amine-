@@ -14,7 +14,7 @@ export default function Footer() {
             AMINE<span className="text-clay">DIGITAL</span>
           </div>
           <p className="text-sm text-muted leading-relaxed max-w-xs">
-            Développement web & mobile, design, marketing digital et automatisation IA, basé à Bobo-Dioulasso.
+            Sites et applications, e-commerce, community management, cybersécurité, digitalisation, conseil et formation, basé à Bobo-Dioulasso.
           </p>
         </div>
 
@@ -46,7 +46,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-stroke py-6 text-center text-xs text-muted font-mono">
-        © 2023 AMINE DIGITAL — Tous droits réservés
+        © {new Date().getFullYear()} AMINE DIGITAL — Tous droits réservés
       </div>
     </footer>
   )

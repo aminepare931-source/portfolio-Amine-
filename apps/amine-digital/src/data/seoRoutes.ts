@@ -16,8 +16,8 @@ export const PAGE_SEO: Record<string, { title: string; description: string }> = 
     description: "De l'échange initial à la livraison : le processus d'AMINE DIGITAL en étapes claires pour réaliser votre site web, votre application ou votre campagne digitale.",
   },
   '/services': {
-    title: 'Nos services — Sites web, applications, design, marketing digital | AMINE DIGITAL',
-    description: "Sites web, applications mobiles, design, marketing digital, automatisation par IA et cybersécurité : tous les services d'AMINE DIGITAL à Bobo-Dioulasso, Burkina Faso.",
+    title: 'Nos services — Web, e-commerce, cybersécurité, digitalisation, formation | AMINE DIGITAL',
+    description: "Sites et applications web, applications mobiles, e-commerce, community management, cybersécurité, digitalisation, suivi d'entreprise, conseil et formation : tous les services d'AMINE DIGITAL à Bobo-Dioulasso, Burkina Faso.",
   },
   '/tarifs': {
     title: 'Tarifs — AMINE DIGITAL',
@@ -58,5 +58,5 @@ export const ORG_JSONLD = {
   description: PAGE_SEO['/'].description,
   areaServed: { '@type': 'Country', name: 'Burkina Faso' },
   address: { '@type': 'PostalAddress', addressLocality: 'Bobo-Dioulasso', addressCountry: 'BF' },
-  knowsAbout: ['Création de sites web', 'Applications mobiles', 'Design graphique', 'Marketing digital', 'Automatisation par IA', 'Cybersécurité'],
+  knowsAbout: ['Sites et applications web', 'Applications mobiles', 'E-commerce et paiement Mobile Money', 'Community management', 'Design graphique', 'Marketing digital', 'Automatisation par IA', 'Cybersécurité', "Digitalisation d'entreprise", "Suivi d'entreprise", 'Conseil', 'Formation'],
 }
