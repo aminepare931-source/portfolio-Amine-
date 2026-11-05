@@ -90,7 +90,7 @@ export function PublicationsTab(p: TabProps) {
       <div className="space-y-3">
         {rows.map((r) => (
           <div key={r.id} className="border border-stroke rounded-md p-3 bg-white/70 flex flex-wrap gap-4 items-center">
-            <img src={r.image} alt="" className="w-20 h-20 object-cover rounded-sm border border-stroke" />
+            <img src={r.image} alt="" className="w-20 h-20 object-contain bg-surface rounded-sm border border-stroke" />
             <div className="flex-1 min-w-[200px]">
               <div className="font-display text-base">{r.title}{!r.visible && <Hidden />}</div>
               <div className="text-xs text-clay font-mono uppercase">{r.category}{r.price ? ` · ${r.price}` : ''}</div>
@@ -162,19 +162,37 @@ export function RealisationsTab(p: TabProps) {
   const payload = (r: typeof emptyReal) => ({ title: r.title, client: r.client, sector: r.sector, description: r.description, long_desc: r.long_desc, result: r.result, link: r.link, tags: split(r.tags, /,/), features: split(r.features, /\n/), stack: split(r.stack, /,/), ...(r.gchanged ? { gallery: r.gallery } : {}), kind: r.kind, status: r.status, visible: r.visible, position: Number(r.position) || 0, ...(r.changed ? { image: r.image } : {}) })
   const toForm = (r: Real) => ({ id: r.id, title: r.title, client: r.client ?? '', sector: r.sector ?? '', description: r.description, long_desc: r.long_desc ?? '', result: r.result ?? '', link: r.link ?? '', tags: r.tags.join(', '), features: r.features.join('\n'), stack: r.stack.join(', '), gallery: r.gallery, image: r.image ?? '', kind: r.kind ?? '', status: r.status ?? '', visible: r.visible, position: r.position, changed: false, gchanged: false })
 
+  const norm = (t: string) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim()
+  const findDraft = (name: string) => {
+    const n = norm(name); if (!n) return undefined
+    return PROJECT_DRAFTS.find((d) => { const t = norm(d.title); return t === n || t.startsWith(n + ' ') || n.startsWith(t + ' ') || (n.length > 3 && t.includes(n)) })
+  }
+  const draftData = (d: (typeof PROJECT_DRAFTS)[number]) => ({ title: d.title, kind: d.kind, status: d.status, sector: d.sector, description: d.description, long_desc: d.long_desc, features: d.features, stack: d.stack, tags: d.tags, client: d.client ?? '', link: d.link ?? '' })
+
+  /** Reprend les projets du portfolio (nom, ligne, photo) et les complète avec la présentation détaillée quand elle existe. */
   async function importPortfolio() {
     setImporting(true)
     try {
       const projects = await fetchProjects()
-      const have = new Set(rows.map((r) => r.title.trim().toLowerCase()))
-      let n = 0
+      const byTitle = new Map(rows.map((r) => [norm(r.title), r]))
+      let added = 0, completed = 0
       for (const pr of projects) {
-        if (have.has(pr.name.trim().toLowerCase())) continue
-        const img = pr.img && /^https:\/\//.test(pr.img) ? pr.img : ''
-        await p.call('admin_realisation_save', { p_id: null, p_data: { title: pr.name, description: pr.description?.trim().length >= 5 ? pr.description.trim() : PLACEHOLDER, tags: pr.tags ?? [], image: img, kind: '', visible: false, position: pr.position ?? 0 } })
-        n++
+        const d = findDraft(pr.name)
+        const img = pr.img && /^(https:\/\/|data:image\/(jpeg|png|webp);base64,)/.test(pr.img) && pr.img.length <= 690000 ? pr.img : ''
+        const existing = byTitle.get(norm(d ? d.title : pr.name)) ?? byTitle.get(norm(pr.name))
+        if (existing) {
+          if (d && existing.description.trim() === PLACEHOLDER) {
+            await p.call('admin_realisation_save', { p_id: existing.id, p_data: { ...draftData(d), visible: !!d.kind, position: pr.position ?? 0, ...(img ? { image: img } : {}) } })
+            completed++
+          }
+          continue
+        }
+        const base = d ? { ...draftData(d), visible: !!d.kind } : { title: pr.name, description: pr.description?.trim().length >= 5 ? pr.description.trim() : PLACEHOLDER, tags: pr.tags ?? [], kind: '', visible: false }
+        await p.call('admin_realisation_save', { p_id: null, p_data: { ...base, image: img || d?.image || '', position: pr.position ?? 0 } })
+        byTitle.set(norm(base.title), { id: '', description: '' } as Real)
+        added++
       }
-      p.notify(n ? `${n} projet(s) importé(s) en brouillon : complétez-les puis publiez-les` : 'Rien de nouveau à importer')
+      p.notify(added || completed ? `${added} projet(s) importé(s), ${completed} complété(s). Ceux avec une présentation et un type sont publiés ; les autres sont masqués.` : 'Rien de nouveau à importer')
       await load()
     } catch (e) { p.notify((e as Error).message) } finally { setImporting(false) }
   }
@@ -231,7 +249,7 @@ export function RealisationsTab(p: TabProps) {
       <div className="space-y-3">
         {rows.map((r) => (
           <div key={r.id} className="border border-stroke rounded-md p-3 bg-white/70 flex flex-wrap gap-4 items-center">
-            {r.image ? <img src={r.image} alt="" className="w-20 h-14 object-cover rounded-sm border border-stroke" /> : <span className="w-20 h-14 rounded-sm bg-surface border border-stroke" />}
+            {r.image ? <img src={r.image} alt="" className="w-20 h-14 object-contain bg-surface rounded-sm border border-stroke" /> : <span className="w-20 h-14 rounded-sm bg-surface border border-stroke" />}
             <div className="flex-1 min-w-[200px]">
               <div className="font-display text-base">{r.title}{!r.visible && <Hidden />}{r.description.trim() === PLACEHOLDER && <span className="text-[10px] bg-amber-100 text-amber-800 rounded-full px-2 py-0.5 ml-1.5 font-semibold">À compléter</span>}</div>
               <div className="text-xs text-muted">{r.kind ? <b className="text-gov">{KIND_SHORT[r.kind]}</b> : <b className="text-amber-700">Type à choisir</b>}{[r.sector, r.client].filter(Boolean).map((x) => ` · ${x}`)}</div>
