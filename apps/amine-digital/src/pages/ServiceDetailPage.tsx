@@ -5,7 +5,7 @@ import { Link, useParams, Navigate } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Check } from 'lucide-react'
 import { ServiceImage } from '../components/PillarIllustrations'
 import { SERVICES } from '../data/services'
-import { SERVICE_PHOTOS, type ServicePhoto } from '../data/servicePhotos'
+import { SERVICE_PHOTOS, serviceBanner, type ServicePhoto } from '../data/servicePhotos'
 
 function Photo({ p }: { p: ServicePhoto }) {
   return (
@@ -36,13 +36,18 @@ export default function ServiceDetailPage() {
         <ArrowLeft size={15} /> Tous les services
       </Link>
 
-      <div className="grid md:grid-cols-[1fr_auto] gap-6 items-center mb-10">
+      <div className="grid md:grid-cols-[1fr_auto] gap-6 items-center mb-8">
         <div>
           <h1 className="font-display text-4xl sm:text-5xl mb-3">{service.title}</h1>
           <p className="text-muted">{service.teaser}</p>
         </div>
-        <ServiceImage set="services-page" slug={service.slug} className="w-48 sm:w-56 h-auto md:justify-self-end" />
+        {serviceBanner(service.slug)
+          ? null
+          : <ServiceImage set="services-page" slug={service.slug} className="w-48 sm:w-56 h-auto md:justify-self-end" />}
       </div>
+      {serviceBanner(service.slug) && (
+        <img src={serviceBanner(service.slug)!} alt={service.title} className="w-full h-auto rounded-md mb-12" />
+      )}
 
       {/* 1 — Présentation + photo */}
       <section className="grid md:grid-cols-2 gap-6 md:gap-10 items-center mb-14">

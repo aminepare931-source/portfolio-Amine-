@@ -1,10 +1,15 @@
 import { useState } from 'react'
 import { SERVICES } from '../data/services'
+import { serviceCard } from '../data/servicePhotos'
 // Illustrations des services (images fournies par AMINE DIGITAL).
 // PNG à fond transparent : l'illustration se pose sur la couleur de la carte.
 // Accueil : série « services » — Page Services et pages de détail : série « services-page ».
 export function ServiceImage({ slug, className = '', set = 'services' }: { slug: string; className?: string; set?: 'services' | 'services-page' }) {
   const [failed, setFailed] = useState(false)
+  const card = serviceCard(slug)
+  if (card) {
+    return <img src={card} alt="" loading="lazy" className={`select-none pointer-events-none aspect-[4/3] object-cover rounded-md ${className}`} />
+  }
   if (failed) {
     // Pas d'illustration pour ce service : on affiche son icône dans un cadre aux couleurs du site.
     const Icon = SERVICES.find((s) => s.slug === slug)?.icon

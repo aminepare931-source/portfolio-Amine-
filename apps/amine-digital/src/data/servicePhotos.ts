@@ -35,4 +35,45 @@ export const SERVICE_PHOTOS: Record<string, ServicePhoto[]> = {
     p('design', 3, 'Retouche graphique sur un écran d’ordinateur'),
     p('design', 4, 'Carte et support de marque AMINE DIGITAL'),
   ],
+  'e-commerce': [
+    p('e-commerce', 1, 'Ordinateur portable affichant une boutique en ligne, avec un casque audio'),
+    p('e-commerce', 2, 'Smartphone affichant « Paiement réussi »'),
+    p('e-commerce', 3, 'Chariot avec colis devant un ordinateur'),
+    p('e-commerce', 4, 'Cartes bancaires et terminal de paiement'),
+  ],
+  'community-management': [
+    p('community-management', 1, 'Smartphone entouré d’icônes de réseaux sociaux'),
+    p('community-management', 2, 'Ordinateur affichant des statistiques d’audience'),
+    p('community-management', 3, 'Anneau lumineux et smartphone sur trépied'),
+    p('community-management', 4, 'Icônes « j’aime » et commentaires'),
+  ],
+  digitalisation: [
+    p('digitalisation', 1, 'Homme d’affaires devant un ordinateur'),
+    p('digitalisation', 2, 'Schéma « Transformation digitale »'),
+    p('digitalisation', 3, 'Main touchant une interface de processus numériques'),
+    p('digitalisation', 4, 'Bureau moderne ouvert'),
+  ],
+  'suivi-entreprise': [
+    p('suivi-entreprise', 1, 'Tableau de bord affiché à l’écran'),
+    p('suivi-entreprise', 2, 'Tablette affichant objectifs, performances et rapports'),
+    p('suivi-entreprise', 3, 'Carnet « Plan d’action » et café'),
+    p('suivi-entreprise', 4, 'Réunion devant des graphiques'),
+  ],
+  conseil: [
+    p('conseil', 1, 'Consultant en discussion avec un client'),
+    p('conseil', 2, 'Carnet « stratégie, innovation, performance »'),
+    p('conseil', 3, 'Ampoule tenue en main'),
+    p('conseil', 4, 'Pousse de plante sur des pièces de monnaie'),
+  ],
+  formation: [
+    p('formation', 1, 'Formateur devant une salle'),
+    p('formation', 2, 'Ordinateur affichant « Formation en ligne »'),
+    p('formation', 3, 'Étudiante qui écrit'),
+    p('formation', 4, 'Attestation de formation'),
+  ],
 }
+
+/** Photos de couverture (cartes) et bannières des services illustrés par des photos. */
+const COVERED = ['e-commerce', 'community-management', 'digitalisation', 'suivi-entreprise', 'conseil', 'formation']
+export const serviceCard = (slug: string) => (COVERED.includes(slug) ? `/assets/services-cards/${slug}.jpg` : null)
+export const serviceBanner = (slug: string) => (COVERED.includes(slug) ? `/assets/services-banners/${slug}.jpg` : null)
